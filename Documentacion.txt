@@ -1,0 +1,76 @@
+
+___________________/ WORK \_____________________
+Ciel:
+	Vytvorit funkcne singleplayer 2D RPG s:
+		combat systemom
+			melee
+			ranged
+			magic
+		equipment systemom
+		moznostou hrania na ovladaci aj klavesnici
+		dandznami (v jaskynach, budovach ...)
+
+----------------< 03.10.  2023 >----------------
+Zaciatok Dokumetacie
+
+Pridane Funkcie: 
+	pohyb hraca + kamery
+
+Pridane Textury:
+	Enviroment = { background, rock1, rock2, tree1, tree2 }
+	Player = { torso, head, armL, armR, legL, legR }
+
+Pridane Animacie:
+	Player = { RunR, RunL, RunU, RunD, Idle}
+		Movement(RunR, RunL, RunU, RunD)
+	  Tanzisions:
+		Idle => Movement
+		Movement => Idle
+
+Pridane UI:
+	Canvas + EventSystem
+
+Pridane Sceny:
+	InGame
+	MainMenu
+
+Pridane Scripty:
+	PlayerScript
+	GameManager
+	MenuManager
+
+----------------< 04.10.  2023 >----------------
+Pridane Funkcie: 	
+	Save 
+	Load
+
+Pridane Scripty:
+	PlayerData
+	SaveSystem
+
+Upravene Scripty:
+	PlayerSystem
+	GameManager
+
+GitHub Commit:
+	First Sample Commit
+
+__________________/ SOURCES \___________________
+https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
+https://youtu.be/0wKo5WSImYY?si=w8hb-OUKRs5IU3ja
+https://youtu.be/0cYjreg7dpg?si=NFbaBdUP9c6YLFLC
+https://youtu.be/Hmw73vcUzsg?si=jWtaIKpS6MW7aojm
+https://youtu.be/2JCG4fCmeHk?si=c7WoJyNMkHQV1oNC
+https://youtu.be/6BrZryMz-ac?si=k33Q9D-j1r8polv8
+https://youtu.be/6BrZryMz-ac?si=OD4OciJ1a5TTLaZf
+https://youtu.be/x5wndRdBowo?si=LFq5gT0QsK24W7PM
+https://youtu.be/ecyK0vHmbpQ?si=xPRQ0EBkx1yZew1i
+https://youtu.be/XtQMytORBmM?si=P4C39XeGAqxAmMCF
+https://youtu.be/sPiVz1k-fEs?si=M6RXCrZqbpWfOjEl
+https://youtu.be/whzomFgjT50?si=nLri-Y23Awp7bVx3
+https://youtu.be/T1masuI3g8Q?si=q1ney6qAkLjSVEq9
+https://youtu.be/dYi-i83sq5g?si=4F8LvQRTku0CLF_c
+https://youtu.be/bY4Hr2x05p8?si=T_NRcqnvBNXmht_y
+https://youtu.be/-GWjA6dixV4?si=BxiNDh8SuH6DyN5u
+https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
+https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
