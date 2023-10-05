@@ -40,10 +40,6 @@ Pridane Scripty:
 	MenuManager
 
 ----------------< 04.10.  2023 >----------------
-Pridane Funkcie: 	
-	Save 
-	Load
-
 Pridane Scripty:
 	PlayerData
 	SaveSystem
@@ -52,8 +48,34 @@ Upravene Scripty:
 	PlayerSystem
 	GameManager
 
+Pridane Textury:
+	Weapons = { sword, bow, knife }
+
+Pridane Objekty:
+	Player.body.armL.WeaponL
+	Player.body.armR.WeaponR
+	Canvas.PauseMenu
+
 GitHub Commit:
 	First Sample Commit
+
+----------------< 05.10.  2023 >----------------
+Pridane Funkcie:
+	Save
+	Load
+	Pause
+	Resume
+
+Neuspesne Pokusy o:
+	Pohyb PauseMenu mysou
+	Load v PauseMenu (aby sa prejavil je potrebne z neho vystupit)
+
+Upravene Scripty:
+	GameManager
+	PlayerScript
+
+Pridane UI:
+	Pause Menu = { resume-button, save-button, load-button, quit-button }
 
 __________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
@@ -74,3 +96,4 @@ https://youtu.be/bY4Hr2x05p8?si=T_NRcqnvBNXmht_y
 https://youtu.be/-GWjA6dixV4?si=BxiNDh8SuH6DyN5u
 https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
 https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
+https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5

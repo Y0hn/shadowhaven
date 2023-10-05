@@ -5,7 +5,7 @@ using UnityEngine.U2D;
 using UnityEngine.U2D.IK;
 
 public class PlayerScript : MonoBehaviour
-{
+{    
     public Rigidbody2D rb;
     public Animator animator;
     public float moveSpeed;
@@ -16,7 +16,8 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
-        ProcessInput();
+        if (!GameManager.isPaused)
+            ProcessInput();
     }
     void FixedUpdate()
     {
@@ -49,8 +50,11 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("speed", moveDir.sqrMagnitude);
     }
 
+    #region GetSet
     public void SetHealth(int newHealth) { health = newHealth; }
     public int GetHealth() { return health; }
     public void SetLevel(int newLevel) { level = newLevel; }
     public int GetLevel() { return level; }
+
+    #endregion
 }
