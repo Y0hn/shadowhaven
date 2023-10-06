@@ -1,4 +1,3 @@
-
 ___________________/ WORK \_____________________
 Ciel:
 	Vytvorit funkcne singleplayer 2D RPG s:
@@ -9,6 +8,8 @@ Ciel:
 		equipment systemom
 		moznostou hrania na ovladaci aj klavesnici
 		dandznami (v jaskynach, budovach ...)
+			v styte Binding of Issac
+		interaktivnimi NPC
 
 ----------------< 03.10.  2023 >----------------
 Zaciatok Dokumetacie
@@ -26,6 +27,12 @@ Pridane Animacie:
 	  Tanzisions:
 		Idle => Movement
 		Movement => Idle
+		
+Vytvorene Animatory:
+	Player.Player
+		Variables { float Horizontal, float Vertical, float speed}
+		Tranzicion time (Movement <=> Idle) = 0.1
+
 
 Pridane UI:
 	Canvas + EventSystem
@@ -76,6 +83,46 @@ Upravene Scripty:
 
 Pridane UI:
 	Pause Menu = { resume-button, save-button, load-button, quit-button }
+
+----------------< 06.10.  2023 >----------------
+Pridane Funkcie:
+	Attack
+	Hit
+	Die
+	Enemy Random Health
+
+Pridane Animacie:
+	AttackL
+
+Pridane Objekty:
+	Player.body.armL.MeleeWeaponL.AttackPointL
+	Player.body.armR.MeleeWeaponR.AttackPointR
+		+ render ich range v scripte
+
+Pridane Objekty:
+	Enemy
+
+Pridane Layery:
+	Enemy
+
+Pridane Scripty:
+	EnemyScript
+
+Upravene Animacie:
+	Player.{ RunR, RunL, RunU, RunD }
+		pridanie animacie pre MeleeWeapons
+
+Uprava Animatory:
+	Player.Player
+		Tranzicion time (Movement <=> Idle) = 0
+		pridane Variables { Trigger Attack, bool Melee, bool Ranged }
+
+Upravene Objekty:
+	WeaponL	=> MeleeWeaponL
+	WeaponR	=> MeleeWeaponR
+
+Upravene Scripty:
+	PlayerScript
 
 __________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_

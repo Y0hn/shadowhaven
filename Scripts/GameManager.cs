@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     {
         pauseMenu.SetActive(false);
         isPaused = false;
+        Debug.Log(Application.persistentDataPath);
     }
     private void Update()
     {
