@@ -2,8 +2,8 @@
  skolsky projekt 2D RPG
 
 Ciel:
-	\nVytvorit funkcne singleplayer 2D RPG s:
-		\n\t\tcombat systemom
+	Vytvorit funkcne singleplayer 2D RPG s:
+		combat systemom
 			melee
 			ranged
 			magic
