@@ -2936,7 +2936,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ffc6cc6a9175e41833691f2cb3ed78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 2029063499}
+  rigitBody: {fileID: 2029063499}
   animator: {fileID: 2029063496}
   WeaponL: {fileID: 470351730}
   WeaponR: {fileID: 1102147209}
@@ -2948,7 +2948,7 @@ MonoBehaviour:
   attackRange: 1
   attackRate: 2
   damage: 50
-  moveSpeed: 5
+  animatorMoveSpeed: 0
 --- !u!1 &2051245669
 GameObject:
   m_ObjectHideFlags: 0

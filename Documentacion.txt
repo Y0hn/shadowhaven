@@ -124,6 +124,20 @@ Upravene Objekty:
 Upravene Scripty:
 	PlayerScript
 
+----------------< 07.10.  2023 >----------------
+Pridane Funkcie:
+	Directional Attack
+
+Pridane Animacie:
+	MeleeAttack = { AttackR, AttackL, AttackU, AttackD }
+
+Upravene Scripty:
+	PlayerScript
+
+Upravene Animatory:
+	Player.Player
+
+
 __________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
 https://youtu.be/0wKo5WSImYY?si=w8hb-OUKRs5IU3ja
