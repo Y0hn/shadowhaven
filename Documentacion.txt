@@ -137,6 +137,9 @@ Upravene Scripty:
 Upravene Animatory:
 	Player.Player
 
+----------------< 08.10.  2023 >----------------
+Pridane Textury:
+	Zombie = { grey(player) + damage(limbs, torso, head) }
 
 __________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
