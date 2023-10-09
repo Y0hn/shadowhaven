@@ -32,7 +32,7 @@ public class PlayerScript : MonoBehaviour
     private float moveSpeed = 5;
     private float nextAttackTime = 0;
 
-    private void Start() { level = 1; health = 100 * level; }
+    private void Start() { level = 1; health = 100 * level; pastMoveDir = new Vector2(1,0); }
     
     void Update()
     {

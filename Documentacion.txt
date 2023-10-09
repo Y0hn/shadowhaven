@@ -1,4 +1,5 @@
-___________________/ WORK \_____________________
+____________________/ GOAL \____________________
+
 Ciel:
 	Vytvorit funkcne singleplayer 2D RPG s:
 		combat systemom
@@ -11,7 +12,8 @@ Ciel:
 			v styte Binding of Issac
 		interaktivnimi NPC
 
-----------------< 03.10.  2023 >----------------
+__________________/ PROGRESS \__________________
+----------------< 03. 10. 2023 >----------------
 Zaciatok Dokumetacie
 
 Pridane Funkcie: 
@@ -140,8 +142,18 @@ Upravene Animatory:
 ----------------< 08.10.  2023 >----------------
 Pridane Textury:
 	Zombie = { grey(player) + damage(limbs, torso, head) }
+	
+----------------< 09.10.  2023 >----------------
+Pridane Scripty:
+	ZombieScript
 
-__________________/ SOURCES \___________________
+Pridane Animacie
+	Zombie = { goR, goL, idle }
+
+
+
+
+___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
 https://youtu.be/0wKo5WSImYY?si=w8hb-OUKRs5IU3ja
 https://youtu.be/0cYjreg7dpg?si=NFbaBdUP9c6YLFLC
@@ -161,3 +173,10 @@ https://youtu.be/-GWjA6dixV4?si=BxiNDh8SuH6DyN5u
 https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
 https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
 https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5
+https://youtu.be/fBLpLZFNtVg?si=kCOCHyPgz0WF-_-a
+
+____________________/ TOOLS \____________________
+https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
+https://www.gimp.org/
+https://unity.com/
+https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare
