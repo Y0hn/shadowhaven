@@ -260,7 +260,7 @@ GameObject:
   m_Component:
   - component: {fileID: 111867649}
   - component: {fileID: 111867650}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legR-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -493,7 +493,7 @@ GameObject:
   m_Component:
   - component: {fileID: 135387867}
   - component: {fileID: 135387868}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,15 +508,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 135387866}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: -0.6, y: 0, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: -1, w: 0}
+  m_LocalPosition: {x: -0.35, y: 0.7, z: 0.1}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1705818136}
   - {fileID: 335311434}
   m_Father: {fileID: 967169496}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -180}
 --- !u!212 &135387868
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -579,7 +579,7 @@ GameObject:
   m_Component:
   - component: {fileID: 155434092}
   - component: {fileID: 155434093}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -594,15 +594,15 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 155434091}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 0.6, y: 0, z: 0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 1, w: 0}
+  m_LocalPosition: {x: 0.35, y: 0.7, z: 0.1}
+  m_LocalScale: {x: 1, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1562779351}
   - {fileID: 1444157008}
   m_Father: {fileID: 967169496}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
 --- !u!212 &155434093
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -711,7 +711,7 @@ GameObject:
   m_Component:
   - component: {fileID: 234773606}
   - component: {fileID: 234773607}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -892,7 +892,7 @@ GameObject:
   m_Component:
   - component: {fileID: 335311434}
   - component: {fileID: 335311435}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armL-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -976,7 +976,7 @@ GameObject:
   m_Component:
   - component: {fileID: 451033953}
   - component: {fileID: 451033954}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legL-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1229,7 @@ GameObject:
   m_Component:
   - component: {fileID: 480612184}
   - component: {fileID: 480612185}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1535,7 +1535,7 @@ GameObject:
   m_Component:
   - component: {fileID: 576200097}
   - component: {fileID: 576200098}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legR-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1704,7 +1704,7 @@ GameObject:
   m_Component:
   - component: {fileID: 704014945}
   - component: {fileID: 704014946}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2200,7 +2200,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 967169496}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2754,7 +2754,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1444157008}
   - component: {fileID: 1444157009}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armR-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3007,7 +3007,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1517915209}
   - component: {fileID: 1517915210}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: torso-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3221,7 +3221,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1562779351}
   - component: {fileID: 1562779352}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armR-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3466,7 +3466,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1705818136}
   - component: {fileID: 1705818137}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: armL-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3551,7 +3551,10 @@ GameObject:
   - component: {fileID: 1711133766}
   - component: {fileID: 1711133765}
   - component: {fileID: 1711133767}
-  m_Layer: 0
+  - component: {fileID: 1711133770}
+  - component: {fileID: 1711133769}
+  - component: {fileID: 1711133768}
+  m_Layer: 8
   m_Name: Zombie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3571,6 +3574,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   body: {fileID: 967169495}
+  rigidbody: {fileID: 1711133770}
+  animator: {fileID: 1711133767}
+  maxHealth: 1000
+  health: 1000
+  speed: 2
+  attackRange: 1.2
+  attackRate: 0.5
 --- !u!4 &1711133766
 Transform:
   m_ObjectHideFlags: 0
@@ -3608,6 +3618,82 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1711133768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711133764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: deaa5f69a64a93e4c8a979bd80a711d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 0
+  minHealth: 0
+--- !u!70 &1711133769
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711133764}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_Size: {x: 0.8, y: 2.5}
+  m_Direction: 0
+--- !u!50 &1711133770
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711133764}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 50
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1729399479
 GameObject:
   m_ObjectHideFlags: 0
@@ -3753,7 +3839,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1756738048}
   - component: {fileID: 1756738049}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3839,7 +3925,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1779857771}
   - component: {fileID: 1779857772}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: torso-damage2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3956,7 +4042,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1815857329}
   - component: {fileID: 1815857330}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4040,7 +4126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1826072865}
   - component: {fileID: 1826072866}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4056,7 +4142,7 @@ Transform:
   m_GameObject: {fileID: 1826072864}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.8, z: -0.1}
+  m_LocalPosition: {x: 0, y: 0.8, z: 0.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4359,7 +4445,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2025164930}
   - component: {fileID: 2025164931}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: legL-damage1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4448,7 +4534,7 @@ GameObject:
   - component: {fileID: 2029063501}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

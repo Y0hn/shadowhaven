@@ -150,8 +150,16 @@ Pridane Scripty:
 Pridane Animacie
 	Zombie = { goR, goL, idle }
 
+	
+----------------< 10.10.  2023 >----------------
+Pridane Funkcie:
+	Zombie.Follow
 
+Pridane Animacie
+	Zombie = { goU, goD, attackR, attackL, attackU, attackD }
 
+Upravene Animacie:
+	Zombie.idle
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_

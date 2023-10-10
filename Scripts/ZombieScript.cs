@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -6,36 +7,77 @@ using UnityEngine;
 public class ZombieScript : MonoBehaviour
 {
     public GameObject body;
-    private double temp = 0;
+    public Rigidbody2D rigidbody;
+    public Animator animator;
+    public int maxHealth;
+    public int health;
+    public float speed;
+    public float attackRange;
+    public float attackRate;
+
+    private Vector2 dir;
+    private Transform playerPos;
+    private float nextAttack = 0;
     void Start()
     {
         HealWounds(body);
         RandomDamage();
+        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
     }
-    private void Update()
+    private void FixedUpdate()
     {
-        if (Time.time > temp) 
-        { 
-            temp = Time.time + 1;
-            HealWounds(body);
-            RandomDamage();
+        FollowBegavior();
+        Animate();
+    }
+    private void FollowBegavior() 
+    {
+       
+        if (Vector2.Distance(playerPos.position, rigidbody.position) < attackRange)
+            Attack();
+        else
+        {
+            rigidbody.velocity = Vector2.zero;
+            animator.SetFloat("Speed", 1);
+            rigidbody.position = Vector2.MoveTowards(rigidbody.position, playerPos.position, speed * Time.deltaTime);
         }
+    }
+    private void Attack()
+    {
+        if (Time.time > nextAttack)
+        {
+            animator.SetTrigger("Attack");
+            nextAttack = Time.time + 1 / attackRate;
+        }
+    }
+    private void Animate()
+    {
+        if (playerPos.position.x < rigidbody.position.x - attackRange)
+            dir = new Vector2(-1, 0);
+        else if (playerPos.position.x > rigidbody.position.x + attackRange)
+            dir = new Vector2(1, 0);
+        else if (playerPos.position.y < rigidbody.position.y)
+            dir = new Vector2(0, -1);
+        else if (playerPos.position.y > rigidbody.position.y)
+            dir = new Vector2(0, 1);
+        else
+            animator.SetFloat("Speed", 0);
+
+        animator.SetFloat("Horizontal", dir.x);
+        animator.SetFloat("Vertical", dir.y);
     }
     private void RandomDamage()
     {
-
-
-        int damaged = Random.Range(0, 6);
+        int damaged = UnityEngine.Random.Range(0, 6);
         List<int> used = new List<int>();
 
         for (int i = 0; i < damaged; i++)
         {
             int hurt;
-            do hurt = Random.Range(0, 6);
+            do hurt = UnityEngine.Random.Range(0, 6);
             while (used.Contains(hurt));
             used.Add(hurt);
 
-            hurt = hurt * 10 + Random.Range(1, 3);
+            hurt = hurt * 10 + UnityEngine.Random.Range(1, 3);
 
             FindChildByName(body, NumberToName(hurt)).SetActive(true);
         }
