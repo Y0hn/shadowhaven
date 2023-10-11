@@ -15,7 +15,7 @@ public class PlayerData
         health = player.GetHealth();
 
         position = new float[2];
-        position[0] = player.rigitBody.position.x;
-        position[1] = player.rigitBody.position.y;
+        position[0] = player.rigitbody.position.x;
+        position[1] = player.rigitbody.position.y;
     }
 }

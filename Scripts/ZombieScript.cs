@@ -9,15 +9,16 @@ public class ZombieScript : MonoBehaviour
     public GameObject body;
     public Rigidbody2D rigidbody;
     public Animator animator;
-    public int maxHealth;
-    public int health;
     public float speed;
-    public float attackRange;
     public float attackRate;
+    public float attackRangeX;
+    public float attackRangeY;
+    public Component enemyScript;
 
     private Vector2 dir;
     private Transform playerPos;
     private float nextAttack = 0;
+    
     void Start()
     {
         HealWounds(body);
@@ -26,13 +27,22 @@ public class ZombieScript : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        FollowBegavior();
-        Animate();
+        if (animator.GetBool("IsAlive"))
+        {
+            FollowBegavior();
+            Animate();
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
     private void FollowBegavior() 
     {
        
-        if (Vector2.Distance(playerPos.position, rigidbody.position) < attackRange)
+        if (dir.x != 0 && Vector2.Distance(playerPos.position, rigidbody.position) <= attackRangeX)
+            Attack();
+        else if (dir.y != 0 && Vector2.Distance(playerPos.position, rigidbody.position) <= attackRangeY)
             Attack();
         else
         {
@@ -45,15 +55,20 @@ public class ZombieScript : MonoBehaviour
     {
         if (Time.time > nextAttack)
         {
+            animator.SetFloat("Speed", 0);
             animator.SetTrigger("Attack");
             nextAttack = Time.time + 1 / attackRate;
         }
     }
+    private void OnDrawGizmosSelected()
+    { 
+        Gizmos.DrawWireCube(rigidbody.position, new Vector3(attackRangeX, attackRangeY, 0));
+    }
     private void Animate()
     {
-        if (playerPos.position.x < rigidbody.position.x - attackRange)
+        if (playerPos.position.x < rigidbody.position.x - attackRangeX + 0.5)
             dir = new Vector2(-1, 0);
-        else if (playerPos.position.x > rigidbody.position.x + attackRange)
+        else if (playerPos.position.x > rigidbody.position.x + attackRangeX -0.5)
             dir = new Vector2(1, 0);
         else if (playerPos.position.y < rigidbody.position.y)
             dir = new Vector2(0, -1);

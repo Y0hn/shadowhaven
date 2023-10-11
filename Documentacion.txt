@@ -160,6 +160,16 @@ Pridane Animacie
 
 Upravene Animacie:
 	Zombie.idle
+	
+----------------< 11.10.  2023 >----------------
+BugFixes: 
+	Animacie:
+		Zombie
+	Scripty:
+		ZombieScript
+
+Pridane Animacie:
+	Zombie = { dieR, dieL}
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_

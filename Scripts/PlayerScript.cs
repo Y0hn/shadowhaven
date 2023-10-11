@@ -9,12 +9,10 @@ using UnityEngine.U2D.IK;
 
 public class PlayerScript : MonoBehaviour
 {    
-    public Rigidbody2D rigitBody;
+    public Rigidbody2D rigitbody;
     public Animator animator;
     public GameObject WeaponL;
     public GameObject WeaponR;
-    public Transform attackPointL;
-    public Transform attackPointR;
     public LayerMask enemyLayers;
     public float attackRange;
     public float attackRate;
@@ -23,6 +21,7 @@ public class PlayerScript : MonoBehaviour
 
     private Vector2 moveDir;
     private Vector2 pastMoveDir;
+    private Vector2 attackPoint;
     private int level;
     private int health;
     private bool atck = false;
@@ -38,6 +37,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (!GameManager.isPaused)
         {
+            attackPoint = new Vector2(rigitbody.position.x + pastMoveDir.x, rigitbody.position.y + pastMoveDir.y);
             ProcessInput();
             PastDirection();
         }
@@ -73,7 +73,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Move()
     {
-        rigitBody.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+        rigitbody.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
     }
     private void AnimateMovement()
     {
@@ -101,7 +101,7 @@ public class PlayerScript : MonoBehaviour
     private void Attack()
     {
         animator.SetFloat("speed", 0);
-        rigitBody.velocity = Vector2.zero;
+        rigitbody.velocity = Vector2.zero;
         
         if (!twoHanded)
             if (0 < pastMoveDir.y)
@@ -112,22 +112,10 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Horizontal", pastMoveDir.x);
         animator.SetFloat("Vertical", pastMoveDir.y);
         animator.SetTrigger("Attack");
-        List<Collider2D> hitEnemies = new List<Collider2D>();
-        Collider2D[] hitEnemiesR = Physics2D.OverlapCircleAll(attackPointR.position, attackRange, enemyLayers);
-        Collider2D[] hitEnemiesL = Physics2D.OverlapCircleAll(attackPointL.position, attackRange, enemyLayers);
+        
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint, attackRange, enemyLayers);
 
-        if (twoHanded)
-        {
-            hitEnemies.AddRange(hitEnemiesR);
-            hitEnemies.AddRange(hitEnemiesL);
-        }
-        else
-            if (0 == pastMoveDir.x && 0 < pastMoveDir.y)
-                hitEnemies.AddRange(hitEnemiesR);
-            else
-                hitEnemies.AddRange(hitEnemiesL);
-
-        foreach(Collider2D enemy in hitEnemies.ToArray())
+        foreach(Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
@@ -136,10 +124,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        if (attackPointR != null)
-            Gizmos.DrawWireSphere(attackPointR.position, attackRange);
-        if (attackPointL != null)
-            Gizmos.DrawWireSphere(attackPointL.position, attackRange);
+        Gizmos.DrawWireSphere(attackPoint, attackRange);
     }
     private void PastDirection()
     {
