@@ -170,6 +170,24 @@ BugFixes:
 
 Pridane Animacie:
 	Zombie = { dieR, dieL}
+	
+----------------< 12.10.  2023 >----------------
+BugFixes
+	GameObjekty:
+		Zombie
+	Scripty:
+		ZombieScript
+		EnemyScript
+
+Pridane Scripty:
+	EnemiesData
+
+Prefab Nedokonceny:
+	Chyba - Load playerScript v enemyScripte
+
+IMPORTANT Rework Scheduled:
+	Prerobenie visualu aby sa podobal viac na BOI
+		vacsi pomer hlavy k telu
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_

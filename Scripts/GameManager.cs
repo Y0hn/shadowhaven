@@ -47,7 +47,7 @@ public class GameManager : MonoBehaviour
 
         player.SetHealth(data.health);
         player.SetLevel(data.level);
-        player.rigitbody.position = new Vector2(data.position[0], data.position[1]);
+        player.SetPos(new Vector2(data.position[0], data.position[1]));
     }
     public void GoToMainMenu()
     { 

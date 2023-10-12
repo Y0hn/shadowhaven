@@ -14,8 +14,9 @@ public class PlayerData
         level = player.GetLevel();
         health = player.GetHealth();
 
+        Vector2 pos = player.GetPos();
         position = new float[2];
-        position[0] = player.rigitbody.position.x;
-        position[1] = player.rigitbody.position.y;
+        position[0] = pos.x;
+        position[1] = pos.y;
     }
 }

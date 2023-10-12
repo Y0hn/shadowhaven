@@ -6,49 +6,63 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour
 {
-    public GameObject body;
     public Rigidbody2D rigidbody;
     public Animator animator;
-    public float speed;
-    public float attackRate;
-    public float attackRangeX;
-    public float attackRangeY;
-    public Component enemyScript;
+    public EnemyScript enemy;
+    public GameObject body;
 
     private Vector2 dir;
-    private Transform playerPos;
+    private Vector2 playerPos;
     private float nextAttack = 0;
-    
+    private float attackRangeX;
+    private float attackRangeY;
+    private float attackRate;
+    private float speed = 0;
+
     void Start()
     {
         HealWounds(body);
         RandomDamage();
-        playerPos = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+    private void SetUp()
+    {
+        speed = enemy.GetSpeed();
+        attackRate = enemy.GetAttackRate();
+        Vector2 temp = enemy.GetAttackRange();
+        attackRangeX = temp.x;
+        attackRangeY = temp.y;
     }
     private void FixedUpdate()
     {
+        if (Time.time < 0.5)
+            if (enemy.dataLoaded)
+                SetUp();
         if (animator.GetBool("IsAlive"))
         {
             FollowBegavior();
             Animate();
+            enemy.SetDir(dir);
         }
         else
         {
+            rigidbody.velocity = Vector2.zero;
             Destroy(this);
         }
     }
+    private void OnDrawGizmosSelected()
+    { Gizmos.DrawWireCube(rigidbody.position, new Vector3(attackRangeX, attackRangeY, 0)); }
     private void FollowBegavior() 
     {
-       
-        if (dir.x != 0 && Vector2.Distance(playerPos.position, rigidbody.position) <= attackRangeX)
+        playerPos = enemy.GetPlayerPos();
+        if (dir.x != 0 && Vector2.Distance(playerPos, rigidbody.position) <= attackRangeX)
             Attack();
-        else if (dir.y != 0 && Vector2.Distance(playerPos.position, rigidbody.position) <= attackRangeY)
+        else if (dir.y != 0 && Vector2.Distance(playerPos, rigidbody.position) <= attackRangeY)
             Attack();
         else
         {
             rigidbody.velocity = Vector2.zero;
             animator.SetFloat("Speed", 1);
-            rigidbody.position = Vector2.MoveTowards(rigidbody.position, playerPos.position, speed * Time.deltaTime);
+            rigidbody.position = Vector2.MoveTowards(rigidbody.position, playerPos, speed * Time.deltaTime);
         }
     }
     private void Attack()
@@ -60,19 +74,15 @@ public class ZombieScript : MonoBehaviour
             nextAttack = Time.time + 1 / attackRate;
         }
     }
-    private void OnDrawGizmosSelected()
-    { 
-        Gizmos.DrawWireCube(rigidbody.position, new Vector3(attackRangeX, attackRangeY, 0));
-    }
     private void Animate()
     {
-        if (playerPos.position.x < rigidbody.position.x - attackRangeX + 0.5)
+        if (playerPos.x < rigidbody.position.x - attackRangeX + 0.5)
             dir = new Vector2(-1, 0);
-        else if (playerPos.position.x > rigidbody.position.x + attackRangeX -0.5)
+        else if (playerPos.x > rigidbody.position.x + attackRangeX -0.5)
             dir = new Vector2(1, 0);
-        else if (playerPos.position.y < rigidbody.position.y)
+        else if (playerPos.y < rigidbody.position.y)
             dir = new Vector2(0, -1);
-        else if (playerPos.position.y > rigidbody.position.y)
+        else if (playerPos.y > rigidbody.position.y)
             dir = new Vector2(0, 1);
         else
             animator.SetFloat("Speed", 0);
@@ -140,11 +150,12 @@ public class ZombieScript : MonoBehaviour
         for (int i = 0; i < parent.transform.childCount; i++)
         {
             int j = i * 10;
-            DisableWounds(ref parent, NumberToName(j + 1));
-            DisableWounds(ref parent, NumberToName(j + 2));
+            HealWound(ref parent, NumberToName(j + 1));
+            HealWound(ref parent, NumberToName(j + 2));
         }
+
     }
-    private void DisableWounds(ref GameObject parent, string name)
+    private void HealWound(ref GameObject parent, string name)
     {
         FindChildByName(parent, name).SetActive(false);
     }

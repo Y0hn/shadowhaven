@@ -147,6 +147,8 @@ public class PlayerScript : MonoBehaviour
     public int GetHealth() { return health; }
     public void SetLevel(int newLevel) { level = newLevel; }
     public int GetLevel() { return level; }
+    public void SetPos(Vector2 pos) { rigitbody.position = pos; }
+    public Vector2 GetPos() {  return rigitbody.position; }
     public void SetAttackRange(float newAttackRange) { attackRange = newAttackRange; }
     public float GetAttackRange() {  return attackRange; }
     #endregion
