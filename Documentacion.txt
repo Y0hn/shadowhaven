@@ -1,13 +1,14 @@
 ____________________/ GOAL \____________________
-
-Ciel:
+Goal:
 	Vytvorit funkcne singleplayer 2D RPG s:
 		combat systemom
 			melee
 			ranged
 			magic
 		equipment systemom
-		moznostou hrania na ovladaci aj klavesnici
+		moznostou hrania na:
+			ovladaci
+			klavesnici
 		dandznami (v jaskynach, budovach ...)
 			v styte Binding of Issac
 		interaktivnimi NPC
@@ -20,8 +21,12 @@ Pridane Funkcie:
 	pohyb hraca + kamery
 
 Pridane Textury:
-	Enviroment = { background, rock1, rock2, tree1, tree2 }
-	Player = { torso, head, armL, armR, legL, legR }
+	Enviroment = { background, rock1, 
+		rock2, tree1, tree2 
+		}
+	Player = { torso, head, armL, armR, legL, 
+		legR 
+		}
 
 Pridane Animacie:
 	Player = { RunR, RunL, RunU, RunD, Idle}
@@ -32,7 +37,9 @@ Pridane Animacie:
 		
 Vytvorene Animatory:
 	Player.Player
-		Variables { float Horizontal, float Vertical, float speed}
+		Variables { float Horizontal, 
+			float Vertical, float speed
+			}
 		Tranzicion time (Movement <=> Idle) = 0.1
 
 
@@ -48,7 +55,7 @@ Pridane Scripty:
 	GameManager
 	MenuManager
 
-----------------< 04.10.  2023 >----------------
+----------------< 04. 10.  2023 >----------------
 Pridane Scripty:
 	PlayerData
 	SaveSystem
@@ -68,7 +75,7 @@ Pridane Objekty:
 GitHub Commit:
 	First Sample Commit
 
-----------------< 05.10.  2023 >----------------
+----------------< 05. 10.  2023 >----------------
 Pridane Funkcie:
 	Save
 	Load
@@ -77,16 +84,20 @@ Pridane Funkcie:
 
 Neuspesne Pokusy o:
 	Pohyb PauseMenu mysou
-	Load v PauseMenu (aby sa prejavil je potrebne z neho vystupit)
+	Load v PauseMenu 
+	- (aby sa prejavil je potrebne z neho vystupit)
 
 Upravene Scripty:
 	GameManager
 	PlayerScript
 
 Pridane UI:
-	Pause Menu = { resume-button, save-button, load-button, quit-button }
+	Pause Menu = { 
+		resume-button, save-button, 
+		load-button, quit-button 
+		}
 
-----------------< 06.10.  2023 >----------------
+----------------< 06. 10.  2023 >----------------
 Pridane Funkcie:
 	Attack
 	Hit
@@ -126,7 +137,7 @@ Upravene Objekty:
 Upravene Scripty:
 	PlayerScript
 
-----------------< 07.10.  2023 >----------------
+----------------< 07. 10.  2023 >----------------
 Pridane Funkcie:
 	Directional Attack
 
@@ -139,11 +150,11 @@ Upravene Scripty:
 Upravene Animatory:
 	Player.Player
 
-----------------< 08.10.  2023 >----------------
+----------------< 08. 10.  2023 >----------------
 Pridane Textury:
 	Zombie = { grey(player) + damage(limbs, torso, head) }
 	
-----------------< 09.10.  2023 >----------------
+----------------< 09. 10.  2023 >----------------
 Pridane Scripty:
 	ZombieScript
 
@@ -151,7 +162,7 @@ Pridane Animacie
 	Zombie = { goR, goL, idle }
 
 	
-----------------< 10.10.  2023 >----------------
+----------------< 10. 10.  2023 >----------------
 Pridane Funkcie:
 	Zombie.Follow
 
@@ -161,8 +172,8 @@ Pridane Animacie
 Upravene Animacie:
 	Zombie.idle
 	
-----------------< 11.10.  2023 >----------------
-BugFixes: 
+----------------< 11. 10.  2023 >----------------
+Bug Fixes: 
 	Animacie:
 		Zombie
 	Scripty:
@@ -171,8 +182,8 @@ BugFixes:
 Pridane Animacie:
 	Zombie = { dieR, dieL}
 	
-----------------< 12.10.  2023 >----------------
-BugFixes
+----------------< 12. 10.  2023 >----------------
+Bug Fixes:
 	GameObjekty:
 		Zombie
 	Scripty:
@@ -182,12 +193,49 @@ BugFixes
 Pridane Scripty:
 	EnemiesData
 
-Prefab Nedokonceny:
+Zombie Prefab Nedokonceny:
 	Chyba - Load playerScript v enemyScripte
 
-IMPORTANT Rework Scheduled:
+IMPORTANT REWORK SCHEDULED:
 	Prerobenie visualu aby sa podobal viac na BOI
 		vacsi pomer hlavy k telu
+		
+----------------< 13. 10.  2023 >----------------
+Graficky Update:
+	Rework Player Body
+		Sprites
+		Weapons
+
+Nova Koncepcia Combatu:
+	odelene ruk do tela
+
+Vymazane nepotrebne stare Sprity
+
+// Pokracovat v raw animovani player.runUD
+
+----------------< 14. 10.  2023 >----------------
+
+----------------< 15. 10.  2023 >----------------
+
+----------------< 16. 10.  2023 >----------------
+
+----------------< 17. 10.  2023 >----------------
+
+----------------< 18. 10.  2023 >----------------
+
+----------------< 19. 10.  2023 >----------------
+
+----------------< 20. 10.  2023 >----------------
+
+----------------< 21. 10.  2023 >----------------
+
+----------------< 22. 10.  2023 >----------------
+
+----------------< 23. 10.  2023 >----------------
+
+----------------< 24. 10.  2023 >----------------
+
+----------------< 25. 10.  2023 >----------------
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
@@ -213,6 +261,6 @@ https://youtu.be/fBLpLZFNtVg?si=kCOCHyPgz0WF-_-a
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
+https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare
 https://www.gimp.org/
 https://unity.com/
-https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare

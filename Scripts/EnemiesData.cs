@@ -7,8 +7,8 @@ public static class EnemyData
 {
     private static Dictionary<string, string> Enemies = new Dictionary<string, string>
     {
-        {"Name",    "baseHealth attackRange  attackRate moveSpeed"},
-        {"Zombie",  "100 " +    "1,5 2,5 " + "0,5 " +   "2"},
+        {"Name",    "baseHealth attackRange  attackRate moveSpeed attackDamage"},
+        {"Zombie",  "100 " +    "1,5 2,5 " + "0,5 " +   "2 " +    "10 "},
         {"Skeleton", " "},
         {"Fly", " "},
         {"file", " "}

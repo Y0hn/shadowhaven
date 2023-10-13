@@ -9,8 +9,8 @@ public class EnemyScript : MonoBehaviour
     public GameObject enemy;
     public Animator animator;
     public bool dataLoaded = false;
+    public PlayerScript player;
 
-    private PlayerScript player;
     private int fullHealth;
     private int health;
     private int baseHealth;
@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour
     {
         SetStats();
         animator = (Animator)enemy.GetComponent("Animator");
-        player = (PlayerScript)GameObject.Find("Player").GetComponent("Player Script");
+        //player = (PlayerScript)GameObject.Find("Player").GetComponent("Player Script");
     }
     private void Update()
     {
