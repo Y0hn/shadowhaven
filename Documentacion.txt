@@ -214,6 +214,15 @@ Vymazane nepotrebne stare Sprity
 // Pokracovat v raw animovani player.runUD
 
 ----------------< 14. 10.  2023 >----------------
+Animacie Dokoncene:
+	Player = { runR, runL, runU, runD, IDLE,
+		hurt
+		}
+Velke Changes:
+	PlayerScript
+
+Pridane Scripty:
+	PlayerCombatScript
 
 ----------------< 15. 10.  2023 >----------------
 
@@ -258,6 +267,7 @@ https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
 https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
 https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5
 https://youtu.be/fBLpLZFNtVg?si=kCOCHyPgz0WF-_-a
+https://youtu.be/9_i6S_rDZuA?si=vg1gx6ZXdN0hwRUn
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare

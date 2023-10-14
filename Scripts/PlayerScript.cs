@@ -6,42 +6,49 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.U2D.IK;
+using UnityEngine.XR;
 
 public class PlayerScript : MonoBehaviour
 {    
-    public Rigidbody2D rigitbody;
-    public Animator animator;
-    public GameObject WeaponL;
-    public GameObject WeaponR;
+
     public LayerMask enemyLayers;
-    public float attackRange;
-    public float attackRate;
-    public int damage;
-    public float animatorMoveSpeed = 0;
+    public GameObject EyeR;
+    public GameObject EyeL;
+
+    private GameObject player;
+    private Rigidbody2D rb;
+    private Animator animator;
 
     private Vector2 moveDir;
-    private Vector2 pastMoveDir;
-    private Vector2 attackPoint;
-    private int level;
-    private int health;
-    private bool atck = false;
-    private bool goneUp;
-    private bool goneRight;
-    private bool twoHanded = false;
-    private float moveSpeed = 5;
-    private float nextAttackTime = 0;
+    private Vector3 mousePos;
+    private Vector2 handsDir;
 
-    private void Start() { level = 1; health = 100 * level; pastMoveDir = new Vector2(1,0); }
+    private float moveSpeed = 5;
+    private float attackRate;
+    private float attackRange;
+
+    private int level;
+    private int health;     
+    private int damage;
+
+    private void Start() 
+    { 
+        player = GameObject.FindGameObjectWithTag("Player");
+        rb = player.GetComponent<Rigidbody2D>();
+        animator = player.GetComponent<Animator>();
+        level = 1; health = 100 * level; damage = 20; 
+    }
     
-    void Update()
+    private void Update()
     {
         if (!GameManager.isPaused)
         {
-            attackPoint = new Vector2(rigitbody.position.x + pastMoveDir.x, rigitbody.position.y + pastMoveDir.y);
             ProcessInput();
-            PastDirection();
+            Move();
+            AnimateMovement();
         }
     }
+    /*
     void FixedUpdate()
     {
         if (health >= 0)
@@ -53,62 +60,105 @@ public class PlayerScript : MonoBehaviour
             }
             else if (Time.time >= nextAttackTime)
             {
-                Move();
-                AnimateMovement();
             }
         }
         else
-            Die();
-    }
+            Die();        
+    }*/
     private void ProcessInput()
     {
-        atck = false;
-        if (Input.GetKey(KeyCode.Space))
-            atck = true;
-
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
         moveDir = new Vector2(moveX, moveY).normalized;
     }
-    private void Move()
-    {
-        rigitbody.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
+    private void Move() 
+    { 
+        rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
     }
     private void AnimateMovement()
     {
-        if (!atck)
-        {
-            animator.SetFloat("Horizontal", moveDir.x);
-            animator.SetFloat("Vertical", moveDir.y);
-            animator.SetFloat("speed", moveDir.sqrMagnitude);
-        }
+        animator.SetFloat("Horizontal", moveDir.x);
+        animator.SetFloat("Vertical", moveDir.y);
+        animator.SetFloat("Speed", moveDir.sqrMagnitude);
+    }/*
+    private void EyeMovement()
+    {
+        Vector2 pos = new Vector2(rb.position.x, rb.position.y + 0.7f);
 
-        if (!twoHanded)
+        if (true)
         {
-            if (0 == moveDir.x && 0 < moveDir.y)
-            {
-                WeaponL.SetActive(false);
-                WeaponR.SetActive(true);
-            }
-            else
-            {
-                WeaponL.SetActive(true);
-                WeaponR.SetActive(false);
-            }
+            Vector2 EyeLmove = MoveTovards(EyeL.transform.position, mousePos, 0.001f);
+            float x = EyeL.transform.position.x;
+            float y = EyeL.transform.position.y;
+
+            if (x - 0.07 < EyeLmove.x && EyeLmove.x < x + 0.07)
+                if (y - 0.07 < EyeLmove.x && EyeLmove.x < x + 0.7)
+                    EyeL.transform.position = EyeLmove;
+
+            EyeL.transform.position = new Vector3(EyeLmove.x, EyeLmove.y, -0.1f);
+            attackPoint = EyeLmove;
         }
+        if (true)
+        {
+            Vector2 EyeRmove = Vector2.MoveTowards(EyeR.transform.position, mousePos, 1 * Time.deltaTime);
+
+            if (pos.x + 0.37 < EyeRmove.x && EyeRmove.x < pos.x + 0.23)
+                if (pos.y - 0.07 < EyeRmove.x && EyeRmove.x < pos.x + 0.7)
+                    EyeR.transform.position = EyeRmove;
+        }
+    }*/
+
+    public void Hurt(int damage) 
+    { 
+        health -= damage;
+        animator.SetTrigger("Hurt");
+
+        if (health < 0)
+            Die();
+    }
+    private void Die()
+    {
+        rb.simulated = false;
+        animator.SetTrigger("Die");
+        Debug.Log("Hrac zomrel");
+        Destroy(this);
+    }/*
+    private Vector2 MoveTovards(Vector2 pointA, Vector3 pointB, float distance)
+    {
+        Vector2 result = Vector2.zero;
+
+        if (pointA.x < pointB.x)
+            result.x = 1;
+        else if (pointA.x > pointB.x)
+            result.x = -1;
+        if (pointA.y < pointB.y)
+            result.y = 1;
+        else if (pointA.y > pointB.y)
+            result.y = -1;
+
+        result = new Vector2(result.x * distance, result.y * distance);
+
+        return result;
+    }*/
+    /*
+    private void PastDirection()
+    {
+        double x = 0, y = 0;
+
+        if (moveDir.x != 0)
+            x = Math.Round(moveDir.x);
+        else if (moveDir.y != 0)
+            y = Math.Round(moveDir.y);
+
+        if (x != y)
+            pastMoveDir = new Vector2(float.Parse(x.ToString()), float.Parse(y.ToString()));
     }
     private void Attack()
     {
         animator.SetFloat("speed", 0);
         rigitbody.velocity = Vector2.zero;
         
-        if (!twoHanded)
-            if (0 < pastMoveDir.y)
-            {
-                WeaponL.SetActive(false);
-                WeaponR.SetActive(true);
-            }
         animator.SetFloat("Horizontal", pastMoveDir.x);
         animator.SetFloat("Vertical", pastMoveDir.y);
         animator.SetTrigger("Attack");
@@ -120,36 +170,33 @@ public class PlayerScript : MonoBehaviour
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
         }
+       
+    } not working */
+
+    #region GetSetVar
+    /*
+    public void GetSet()
+    {
 
     }
-    private void OnDrawGizmosSelected()
+    public int GetSet(int id)
     {
-        Gizmos.DrawWireSphere(attackPoint, attackRange);
-    }
-    private void PastDirection()
-    {
-        double x = 0, y = 0;
-        if (moveDir.x != 0)
-            x = Math.Round(moveDir.x);
-        else if (moveDir.y != 0)
-            y = Math.Round(moveDir.y);
-        if (x != y)
-            pastMoveDir = new Vector2(float.Parse(x.ToString()), float.Parse(y.ToString()));
-    }
-    private void Die()
-    {
-        // Death animation
-        Debug.Log("Hrac zomrel");
-        Destroy(this);
-    }
-    #region GetSetVariables
-    public void SetHealth(int newHealth) { health = newHealth; }
-    public int GetHealth() { return health; }
-    public void SetLevel(int newLevel) { level = newLevel; }
-    public int GetLevel() { return level; }
-    public void SetPos(Vector2 pos) { rigitbody.position = pos; }
-    public Vector2 GetPos() {  return rigitbody.position; }
-    public void SetAttackRange(float newAttackRange) { attackRange = newAttackRange; }
-    public float GetAttackRange() {  return attackRange; }
+        return 0;
+    }*/
+    public void SetDamage(int newDamage)                { damage = newDamage;           }
+    public int GetDamage()                              { return damage;                }
+    public void SetHealth(int newHealth)                { health = newHealth;           }
+    public int GetHealth()                              { return health;                }
+    public void SetLevel(int newLevel)                  { level = newLevel;             }
+    public int GetLevel()                               { return level;                 }
+    public void SetAttRate(int newattRate)              { attackRate = newattRate;      }
+    public float GetAttRate()                           { return attackRate;            }
+    public void SetSpeed(float newSpeed)                { moveSpeed = newSpeed;         }
+    public float GetSpeed()                             { return moveSpeed;             }
+    public void SetAttackRange(float newAttackRange)    { attackRange = newAttackRange; }
+    public float GetAttackRange()                       { return attackRange;           }
+    public void SetPos(Vector2 pos)                     { rb.position = pos;            }
+    public Vector2 GetPos()                             { return rb.position;           }
+
     #endregion
 }

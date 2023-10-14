@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class ZombieScript : MonoBehaviour
 {
-    public Rigidbody2D rigidbody;
+    public Rigidbody2D rb;
     public Animator animator;
     public EnemyScript enemy;
     public GameObject body;
@@ -45,24 +45,24 @@ public class ZombieScript : MonoBehaviour
         }
         else
         {
-            rigidbody.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             Destroy(this);
         }
     }
     private void OnDrawGizmosSelected()
-    { Gizmos.DrawWireCube(rigidbody.position, new Vector3(attackRangeX, attackRangeY, 0)); }
+    { Gizmos.DrawWireCube(rb.position, new Vector3(attackRangeX, attackRangeY, 0)); }
     private void FollowBegavior() 
     {
         playerPos = enemy.GetPlayerPos();
-        if (dir.x != 0 && Vector2.Distance(playerPos, rigidbody.position) <= attackRangeX)
+        if (dir.x != 0 && Vector2.Distance(playerPos, rb.position) <= attackRangeX)
             Attack();
-        else if (dir.y != 0 && Vector2.Distance(playerPos, rigidbody.position) <= attackRangeY)
+        else if (dir.y != 0 && Vector2.Distance(playerPos, rb.position) <= attackRangeY)
             Attack();
         else
         {
-            rigidbody.velocity = Vector2.zero;
+            rb.velocity = Vector2.zero;
             animator.SetFloat("Speed", 1);
-            rigidbody.position = Vector2.MoveTowards(rigidbody.position, playerPos, speed * Time.deltaTime);
+            rb.position = Vector2.MoveTowards(rb.position, playerPos, speed * Time.deltaTime);
         }
     }
     private void Attack()
@@ -76,13 +76,13 @@ public class ZombieScript : MonoBehaviour
     }
     private void Animate()
     {
-        if (playerPos.x < rigidbody.position.x - attackRangeX + 0.5)
+        if (playerPos.x < rb.position.x - attackRangeX + 0.5)
             dir = new Vector2(-1, 0);
-        else if (playerPos.x > rigidbody.position.x + attackRangeX -0.5)
+        else if (playerPos.x > rb.position.x + attackRangeX -0.5)
             dir = new Vector2(1, 0);
-        else if (playerPos.y < rigidbody.position.y)
+        else if (playerPos.y < rb.position.y)
             dir = new Vector2(0, -1);
-        else if (playerPos.y > rigidbody.position.y)
+        else if (playerPos.y > rb.position.y)
             dir = new Vector2(0, 1);
         else
             animator.SetFloat("Speed", 0);

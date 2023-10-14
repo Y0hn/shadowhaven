@@ -16,7 +16,7 @@ public static class SaveSystem
         stream.Close();
     }
 
-    public static PlayerData LoadPlayer ()
+    public static PlayerData LoadPlayer()
     {
         if (File.Exists(Path("player")))
         {
@@ -29,13 +29,13 @@ public static class SaveSystem
         }
         else
         {
-            Debug.LogError("Savefile not found" + Path("player"));
+            Debug.LogError("Savefile not found " + Path("player"));
             return null;
         }
     }
-    private static string Path(string obj)
+    private static string Path(string filename)
     {
-        string path = Application.persistentDataPath + "/" + obj + ".file";
+        string path = Application.persistentDataPath + "/" + filename + ".file";
         return path;
     }
 
