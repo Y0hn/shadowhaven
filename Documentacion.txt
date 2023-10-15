@@ -225,6 +225,22 @@ Pridane Scripty:
 	PlayerCombatScript
 
 ----------------< 15. 10.  2023 >----------------
+Pridane Scripty:
+	ProjectileScript
+	FollowBehavior
+	playerManager
+	ItemData
+	LootScript
+
+Pridane GameObjecty:
+	Zombie
+
+Neuspesne Pokusy o:
+	Loot
+	Ranged
+	Damage.Enemy
+	Item list
+	. . .
 
 ----------------< 16. 10.  2023 >----------------
 
@@ -268,6 +284,9 @@ https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
 https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5
 https://youtu.be/fBLpLZFNtVg?si=kCOCHyPgz0WF-_-a
 https://youtu.be/9_i6S_rDZuA?si=vg1gx6ZXdN0hwRUn
+https://youtu.be/-bkmPm_Besk?si=aAWwaijGnaOXileC
+https://youtu.be/dYi-i83sq5g?si=YnS8Wwb8MvGM7hFZ
+https://youtu.be/xppompv1DBg?si=2DIy2Y0cuFeizH6V
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare

@@ -24,8 +24,6 @@ public class PlayerScript : MonoBehaviour
     private Vector2 handsDir;
 
     private float moveSpeed = 5;
-    private float attackRate;
-    private float attackRange;
 
     private int level;
     private int health;     
@@ -48,23 +46,6 @@ public class PlayerScript : MonoBehaviour
             AnimateMovement();
         }
     }
-    /*
-    void FixedUpdate()
-    {
-        if (health >= 0)
-        {
-            if (Time.time >= nextAttackTime && atck)
-            {
-                Attack();
-                nextAttackTime = Time.time + 1f / attackRate;
-            }
-            else if (Time.time >= nextAttackTime)
-            {
-            }
-        }
-        else
-            Die();        
-    }*/
     private void ProcessInput()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -81,8 +62,8 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Horizontal", moveDir.x);
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
-    }/*
-    private void EyeMovement()
+    }
+    /*private void EyeMovement()
     {
         Vector2 pos = new Vector2(rb.position.x, rb.position.y + 0.7f);
 
@@ -123,78 +104,16 @@ public class PlayerScript : MonoBehaviour
         animator.SetTrigger("Die");
         Debug.Log("Hrac zomrel");
         Destroy(this);
-    }/*
-    private Vector2 MoveTovards(Vector2 pointA, Vector3 pointB, float distance)
-    {
-        Vector2 result = Vector2.zero;
-
-        if (pointA.x < pointB.x)
-            result.x = 1;
-        else if (pointA.x > pointB.x)
-            result.x = -1;
-        if (pointA.y < pointB.y)
-            result.y = 1;
-        else if (pointA.y > pointB.y)
-            result.y = -1;
-
-        result = new Vector2(result.x * distance, result.y * distance);
-
-        return result;
-    }*/
-    /*
-    private void PastDirection()
-    {
-        double x = 0, y = 0;
-
-        if (moveDir.x != 0)
-            x = Math.Round(moveDir.x);
-        else if (moveDir.y != 0)
-            y = Math.Round(moveDir.y);
-
-        if (x != y)
-            pastMoveDir = new Vector2(float.Parse(x.ToString()), float.Parse(y.ToString()));
     }
-    private void Attack()
-    {
-        animator.SetFloat("speed", 0);
-        rigitbody.velocity = Vector2.zero;
-        
-        animator.SetFloat("Horizontal", pastMoveDir.x);
-        animator.SetFloat("Vertical", pastMoveDir.y);
-        animator.SetTrigger("Attack");
-        
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attackPoint, attackRange, enemyLayers);
-
-        foreach(Collider2D enemy in hitEnemies)
-        {
-            Debug.Log("We hit " + enemy.name);
-            enemy.GetComponent<EnemyScript>().TakeDamage(damage);
-        }
-       
-    } not working */
-
     #region GetSetVar
-    /*
-    public void GetSet()
-    {
-
-    }
-    public int GetSet(int id)
-    {
-        return 0;
-    }*/
     public void SetDamage(int newDamage)                { damage = newDamage;           }
     public int GetDamage()                              { return damage;                }
     public void SetHealth(int newHealth)                { health = newHealth;           }
     public int GetHealth()                              { return health;                }
     public void SetLevel(int newLevel)                  { level = newLevel;             }
     public int GetLevel()                               { return level;                 }
-    public void SetAttRate(int newattRate)              { attackRate = newattRate;      }
-    public float GetAttRate()                           { return attackRate;            }
     public void SetSpeed(float newSpeed)                { moveSpeed = newSpeed;         }
     public float GetSpeed()                             { return moveSpeed;             }
-    public void SetAttackRange(float newAttackRange)    { attackRange = newAttackRange; }
-    public float GetAttackRange()                       { return attackRange;           }
     public void SetPos(Vector2 pos)                     { rb.position = pos;            }
     public Vector2 GetPos()                             { return rb.position;           }
 
