@@ -9,14 +9,24 @@ public class PlayerCombatScript : MonoBehaviour
     public GameObject HandSecondary;
     public LayerMask enemyLayers;
 
+    public float attackRange;
+
     private PlayerScript player;
     private Animator animator;
     private Camera cam;    
-    private Vector3 attackRange;
+
     private Vector2 mousePos;
+
     private float rotZ;
+    private float lastRotZ;
+    private float nextAttack = 0;
+    private float interAttack = 1f;
+    private float attackDist = 45;
+
     private int damage;
+
     private bool CombatActive;
+    private bool melee = true;
 
     private Collider2D hitBox;
 
@@ -32,6 +42,15 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void Update()
     {
+        // Record of degree in past 
+        if (Time.time > nextAttack)
+        {
+            nextAttack = Time.time + interAttack;
+
+            if (melee)
+                lastRotZ = transform.rotation.z;
+        }
+
         if      (Input.GetMouseButton(0))
         {
             if (!CombatActive)
@@ -62,26 +81,25 @@ public class PlayerCombatScript : MonoBehaviour
             Vector2 rotation = mousePos - player.GetPos();
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
+
+            if (transform.rotation.z > lastRotZ + attackDist || lastRotZ - attackDist > transform.rotation.z)
+                MeleeAttack();
         }
-    }/*
+    }
     private void OnDrawGizmosSelected()
     {
         Vector2 attP = Hand.transform.position;
-
-        Gizmos.DrawWireCube(new Vector2(attP.x, attP.y + attackRange.z), new Vector2(attackRange.x, attackRange.y));
+        Gizmos.DrawWireSphere(attP, attackRange);
     }
-    private void Attack()
+    private void MeleeAttack()
     {
         Vector2 attP = Hand.transform.position;
 
-        Collider2D[] hitEnemies = Physics2D.OverlapBoxAll(new Vector2(attP.x, attP.y + attackRange.z), 
-            new Vector2(attackRange.x, attackRange.y), rotZ, enemyLayers);
-
+        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
         }
-
-    }*/
+    }
 }

@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject enemy;
     public float lookRadius;
+    public HealthBar healthBar;
 
     private Animator animator;
     private GameObject player;
@@ -19,6 +20,7 @@ public class EnemyScript : MonoBehaviour
     private Vector2 hitBox;
     private int fullHealth;
     private int health;
+    private int damage = 10;
 
     private void Start()
     {
@@ -61,11 +63,14 @@ public class EnemyScript : MonoBehaviour
         moveSpeed = float.Parse(data[4]);
         
     }*/
-    
+    public int DoDamage()
+    {
+        return damage;
+    }
     public void TakeDamage(int damage)
     {
         health -= damage;
-
+        healthBar.SetHealth(health);
         animator.SetTrigger("Hurt");
 
         // Play animation
@@ -79,98 +84,3 @@ public class EnemyScript : MonoBehaviour
         Destroy(this);
     }
 }
-/*public class ZombieScript : MonoBehaviour
-{
-    public Rigidbody2D rb;
-    public Animator animator;
-    public EnemyScript enemy;
-    public GameObject body;
-
-    private Vector2 dir;
-    private Vector2 playerPos;
-    private float nextAttack = 0;
-    private float attackRangeX;
-    private float attackRangeY;
-    private float attackRate;
-    private float speed = 0;
-    private void SetUp()
-    {
-        speed = enemy.GetSpeed();
-        attackRate = enemy.GetAttackRate();
-        Vector2 temp = enemy.GetAttackRange();
-        attackRangeX = temp.x;
-        attackRangeY = temp.y;
-    }
-    private void FixedUpdate()
-    {
-        if (Time.time < 0.5)
-            if (enemy.dataLoaded)
-                SetUp();
-        if (animator.GetBool("IsAlive"))
-        {
-            Animate();
-            enemy.SetDir(dir);
-        }
-        else
-        {
-            rb.velocity = Vector2.zero;
-            Destroy(this);
-        }
-    }
-    private void OnDrawGizmosSelected()
-    { Gizmos.DrawWireCube(rb.position, new Vector3(attackRangeX, attackRangeY, 0)); }
-    private void FollowBegavior() 
-    {
-        playerPos = enemy.GetPlayerPos();
-        if (dir.x != 0 && Vector2.Distance(playerPos, rb.position) <= attackRangeX)
-            Attack();
-        else if (dir.y != 0 && Vector2.Distance(playerPos, rb.position) <= attackRangeY)
-            Attack();
-        else
-        {
-            rb.velocity = Vector2.zero;
-            animator.SetFloat("Speed", 1);
-            rb.position = Vector2.MoveTowards(rb.position, playerPos, speed * Time.deltaTime);
-        }
-    }
-    private void Attack()
-    {
-        if (Time.time > nextAttack)
-        {
-            animator.SetFloat("Speed", 0);
-            animator.SetTrigger("Attack");
-            nextAttack = Time.time + 1 / attackRate;
-        }
-    }
-    private void Animate()
-    {
-        if (playerPos.x < rb.position.x - attackRangeX + 0.5)
-            dir = new Vector2(-1, 0);
-        else if (playerPos.x > rb.position.x + attackRangeX - 0.5)
-            dir = new Vector2(1, 0);
-        else if (playerPos.y < rb.position.y)
-            dir = new Vector2(0, -1);
-        else if (playerPos.y > rb.position.y)
-            dir = new Vector2(0, 1);
-        else
-            animator.SetFloat("Speed", 0);
-
-        animator.SetFloat("Horizontal", dir.x);
-        animator.SetFloat("Vertical", dir.y);
-    }
-    private GameObject FindChildByName(GameObject parent, string childName)
-    {
-        for (int i = 0; i < parent.transform.childCount; i++) 
-        { 
-            if (parent.transform.GetChild(i).name == childName)
-                return parent.transform.GetChild(i).gameObject;
-
-            GameObject tmp = FindChildByName(parent.transform.GetChild(i).gameObject, childName);
-
-            if (tmp != null)
-                return tmp;
-        }
-
-        return null;
-    }
-}*/

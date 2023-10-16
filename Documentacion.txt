@@ -245,9 +245,13 @@ Neuspesne Pokusy o:
 ----------------< 16. 10.  2023 >----------------
 Pridane Funkcie:
 	Health Bar
+	Player.TakeDamage
 
 Pridane Scripty:
 	HealthBar
+
+Pomenene nazvy Scriptov:
+	Odstraneny Retazec "Script
 
 ----------------< 17. 10.  2023 >----------------
 
