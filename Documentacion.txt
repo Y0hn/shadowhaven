@@ -243,6 +243,11 @@ Neuspesne Pokusy o:
 	. . .
 
 ----------------< 16. 10.  2023 >----------------
+Pridane Funkcie:
+	Health Bar
+
+Pridane Scripty:
+	HealthBar
 
 ----------------< 17. 10.  2023 >----------------
 
