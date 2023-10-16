@@ -14,6 +14,7 @@ public class PlayerScript : MonoBehaviour
     public LayerMask enemyLayers;
     public GameObject EyeR;
     public GameObject EyeL;
+    public HealthBar healthBar;
 
     private GameObject player;
     private Rigidbody2D rb;

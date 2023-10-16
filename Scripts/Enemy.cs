@@ -10,6 +10,7 @@ public class EnemyScript : MonoBehaviour
 {
     public GameObject enemy;
     public float lookRadius;
+    public HealthBar healthBar;
 
     private Animator animator;
     private GameObject player;
