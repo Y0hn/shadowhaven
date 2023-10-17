@@ -22,7 +22,8 @@ public class PlayerCombatScript : MonoBehaviour
 
     private float rotZ;
     private float lastRotZ;
-    private float attackDist = 45;
+    private float attackDist = 50;
+    private float attackOfst = 0.7f;
 
     private int damage = 20;
 
@@ -74,7 +75,7 @@ public class PlayerCombatScript : MonoBehaviour
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
-            if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
+            if (melee && (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ))
             {
                 MeleeAttack();
                 lastRotZ= rotZ;
@@ -83,12 +84,12 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Vector2 attP = Hand.transform.position;
+        Vector2 attP = new Vector2 (Hand.transform.position.x,Hand.transform.position.y + attackOfst);
         Gizmos.DrawWireSphere(attP, attackRange);
     }
     private void MeleeAttack()
     {
-        Vector2 attP = Hand.transform.position;
+        Vector2 attP = new Vector2(Hand.transform.position.x, Hand.transform.position.y + attackOfst);
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)

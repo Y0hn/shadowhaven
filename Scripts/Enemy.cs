@@ -24,6 +24,9 @@ public class EnemyScript : MonoBehaviour
     private int health = 100;
     private int damage = 10;
 
+    private float nextDamage = 0;
+    private float inviTime = 0.5f;
+
     private void Start()
     {
         // References
@@ -58,12 +61,17 @@ public class EnemyScript : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        health -= damage;
-        healthBar.SetHealth(health);
-        animator.SetTrigger("Hurt");
+        if (Time.time > nextDamage)
+        {
+            health -= damage;
+            healthBar.SetHealth(health);
+            animator.SetTrigger("Hurt");
 
-        if (health <= 0)
-            Die();
+            if (health <= 0)
+                Die();
+
+            nextDamage = Time.time + inviTime;
+        }
     }
     private void Die() 
     { 
