@@ -16,28 +16,27 @@ public class EnemyScript : MonoBehaviour
     private GameObject player;
     private Transform target;
     private PlayerScript playerScript;
-    private Vector2 attackRange;
+    private Collider2D collid;
+
     private Vector2 hitBox;
-    private int fullHealth;
-    private int health;
+
+    private int fullHealth = 100;
+    private int health = 100;
     private int damage = 10;
 
     private void Start()
     {
         // References
         animator = GetComponent<Animator>();
+        collid = GetComponent<Collider2D>();
         player = PlayerManager.instance.player;
         target = player.transform;
-        playerScript = player.GetComponent<PlayerScript>();      
-        
-        // Set Stats
-        /* UnpackData(out int baseHealth);
-        int playerLevel = playerScript.GetLevel();
-        int minHealth = int.Parse(Math.Round(playerLevel * 1.5 + baseHealth).ToShortString());
-        int maxHealth = int.Parse(Math.Round(playerLevel * 1.6 + baseHealth * 1.5).ToShortString());
-        fullHealth = UnityEngine.Random.Range(minHealth, maxHealth);
+        playerScript = player.GetComponent<PlayerScript>();
+
+        // Stats
+        healthBar.SetMaxHealth(fullHealth);
         health = fullHealth;
-        */
+
     }
     private void Update()
     {
@@ -52,17 +51,7 @@ public class EnemyScript : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
-    }/*
-    private void UnpackData(out int baseHealth )
-    {
-        
-        string[] data = EnemyData.GetData(enemy.name).Split(' ');
-        baseHealth = int.Parse(data[0]);
-        attackRange = new Vector2(float.Parse(data[1]), float.Parse(data[2]));
-        attackSpeed = float.Parse(data[3]);
-        moveSpeed = float.Parse(data[4]);
-        
-    }*/
+    }
     public int DoDamage()
     {
         return damage;
@@ -73,14 +62,15 @@ public class EnemyScript : MonoBehaviour
         healthBar.SetHealth(health);
         animator.SetTrigger("Hurt");
 
-        // Play animation
-        if (health < 0)
+        if (health <= 0)
             Die();
     }
     private void Die() 
     { 
         Debug.Log("Enemy died!");
         animator.SetTrigger("Die");
+        // Deconstruction
+        Destroy(collid);
         Destroy(this);
     }
 }

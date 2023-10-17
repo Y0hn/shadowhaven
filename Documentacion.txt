@@ -254,6 +254,11 @@ Pomenene nazvy Scriptov:
 	Odstraneny Retazec "Script
 
 ----------------< 17. 10.  2023 >----------------
+Pridane Funkcie:
+	Dokonceny Basic Combat
+
+Update Animacii:
+	Zombie Death
 
 ----------------< 18. 10.  2023 >----------------
 

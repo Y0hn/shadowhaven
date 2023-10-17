@@ -3365,7 +3365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemy: {fileID: 1586548229}
   lookRadius: 5
-  healthBar: {fileID: 1980874016}
+  healthBar: {fileID: 0}
 --- !u!1 &1622741311
 GameObject:
   m_ObjectHideFlags: 0
@@ -3537,6 +3537,7 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 0
+  attackRange: 0.5
 --- !u!95 &1683047833
 Animator:
   serializedVersion: 5
@@ -4269,9 +4270,8 @@ MonoBehaviour:
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
-  EyeR: {fileID: 736767677}
-  EyeL: {fileID: 1510851520}
   healthBar: {fileID: 146312569}
+  hitBox: {x: 1.2, y: 1.7}
 --- !u!1 &2033847566
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -12,26 +13,25 @@ public class PlayerCombatScript : MonoBehaviour
     public float attackRange;
 
     private PlayerScript player;
+    private Collider2D hitBox;
     private Animator animator;
     private Camera cam;    
+
 
     private Vector2 mousePos;
 
     private float rotZ;
     private float lastRotZ;
-    private float nextAttack = 0;
-    private float interAttack = 1f;
     private float attackDist = 45;
 
-    private int damage;
+    private int damage = 20;
 
     private bool CombatActive;
     private bool melee = true;
 
-    private Collider2D hitBox;
-
     private void Start()
     {
+        // References
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         hitBox = Hand.GetComponent<Collider2D>();
@@ -42,15 +42,7 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void Update()
     {
-        // Record of degree in past 
-        if (Time.time > nextAttack)
-        {
-            nextAttack = Time.time + interAttack;
-
-            if (melee)
-                lastRotZ = transform.rotation.z;
-        }
-
+        // Eneterin combat-mode
         if      (Input.GetMouseButton(0))
         {
             if (!CombatActive)
@@ -82,8 +74,11 @@ public class PlayerCombatScript : MonoBehaviour
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
-            if (transform.rotation.z > lastRotZ + attackDist || lastRotZ - attackDist > transform.rotation.z)
+            if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
+            {
                 MeleeAttack();
+                lastRotZ= rotZ;
+            }
         }
     }
     private void OnDrawGizmosSelected()
