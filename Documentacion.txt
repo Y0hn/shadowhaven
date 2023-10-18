@@ -261,6 +261,9 @@ Update Animacii:
 	Zombie Death
 
 ----------------< 18. 10.  2023 >----------------
+Pridane Funkcie:
+	if player dies game pauses
+	
 Bug Fixses:
 	Player Combat Death
 	Zombie Texture Gliting
