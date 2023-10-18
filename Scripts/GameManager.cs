@@ -6,23 +6,40 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject pauseMenu;
-    public PlayerScript player;
+    private PlayerScript player;
 
+    public static bool playerLives;
     public static bool isPaused;
+
+    private float afterDeath;
 
     void Start()
     {
+        GameObject playerO = GameObject.FindGameObjectWithTag("Player");
+        player = playerO.GetComponent<PlayerScript>();
         pauseMenu.SetActive(false);
+        playerLives = true;
         isPaused = false;
+        afterDeath = -1;
         Debug.Log(Application.persistentDataPath);
     }
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape))
-            if (isPaused) 
-                ResumeGame();
-            else
+        if (playerLives)
+        {
+            if (Input.GetKeyUp(KeyCode.Escape))
+                if (isPaused)
+                    ResumeGame();
+                else
+                    PauseGame();
+        }
+        else
+        {
+            if (afterDeath == -1)
+                afterDeath = Time.time + 2;
+            else if (afterDeath <= Time.time)
                 PauseGame();
+        }
     }
     
     private void PauseGame()

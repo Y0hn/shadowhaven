@@ -261,6 +261,9 @@ Update Animacii:
 	Zombie Death
 
 ----------------< 18. 10.  2023 >----------------
+Bug Fixses:
+	Player Combat Death
+	Zombie Texture Gliting
 
 ----------------< 19. 10.  2023 >----------------
 

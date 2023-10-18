@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -43,42 +44,45 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void Update()
     {
-        // Eneterin combat-mode
-        if      (Input.GetMouseButton(0))
+        if (!GameManager.isPaused)
         {
-            if (!CombatActive)
+            // Eneterin combat-mode
+            if (Input.GetMouseButton(0))
             {
-                Hand.SetActive(true);
-                CombatActive=true;
+                if (!CombatActive)
+                {
+                    Hand.SetActive(true);
+                    CombatActive = true;
+                }
             }
-        }
-        else if (Input.GetMouseButton(1))
-        {
-            if (!CombatActive)
+            else if (Input.GetMouseButton(1))
             {
-                Hand.SetActive(true);
-                CombatActive=true;
+                if (!CombatActive)
+                {
+                    Hand.SetActive(true);
+                    CombatActive = true;
+                }
             }
-        }
-        else if (Input.GetMouseButton(2)) 
-        { 
-            Hand.SetActive(false);
-            CombatActive=false;
-        }
-
-        if (CombatActive)
-        {
-            mousePos = Input.mousePosition;
-            mousePos = cam.ScreenToWorldPoint(mousePos);
-
-            Vector2 rotation = mousePos - player.GetPos();
-            rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, rotZ);
-
-            if (melee && (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ))
+            else if (Input.GetMouseButton(2))
             {
-                MeleeAttack();
-                lastRotZ= rotZ;
+                Hand.SetActive(false);
+                CombatActive = false;
+            }
+
+            if (CombatActive)
+            {
+                mousePos = Input.mousePosition;
+                mousePos = cam.ScreenToWorldPoint(mousePos);
+
+                Vector2 rotation = mousePos - player.GetPos();
+                rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, rotZ);
+
+                if (melee && (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ))
+                {
+                    MeleeAttack();
+                    lastRotZ = rotZ;
+                }
             }
         }
     }
@@ -97,5 +101,9 @@ public class PlayerCombatScript : MonoBehaviour
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
         }
+    }
+    public void Die()
+    {
+
     }
 }

@@ -10,13 +10,14 @@ using UnityEngine.XR;
 
 public class PlayerScript : MonoBehaviour
 {    
-    public LayerMask enemyLayers;
     public HealthBar healthBar;
+    public LayerMask enemyLayers;
     public Vector2 hitBox;
 
     private GameObject player;
     private Rigidbody2D rb;
     private Animator animator;
+    private GameObject weapon;
 
     private Vector2 moveDir;
 
@@ -32,6 +33,7 @@ public class PlayerScript : MonoBehaviour
     { 
         // References
         player = GameObject.FindGameObjectWithTag("Player");
+        weapon = FindChildByTag(player, "Weapon");
         rb = player.GetComponent<Rigidbody2D>();
         animator = player.GetComponent<Animator>();
     }
@@ -79,6 +81,20 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
     }
+    private GameObject FindChildByTag(GameObject parent, string tag)
+    {
+        for (int i = 0; i < parent.transform.childCount; i++)
+        {
+            if (parent.transform.GetChild(i).tag == tag)
+                return parent.transform.GetChild(i).gameObject;
+
+            GameObject tmp = FindChildByTag(parent.transform.GetChild(i).gameObject, tag);
+
+            if (tmp != null)
+                return tmp;
+        }
+        return null;
+    }
     private void Hurt(int damage) 
     { 
         health -= damage;
@@ -91,8 +107,10 @@ public class PlayerScript : MonoBehaviour
     private void Die()
     {
         rb.simulated = false;
+        weapon.SetActive(false);
         animator.SetTrigger("Die");
         Debug.Log("Hrac zomrel");
+        GameManager.playerLives = false;
         Destroy(this);
     }
     public void SetPos(Vector2 pos)                     { rb.position = pos;    }

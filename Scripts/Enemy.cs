@@ -17,6 +17,7 @@ public class EnemyScript : MonoBehaviour
     private Transform target;
     private PlayerScript playerScript;
     private Collider2D collid;
+    private Rigidbody2D rb;
 
     private Vector2 hitBox;
 
@@ -32,6 +33,7 @@ public class EnemyScript : MonoBehaviour
         // References
         animator = GetComponent<Animator>();
         collid = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
         player = PlayerManager.instance.player;
         target = player.transform;
         playerScript = player.GetComponent<PlayerScript>();
@@ -45,10 +47,13 @@ public class EnemyScript : MonoBehaviour
     {
         float distance = Vector2.Distance(target.position, transform.position);
 
-        if      (distance < lookRadius)
+        if (distance < lookRadius)
             animator.SetBool("isFollowing", true);
         else if (animator.GetBool("isFollowing"))
+        {
             animator.SetBool("isFollowing", false);
+            rb.velocity = Vector3.zero;
+        }
     }
     private void OnDrawGizmosSelected()
     {
@@ -78,6 +83,7 @@ public class EnemyScript : MonoBehaviour
         Debug.Log("Enemy died!");
         animator.SetTrigger("Die");
         // Deconstruction
+        rb.simulated = false;
         Destroy(collid);
         Destroy(this);
     }
