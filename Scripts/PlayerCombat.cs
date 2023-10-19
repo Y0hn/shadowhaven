@@ -23,7 +23,7 @@ public class PlayerCombatScript : MonoBehaviour
 
     private float rotZ;
     private float lastRotZ;
-    private float attackDist = 50;
+    private float attackDist = 45;
     private float attackOfst = 0.7f;
 
     private int damage = 20;
@@ -83,6 +83,12 @@ public class PlayerCombatScript : MonoBehaviour
                     MeleeAttack();
                     lastRotZ = rotZ;
                 }
+                /*
+                if (-90 < rotZ && rotZ < 90)
+                    Hand.transform.rotation = Quaternion.Euler(0, 0, -180);
+                else
+                    Hand.transform.rotation = Quaternion.Euler(0, 0, 0);
+                */
             }
         }
     }
@@ -101,9 +107,5 @@ public class PlayerCombatScript : MonoBehaviour
             Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
         }
-    }
-    public void Die()
-    {
-
     }
 }

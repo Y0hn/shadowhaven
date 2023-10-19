@@ -56,7 +56,7 @@ public class PlayerScript : MonoBehaviour
                 // Enemis Doin Damage
                 foreach (Collider2D enemy in Enemies)
                 {
-                    Debug.Log("We got hit by " + enemy.name);
+                    //Debug.Log("We got hit by " + enemy.name);
                     Hurt(enemy.GetComponent<EnemyScript>().DoDamage());
                 }
                 // Invincibility
@@ -109,7 +109,7 @@ public class PlayerScript : MonoBehaviour
         rb.simulated = false;
         weapon.SetActive(false);
         animator.SetTrigger("Die");
-        Debug.Log("Hrac zomrel");
+        //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
         Destroy(this);
     }

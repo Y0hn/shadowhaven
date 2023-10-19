@@ -269,7 +269,11 @@ Bug Fixses:
 	Zombie Texture Gliting
 
 ----------------< 19. 10.  2023 >----------------
+Bug Fixes:
+	Zombie.FollowBehavior
 
+Nedokonceny pokus o:
+	Tile Map Random Generovanie
 ----------------< 20. 10.  2023 >----------------
 
 ----------------< 21. 10.  2023 >----------------

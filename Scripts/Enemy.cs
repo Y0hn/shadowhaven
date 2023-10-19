@@ -80,7 +80,7 @@ public class EnemyScript : MonoBehaviour
     }
     private void Die() 
     { 
-        Debug.Log("Enemy died!");
+        //Debug.Log("Enemy died!");
         animator.SetTrigger("Die");
         // Deconstruction
         rb.simulated = false;

@@ -37,7 +37,7 @@ public class FollowBehavior : StateMachineBehaviour
         Vector2 moveDir = playerPos - pos;
         moveDir = moveDir.normalized;
 
-        rb.velocity = new Vector2(moveDir.x * speed * Time.deltaTime, moveDir.y * speed * Time.deltaTime);
+        rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
 
         animator.SetFloat("Horizontal", dir.x);
         animator.SetFloat("Vertical", dir.y);
