@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 649179845869740053}
   - component: {fileID: 2167157717085190233}
   m_Layer: 0
-  m_Name: SpawnPoint (4)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,8 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &155124313628860508
 GameObject:
   m_ObjectHideFlags: 0
@@ -57,7 +55,7 @@ GameObject:
   - component: {fileID: 713815613558791071}
   - component: {fileID: 8913949672739928021}
   m_Layer: 0
-  m_Name: SpawnPoint (21)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -90,8 +88,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &579787035246210458
 GameObject:
   m_ObjectHideFlags: 0
@@ -103,7 +99,7 @@ GameObject:
   - component: {fileID: 6371491556201491556}
   - component: {fileID: 5052719305297264340}
   m_Layer: 0
-  m_Name: SpawnPoint (25)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -136,8 +132,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &630846230885321464
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,7 +143,7 @@ GameObject:
   - component: {fileID: 6235632372718472698}
   - component: {fileID: 7833365389370959029}
   m_Layer: 0
-  m_Name: SpawnPoint (24)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -182,8 +176,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &826050927654394494
 GameObject:
   m_ObjectHideFlags: 0
@@ -195,7 +187,7 @@ GameObject:
   - component: {fileID: 4450792235249095349}
   - component: {fileID: 6420250252445058529}
   m_Layer: 0
-  m_Name: SpawnPoint (33)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -228,8 +220,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &919714964319791663
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,7 +231,7 @@ GameObject:
   - component: {fileID: 713196326847078573}
   - component: {fileID: 4890352533175188209}
   m_Layer: 0
-  m_Name: SpawnPoint (11)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,8 +264,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &2592328061740612706
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +275,7 @@ GameObject:
   - component: {fileID: 3526185166211641350}
   - component: {fileID: 665025283257825745}
   m_Layer: 0
-  m_Name: SpawnPoint (14)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -320,8 +308,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &3270648861974489757
 GameObject:
   m_ObjectHideFlags: 0
@@ -333,7 +319,7 @@ GameObject:
   - component: {fileID: 2827840627370296883}
   - component: {fileID: 6624464459022469169}
   m_Layer: 0
-  m_Name: SpawnPoint (23)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -366,8 +352,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &3481110759054644702
 GameObject:
   m_ObjectHideFlags: 0
@@ -379,7 +363,7 @@ GameObject:
   - component: {fileID: 3313165491213129379}
   - component: {fileID: 1318762356519753746}
   m_Layer: 0
-  m_Name: SpawnPoint (5)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,8 +396,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &3611163265874640004
 GameObject:
   m_ObjectHideFlags: 0
@@ -425,7 +407,7 @@ GameObject:
   - component: {fileID: 2978721383741142058}
   - component: {fileID: 6046912755423700089}
   m_Layer: 0
-  m_Name: SpawnPoint (27)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -458,8 +440,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &3698979242157297794
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +451,7 @@ GameObject:
   - component: {fileID: 3105605535470504574}
   - component: {fileID: 6496888312979726072}
   m_Layer: 0
-  m_Name: SpawnPoint (6)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -504,8 +484,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &3925494357684181942
 GameObject:
   m_ObjectHideFlags: 0
@@ -517,7 +495,7 @@ GameObject:
   - component: {fileID: 5032048182728478105}
   - component: {fileID: 3418755954409209694}
   m_Layer: 0
-  m_Name: SpawnPoint (26)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -550,8 +528,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &4010742563126693207
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +539,7 @@ GameObject:
   - component: {fileID: 9099323680574367469}
   - component: {fileID: 2526811350045927113}
   m_Layer: 0
-  m_Name: SpawnPoint (10)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,8 +572,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &4323323474855393628
 GameObject:
   m_ObjectHideFlags: 0
@@ -609,7 +583,7 @@ GameObject:
   - component: {fileID: 6916075291581848715}
   - component: {fileID: 8435687186535253290}
   m_Layer: 0
-  m_Name: SpawnPoint (17)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -642,8 +616,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &4701642544650410047
 GameObject:
   m_ObjectHideFlags: 0
@@ -655,7 +627,7 @@ GameObject:
   - component: {fileID: 5563731348643995822}
   - component: {fileID: 4041038039914446898}
   m_Layer: 0
-  m_Name: SpawnPoint (13)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -688,8 +660,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &4927682592739625718
 GameObject:
   m_ObjectHideFlags: 0
@@ -701,7 +671,7 @@ GameObject:
   - component: {fileID: 3733862890075458817}
   - component: {fileID: 6011262512162841414}
   m_Layer: 0
-  m_Name: SpawnPoint (18)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -734,8 +704,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &5107916503974046821
 GameObject:
   m_ObjectHideFlags: 0
@@ -747,7 +715,7 @@ GameObject:
   - component: {fileID: 8538773487873994862}
   - component: {fileID: 7189132414635437198}
   m_Layer: 0
-  m_Name: SpawnPoint (29)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -780,8 +748,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &5291139423678669612
 GameObject:
   m_ObjectHideFlags: 0
@@ -793,7 +759,7 @@ GameObject:
   - component: {fileID: 4285836486713474266}
   - component: {fileID: 7856385714540823649}
   m_Layer: 0
-  m_Name: SpawnPoint (7)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -826,8 +792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &6357625376043586203
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,7 +803,7 @@ GameObject:
   - component: {fileID: 6597804023792312170}
   - component: {fileID: 101386076067867173}
   m_Layer: 0
-  m_Name: SpawnPoint (19)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -872,8 +836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &6473628200293970195
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,7 +847,7 @@ GameObject:
   - component: {fileID: 1565400916087261858}
   - component: {fileID: 3485506229499940803}
   m_Layer: 0
-  m_Name: SpawnPoint (12)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -918,8 +880,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &6603782940794590682
 GameObject:
   m_ObjectHideFlags: 0
@@ -931,7 +891,7 @@ GameObject:
   - component: {fileID: 5708679797269814250}
   - component: {fileID: 7867709921288685127}
   m_Layer: 0
-  m_Name: SpawnPoint (32)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -964,8 +924,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &6699004966228169454
 GameObject:
   m_ObjectHideFlags: 0
@@ -977,7 +935,7 @@ GameObject:
   - component: {fileID: 8512777319240907959}
   - component: {fileID: 7233170295657431183}
   m_Layer: 0
-  m_Name: SpawnPoint (8)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1010,8 +968,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &6851643145015222508
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +979,7 @@ GameObject:
   - component: {fileID: 8420780632752707296}
   - component: {fileID: 4231772181414218203}
   m_Layer: 0
-  m_Name: SpawnPoint (31)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1056,8 +1012,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &7055379932198576441
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1023,7 @@ GameObject:
   - component: {fileID: 1329481600417835428}
   - component: {fileID: 7845908174607299366}
   m_Layer: 0
-  m_Name: SpawnPoint (30)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1102,8 +1056,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &7236223787675240829
 GameObject:
   m_ObjectHideFlags: 0
@@ -1115,7 +1067,7 @@ GameObject:
   - component: {fileID: 2184290559535787377}
   - component: {fileID: 7092798893045961874}
   m_Layer: 0
-  m_Name: SpawnPoint (3)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1148,8 +1100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &7737173106190843351
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1111,7 @@ GameObject:
   - component: {fileID: 7224777514234633475}
   - component: {fileID: 8163852059651556490}
   m_Layer: 0
-  m_Name: SpawnPoint (28)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1194,8 +1144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &8298720973580599138
 GameObject:
   m_ObjectHideFlags: 0
@@ -1207,7 +1155,7 @@ GameObject:
   - component: {fileID: 1484956377975987782}
   - component: {fileID: 7849098446711806563}
   m_Layer: 0
-  m_Name: SpawnPoint (15)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1240,8 +1188,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &8462716452356734811
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1199,7 @@ GameObject:
   - component: {fileID: 5083932296215311578}
   - component: {fileID: 3160026064768971185}
   m_Layer: 0
-  m_Name: SpawnPoint (9)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1286,8 +1232,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &8511175317284401120
 GameObject:
   m_ObjectHideFlags: 0
@@ -1313,10 +1257,11 @@ Transform:
   m_GameObject: {fileID: 8511175317284401120}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5, y: 5, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 872383171469554786}
   - {fileID: 3963918807217779362}
   - {fileID: 6299877085235709805}
   - {fileID: 8530311540929949858}
@@ -1362,7 +1307,7 @@ GameObject:
   - component: {fileID: 6299877085235709805}
   - component: {fileID: 4280968358075232095}
   m_Layer: 0
-  m_Name: SpawnPoint (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1395,8 +1340,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &8674244535325789105
 GameObject:
   m_ObjectHideFlags: 0
@@ -1408,7 +1351,7 @@ GameObject:
   - component: {fileID: 3963918807217779362}
   - component: {fileID: 3926729366380618992}
   m_Layer: 0
-  m_Name: SpawnPoint
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1441,8 +1384,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &8886321288724308663
 GameObject:
   m_ObjectHideFlags: 0
@@ -1454,7 +1395,7 @@ GameObject:
   - component: {fileID: 9640282651165127}
   - component: {fileID: 6465377678012580324}
   m_Layer: 0
-  m_Name: SpawnPoint (22)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1487,8 +1428,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
 --- !u!1 &9174892625798076115
 GameObject:
   m_ObjectHideFlags: 0
@@ -1500,7 +1439,7 @@ GameObject:
   - component: {fileID: 8530311540929949858}
   - component: {fileID: 5014769266578989434}
   m_Layer: 0
-  m_Name: SpawnPoint (2)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1533,5 +1472,65 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1aecc9d18f46d341b89e18aaf7b1381, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objects:
-  - {fileID: 0}
+--- !u!1001 &3222919565075788561
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 8350606092325236925}
+    m_Modifications:
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2888755047903530447, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+      propertyPath: m_Name
+      value: Floor
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+--- !u!4 &872383171469554786 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2351248010094511987, guid: 2653595f86c202c4d85846dd0e6bf523, type: 3}
+  m_PrefabInstance: {fileID: 3222919565075788561}
+  m_PrefabAsset: {fileID: 0}

@@ -8,7 +8,7 @@ public class SpawnTile : MonoBehaviour
 
     void Start()
     {
-        objects = GameObject.FindGameObjectsWithTag("Tile");
+        objects = GameObject.FindGameObjectsWithTag(transform.name);
         int rand = Random.Range(0, objects.Length);
         Instantiate(objects[rand], transform.position, Quaternion.identity);
     }
