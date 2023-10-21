@@ -104,7 +104,7 @@ public class PlayerCombatScript : MonoBehaviour
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
         {
-            Debug.Log("We hit " + enemy.name);
+            //Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
         }
     }

@@ -576,7 +576,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenu: {fileID: 9139626}
-  player: {fileID: 2029063501}
 --- !u!4 &215115863
 Transform:
   m_ObjectHideFlags: 0
@@ -3969,9 +3968,9 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1814827294}
   - {fileID: 215115863}
   - {fileID: 932256710}
   - {fileID: 1042008545}
-  - {fileID: 1814827294}
   - {fileID: 2029063500}
   - {fileID: 582640987344167089}

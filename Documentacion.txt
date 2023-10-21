@@ -274,9 +274,25 @@ Bug Fixes:
 
 Nedokonceny pokus o:
 	Tile Map Random Generovanie
+
 ----------------< 20. 10.  2023 >----------------
+Pridane:
+	Zaciatok Auto Generacie Levelov
+
+Pridane Scripty:
+	LevelGener
+	SpawnObject
+
+Pridane Prefaby:
+	Room = { RL, UR, UL ...}
+	Tile
 
 ----------------< 21. 10.  2023 >----------------
+Pridane Funkcie:
+	Simple Map Generation
+
+Work On Hold:
+	Room Content Tempates
 
 ----------------< 22. 10.  2023 >----------------
 
@@ -311,6 +327,9 @@ https://youtu.be/9_i6S_rDZuA?si=vg1gx6ZXdN0hwRUn
 https://youtu.be/-bkmPm_Besk?si=aAWwaijGnaOXileC
 https://youtu.be/dYi-i83sq5g?si=YnS8Wwb8MvGM7hFZ
 https://youtu.be/xppompv1DBg?si=2DIy2Y0cuFeizH6V
+https://youtu.be/hk6cUanSfXQ?si=_7EgsK0a9S0vWZG9 
+https://youtu.be/XNQQLr0E9TY?si=r_mU_TGYO5eoJ2pO
+https://youtu.be/G9Wa0XZ2a2o?si=Uxsrz2hS4V7ct3-k
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
