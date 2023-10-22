@@ -9,12 +9,14 @@ public class PlayerCombatScript : MonoBehaviour
 {
     public GameObject Hand;
     public GameObject HandSecondary;
+    public GameObject projectile;
     public LayerMask enemyLayers;
+    public Sprite[] weapons;
 
     public float attackRange;
 
     private PlayerScript player;
-    private Collider2D hitBox;
+    private Collider2D col;
     private Animator animator;
     private Camera cam;    
 
@@ -30,17 +32,22 @@ public class PlayerCombatScript : MonoBehaviour
 
     private bool CombatActive;
     private bool melee = true;
+    private float fireTime;
+    private float fireRate;
 
     private void Start()
     {
         // References
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        hitBox = Hand.GetComponent<Collider2D>();
+        col = Hand.GetComponent<Collider2D>();
         animator = GetComponent<Animator>();
+        // Set Up
         HandSecondary.SetActive(false);
         Hand.SetActive(false);
         CombatActive = false;
+        fireTime = 0;
+        fireRate = 0.5f;
     }
     private void Update()
     {
@@ -54,9 +61,29 @@ public class PlayerCombatScript : MonoBehaviour
                     Hand.SetActive(true);
                     CombatActive = true;
                 }
+                else if (!melee)
+                { 
+                    if (Time.time >= fireTime)
+                    {
+                        Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+                        fireTime = Time.time + 1 / fireRate;
+                    }
+                }
             }
-            else if (Input.GetMouseButton(1))
+            else if (Input.GetMouseButtonDown(1))
             {
+                int weap;
+
+                if (melee)
+                    weap = 2;
+                else
+                    weap = 1;
+
+                Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
+
+                melee = !melee;
+                col.enabled = melee;
+
                 if (!CombatActive)
                 {
                     Hand.SetActive(true);
@@ -83,12 +110,6 @@ public class PlayerCombatScript : MonoBehaviour
                     MeleeAttack();
                     lastRotZ = rotZ;
                 }
-                /*
-                if (-90 < rotZ && rotZ < 90)
-                    Hand.transform.rotation = Quaternion.Euler(0, 0, -180);
-                else
-                    Hand.transform.rotation = Quaternion.Euler(0, 0, 0);
-                */
             }
         }
     }

@@ -76,6 +76,9 @@ public class EnemyScript : MonoBehaviour
                 Die();
 
             nextDamage = Time.time + inviTime;
+
+            if (lookRadius <= 15)
+                lookRadius += 5;
         }
     }
     private void Die() 
