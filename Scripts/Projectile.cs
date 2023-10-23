@@ -27,7 +27,7 @@ public class ProjectileScript : MonoBehaviour
         rb.velocity = new Vector2 (direction.x, direction.y).normalized * force;
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 90);
-        timeToDie = Time.time + 5;
+        timeToDie = Time.time + timeToDie;
     }
     void Update()
     {
@@ -44,10 +44,10 @@ public class ProjectileScript : MonoBehaviour
                 ene.GetComponent<EnemyScript>().TakeDamage(damage);
                 Debug.Log("Enemy hit");
             }
-            if (hitEnemies != null)
+            if (hitEnemies.Length > 0)
             {
                 // Play animation (optional)
-                Destroy(transform.gameObject, 0.5f);
+                Destroy(transform.gameObject);
             }
         }
     }

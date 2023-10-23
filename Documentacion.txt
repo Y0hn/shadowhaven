@@ -306,7 +306,11 @@ Bugs:
 		Projectile	<=> Player.body
 
 ----------------< 23. 10.  2023 >----------------
+Pridane textury:
+	Sekeleton = { torso, head }
 
+Neuspesne pokusy o:
+	Melee Weapon fliper
 ----------------< 24. 10.  2023 >----------------
 
 ----------------< 25. 10.  2023 >----------------

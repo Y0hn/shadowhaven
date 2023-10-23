@@ -128,7 +128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 10
   force: 10
-  timeToDie: 5
+  timeToDie: 30
   size: 0.5
   enemy:
     serializedVersion: 2

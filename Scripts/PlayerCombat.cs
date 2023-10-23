@@ -31,7 +31,8 @@ public class PlayerCombatScript : MonoBehaviour
     private int damage = 20;
 
     private bool CombatActive;
-    private bool melee = true;
+    //private bool fliped;
+    private bool melee;
     private float fireTime;
     private float fireRate;
 
@@ -47,7 +48,9 @@ public class PlayerCombatScript : MonoBehaviour
         Hand.SetActive(false);
         CombatActive = false;
         fireTime = 0;
-        fireRate = 0.5f;
+        fireRate = 1;
+        //fliped = false;
+        melee = true;
     }
     private void Update()
     {
@@ -62,33 +65,19 @@ public class PlayerCombatScript : MonoBehaviour
                     CombatActive = true;
                 }
                 else if (!melee)
-                { 
-                    if (Time.time >= fireTime)
-                    {
-                        Instantiate(projectile, Hand.transform.position, Quaternion.identity);
-                        fireTime = Time.time + 1 / fireRate;
-                    }
-                }
+                    RangedAttack();
+                /*else
+                {
+                    if (fliped)
+                        Hand.transform.rotation = Quaternion.Euler(0, 0, 90);
+                    else
+                        Hand.transform.rotation = Quaternion.Euler(0, 0, -90);
+                    fliped = !fliped;
+                }*/
             }
             else if (Input.GetMouseButtonDown(1))
             {
-                int weap;
-
-                if (melee)
-                    weap = 2;
-                else
-                    weap = 1;
-
-                Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
-
-                melee = !melee;
-                col.enabled = melee;
-
-                if (!CombatActive)
-                {
-                    Hand.SetActive(true);
-                    CombatActive = true;
-                }
+                WeaponSwap();
             }
             else if (Input.GetMouseButton(2))
             {
@@ -109,14 +98,34 @@ public class PlayerCombatScript : MonoBehaviour
                 {
                     MeleeAttack();
                     lastRotZ = rotZ;
-                }
-            }
+                }                   
+             }
         }
     }
     private void OnDrawGizmosSelected()
     {
         Vector2 attP = new Vector2 (Hand.transform.position.x,Hand.transform.position.y + attackOfst);
         Gizmos.DrawWireSphere(attP, attackRange);
+    }
+    private void WeaponSwap()
+    {
+        int weap;
+
+        if (melee)
+            weap = 2;
+        else
+            weap = 1;
+
+        Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
+
+        melee = !melee;
+        col.enabled = melee;
+
+        if (!CombatActive)
+        {
+            Hand.SetActive(true);
+            CombatActive = true;
+        }
     }
     private void MeleeAttack()
     {
@@ -127,6 +136,14 @@ public class PlayerCombatScript : MonoBehaviour
         {
             //Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
+        }
+    }
+    private void RangedAttack()
+    {
+        if (Time.time >= fireTime)
+        {
+            Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+            fireTime = Time.time + 1 / fireRate;
         }
     }
 }
