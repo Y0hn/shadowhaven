@@ -8,10 +8,10 @@ using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
-    public GameObject enemy;
     public float lookRadius;
     public HealthBar healthBar;
 
+    private GameObject enemy;
     private Animator animator;
     private GameObject player;
     private Transform target;
@@ -21,16 +21,17 @@ public class EnemyScript : MonoBehaviour
 
     private Vector2 hitBox;
 
-    private int fullHealth = 100;
-    private int health = 100;
-    private int damage = 10;
+    private int fullHealth;
+    private int health;
+    private int damage;
 
-    private float nextDamage = 0;
-    private float inviTime = 0.5f;
+    private float nextDamage;
+    private float inviTime;
 
     private void Start()
     {
         // References
+        enemy = transform.gameObject;
         animator = GetComponent<Animator>();
         collid = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
@@ -39,9 +40,12 @@ public class EnemyScript : MonoBehaviour
         playerScript = player.GetComponent<PlayerScript>();
 
         // Stats
-        healthBar.SetMaxHealth(fullHealth);
+        fullHealth = 100;
         health = fullHealth;
-
+        healthBar.SetMaxHealth(fullHealth);
+        damage = 10;
+        nextDamage = 0;
+        inviTime = 0.5f;
     }
     private void Update()
     {

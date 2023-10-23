@@ -306,8 +306,14 @@ Bugs:
 		Projectile	<=> Player.body
 
 ----------------< 23. 10.  2023 >----------------
+Pridane Prefaby
+	Skeleton
+
 Pridane textury:
-	Sekeleton = { torso, head }
+	Sekeleton = { torso, head, legRL }
+
+Bug Fixes:
+	enemy behind sword glitch
 
 Neuspesne pokusy o:
 	Melee Weapon fliper
