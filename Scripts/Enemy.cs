@@ -63,6 +63,13 @@ public class EnemyScript : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, lookRadius);
+        if (transform.name == "Skeleton")
+        {
+            Gizmos.color = Color.blue;
+            Gizmos.DrawWireSphere(transform.position, lookRadius/9*7);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius/3);
+        }
     }
     public int DoDamage()
     {

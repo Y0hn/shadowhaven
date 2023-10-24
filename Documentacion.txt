@@ -318,6 +318,11 @@ Bug Fixes:
 Neuspesne pokusy o:
 	Melee Weapon fliper
 ----------------< 24. 10.  2023 >----------------
+Grafical Update:
+	Skeleton
+
+Pridane Aniamcie:
+	Skeleton = { skel-runD, skel-runU }
 
 ----------------< 25. 10.  2023 >----------------
 
