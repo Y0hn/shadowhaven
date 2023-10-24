@@ -318,13 +318,41 @@ Bug Fixes:
 Neuspesne pokusy o:
 	Melee Weapon fliper
 ----------------< 24. 10.  2023 >----------------
+Pridane Funkcie:
+	Enemy Generation
+
 Grafical Update:
 	Skeleton
 
 Pridane Aniamcie:
 	Skeleton = { skel-runD, skel-runU }
 
+Pridane Scripty:
+	SpawnListRand
+
 ----------------< 25. 10.  2023 >----------------
+
+
+
+
+
+___________________/ SCRIPTS \___________________
+GameManager			
+MainMenuManager		
+Player				
+PlayerCombat		
+PlayerData			
+Enemy				
+EnemyData			
+FollowBehavior		
+Item				- none
+LevelGener			
+Loot				- none
+HealthBar			
+Projectile			
+SpawnListRand		
+SpawnObject			
+SaveSystem			
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
