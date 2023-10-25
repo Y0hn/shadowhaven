@@ -55,12 +55,16 @@ public class PlayerScript : MonoBehaviour
                 Collider2D[] Enemies = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
                 // Enemis Doin Damage
                 foreach (Collider2D enemy in Enemies)
-                {
-                    //Debug.Log("We got hit by " + enemy.name);
                     Hurt(enemy.GetComponent<EnemyScript>().DoDamage());
+
+                if (Enemies.Length < 1)
+                {
+                    // Get Coilidning Projectiles
+                    Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
+                    // Projectiles Doin Damage
+                    foreach (Collider2D projectile in Projectiles)
+                        Hurt(projectile.GetComponent<ProjectileScript>().DoDamage());
                 }
-                // Invincibility
-                nextDamage = Time.time + inviTime;
             }
         }
     }
@@ -103,6 +107,9 @@ public class PlayerScript : MonoBehaviour
 
         if (health < 0)
             Die();
+
+        // Invincibility
+        nextDamage = Time.time + inviTime;
     }
     private void Die()
     {

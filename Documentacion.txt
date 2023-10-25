@@ -337,7 +337,15 @@ Textury Update:
 Animacie Update:
 	Skleton
 
+Pridane Sripty:
+	ShootAtTargetBehavior
 
+Bugs:
+	Player dont take projectile damage
+	Skeleton range multiplays
+	Skeleton acuracy
+	Skeleton arrow spawning direction
+	Zombie damage TOO OP :S
 
 ___________________/ SCRIPTS \___________________
 GameManager			

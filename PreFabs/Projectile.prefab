@@ -130,9 +130,12 @@ MonoBehaviour:
   force: 10
   timeToDie: 30
   size: 0.5
-  enemy:
+  enemyLayer:
     serializedVersion: 2
     m_Bits: 256
+  playerLayer:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!70 &648226578949599671
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

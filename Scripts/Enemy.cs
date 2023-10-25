@@ -11,54 +11,22 @@ public class EnemyScript : MonoBehaviour
     public float lookRadius;
     public HealthBar healthBar;
 
-    private GameObject enemy;
     private Animator animator;
-    private GameObject player;
     private Transform target;
     private PlayerScript playerScript;
     private Collider2D collid;
     private Rigidbody2D rb;
 
-    private Vector2 hitBox;
+    private string eneName;
 
-    private int fullHealth;
+    public int fullHealth;
+    public int damage;
+
     private int health;
-    private int damage;
 
     private float nextDamage;
     private float inviTime;
 
-    private void Start()
-    {
-        // References
-        enemy = transform.gameObject;
-        animator = GetComponent<Animator>();
-        collid = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-        player = PlayerManager.instance.player;
-        target = player.transform;
-        playerScript = player.GetComponent<PlayerScript>();
-
-        // Stats
-        fullHealth = 100;
-        health = fullHealth;
-        healthBar.SetMaxHealth(fullHealth);
-        damage = 10;
-        nextDamage = 0;
-        inviTime = 0.5f;
-    }
-    private void Update()
-    {
-        float distance = Vector2.Distance(target.position, transform.position);
-
-        if (distance < lookRadius)
-            animator.SetBool("isFollowing", true);
-        else if (animator.GetBool("isFollowing"))
-        {
-            animator.SetBool("isFollowing", false);
-            rb.velocity = Vector3.zero;
-        }
-    }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
@@ -66,9 +34,73 @@ public class EnemyScript : MonoBehaviour
         if (transform.name == "Skeleton")
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, lookRadius/9*7);
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius/3);
+            Gizmos.DrawWireSphere(transform.position, lookRadius / 4 * 3);
+        }
+    }
+    private void Start()
+    {
+        // References
+        GameObject player;
+        eneName = transform.name;
+        animator = GetComponent<Animator>();
+        collid = GetComponent<Collider2D>();
+        rb = GetComponent<Rigidbody2D>();
+        player = PlayerManager.instance.player;
+        target = player.transform;
+        playerScript = player.GetComponent<PlayerScript>();
+        SetStats();
+    }
+    private void SetStats()
+    {
+        // Stats
+        fullHealth += 20 * playerScript.GetLevel();
+        healthBar.SetMaxHealth(fullHealth);
+        health = fullHealth;
+        damage += 10 * playerScript.GetLevel();
+        nextDamage = 0;
+        inviTime = 0.5f;
+    }
+    private void Update()
+    {
+        Behavior();
+    }
+    private void Behavior()
+    {
+        float distance = Vector2.Distance(target.position, transform.position);
+
+        if (eneName.Contains("Zombie"))
+        {
+            if (distance < lookRadius)
+                animator.SetBool("isFollowing", true);
+            else if (animator.GetBool("isFollowing"))
+            {
+                animator.SetBool("isFollowing", false);
+                rb.velocity = Vector3.zero;
+            }
+
+        }
+        else if (eneName.Contains("Skeleton"))
+        {
+            if (!(lookRadius/4*3 > distance) && distance < lookRadius)
+            {
+                animator.SetBool("Shootin", false);
+                animator.SetBool("isFollowing", true);
+            }
+            else if (lookRadius/4*3 > distance)
+            {
+                animator.SetBool("isFollowing", false);
+                rb.velocity = Vector3.zero;
+                animator.SetBool("Shootin", true);
+            }
+            else
+            {
+                if (animator.GetBool("Shootin"))
+                    animator.SetBool("Shootin", false);
+                if (animator.GetBool("isFollowing"))
+                    animator.SetBool("isFollowing", false);
+                rb.velocity = Vector3.zero;
+            } 
+
         }
     }
     public int DoDamage()

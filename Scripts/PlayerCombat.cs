@@ -28,7 +28,7 @@ public class PlayerCombatScript : MonoBehaviour
     private float attackDist = 45;
     private float attackOfst = 0.7f;
 
-    private int damage = 20;
+    private int damage = 40;
 
     private bool CombatActive;
     //private bool fliped;
@@ -48,7 +48,7 @@ public class PlayerCombatScript : MonoBehaviour
         Hand.SetActive(false);
         CombatActive = false;
         fireTime = 0;
-        fireRate = 1;
+        fireRate = 0.5f;
         //fliped = false;
         melee = true;
     }

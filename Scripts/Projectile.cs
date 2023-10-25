@@ -9,7 +9,7 @@ public class ProjectileScript : MonoBehaviour
     public float force;
     public float timeToDie;
     public float size;
-    public LayerMask enemy;
+    public LayerMask enemyLayer;
 
     private Vector3 mousePos;
     private Camera mainCam;
@@ -38,19 +38,14 @@ public class ProjectileScript : MonoBehaviour
         }
         else
         {
-            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, size, enemy);
+            Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(transform.position, size, enemyLayer);
             foreach (Collider2D ene in hitEnemies)
-            {
                 ene.GetComponent<EnemyScript>().TakeDamage(damage);
-                //Debug.Log("Enemy hit");
-            }
             if (hitEnemies.Length > 0)
-            {
-                // Play animation (optional)
                 Destroy(transform.gameObject);
-            }
         }
     }
+    public int DoDamage() { return damage; }
     private void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, size);
