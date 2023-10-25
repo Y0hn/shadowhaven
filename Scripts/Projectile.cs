@@ -42,7 +42,7 @@ public class ProjectileScript : MonoBehaviour
             foreach (Collider2D ene in hitEnemies)
             {
                 ene.GetComponent<EnemyScript>().TakeDamage(damage);
-                Debug.Log("Enemy hit");
+                //Debug.Log("Enemy hit");
             }
             if (hitEnemies.Length > 0)
             {
