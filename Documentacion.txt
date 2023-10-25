@@ -331,8 +331,11 @@ Pridane Scripty:
 	SpawnListRand
 
 ----------------< 25. 10.  2023 >----------------
+Textury Update:
+	Skeleton
 
-
+Animacie Update:
+	Skleton
 
 
 
