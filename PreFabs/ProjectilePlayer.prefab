@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4832388025373577486}
   - component: {fileID: 648226578949599671}
   m_Layer: 10
-  m_Name: Projectile
+  m_Name: ProjectilePlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -126,16 +126,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7774558d0f338f848b062b8765711eb9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 20
   force: 10
   timeToDie: 30
-  size: 0.5
-  enemyLayer:
+  size: 0.4
+  targetLayers:
     serializedVersion: 2
     m_Bits: 256
-  playerLayer:
-    serializedVersion: 2
-    m_Bits: 128
 --- !u!70 &648226578949599671
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

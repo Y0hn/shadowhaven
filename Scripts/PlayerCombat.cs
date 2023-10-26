@@ -26,9 +26,8 @@ public class PlayerCombatScript : MonoBehaviour
     private float rotZ;
     private float lastRotZ;
     private float attackDist = 45;
-    private float attackOfst = 0.7f;
 
-    private int damage = 40;
+    private int damage = 50;
 
     private bool CombatActive;
     //private bool fliped;
@@ -104,7 +103,7 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Vector2 attP = new Vector2 (Hand.transform.position.x,Hand.transform.position.y + attackOfst);
+        Vector2 attP = new Vector2 (Hand.transform.position.x,Hand.transform.position.y);
         Gizmos.DrawWireSphere(attP, attackRange);
     }
     private void WeaponSwap()
@@ -129,14 +128,11 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void MeleeAttack()
     {
-        Vector2 attP = new Vector2(Hand.transform.position.x, Hand.transform.position.y + attackOfst);
+        Vector2 attP = new Vector2(Hand.transform.position.x, Hand.transform.position.y);
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
-        {
-            //Debug.Log("We hit " + enemy.name);
             enemy.GetComponent<EnemyScript>().TakeDamage(damage);
-        }
     }
     private void RangedAttack()
     {

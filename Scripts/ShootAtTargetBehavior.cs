@@ -13,8 +13,7 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
 
     private Transform spawn;
     private Transform targetTra;
-    private GameObject rotatePoint;
-    private float rotZ;
+    private Transform rotatePoint;
     private float nextAtk = 0;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -24,13 +23,13 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
         {
             if (animator.transform.GetChild(i).tag == "Weapon")
             {
-                rotatePoint = animator.transform.GetChild(i).gameObject;
+                rotatePoint = animator.transform.GetChild(i);
                 break;
             }
         }
         spawn = rotatePoint.transform.GetChild(0).transform;
         if (hide)
-            rotatePoint.SetActive(true);
+            rotatePoint.gameObject.SetActive(true);
         // Finding closet target
         GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
         float minDistance = Mathf.Infinity;
@@ -47,19 +46,20 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Vector2 rotation = targetTra.position - animator.transform.position;            
+        float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+        rotatePoint.rotation = Quaternion.Euler(0, 0, rotZ);
+
         if (Time.time >= nextAtk)
         {
-            GameObject.Instantiate(projectile, spawn.position, rotatePoint.transform.rotation);
+            Instantiate(projectile, spawn.position, Quaternion.identity);
             nextAtk = Time.time + 1 / rate;
         }
-        Vector2 rotation = targetTra.position - animator.transform.position;            
-        rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (hide)
-            rotatePoint.SetActive(false);
+            rotatePoint.gameObject.SetActive(false);
     }
 }

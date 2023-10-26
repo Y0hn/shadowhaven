@@ -20,11 +20,14 @@ public class PlayerScript : MonoBehaviour
     private GameObject weapon;
 
     private Vector2 moveDir;
+    private Vector2 latePos;
 
     private float moveSpeed = 5;
 
     private float nextDamage = 0;
     private float inviTime = 0.5f;
+    private float nextLatePos;
+    private float lateInterval = 2;
 
     private int level = 1;
     private int health = 100;
@@ -48,23 +51,12 @@ public class PlayerScript : MonoBehaviour
             ProcessInput();
             Move();
             AnimateMovement();
+            CollisionCheck();
 
-            if (Time.time > nextDamage)
+            if (Time.time >= nextLatePos)
             {
-                // Get Coilidning Enemies
-                Collider2D[] Enemies = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
-                // Enemis Doin Damage
-                foreach (Collider2D enemy in Enemies)
-                    Hurt(enemy.GetComponent<EnemyScript>().DoDamage());
-
-                if (Enemies.Length < 1)
-                {
-                    // Get Coilidning Projectiles
-                    Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
-                    // Projectiles Doin Damage
-                    foreach (Collider2D projectile in Projectiles)
-                        Hurt(projectile.GetComponent<ProjectileScript>().DoDamage());
-                }
+                latePos = transform.position;
+                nextLatePos = Time.time + lateInterval;
             }
         }
     }
@@ -84,6 +76,26 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Horizontal", moveDir.x);
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
+    }
+    private void CollisionCheck()
+    {
+        if (Time.time > nextDamage)
+        {
+            // Get Coilidning Enemies
+            Collider2D[] Enemies = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
+            // Enemis Doin Damage
+            foreach (Collider2D enemy in Enemies)
+                Hurt(enemy.GetComponent<EnemyScript>().DoDamage());
+
+            if (Enemies.Length < 1)
+            {
+                // Get Coilidning Projectiles
+                Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
+                // Projectiles Doin Damage
+                foreach (Collider2D projectile in Projectiles)
+                    Hurt(projectile.GetComponent<ProjectileScript>().DoDamage());
+            }
+        }
     }
     private GameObject FindChildByTag(GameObject parent, string tag)
     {
@@ -120,6 +132,7 @@ public class PlayerScript : MonoBehaviour
         GameManager.playerLives = false;
         Destroy(this);
     }
+    public void TakeDamage(int damage)                  { Hurt(damage);         }
     public void SetPos(Vector2 pos)                     { rb.position = pos;    }
     public void SetLevel(int newlevel)                  { level = newlevel;     }
     public void SetHealth(int newhealth)                {  health = newhealth;  }

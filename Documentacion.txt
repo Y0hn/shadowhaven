@@ -346,6 +346,26 @@ Bugs:
 	Skeleton acuracy
 	Skeleton arrow spawning direction
 	Zombie damage TOO OP :S
+	
+----------------< 26. 10.  2023 >----------------
+Prev Bugs Found:
+	Sword Hidbox Rotation offset inconsistency
+
+Bud Fixes:
+	Skelelton Bug Fixes	
+	Sword Hidbox Rotation offset inconsistency	
+	Player dont take projectile damage
+	Skeleton range multiplays
+	Skeleton acuracy
+	
+Pridane Aniamcie:
+	Skeleton.skel-death
+
+----------------< 27. 10.  2023 >----------------
+----------------< 28. 10.  2023 >----------------
+----------------< 29. 10.  2023 >----------------
+----------------< 30. 10.  2023 >----------------
+----------------< 31. 10.  2023 >----------------
 
 ___________________/ SCRIPTS \___________________
 GameManager			

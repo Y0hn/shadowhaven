@@ -26,6 +26,7 @@ public class EnemyScript : MonoBehaviour
 
     private float nextDamage;
     private float inviTime;
+    private float range;
 
     private void OnDrawGizmosSelected()
     {
@@ -34,7 +35,7 @@ public class EnemyScript : MonoBehaviour
         if (transform.name == "Skeleton")
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, lookRadius / 4 * 3);
+            Gizmos.DrawWireSphere(transform.position, lookRadius * 0.8f);
         }
     }
     private void Start()
@@ -59,6 +60,7 @@ public class EnemyScript : MonoBehaviour
         damage += 10 * playerScript.GetLevel();
         nextDamage = 0;
         inviTime = 0.5f;
+        range = lookRadius * 0.8f;
     }
     private void Update()
     {
@@ -81,12 +83,12 @@ public class EnemyScript : MonoBehaviour
         }
         else if (eneName.Contains("Skeleton"))
         {
-            if (!(lookRadius/4*3 > distance) && distance < lookRadius)
+            if (!(range > distance) && distance < lookRadius)
             {
                 animator.SetBool("Shootin", false);
                 animator.SetBool("isFollowing", true);
             }
-            else if (lookRadius/4*3 > distance)
+            else if (range > distance)
             {
                 animator.SetBool("isFollowing", false);
                 rb.velocity = Vector3.zero;
