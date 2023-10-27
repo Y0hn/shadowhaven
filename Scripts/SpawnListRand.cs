@@ -9,6 +9,6 @@ public class SpawnListRand : MonoBehaviour
     void Start()
     {
         int rand = Random.Range(0, spawnList.Length);
-        Instantiate(spawnList[rand], transform.position, Quaternion.identity);
+        Instantiate(spawnList[rand], transform.position, Quaternion.identity, transform);
     }
 }

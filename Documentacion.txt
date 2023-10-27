@@ -362,6 +362,22 @@ Pridane Aniamcie:
 	Skeleton.skel-death
 
 ----------------< 27. 10.  2023 >----------------
+Balancing Gugs:
+	Damages
+	Health Player
+	Damage Burts
+	 . . . 
+
+Pridane Funkcie:
+	You Died screen
+		Test repawn
+	UI cover
+	Respawn player
+
+Pridane Prefaby:
+	Level
+	PlayerBlueprint
+
 ----------------< 28. 10.  2023 >----------------
 ----------------< 29. 10.  2023 >----------------
 ----------------< 30. 10.  2023 >----------------

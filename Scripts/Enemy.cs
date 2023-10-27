@@ -57,7 +57,7 @@ public class EnemyScript : MonoBehaviour
         fullHealth += 20 * playerScript.GetLevel();
         healthBar.SetMaxHealth(fullHealth);
         health = fullHealth;
-        damage += 10 * playerScript.GetLevel();
+        damage += 5 * playerScript.GetLevel();
         nextDamage = 0;
         inviTime = 0.5f;
         range = lookRadius * 0.8f;

@@ -145,6 +145,6 @@ public class LevelGener : MonoBehaviour
         }
         //Debug.Log("PastDir: " + pastDir + "Dir: " + dir);
         //Debug.Log("Room type " + type + " = " + rooms[type].name + " on position: " + transform.position);
-        Instantiate(rooms[type], transform.position, Quaternion.identity);
+        Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
     }
 }

@@ -29,16 +29,20 @@ public class PlayerScript : MonoBehaviour
     private float nextLatePos;
     private float lateInterval = 2;
 
-    private int level = 1;
-    private int health = 100;
+    public int health = 100;
+    private int maxHealth;
+    public int level = 1;
 
     private void Start() 
-    { 
+    {
         // References
         player = GameObject.FindGameObjectWithTag("Player");
         weapon = FindChildByTag(player, "Weapon");
         rb = player.GetComponent<Rigidbody2D>();
         animator = player.GetComponent<Animator>();
+
+        maxHealth = health;
+        healthBar.SetMaxHealth(health);
     }
     private void OnDrawGizmosSelected()
     {
@@ -127,10 +131,9 @@ public class PlayerScript : MonoBehaviour
     {
         rb.simulated = false;
         weapon.SetActive(false);
-        animator.SetTrigger("Die");
+        animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
-        Destroy(this);
     }
     public void TakeDamage(int damage)                  { Hurt(damage);         }
     public void SetPos(Vector2 pos)                     { rb.position = pos;    }
@@ -139,4 +142,12 @@ public class PlayerScript : MonoBehaviour
     public int GetLevel()                               { return level;         }
     public int GetHealth()                              { return health;        }
     public Vector2 GetPos()                             { return rb.position;   }
+    public void Resurect() 
+    { 
+        health = maxHealth; 
+        healthBar.SetHealth(health);
+        weapon.SetActive(true);
+        rb.simulated = true;
+        animator.SetBool("isAlive", true);
+    }
 }
