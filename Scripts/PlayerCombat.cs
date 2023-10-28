@@ -47,8 +47,8 @@ public class PlayerCombatScript : MonoBehaviour
         Hand.SetActive(false);
         CombatActive = false;
         fireTime = 0;
-        fireRate = 0.5f;
-        //fliped = false;
+        fireRate = 2;
+        lastRotZ = 0;
         melee = true;
     }
     private void Update()
@@ -65,14 +65,6 @@ public class PlayerCombatScript : MonoBehaviour
                 }
                 else if (!melee)
                     RangedAttack();
-                /*else
-                {
-                    if (fliped)
-                        Hand.transform.rotation = Quaternion.Euler(0, 0, 90);
-                    else
-                        Hand.transform.rotation = Quaternion.Euler(0, 0, -90);
-                    fliped = !fliped;
-                }*/
             }
             else if (Input.GetMouseButtonDown(1))
             {
@@ -93,10 +85,13 @@ public class PlayerCombatScript : MonoBehaviour
                 rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                 transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
-                if (melee && (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ))
+                if (melee)
                 {
-                    MeleeAttack();
-                    lastRotZ = rotZ;
+                    if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
+                    {
+                        MeleeAttack();
+                        lastRotZ = rotZ;
+                    }
                 }                   
              }
         }

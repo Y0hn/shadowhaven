@@ -379,6 +379,18 @@ Pridane Prefaby:
 	PlayerBlueprint
 
 ----------------< 28. 10.  2023 >----------------
+Fixes:
+	Animation Fix:
+		Skleton face
+
+Pridane Funkcie:
+	Combat Hurt
+	Skeleton contact behavior
+
+Plan:
+	Mozno odstranit Enemy invincibility
+
+
 ----------------< 29. 10.  2023 >----------------
 ----------------< 30. 10.  2023 >----------------
 ----------------< 31. 10.  2023 >----------------

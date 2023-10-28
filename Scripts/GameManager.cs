@@ -6,20 +6,27 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    // Singleton
+    public static GameManager instance;
+    void Awake()
+    {
+        instance = this;
+    }
+
+    public GameObject player;
     public GameObject playerUI;
     public GameObject pauseMenu;
     public GameObject deathMenu;
     public GameObject Level;
-    public GameObject playerBluePrint;
-    private PlayerScript player;
+
+    private PlayerScript playerScript;
 
     public static bool playerLives;
     public static bool isPaused;
 
     void Start()
     {
-        GameObject playerO = GameObject.FindGameObjectWithTag("Player");
-        player = playerO.GetComponent<PlayerScript>();
+        playerScript = player.GetComponent<PlayerScript>();
         pauseMenu.SetActive(false);
         playerLives = true;
         isPaused = false;
@@ -61,15 +68,15 @@ public class GameManager : MonoBehaviour
     }
     public void Save()
     {
-        SaveSystem.SavePlayer(player);
+        SaveSystem.SavePlayer(playerScript);
     }
     public void Load()
     {
         PlayerData data = SaveSystem.LoadPlayer();
 
-        player.SetHealth(data.health);
-        player.SetLevel(data.level);
-        player.SetPos(new Vector2(data.position[0], data.position[1]));
+        playerScript.SetHealth(data.health);
+        playerScript.SetLevel(data.level);
+        playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
     public void GoToMainMenu()
     { 
@@ -78,7 +85,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive() // Just for testing
     {
-        player.Resurect();
+        playerScript.Resurect();
         playerLives = true;
         isPaused = false;
         Destroy(GameObject.FindGameObjectWithTag("Level"));

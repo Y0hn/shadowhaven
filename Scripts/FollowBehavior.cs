@@ -14,7 +14,7 @@ public class FollowBehavior : StateMachineBehaviour
     // Start
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        playerTra = PlayerManager.instance.player.transform;
+        playerTra = GameManager.instance.player.transform;
         rb = animator.GetComponent<Rigidbody2D>();
     }
 

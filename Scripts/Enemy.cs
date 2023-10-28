@@ -23,10 +23,12 @@ public class EnemyScript : MonoBehaviour
     public int damage;
 
     private int health;
+    private bool stunable;
 
     private float nextDamage;
     private float inviTime;
-    private float range;
+    private float rangeMax;
+    private float rangeMin;
 
     private void OnDrawGizmosSelected()
     {
@@ -36,6 +38,8 @@ public class EnemyScript : MonoBehaviour
         {
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(transform.position, lookRadius * 0.8f);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(transform.position, lookRadius * 0.25f);
         }
     }
     private void Start()
@@ -46,7 +50,7 @@ public class EnemyScript : MonoBehaviour
         animator = GetComponent<Animator>();
         collid = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        player = PlayerManager.instance.player;
+        player = GameManager.instance.player;
         target = player.transform;
         playerScript = player.GetComponent<PlayerScript>();
         SetStats();
@@ -54,13 +58,22 @@ public class EnemyScript : MonoBehaviour
     private void SetStats()
     {
         // Stats
+        stunable = true;
         fullHealth += 20 * playerScript.GetLevel();
         healthBar.SetMaxHealth(fullHealth);
         health = fullHealth;
         damage += 5 * playerScript.GetLevel();
         nextDamage = 0;
         inviTime = 0.5f;
-        range = lookRadius * 0.8f;
+
+        if (eneName.Contains("Zombie"))
+        {
+        }
+        else if (eneName.Contains("Skeleton"))
+        {
+            rangeMax = lookRadius * 0.8f;
+            rangeMin = lookRadius * 0.25f;
+        }
     }
     private void Update()
     {
@@ -83,12 +96,12 @@ public class EnemyScript : MonoBehaviour
         }
         else if (eneName.Contains("Skeleton"))
         {
-            if (!(range > distance) && distance < lookRadius)
+            if ((rangeMax < distance || distance < rangeMin) && distance < lookRadius)
             {
                 animator.SetBool("Shootin", false);
                 animator.SetBool("isFollowing", true);
             }
-            else if (range > distance)
+            else if (rangeMax > distance)
             {
                 animator.SetBool("isFollowing", false);
                 rb.velocity = Vector3.zero;
@@ -120,6 +133,17 @@ public class EnemyScript : MonoBehaviour
             if (health <= 0)
                 Die();
 
+            if (stunable)
+            {
+                rb.velocity = Vector2.zero;
+                Vector2 moveDir;
+
+                float hori = animator.GetFloat("Horizontal");
+                float vert = animator.GetFloat("Vertical");
+
+                moveDir = new Vector2(-hori, -vert);
+                rb.velocity = moveDir;
+            }
             nextDamage = Time.time + inviTime;
 
             if (lookRadius <= 15)
@@ -128,11 +152,10 @@ public class EnemyScript : MonoBehaviour
     }
     private void Die() 
     { 
-        //Debug.Log("Enemy died!");
-        animator.SetTrigger("Die");
+        animator.SetBool("isAlive", false);
         // Deconstruction
         rb.simulated = false;
         Destroy(collid);
-        Destroy(this);
+        Destroy(transform.gameObject, 5);
     }
 }

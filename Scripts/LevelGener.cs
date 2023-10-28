@@ -22,14 +22,14 @@ public class LevelGener : MonoBehaviour
 
     public float minX;
     public float maxX;
-    public float minY;
     public float maxY;
 
     public Vector2 moveAmount;
+
     private int dir = -1;
     private int pastDir = -1;
 
-    public bool stop;
+    private bool stop;
 
     void Start()
     {
