@@ -317,6 +317,7 @@ Bug Fixes:
 
 Neuspesne pokusy o:
 	Melee Weapon fliper
+
 ----------------< 24. 10.  2023 >----------------
 Pridane Funkcie:
 	Enemy Generation
@@ -390,31 +391,32 @@ Pridane Funkcie:
 Plan:
 	Mozno odstranit Enemy invincibility
 
-
 ----------------< 29. 10.  2023 >----------------
 Pridane Funkcie:
 	Health bar Update
+	Better Room Generation:
+		Borders
+		LRDU Modularity
+
+Pridane Prefaby:
+	L R D U
+		
+Pridane textury:
+	Walls placeholders
+
+Unity Warnings:
+	[Worker0] SendMessage cannot be called 
+	during Awake, CheckConsistency, 
+	or OnValidate (ProjectileEnemy: 
+	OnSpriteTilingPropertyChange)
+	UnityEngine.GUIUtility:ProcessEvent 
+	(int,intptr,bool&)
 
 ----------------< 30. 10.  2023 >----------------
 ----------------< 31. 10.  2023 >----------------
 
 ___________________/ SCRIPTS \___________________
-GameManager			
-MainMenuManager		
-Player				
-PlayerCombat		
-PlayerData			
-Enemy				
-EnemyData			
-FollowBehavior		
-Item				- none
-LevelGener			
-Loot				- none
-HealthBar			
-Projectile			
-SpawnListRand		
-SpawnObject			
-SaveSystem			
+fill in later ;D
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
