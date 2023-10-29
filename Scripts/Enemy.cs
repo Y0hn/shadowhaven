@@ -23,10 +23,9 @@ public class EnemyScript : MonoBehaviour
     public int damage;
 
     private int health;
+
     private bool stunable;
 
-    private float nextDamage;
-    private float inviTime;
     private float rangeMax;
     private float rangeMin;
 
@@ -63,8 +62,6 @@ public class EnemyScript : MonoBehaviour
         healthBar.SetMaxHealth(fullHealth);
         health = fullHealth;
         damage += 5 * playerScript.GetLevel();
-        nextDamage = 0;
-        inviTime = 0.5f;
 
         if (eneName.Contains("Zombie"))
         {
@@ -124,31 +121,26 @@ public class EnemyScript : MonoBehaviour
     }
     public void TakeDamage(int damage)
     {
-        if (Time.time > nextDamage)
+        health -= damage;
+        healthBar.SetHealth(health);
+        animator.SetTrigger("Hurt");
+
+        if (health <= 0)
+            Die();
+
+        if (stunable)
         {
-            health -= damage;
-            healthBar.SetHealth(health);
-            animator.SetTrigger("Hurt");
+            rb.velocity = Vector2.zero;
+            Vector2 moveDir;
 
-            if (health <= 0)
-                Die();
+            float hori = animator.GetFloat("Horizontal");
+            float vert = animator.GetFloat("Vertical");
 
-            if (stunable)
-            {
-                rb.velocity = Vector2.zero;
-                Vector2 moveDir;
-
-                float hori = animator.GetFloat("Horizontal");
-                float vert = animator.GetFloat("Vertical");
-
-                moveDir = new Vector2(-hori, -vert);
-                rb.velocity = moveDir;
-            }
-            nextDamage = Time.time + inviTime;
-
-            if (lookRadius <= 15)
-                lookRadius += 5;
+            moveDir = new Vector2(-hori, -vert);
+            rb.velocity = moveDir;
         }
+        if (lookRadius <= 15)
+            lookRadius += 5;
     }
     private void Die() 
     { 

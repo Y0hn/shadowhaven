@@ -20,14 +20,11 @@ public class PlayerScript : MonoBehaviour
     private GameObject weapon;
 
     private Vector2 moveDir;
-    private Vector2 latePos;
 
     private float moveSpeed = 5;
 
     private float nextDamage = 0;
     private float inviTime = 0.5f;
-    private float nextLatePos;
-    private float lateInterval = 2;
 
     public int health = 100;
     private int maxHealth;
@@ -56,12 +53,6 @@ public class PlayerScript : MonoBehaviour
             Move();
             AnimateMovement();
             CollisionCheck();
-
-            if (Time.time >= nextLatePos)
-            {
-                latePos = transform.position;
-                nextLatePos = Time.time + lateInterval;
-            }
         }
     }
     private void ProcessInput()
@@ -121,7 +112,7 @@ public class PlayerScript : MonoBehaviour
         healthBar.SetHealth(health);
         animator.SetTrigger("Hurt");
 
-        if (health < 0)
+        if (health <= 0)
             Die();
 
         // Invincibility
