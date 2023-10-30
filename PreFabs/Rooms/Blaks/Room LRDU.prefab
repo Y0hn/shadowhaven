@@ -352,7 +352,7 @@ GameObject:
   - component: {fileID: 1701782172903098308}
   - component: {fileID: 4816511405771069388}
   m_Layer: 0
-  m_Name: Wall-E
+  m_Name: Wall-RCU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -851,7 +851,7 @@ GameObject:
   - component: {fileID: 8507857713727877247}
   - component: {fileID: 4192736531135272138}
   m_Layer: 0
-  m_Name: Wall-E
+  m_Name: Wall-RCD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1027,7 +1027,7 @@ GameObject:
   - component: {fileID: 5299432788370889208}
   - component: {fileID: 7689756846150948853}
   m_Layer: 0
-  m_Name: Wall-E
+  m_Name: Wall-LCD
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1291,7 +1291,7 @@ GameObject:
   - component: {fileID: 2303105218098298094}
   - component: {fileID: 4498692368907473373}
   m_Layer: 0
-  m_Name: Wall-E
+  m_Name: Wall-LCU
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

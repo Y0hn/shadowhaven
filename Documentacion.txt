@@ -413,6 +413,10 @@ Unity Warnings:
 	(int,intptr,bool&)
 
 ----------------< 30. 10.  2023 >----------------
+Pridane Textury:
+	Walls
+	Floor 
+
 ----------------< 31. 10.  2023 >----------------
 
 ___________________/ SCRIPTS \___________________
@@ -448,6 +452,7 @@ https://youtu.be/XNQQLr0E9TY?si=r_mU_TGYO5eoJ2pO
 https://youtu.be/G9Wa0XZ2a2o?si=Uxsrz2hS4V7ct3-k
 https://youtu.be/-bkmPm_Besk?si=-V0cNSTUEG0mvq2U
 https://youtu.be/8_B3ZG_bIkE?si=N97oDbu5qH-KGheH
+https://youtu.be/nkgGyO9VG54?si=O6PQFyM8uiZePHvp
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
