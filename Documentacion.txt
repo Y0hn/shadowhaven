@@ -413,6 +413,10 @@ Unity Warnings:
 	(int,intptr,bool&)
 
 ----------------< 30. 10.  2023 >----------------
+Pridane Funkcie:
+	Even Better Room Generation
+	Working Main Menu 
+
 Pridane Textury:
 	Walls
 	Floor 
