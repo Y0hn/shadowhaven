@@ -24,16 +24,21 @@ public class GameManager : MonoBehaviour
     public static bool playerLives;
     public static bool isPaused;
 
+    private bool SceneLoaded = false;
+
     void Start()
     {
         playerScript = player.GetComponent<PlayerScript>();
         pauseMenu.SetActive(false);
         playerLives = true;
         isPaused = false;
+        SceneLoaded = true;
         // Debug.Log(Application.persistentDataPath);
     }
     private void Update()
     {
+        if (!SceneLoaded) 
+            ReloadScene();
         if (playerLives)
         {
             if (Input.GetKeyUp(KeyCode.Escape))
@@ -60,6 +65,11 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0f;
         isPaused = true;
     }
+    private void ReloadScene()
+    {
+        PlayerRevive();
+        SceneLoaded = true;
+    }
     public void ResumeGame()
     {
         pauseMenu.SetActive(false);
@@ -81,6 +91,7 @@ public class GameManager : MonoBehaviour
     public void GoToMainMenu()
     { 
         Time.timeScale = 1f;
+        SceneLoaded = false;
         SceneManager.LoadScene(0);
     }
     public void PlayerRevive() // Just for testing
@@ -93,5 +104,5 @@ public class GameManager : MonoBehaviour
         deathMenu.SetActive(false);
         playerUI.SetActive(true);
         Time.timeScale = 1f;
-    }
+    }    
 }
