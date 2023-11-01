@@ -454,6 +454,17 @@ Add Plan:
 		+ Tem Spawn
 
 ----------------< 01. 11.  2023 >----------------
+Pridane Funkcie:
+	Boss Romm	=> 20x20
+	Room		=> 10x10
+	Imroved Room Generation
+		+ Content
+	Behavior Run Away (FollowBeh)
+
+Found Bugs:
+	Enemy Heatht bar is overlaped by 
+	room pathBlocks
+
 ----------------< 02. 11.  2023 >----------------
 ----------------< 03. 11.  2023 >----------------
 ----------------< 04. 11.  2023 >----------------

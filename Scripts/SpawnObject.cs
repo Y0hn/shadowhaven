@@ -10,7 +10,7 @@ public class SpawnTile : MonoBehaviour
     {
         GameObject spawn;
 
-        if (transform.name.Contains("Wall"))
+        if (transform.name.Contains("Wall") || transform.name.Contains("Floor"))
         {
             List<GameObject> temp = new List<GameObject>();
 

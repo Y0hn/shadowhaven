@@ -217,6 +217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4d9c8854122fa3408971799447d46a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  targetTag: Player
   speed: 3
   tol: 0.5
 --- !u!1102 &2220131363780545869

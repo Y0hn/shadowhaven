@@ -107,16 +107,19 @@ public class PlayerScript : MonoBehaviour
         return null;
     }
     private void Hurt(int damage) 
-    { 
-        health -= damage;
-        healthBar.SetHealth(health);
-        animator.SetTrigger("Hurt");
+    {
+        if (damage != 0)
+        {
+            health -= damage;
+            healthBar.SetHealth(health);
+            animator.SetTrigger("Hurt");
 
-        if (health <= 0)
-            Die();
+            if (health <= 0)
+                Die();
 
-        // Invincibility
-        nextDamage = Time.time + inviTime;
+            // Invincibility
+            nextDamage = Time.time + inviTime;
+        }
     }
     private void Die()
     {

@@ -6,8 +6,8 @@ using UnityEngine.XR;
 
 public class ShootAtTargetBehavior : StateMachineBehaviour
 {
+    public string targetTag;
     public float rate;
-    public string tag;
     public bool hide;
     public GameObject projectile;
 
@@ -31,7 +31,7 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
         if (hide)
             rotatePoint.gameObject.SetActive(true);
         // Finding closet target
-        GameObject[] targets = GameObject.FindGameObjectsWithTag(tag);
+        GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
         float minDistance = Mathf.Infinity;
         foreach (GameObject target in targets) 
         { 

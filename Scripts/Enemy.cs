@@ -58,10 +58,10 @@ public class EnemyScript : MonoBehaviour
     {
         // Stats
         stunable = true;
-        fullHealth += 20 * playerScript.GetLevel();
+        //fullHealth += 20 * playerScript.GetLevel();
         healthBar.SetMaxHealth(fullHealth);
         health = fullHealth;
-        damage += 5 * playerScript.GetLevel();
+        //damage += 5 * playerScript.GetLevel();
 
         if (eneName.Contains("Zombie"))
         {
@@ -69,7 +69,7 @@ public class EnemyScript : MonoBehaviour
         else if (eneName.Contains("Skeleton"))
         {
             rangeMax = lookRadius * 0.8f;
-            rangeMin = lookRadius * 0.25f;
+            rangeMin = lookRadius * 0.5f;
         }
     }
     private void Update()
@@ -95,14 +95,19 @@ public class EnemyScript : MonoBehaviour
         {
             if ((rangeMax < distance || distance < rangeMin) && distance < lookRadius)
             {
+                if (distance < rangeMin)
+                    animator.SetBool("runAway", true);
+                else
+                    animator.SetBool("runAway", false);
+
                 animator.SetBool("Shootin", false);
                 animator.SetBool("isFollowing", true);
             }
             else if (rangeMax > distance)
             {
                 animator.SetBool("isFollowing", false);
-                rb.velocity = Vector3.zero;
                 animator.SetBool("Shootin", true);
+                rb.velocity = Vector3.zero;
             }
             else
             {
