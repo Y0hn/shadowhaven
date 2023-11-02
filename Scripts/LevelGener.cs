@@ -18,8 +18,8 @@ public class LevelGener : MonoBehaviour
      * 7 - LRU
      * 8 - LRBU
      */
-    //private float nextRoom;
-    //private float intervalRoom;
+    private float nextRoom;
+    private float intervalRoom;
 
     public float minX;
     public float maxX;
@@ -31,7 +31,8 @@ public class LevelGener : MonoBehaviour
     private int pastDir = -1;
 
     private bool stop;
-    private bool done;
+    private bool path;
+    private bool startEnd;
 
     void Start()
     {
@@ -41,10 +42,10 @@ public class LevelGener : MonoBehaviour
         int randStartPos = Random.Range(0, startingPos.Length);
         transform.position = startingPos[randStartPos].position;
         player.position = startingPos[randStartPos].position;
+        startEnd = true;
         stop = false;
-        done = false;
+        path = false;
         //nextRoom = 0; intervalRoom = 0.5f;
-        //Debug.Log(startingPos[randStartPos].position);
 
         // Inicializatin
         dir = Random.Range(0, 6);
@@ -57,21 +58,21 @@ public class LevelGener : MonoBehaviour
     {
         if (!stop /*&& Time.time >= nextRoom*/)
         {
-            if (!done)
+            if (path)
             {
-                // Do the thing :D
-                SpawnRoom();
-                pastDir = dir;
+                // Generate Path Room
+                GeneratePath();
+                Move();
+            }
+            else if (startEnd)
+            {
+                GenerateSpawnRoom();
                 Move();
             }
             else
             {
-                // Generate Boss Room
-                transform.position = new Vector2(transform.position.x, transform.position.y + moveAmount.y);
-                Instantiate(rooms[9], transform.position, Quaternion.identity, transform.parent);
-                stop = true;
+                GenerateBossRoom();
             }
-
             // Slowness
             //nextRoom = Time.time + intervalRoom;
         }
@@ -114,7 +115,7 @@ public class LevelGener : MonoBehaviour
                 if (transform.position.y < maxY)
                     newPos = new Vector2(transform.position.x, transform.position.y + moveAmount.y);
                 else
-                    done = true;
+                    path = false;
 
                 dir = Random.Range(0, 6);
                 if      (newPos.x >= maxX)
@@ -127,29 +128,11 @@ public class LevelGener : MonoBehaviour
 
         transform.position = newPos;
     }
-    private void SpawnRoom()
+    private void GeneratePath()
     {
-        int type = 8;
+        int type = 0;
 
-        if (pastDir == -1)
-        {
-            switch (dir)
-            {
-                case 1:
-                case 3:
-                    type = 11;
-                    break;
-                case 2: 
-                case 4:
-                    type = 12;
-                    break;
-                case 0:
-                case 5:
-                    type = 13;
-                    break;
-            }
-        }
-        else if (pastDir == 1 || pastDir == 3)      // FROM RIGHT
+        if      (pastDir == 1 || pastDir == 3)      // FROM RIGHT
         {
             if      (dir == 1 || dir == 3)
                 type = 2;
@@ -163,7 +146,7 @@ public class LevelGener : MonoBehaviour
             else if (dir == 0 || dir == 5)
                 type = 4;
         }   
-        else if (pastDir == 0 || pastDir == 5)                      // FROM BOTTOM
+        else if (pastDir == 0 || pastDir == 5)      // FROM BOTTOM
         {
             if      (dir == 1 || dir == 3)
                 type = 0;
@@ -174,8 +157,69 @@ public class LevelGener : MonoBehaviour
         }
 
         Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
+        pastDir = dir;
     }
-    private void OnDrawGizmosSelected()
+    private void GenerateSpawnRoom()
+    {
+        int type = 0;
+
+        if (pastDir != -1)
+        {
+
+            switch (pastDir)
+            {
+                case 1: case 3: type = 12; break;   // From Left
+                case 2: case 4: type = 11; break;   // From Right
+                case 0: case 5: type = 10; break;   // From Up
+            }
+            stop = true;
+        }
+        else
+        {
+            switch (dir)
+            {
+                case 1: case 3: type = 11; break;   // Left
+                case 2: case 4: type = 12; break;   // Right
+                case 0: case 5: type = 13; break;   // Up
+            }
+            path = true;
+        }
+
+        Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
+        pastDir = dir;
+        startEnd = false;
+    }
+    private void GenerateBossRoom()
+    {
+        dir = Random.Range(0, 3);
+        int type = 0;
+        transform.position = new Vector2(transform.position.x, transform.position.y + moveAmount.y);
+        Vector2 pos = transform.position;
+
+        switch (dir)
+        {
+            case 1: case 3: 
+                type = 7; 
+                transform.position = 
+                    new Vector2(transform.position.x - 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
+                break;
+            case 2: case 4: 
+                type = 8;
+                transform.position =
+                    new Vector2(transform.position.x + 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
+                break;
+            case 0: case 5: 
+                type = 9;
+                transform.position =
+                    new Vector2(transform.position.x, transform.position.y + 2 * moveAmount.y);
+                break;
+        }
+
+        Instantiate(rooms[type], pos, Quaternion.identity, transform.parent);
+        startEnd = true;
+        pastDir = dir;
+    }    
+    /*private void OnDrawGizmosSelected()
     {
         float a, b;
         Vector2 size, pos;
@@ -198,4 +242,5 @@ public class LevelGener : MonoBehaviour
 
         Gizmos.DrawWireCube(pos, size);
     }
+    */
 }

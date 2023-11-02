@@ -44,14 +44,12 @@ public class EnemyScript : MonoBehaviour
     private void Start()
     {
         // References
-        GameObject player;
         eneName = transform.name;
         animator = GetComponent<Animator>();
         collid = GetComponent<Collider2D>();
         rb = GetComponent<Rigidbody2D>();
-        player = GameManager.instance.player;
-        target = player.transform;
-        playerScript = player.GetComponent<PlayerScript>();
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        playerScript = target.GetComponent<PlayerScript>();
         SetStats();
     }
     private void SetStats()

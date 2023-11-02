@@ -156,7 +156,7 @@ MonoBehaviour:
   playerUI: {fileID: 869931384}
   pauseMenu: {fileID: 840914211}
   deathMenu: {fileID: 1816737360}
-  Level: {fileID: 518029452332032132, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+  Levels: []
 --- !u!4 &6703094
 Transform:
   m_ObjectHideFlags: 0
@@ -4229,6 +4229,26 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8853168190576729130, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: rooms.Array.data[6]
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8853168190576729130, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: rooms.Array.data[7]
+      value: 
+      objectReference: {fileID: 5891634902062156863, guid: 527558801d88c3042b8dab2ed1e1e30b, type: 3}
+    - target: {fileID: 8853168190576729130, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: rooms.Array.data[8]
+      value: 
+      objectReference: {fileID: 5891634902062156863, guid: 78dedce7011a53540a1863ebbe747372, type: 3}
+    - target: {fileID: 8853168190576729130, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: rooms.Array.data[9]
+      value: 
+      objectReference: {fileID: 5891634902062156863, guid: 1a7980007cbd61a43b0eaa8b5fe7eb44, type: 3}
+    - target: {fileID: 8853168190576729130, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: rooms.Array.data[10]
+      value: 
+      objectReference: {fileID: 5891634902062156863, guid: 3bad147add50d3646b203984542e1048, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

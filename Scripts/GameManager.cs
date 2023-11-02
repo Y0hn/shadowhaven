@@ -6,18 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    // Singleton
-    public static GameManager instance;
-    void Awake()
-    {
-        instance = this;
-    }
-
     public GameObject player;
     public GameObject playerUI;
     public GameObject pauseMenu;
     public GameObject deathMenu;
-    public GameObject Level;
+    public GameObject[] Levels;
 
     private PlayerScript playerScript;
 
@@ -100,7 +93,7 @@ public class GameManager : MonoBehaviour
         playerLives = true;
         isPaused = false;
         Destroy(GameObject.FindGameObjectWithTag("Level"));
-        Instantiate(Level, transform);
+        Instantiate(Levels[0], transform);
         deathMenu.SetActive(false);
         playerUI.SetActive(true);
         Time.timeScale = 1f;
