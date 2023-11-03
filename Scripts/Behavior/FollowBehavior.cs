@@ -49,12 +49,13 @@ public class FollowBehavior : StateMachineBehaviour
         Vector2 moveDir = playerPos - pos;
         moveDir = moveDir.normalized;
 
-        if (animator.GetBool("runAway"))
-        {
-            moveDir = new Vector2(0 - moveDir.x, 0 - moveDir.y);
-            dir = new Vector2 (0 - dir.x, 0 - dir.y);
-        }
-
+        if (animator.transform.tag == "Ranged Enemy")
+            if (animator.GetBool("runAway"))
+            {
+                moveDir = new Vector2(0 - moveDir.x, 0 - moveDir.y);
+                dir = new Vector2(0 - dir.x, 0 - dir.y);
+            }
+        
         rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
 
         animator.SetFloat("Horizontal", dir.x);

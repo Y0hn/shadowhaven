@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour
 {
     public GameObject player;
-    public GameObject playerUI;
-    public GameObject pauseMenu;
-    public GameObject deathMenu;
+    public ManagerUI UI;
     public GameObject[] Levels;
 
     private PlayerScript playerScript;
@@ -17,16 +15,16 @@ public class GameManager : MonoBehaviour
     public static bool playerLives;
     public static bool isPaused;
 
+    private bool inventory = false;
     private bool SceneLoaded = false;
 
     void Start()
     {
+        // Debug.Log(Application.persistentDataPath);
         playerScript = player.GetComponent<PlayerScript>();
-        pauseMenu.SetActive(false);
         playerLives = true;
         isPaused = false;
         SceneLoaded = true;
-        // Debug.Log(Application.persistentDataPath);
     }
     private void Update()
     {
@@ -39,6 +37,8 @@ public class GameManager : MonoBehaviour
                     ResumeGame();
                 else
                     PauseGame();
+            else if (Input.GetKeyUp(KeyCode.E))
+                OpenCloseInventory();
         }
         else
         {
@@ -49,12 +49,12 @@ public class GameManager : MonoBehaviour
     {
         isPaused = true;
         Time.timeScale = 0f;
-        playerUI.SetActive(false);
-        deathMenu.SetActive(true);
+        UI.DisableUI(0);
+        UI.EnableUI("death");
     }
     private void PauseGame()
     {
-        pauseMenu.SetActive(true);
+        UI.EnableUI("pause");
         Time.timeScale = 0f;
         isPaused = true;
     }
@@ -63,9 +63,24 @@ public class GameManager : MonoBehaviour
         PlayerRevive();
         SceneLoaded = true;
     }
+    private void OpenCloseInventory()
+    {
+        if (!isPaused)
+        {
+            if (inventory)
+                UI.DisableUI("inv");
+            else
+                UI.EnableUI("inv");
+
+            inventory = !inventory;
+        }
+    }
+
+
     public void ResumeGame()
     {
-        pauseMenu.SetActive(false);
+        UI.DisableUI("inv");
+        UI.DisableUI("pause");
         Time.timeScale = 1f;
         isPaused = false;
     }
@@ -87,15 +102,14 @@ public class GameManager : MonoBehaviour
         SceneLoaded = false;
         SceneManager.LoadScene(0);
     }
-    public void PlayerRevive() // Just for testing
+    public void PlayerRevive()
     {
         playerScript.Resurect();
         playerLives = true;
         isPaused = false;
         Destroy(GameObject.FindGameObjectWithTag("Level"));
         Instantiate(Levels[0], transform);
-        deathMenu.SetActive(false);
-        playerUI.SetActive(true);
+        UI.ResetUI();
         Time.timeScale = 1f;
-    }    
+    }
 }

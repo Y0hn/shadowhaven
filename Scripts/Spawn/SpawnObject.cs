@@ -8,7 +8,7 @@ public class SpawnTile : MonoBehaviour
 
     void Start()
     {
-        GameObject spawn;
+        GameObject spawn = null;
 
         if (transform.name.Contains("Wall") || transform.name.Contains("Floor"))
         {
@@ -30,9 +30,10 @@ public class SpawnTile : MonoBehaviour
         {
             objects = GameObject.FindGameObjectsWithTag(transform.name);
             int rand = Random.Range(0, objects.Length);
-            spawn = objects[rand];
+            if (objects.Length != 0)
+                spawn = objects[rand];
         }
-
-        Instantiate(spawn, transform.position, Quaternion.identity, transform);
+        if (spawn != null)    
+            Instantiate(spawn, transform.position, Quaternion.identity, transform);
     }
 }

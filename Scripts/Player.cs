@@ -7,6 +7,7 @@ using UnityEngine;
 using UnityEngine.U2D;
 using UnityEngine.U2D.IK;
 using UnityEngine.XR;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerScript : MonoBehaviour
 {    
@@ -26,6 +27,8 @@ public class PlayerScript : MonoBehaviour
     private float nextDamage = 0;
     private float inviTime = 0.5f;
 
+    private float interRange = 2;
+
     public int health = 100;
     private int maxHealth;
     public int level = 1;
@@ -43,7 +46,10 @@ public class PlayerScript : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
+        Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position, new Vector3(hitBox.x, hitBox.y, 0));
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, interRange);
     }
     private void Update()
     {
@@ -89,6 +95,16 @@ public class PlayerScript : MonoBehaviour
                 // Projectiles Doin Damage
                 foreach (Collider2D projectile in Projectiles)
                     Hurt(projectile.GetComponent<ProjectileScript>().DoDamage());
+            }
+
+            Collider2D[] obj = Physics2D.OverlapCircleAll(transform.position, interRange);
+            foreach (var coll in obj)
+            {
+                if (coll.TryGetComponent(out Interactable temp))
+                {
+                    temp.AddToInventory();
+                    //Destroy(coll.gameObject);
+                }
             }
         }
     }

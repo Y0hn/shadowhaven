@@ -25,9 +25,9 @@ public class PlayerCombatScript : MonoBehaviour
 
     private float rotZ;
     private float lastRotZ;
-    private float attackDist = 45;
+    private float attackDist;
 
-    private int damage = 50;
+    private int damage;
 
     private bool CombatActive;
     //private bool fliped;
@@ -46,6 +46,8 @@ public class PlayerCombatScript : MonoBehaviour
         HandSecondary.SetActive(false);
         Hand.SetActive(false);
         CombatActive = false;
+        attackDist = 45;
+        damage = 50;
         fireTime = 0;
         fireRate = 2;
         lastRotZ = 0;
@@ -66,14 +68,15 @@ public class PlayerCombatScript : MonoBehaviour
                 else if (!melee)
                     RangedAttack();
             }
-            else if (Input.GetMouseButtonDown(1))
+            else if (Input.GetMouseButtonDown(2))
             {
                 WeaponSwap();
             }
-            else if (Input.GetMouseButton(2))
+            else if (Input.GetMouseButton(1))
             {
                 Hand.SetActive(false);
                 CombatActive = false;
+                //Interaction();
             }
 
             if (CombatActive)
@@ -137,4 +140,15 @@ public class PlayerCombatScript : MonoBehaviour
             fireTime = Time.time + 1 / fireRate;
         }
     }
+    /*private void Interaction()
+    {
+        Camera mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        Vector2 targetedPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+        Physics2D.OverlapCircle(targetedPos, interRange).TryGetComponent(out Interactable item);
+        if (item != null) 
+        { 
+        
+        }
+    }
+    */
 }
