@@ -47,7 +47,7 @@ public class PlayerCombatScript : MonoBehaviour
         Hand.SetActive(false);
         CombatActive = false;
         attackDist = 45;
-        damage = 50;
+        damage = 30;
         fireTime = 0;
         fireRate = 2;
         lastRotZ = 0;
@@ -68,11 +68,11 @@ public class PlayerCombatScript : MonoBehaviour
                 else if (!melee)
                     RangedAttack();
             }
-            else if (Input.GetMouseButtonDown(2))
+            else if (Input.GetMouseButtonDown(1))
             {
                 WeaponSwap();
             }
-            else if (Input.GetMouseButton(1))
+            else if (Input.GetMouseButton(2))
             {
                 Hand.SetActive(false);
                 CombatActive = false;
