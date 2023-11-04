@@ -1435,6 +1435,7 @@ GameObject:
   - component: {fileID: 386169645}
   - component: {fileID: 386169644}
   - component: {fileID: 386169643}
+  - component: {fileID: 386169648}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -1557,11 +1558,28 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 2044090447}
   - {fileID: 1930098969}
+  - {fileID: 2044090447}
   - {fileID: 381083803}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &386169648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386169642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b20365cd7cce98545ab4551d40fd7a18, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
+  attackRange: 0.4
 --- !u!1 &436542393
 GameObject:
   m_ObjectHideFlags: 0
@@ -5743,7 +5761,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1930098969}
-  - component: {fileID: 1930098971}
   m_Layer: 9
   m_Name: Rotate-point
   m_TagString: Weapon
@@ -5768,29 +5785,6 @@ Transform:
   - {fileID: 1411029097}
   m_Father: {fileID: 386169647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1930098971
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1930098968}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b20365cd7cce98545ab4551d40fd7a18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Hand: {fileID: 1096870494}
-  HandSecondary: {fileID: 1411029096}
-  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
-  enemyLayers:
-    serializedVersion: 2
-    m_Bits: 256
-  weapons:
-  - {fileID: 21300000, guid: dd5e7ac8490a661489fc57bd186c8069, type: 3}
-  - {fileID: 21300000, guid: 57c5e8a6cbec95341b5b89bd1aee1740, type: 3}
-  - {fileID: 21300000, guid: 75cd172ddc661c24b952653674531ac9, type: 3}
-  attackRange: 0.4
 --- !u!1 &1943271113
 GameObject:
   m_ObjectHideFlags: 0

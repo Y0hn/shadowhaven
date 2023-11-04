@@ -7,19 +7,18 @@ using UnityEngine.XR;
 
 public class PlayerCombatScript : MonoBehaviour
 {
-    public GameObject Hand;
-    public GameObject HandSecondary;
-    public GameObject projectile;
     public LayerMask enemyLayers;
-    public Sprite[] weapons;
+    public GameObject projectile;
+
+    private Transform rotatePoint;
+    private Transform Hand;
+    private Transform HandSecondary;
 
     public float attackRange;
 
     private PlayerScript player;
     private Collider2D col;
-    private Animator animator;
-    private Camera cam;    
-
+    private Camera cam;
 
     private Vector2 mousePos;
 
@@ -30,7 +29,6 @@ public class PlayerCombatScript : MonoBehaviour
     private int damage;
 
     private bool CombatActive;
-    //private bool fliped;
     private bool melee;
     private float fireTime;
     private float fireRate;
@@ -40,11 +38,13 @@ public class PlayerCombatScript : MonoBehaviour
         // References
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        rotatePoint = transform.GetChild(0);
+        Hand = rotatePoint.transform.GetChild(0);
+        HandSecondary = rotatePoint.transform.GetChild(1);
         col = Hand.GetComponent<Collider2D>();
-        animator = GetComponent<Animator>();
         // Set Up
-        HandSecondary.SetActive(false);
-        Hand.SetActive(false);
+        HandSecondary.gameObject.SetActive(false);
+        Hand.gameObject.SetActive(false);
         CombatActive = false;
         attackDist = 45;
         damage = 30;
@@ -62,7 +62,7 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 if (!CombatActive)
                 {
-                    Hand.SetActive(true);
+                    Hand.gameObject.SetActive(true);
                     CombatActive = true;
                 }
                 else if (!melee)
@@ -74,7 +74,7 @@ public class PlayerCombatScript : MonoBehaviour
             }
             else if (Input.GetMouseButton(2))
             {
-                Hand.SetActive(false);
+                Hand.gameObject.SetActive(false);
                 CombatActive = false;
                 //Interaction();
             }
@@ -86,7 +86,7 @@ public class PlayerCombatScript : MonoBehaviour
 
                 Vector2 rotation = mousePos - player.GetPos();
                 rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0, 0, rotZ);
+                rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
 
                 if (melee)
                 {
@@ -101,26 +101,21 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void OnDrawGizmosSelected()
     {
-        Vector2 attP = new Vector2 (Hand.transform.position.x,Hand.transform.position.y);
+        /*
+        Vector2 attP = new Vector2 (Hand.position.x,Hand.position.y);
         Gizmos.DrawWireSphere(attP, attackRange);
+        */
     }
     private void WeaponSwap()
     {
-        int weap;
-
-        if (melee)
-            weap = 2;
-        else
-            weap = 1;
-
-        Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
+        //Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
 
         melee = !melee;
         col.enabled = melee;
 
         if (!CombatActive)
         {
-            Hand.SetActive(true);
+            Hand.gameObject.SetActive(true);
             CombatActive = true;
         }
     }
@@ -140,15 +135,17 @@ public class PlayerCombatScript : MonoBehaviour
             fireTime = Time.time + 1 / fireRate;
         }
     }
-    /*private void Interaction()
+    public void EquipWeapon(Equipment equipment)
     {
-        Camera mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-        Vector2 targetedPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-        Physics2D.OverlapCircle(targetedPos, interRange).TryGetComponent(out Interactable item);
-        if (item != null) 
-        { 
-        
+        if (equipment != null)
+        {
+            damage = equipment.damageModifier;
+            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = equipment.texture;
+        }
+        else
+        {
+            damage = equipment.damageModifier;
+            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = equipment.texture;
         }
     }
-    */
 }
