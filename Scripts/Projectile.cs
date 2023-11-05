@@ -15,6 +15,8 @@ public class ProjectileScript : MonoBehaviour
     private Vector2 velocity;
     private Rigidbody2D rb;
 
+    private int targets;
+
     void Start()
     {
         // References
@@ -37,6 +39,11 @@ public class ProjectileScript : MonoBehaviour
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 90);
         timeToDie = Time.time + timeToDie;
+
+        if (transform.name.Contains("Player"))
+            targets = 1;
+        else if (transform.name.Contains("Enemy"))
+            targets = 0;
     }
     void Update()
     {
@@ -48,13 +55,19 @@ public class ProjectileScript : MonoBehaviour
         else
         {
             Collider2D[] hitTargets = Physics2D.OverlapCircleAll(transform.position, size, targetLayers);
+
             if (hitTargets.Length > 0)
             {
-                if      (transform.name.Contains("Enemy"))
-                    hitTargets[0].GetComponent<PlayerScript>().TakeDamage(damage);
-                else if (transform.name.Contains("Player"))
-                    foreach (Collider2D target in hitTargets)
-                        target.GetComponent<EnemyScript>().TakeDamage(damage);
+                switch (targets)
+                {
+                    case 0:
+                        hitTargets[0].GetComponent<PlayerScript>().TakeDamage(damage);
+                        break;
+                    case 1:
+                        foreach (Collider2D target in hitTargets)
+                            target.GetComponent<EnemyScript>().TakeDamage(damage);
+                        break;
+                }
                 Destroy(transform.gameObject);
             }
             else if (!rb.velocity.Equals(velocity))

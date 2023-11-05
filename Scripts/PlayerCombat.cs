@@ -22,16 +22,17 @@ public class PlayerCombatScript : MonoBehaviour
 
     private Vector2 mousePos;
 
-    private float rotZ;
-    private float lastRotZ;
-    private float attackDist;
 
-    private int damage;
+    public int damage;
+
+    private float attackDist = 45;  // distance for melee weapon to do damage
+    public float fireRate;
+    private float fireTime = 0;
+    private float rotZ;
+    private float lastRotZ = 0;
 
     private bool CombatActive;
     private bool melee;
-    private float fireTime;
-    private float fireRate;
 
     private void Start()
     {
@@ -42,69 +43,39 @@ public class PlayerCombatScript : MonoBehaviour
         Hand = rotatePoint.transform.GetChild(0);
         HandSecondary = rotatePoint.transform.GetChild(1);
         col = Hand.GetComponent<Collider2D>();
-        // Set Up
-        HandSecondary.gameObject.SetActive(false);
-        Hand.gameObject.SetActive(false);
-        CombatActive = false;
-        attackDist = 45;
-        damage = 30;
-        fireTime = 0;
-        fireRate = 2;
-        lastRotZ = 0;
+
         melee = true;
     }
     private void Update()
     {
         if (!GameManager.isPaused)
         {
-            // Eneterin combat-mode
             if (Input.GetMouseButton(0))
             {
-                if (!CombatActive)
-                {
-                    Hand.gameObject.SetActive(true);
-                    CombatActive = true;
-                }
-                else if (!melee)
+                if (!melee)
                     RangedAttack();
             }
             else if (Input.GetMouseButtonDown(1))
             {
                 WeaponSwap();
             }
-            else if (Input.GetMouseButton(2))
+
+            mousePos = Input.mousePosition;
+            mousePos = cam.ScreenToWorldPoint(mousePos);
+
+            Vector2 rotation = mousePos - player.GetPos();
+            rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+            rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
+
+            if (melee)
             {
-                Hand.gameObject.SetActive(false);
-                CombatActive = false;
-                //Interaction();
-            }
-
-            if (CombatActive)
-            {
-                mousePos = Input.mousePosition;
-                mousePos = cam.ScreenToWorldPoint(mousePos);
-
-                Vector2 rotation = mousePos - player.GetPos();
-                rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-                rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
-
-                if (melee)
+                if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
                 {
-                    if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
-                    {
-                        MeleeAttack();
-                        lastRotZ = rotZ;
-                    }
-                }                   
-             }
+                    MeleeAttack();
+                    lastRotZ = rotZ;
+                }
+            }
         }
-    }
-    private void OnDrawGizmosSelected()
-    {
-        /*
-        Vector2 attP = new Vector2 (Hand.position.x,Hand.position.y);
-        Gizmos.DrawWireSphere(attP, attackRange);
-        */
     }
     private void WeaponSwap()
     {
@@ -137,15 +108,21 @@ public class PlayerCombatScript : MonoBehaviour
     }
     public void EquipWeapon(Equipment equipment)
     {
+        SpriteRenderer sprite = Hand.GetChild(0).GetComponent<SpriteRenderer>();
+
         if (equipment != null)
         {
             damage = equipment.damageModifier;
-            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = equipment.texture;
+            sprite.sprite = equipment.texture;
         }
         else
         {
             damage = equipment.damageModifier;
-            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = equipment.texture;
+            sprite.sprite = equipment.texture;
         }
     }
+    private void OnEnable()
+    { transform.GetChild(0).gameObject.SetActive(true);     }
+    private void OnDisable()
+    { transform.GetChild(0).gameObject.SetActive(false);    }
 }

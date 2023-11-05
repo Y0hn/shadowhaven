@@ -1460,6 +1460,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   hitBox: {x: 1.1, y: 1.6}
+  interRange: 2
   health: 100
   level: 1
 --- !u!95 &386169644
@@ -1570,7 +1571,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 386169642}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b20365cd7cce98545ab4551d40fd7a18, type: 3}
   m_Name: 
@@ -1580,6 +1581,8 @@ MonoBehaviour:
     m_Bits: 256
   projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
   attackRange: 0.4
+  damage: 30
+  fireRate: 2
 --- !u!1 &436542393
 GameObject:
   m_ObjectHideFlags: 0

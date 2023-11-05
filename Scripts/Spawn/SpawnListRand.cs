@@ -11,7 +11,7 @@ public class SpawnListRand : MonoBehaviour
         if (spawnList.Length != 0)
         {
             int rand = Random.Range(0, spawnList.Length);
-            Instantiate(spawnList[rand], transform.position, Quaternion.identity, transform);
+            Instantiate(spawnList[rand], transform);
         }
     }
 }

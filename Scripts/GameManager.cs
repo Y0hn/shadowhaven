@@ -76,7 +76,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
     public void ResumeGame()
     {
         UI.DisableUI("inv");
@@ -108,7 +107,7 @@ public class GameManager : MonoBehaviour
         playerLives = true;
         isPaused = false;
         Destroy(GameObject.FindGameObjectWithTag("Level"));
-        Instantiate(Levels[0], transform);
+        Instantiate(Levels[0], transform.position, Quaternion.identity);
         UI.ResetUI();
         Time.timeScale = 1f;
     }

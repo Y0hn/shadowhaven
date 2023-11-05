@@ -15,10 +15,14 @@ public class PlayerScript : MonoBehaviour
     public LayerMask enemyLayers;
     public Vector2 hitBox;
 
-    private GameObject player;
+    public float interRange;
+    public int health;
+    public int level;
+
+    private PlayerCombatScript playerCom;
     private Rigidbody2D rb;
     private Animator animator;
-    private GameObject weapon;
+    private Transform rotate;
 
     private Vector2 moveDir;
 
@@ -27,29 +31,34 @@ public class PlayerScript : MonoBehaviour
     private float nextDamage = 0;
     private float inviTime = 0.5f;
 
-    private float interRange = 2;
-
-    public int health = 100;
     private int maxHealth;
-    public int level = 1;
+    private bool combatAct = false;
 
     private void Start() 
     {
         // References
-        player = GameObject.FindGameObjectWithTag("Player");
-        weapon = FindChildByTag(player, "Weapon");
-        rb = player.GetComponent<Rigidbody2D>();
-        animator = player.GetComponent<Animator>();
-
+        playerCom = GetComponent<PlayerCombatScript>();
+        rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        
         maxHealth = health;
         healthBar.SetMaxHealth(health);
+
+        combatAct = playerCom.enabled;
     }
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.blue;
         Gizmos.DrawWireCube(transform.position, new Vector3(hitBox.x, hitBox.y, 0));
+
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interRange);
+
+        Vector2 pos = transform.GetChild(0).GetChild(0).position;
+        float range = GetComponent<PlayerCombatScript>().attackRange;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(pos, range);
+
     }
     private void Update()
     {
@@ -65,6 +74,18 @@ public class PlayerScript : MonoBehaviour
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
+
+        if (Input.GetMouseButton(0) && !combatAct)
+        {
+            playerCom.enabled = true;
+            combatAct = true;
+        }
+        else if (Input.GetMouseButton(2) && combatAct)
+        {
+            playerCom.enabled = false;
+            combatAct = false;
+        }
+           
 
         moveDir = new Vector2(moveX, moveY).normalized;
     }
@@ -140,7 +161,7 @@ public class PlayerScript : MonoBehaviour
     private void Die()
     {
         rb.simulated = false;
-        weapon.SetActive(false);
+        playerCom.enabled = false;
         animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
@@ -156,7 +177,7 @@ public class PlayerScript : MonoBehaviour
     { 
         health = maxHealth; 
         healthBar.SetHealth(health);
-        weapon.SetActive(true);
+        //playerCom.enabled = true;
         rb.simulated = true;
         animator.SetBool("isAlive", true);
     }
