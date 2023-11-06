@@ -6,16 +6,15 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
+        if (item == null)
+        {
+            item = ItemsList.instance.GetRandItem();
+        }
         transform.GetComponent<SpriteRenderer>().sprite = item.icon;
     }
-
     public void AddToInventory()
     {
-        //Debug.Log("Picking up " + item.name);
         if (Inventory.instance.Add(item))
-        {
-            //Debug.Log("Destroyed " + gameObject.name);
             Destroy(gameObject);
-        }
     }
 }

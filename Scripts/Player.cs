@@ -11,6 +11,7 @@ using static UnityEngine.GraphicsBuffer;
 
 public class PlayerScript : MonoBehaviour
 {    
+    public Sprite empty;
     public HealthBar healthBar;
     public LayerMask enemyLayers;
     public Vector2 hitBox;
@@ -22,7 +23,8 @@ public class PlayerScript : MonoBehaviour
     private PlayerCombatScript playerCom;
     private Rigidbody2D rb;
     private Animator animator;
-    private Transform rotate;
+    private Inventory inventory;
+    private Sprite[] clothes = new Sprite[3];    // tri typy oblecena
 
     private Vector2 moveDir;
 
@@ -32,7 +34,10 @@ public class PlayerScript : MonoBehaviour
     private float inviTime = 0.5f;
 
     private int maxHealth;
+    private int numE;
+
     private bool combatAct = false;
+    private bool armed = false;
 
     private void Start() 
     {
@@ -40,10 +45,14 @@ public class PlayerScript : MonoBehaviour
         playerCom = GetComponent<PlayerCombatScript>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        
         maxHealth = health;
         healthBar.SetMaxHealth(health);
+        //transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+        inventory = Inventory.instance;
+        inventory.onItemChangeCallback += UpdateEquipment;
+        numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
 
+        // Set up
         combatAct = playerCom.enabled;
     }
     private void OnDrawGizmosSelected()
@@ -54,11 +63,14 @@ public class PlayerScript : MonoBehaviour
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, interRange);
 
-        Vector2 pos = transform.GetChild(0).GetChild(0).position;
+        Transform hand = transform.GetChild(0).GetChild(0);
+        if (hand.parent.gameObject.activeSelf)
+        {
+        Vector2 pos = hand.position;
         float range = GetComponent<PlayerCombatScript>().attackRange;
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(pos, range);
-
+        }
     }
     private void Update()
     {
@@ -70,22 +82,60 @@ public class PlayerScript : MonoBehaviour
             CollisionCheck();
         }
     }
+    private void UpdateEquipment()
+    {
+        for (int i = 0; i < numE; i++)
+        {
+            Equipment e = inventory.Equiped(i);
+            if (e != null)
+                switch (i) 
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        if (e.texture != clothes[i])
+                            clothes[i] = e.texture;
+                        break;
+                    case 3: 
+                    case 4:
+                        armed = true;
+                        playerCom.EquipWeapon(e);
+                        break;
+                    default:
+                        break;
+                }
+            else
+                switch (i)
+                {
+                    case 0:
+                    case 1:
+                    case 2:                            
+                        clothes[i] = empty;
+                        break;
+                    case 3:
+                        armed = false;
+                        playerCom.EquipWeapon(empty, i);
+                        break;
+                    default:
+                        break;
+                }
+        }
+    }
     private void ProcessInput()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetMouseButton(0) && !combatAct)
+        if (Input.GetMouseButton(0) && !combatAct && armed)
         {
             playerCom.enabled = true;
             combatAct = true;
         }
-        else if (Input.GetMouseButton(2) && combatAct)
+        else if ((Input.GetMouseButton(2) || !armed) && combatAct)
         {
             playerCom.enabled = false;
             combatAct = false;
-        }
-           
+        }          
 
         moveDir = new Vector2(moveX, moveY).normalized;
     }
@@ -99,6 +149,15 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
     }
+    public void TakeDamage(int damage)                  { Hurt(damage);         }
+    public void SetPos(Vector2 pos)                     { rb.position = pos;    }
+    public void SetLevel(int newlevel)                  { level = newlevel;     }
+    public void SetHealth(int newhealth)                {  health = newhealth;  }
+    public int GetLevel()                               { return level;         }
+    public int GetHealth()                              { return health;        }
+    public Vector2 GetPos()                             { return rb.position;   }
+
+    // DAMAGING \\
     private void CollisionCheck()
     {
         if (Time.time > nextDamage)
@@ -129,20 +188,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-    private GameObject FindChildByTag(GameObject parent, string tag)
-    {
-        for (int i = 0; i < parent.transform.childCount; i++)
-        {
-            if (parent.transform.GetChild(i).tag == tag)
-                return parent.transform.GetChild(i).gameObject;
-
-            GameObject tmp = FindChildByTag(parent.transform.GetChild(i).gameObject, tag);
-
-            if (tmp != null)
-                return tmp;
-        }
-        return null;
-    }
     private void Hurt(int damage) 
     {
         if (damage != 0)
@@ -162,17 +207,11 @@ public class PlayerScript : MonoBehaviour
     {
         rb.simulated = false;
         playerCom.enabled = false;
+        combatAct = false;
         animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
     }
-    public void TakeDamage(int damage)                  { Hurt(damage);         }
-    public void SetPos(Vector2 pos)                     { rb.position = pos;    }
-    public void SetLevel(int newlevel)                  { level = newlevel;     }
-    public void SetHealth(int newhealth)                {  health = newhealth;  }
-    public int GetLevel()                               { return level;         }
-    public int GetHealth()                              { return health;        }
-    public Vector2 GetPos()                             { return rb.position;   }
     public void Resurect() 
     { 
         health = maxHealth; 

@@ -35,7 +35,7 @@ public class Inventory : MonoBehaviour
             
         items.Add(item);
 
-        onItemChangeCallback?.Invoke();
+        onItemChangeCallback.Invoke();
         return true;
     }
     public void Remove (Item item) 

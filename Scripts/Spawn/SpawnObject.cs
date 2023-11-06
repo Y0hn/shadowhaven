@@ -34,6 +34,6 @@ public class SpawnTile : MonoBehaviour
                 spawn = objects[rand];
         }
         if (spawn != null)    
-            Instantiate(spawn, transform);
+            Instantiate(spawn, transform.position, Quaternion.identity, transform);
     }
 }

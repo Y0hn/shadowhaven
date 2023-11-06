@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.UIElements;
 using UnityEngine.XR;
 
 public class PlayerCombatScript : MonoBehaviour
@@ -12,7 +14,8 @@ public class PlayerCombatScript : MonoBehaviour
 
     private Transform rotatePoint;
     private Transform Hand;
-    private Transform HandSecondary;
+    private Transform HandS;
+    private Sprite empty;
 
     public float attackRange;
 
@@ -24,6 +27,7 @@ public class PlayerCombatScript : MonoBehaviour
 
 
     public int damage;
+    private const int posun = 3;    // ak sa v buducosti bude menit tak bude problem
 
     private float attackDist = 45;  // distance for melee weapon to do damage
     public float fireRate;
@@ -31,9 +35,8 @@ public class PlayerCombatScript : MonoBehaviour
     private float rotZ;
     private float lastRotZ = 0;
 
-    private bool CombatActive;
     private bool melee;
-
+    
     private void Start()
     {
         // References
@@ -41,10 +44,8 @@ public class PlayerCombatScript : MonoBehaviour
         cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         rotatePoint = transform.GetChild(0);
         Hand = rotatePoint.transform.GetChild(0);
-        HandSecondary = rotatePoint.transform.GetChild(1);
+        HandS = rotatePoint.transform.GetChild(1);
         col = Hand.GetComponent<Collider2D>();
-
-        melee = true;
     }
     private void Update()
     {
@@ -79,16 +80,7 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void WeaponSwap()
     {
-        //Hand.transform.GetChild(0).GetComponent<SpriteRenderer>().sprite = weapons[weap];
-
-        melee = !melee;
-        col.enabled = melee;
-
-        if (!CombatActive)
-        {
-            Hand.gameObject.SetActive(true);
-            CombatActive = true;
-        }
+        // Change weapons
     }
     private void MeleeAttack()
     {
@@ -106,23 +98,55 @@ public class PlayerCombatScript : MonoBehaviour
             fireTime = Time.time + 1 / fireRate;
         }
     }
-    public void EquipWeapon(Equipment equipment)
+    public void EquipWeapon(Equipment weap)
     {
-        SpriteRenderer sprite = Hand.GetChild(0).GetComponent<SpriteRenderer>();
+        // References
+        Hand = transform.GetChild(0).GetChild(0);
+        HandS = transform.GetChild(0).GetChild(1);
+        SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
+        SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
+        col = Hand.GetComponent<Collider2D>();
 
-        if (equipment != null)
+        int index = (int)weap.equipSlot - posun;
+        int type = (int)weap.type;
+
+        switch (index)
         {
-            damage = equipment.damageModifier;
-            sprite.sprite = equipment.texture;
+            case 0:
+                if (weap.texture != Weapon.sprite)
+                    Weapon.sprite = weap.texture;
+                damage = weap.damageModifier;
+                switch (type)
+                {
+                    case 0: melee = true; break;  // Melee
+                    case 1: 
+                    case 2: melee = false; break;  // Magic + Ranged
+                }
+                col.enabled = melee;
+                break;
+            case 1:
+                Debug.Log("Equipnuta secondary zbran: " + weap.name);
+                if (weap.texture != WeaponS.sprite)
+                    WeaponS.sprite = weap.texture;
+                // nejako modifinut damage alebo neco take
+                break;
+            default:
+                break;
         }
-        else
-        {
-            damage = equipment.damageModifier;
-            sprite.sprite = equipment.texture;
+    }
+    public void EquipWeapon(Sprite s, int i)
+    {
+        i -= posun;
+        switch (i) 
+        { 
+            case 0: transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = s; break;
+            case 1: transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = s; break;
         }
+        
     }
     private void OnEnable()
     { transform.GetChild(0).gameObject.SetActive(true);     }
     private void OnDisable()
     { transform.GetChild(0).gameObject.SetActive(false);    }
+
 }

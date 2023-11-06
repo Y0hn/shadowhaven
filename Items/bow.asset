@@ -10,12 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bdff6aa4a3576c4ca00d9f52a7cc328, type: 3}
-  m_Name: New Equipment
+  m_Name: bow
   m_EditorClassIdentifier: 
-  name: New item
-  icon: {fileID: 21300000, guid: aed49294752e5664fa34a3b6ac48328d, type: 3}
-  texture: {fileID: 21300000, guid: cfe1931000ee0804c8542d316cba6cd4, type: 3}
+  name: bow
+  icon: {fileID: 21300000, guid: 75cd172ddc661c24b952653674531ac9, type: 3}
+  texture: {fileID: 21300000, guid: 75cd172ddc661c24b952653674531ac9, type: 3}
   isDefaultItem: 0
-  equipSlot: 1
-  armorModifier: 20
+  type: 1
+  equipSlot: 3
+  armorModifier: 0
   damageModifier: 0

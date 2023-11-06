@@ -18,6 +18,8 @@ public class GameManager : MonoBehaviour
     private bool inventory = false;
     private bool SceneLoaded = false;
 
+    private float refreshInvTime = 0.1f;
+
     void Start()
     {
         // Debug.Log(Application.persistentDataPath);
@@ -28,6 +30,8 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
+        if (Time.time > refreshInvTime)
+            Inventory.instance.onItemChangeCallback.Invoke();
         if (!SceneLoaded) 
             ReloadScene();
         if (playerLives)

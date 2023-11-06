@@ -492,6 +492,22 @@ Kontrola
 Uhladzovanie
 
 ----------------< 06. 11.  2023 >----------------
+Fixes:
+	Room Generator Bug
+		transform.position
+	Screen Bug
+		pixalated grafics in Editor
+
+Weapon Equipment System:
+	Da sa menit zbrane v inventari
+	da sa unequipovat zbrane
+	da sa nimi nastavovat dmg
+	. . .
+
+WARNING 
+	Rovnake zbrane sa overwrituju.
+
+
 ----------------< 07. 11.  2023 >----------------
 ----------------< 08. 11.  2023 >----------------
 ----------------< 09. 11.  2023 >----------------
@@ -516,6 +532,12 @@ Uhladzovanie
 ----------------< 28. 11.  2023 >----------------
 ----------------< 29. 11.  2023 >----------------
 ----------------< 30. 11.  2023 >----------------
+
+______________/ INVENTORY  SYSTEM \______________
+Inventar sa zklada z 12 itemov 
+A je to Pain
+
+______________/ EQUIPMENT  SYSTEM \______________
 
 ___________________/ SCRIPTS \___________________
 fill in later ;D
