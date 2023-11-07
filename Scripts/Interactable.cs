@@ -7,10 +7,11 @@ public class Interactable : MonoBehaviour
     private void Start()
     {
         if (item == null)
-        {
             item = ItemsList.instance.GetRandItem();
-        }
-        transform.GetComponent<SpriteRenderer>().sprite = item.icon;
+        if (item != null )
+            transform.GetComponent<SpriteRenderer>().sprite = item.icon;
+        else
+            Destroy(gameObject);
     }
     public void AddToInventory()
     {

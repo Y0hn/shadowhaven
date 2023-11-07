@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0bdff6aa4a3576c4ca00d9f52a7cc328, type: 3}
-  m_Name: Sword 1
+  m_Name: sword
   m_EditorClassIdentifier: 
   name: sword
-  icon: {fileID: 21300000, guid: 57c5e8a6cbec95341b5b89bd1aee1740, type: 3}
-  texture: {fileID: 21300000, guid: 57c5e8a6cbec95341b5b89bd1aee1740, type: 3}
+  icon: {fileID: 21300000, guid: 30f73f147012d964c9eaa7f662385bfb, type: 3}
+  texture: {fileID: 21300000, guid: 615a91d08bd3156419b827720648d8c4, type: 3}
   isDefaultItem: 0
   type: 0
   equipSlot: 3

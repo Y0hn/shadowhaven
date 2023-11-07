@@ -36,7 +36,7 @@ public class itemSlot : MonoBehaviour
     }
     public void OnRemoveBtn()
     {
-        Inventory.instance.Remove(item);
+        Inventory.instance.Drop(item);
     }
     public void UseItem()
     {

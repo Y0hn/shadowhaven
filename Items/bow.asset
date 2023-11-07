@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: bow
   m_EditorClassIdentifier: 
   name: bow
-  icon: {fileID: 21300000, guid: 75cd172ddc661c24b952653674531ac9, type: 3}
-  texture: {fileID: 21300000, guid: 75cd172ddc661c24b952653674531ac9, type: 3}
+  icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
+  texture: {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
   isDefaultItem: 0
   type: 1
   equipSlot: 3

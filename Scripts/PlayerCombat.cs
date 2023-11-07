@@ -1,11 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using System;
 using UnityEngine;
-using UnityEngine.U2D;
-using UnityEngine.UIElements;
-using UnityEngine.XR;
 
 public class PlayerCombatScript : MonoBehaviour
 {
@@ -23,7 +17,7 @@ public class PlayerCombatScript : MonoBehaviour
     private Collider2D col;
     private Camera cam;
 
-    private Vector2 mousePos;
+    private Vector3 mousePos;
 
 
     public int damage;
@@ -64,7 +58,7 @@ public class PlayerCombatScript : MonoBehaviour
             mousePos = Input.mousePosition;
             mousePos = cam.ScreenToWorldPoint(mousePos);
 
-            Vector2 rotation = mousePos - player.GetPos();
+            Vector2 rotation = mousePos - transform.position;
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
 

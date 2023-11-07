@@ -17,13 +17,18 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChange();
     public OnItemChange onItemChangeCallback;
 
-    [SerializeField]
-    private int space = 12;
+    public GameObject droper;
+    public int space = 12;
+    
     public List<Item> items = new();
     Equipment[] equipment;
 
+    private Transform player;
+
     private void Start()
     {
+        // References
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         int n = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipment = new Equipment[n];
     }
@@ -41,6 +46,14 @@ public class Inventory : MonoBehaviour
     public void Remove (Item item) 
     { 
         items.Remove(item);
+        onItemChangeCallback?.Invoke();
+    }
+    public void Drop(Item item)
+    {
+        items.Remove(item);
+        droper.GetComponent<Interactable>().item = item;
+        player.GetComponent<PlayerScript>().DropedItem();
+        Instantiate(droper, player.position, Quaternion.identity);
 
         onItemChangeCallback?.Invoke();
     }
@@ -49,11 +62,12 @@ public class Inventory : MonoBehaviour
         int slotIndex = (int)newEqu.equipSlot;
         if (equipment[slotIndex] != null)
         {
-            if (Add(equipment[slotIndex]))
-            {
-                equipment[slotIndex] = newEqu;
-                Remove(newEqu);
-            }
+            if (newEqu != equipment[slotIndex])
+                if (Add(equipment[slotIndex]))
+                {
+                    equipment[slotIndex] = newEqu;
+                    Remove(newEqu);
+                }
         }
         else
         {

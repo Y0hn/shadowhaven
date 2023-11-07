@@ -8,9 +8,14 @@ public class ItemsList : MonoBehaviour
     public static ItemsList instance;
     private void Awake()
     {
-        if (instance != null)
-            Debug.LogWarning("More than one Instance of ItemList!");
-        instance = this;
+        if (transform.tag == "GameController")
+        {
+            if (instance != null)
+                Debug.LogWarning("More than one Instance of ItemList!");
+            else
+                instance = this;
+            //Debug.Log("Vytvorena instance");
+        }
     }
     #endregion
 
@@ -18,7 +23,23 @@ public class ItemsList : MonoBehaviour
 
     public Item GetRandItem()
     {
-        int R = Random.Range(0, Items.Count);
-        return Items[R];
+        if (Items.Count != 0)
+        {
+            int R = Random.Range(0, Items.Count);
+            Item item = Items[R];
+            Items.Remove(item);
+            return item;
+        }
+        else
+            return null;
+    }
+    public List<Item> GetAll()
+    {
+        return Items;
+    }
+    public void SetAll(List<Item> list)
+    {
+        Items.Clear();
+        Items = list;
     }
 }

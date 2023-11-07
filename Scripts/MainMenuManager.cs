@@ -1,23 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    public string ver;
-
     private Transform mainMenu;
     private Transform setMenu;
     private bool main;
 
     void Start()
     {
+        // References
         mainMenu = GameObject.FindGameObjectWithTag("Melee Enemy").GetComponent<Transform>();
         setMenu = GameObject.FindGameObjectWithTag("Ranged Enemy").GetComponent<Transform>();
-        GameObject.FindGameObjectWithTag("Finish").transform.GetComponent<Text>().text += ver;
+        Transform vers = GameObject.FindGameObjectWithTag("Finish").transform;
+        Transform title = GameObject.FindGameObjectWithTag("Tile").transform;
+        Transform comp = GameObject.FindGameObjectWithTag("Floor").transform;
+
+        vers.GetComponent<Text>().text += Application.version;
+        title.GetComponent<Text>().text += Application.productName;
+        comp.GetComponent<Text>().text += Application.companyName;
 
         main = true;
         mainMenu.gameObject.SetActive(main);

@@ -509,6 +509,21 @@ WARNING
 
 
 ----------------< 07. 11.  2023 >----------------
+Fixes:
+	Skeleton Health bar overlap
+
+Pridane Textury:
+	Ikony = { box, sword }
+	
+Pridane funkcie:
+	Player drop item
+	level contains items
+	spawn items from certain level
+	Vylepsene Main Menu
+
+Prvy Build:
+	*LINKS 1
+
 ----------------< 08. 11.  2023 >----------------
 ----------------< 09. 11.  2023 >----------------
 ----------------< 10. 11.  2023 >----------------
@@ -541,6 +556,15 @@ ______________/ EQUIPMENT  SYSTEM \______________
 
 ___________________/ SCRIPTS \___________________
 fill in later ;D
+
+____________________/ LINKS \____________________
+1.)
+https://drive.google.com/drive/folders/1wD3EJGKzidaOD3VBCWk1KXh3JofZYSmR?usp=sharing
+2.)
+3.)
+4.)
+5.)
+
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
@@ -576,6 +600,8 @@ https://youtu.be/nkgGyO9VG54?si=O6PQFyM8uiZePHvp
 https://youtu.be/w6_fetj9PIw?si=utyHQJqJLoK98fta
 https://youtu.be/9tePzyL6dgc?si=a741tqaFgRBoRIfx
 https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
+
+
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare

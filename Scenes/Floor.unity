@@ -139,6 +139,7 @@ GameObject:
   - component: {fileID: 6703094}
   - component: {fileID: 6703092}
   - component: {fileID: 6703095}
+  - component: {fileID: 6703096}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -162,6 +163,7 @@ MonoBehaviour:
   UI: {fileID: 204026929}
   Levels:
   - {fileID: 518029452332032132, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+  level: 0
 --- !u!4 &6703094
 Transform:
   m_ObjectHideFlags: 0
@@ -189,8 +191,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1abb93dd3e15bdb4fb94db80166b4fc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  droper: {fileID: 1884201614146461870, guid: df27750890120ae418648495f819a78f, type: 3}
   space: 12
   items: []
+--- !u!114 &6703096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6703091}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f27a1ddde4239e6449cae353e8d5e554, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Items:
+  - {fileID: 11400000, guid: 9f75fb310d4a36449b6facf6b8f1396a, type: 2}
+  - {fileID: 11400000, guid: d6ebf718e0588d64fa73800e18c6e65f, type: 2}
 --- !u!1001 &39884571
 PrefabInstance:
   m_ObjectHideFlags: 0

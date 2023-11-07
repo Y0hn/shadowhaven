@@ -11,6 +11,9 @@ public class GameManager : MonoBehaviour
     public GameObject[] Levels;
 
     private PlayerScript playerScript;
+    private ItemsList items;
+
+    public int level;
 
     public static bool playerLives;
     public static bool isPaused;
@@ -23,7 +26,10 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // Debug.Log(Application.persistentDataPath);
+        if (player != null)
+            player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<PlayerScript>();
+        items = GetComponent<ItemsList>();
         playerLives = true;
         isPaused = false;
         SceneLoaded = true;
@@ -79,6 +85,17 @@ public class GameManager : MonoBehaviour
             inventory = !inventory;
         }
     }
+    private void LevelLoad(int l)
+    {
+        GameObject oldLvl = GameObject.FindGameObjectWithTag("Level");
+
+        if (oldLvl != null)
+            Destroy(oldLvl);
+
+        Instantiate(Levels[l], transform.position, Quaternion.identity);
+        items.SetAll(GameObject.FindGameObjectWithTag("Level").GetComponent<ItemsList>().GetAll());
+    }
+
 
     public void ResumeGame()
     {
@@ -110,8 +127,7 @@ public class GameManager : MonoBehaviour
         playerScript.Resurect();
         playerLives = true;
         isPaused = false;
-        Destroy(GameObject.FindGameObjectWithTag("Level"));
-        Instantiate(Levels[0], transform.position, Quaternion.identity);
+        LevelLoad(level);
         UI.ResetUI();
         Time.timeScale = 1f;
     }
