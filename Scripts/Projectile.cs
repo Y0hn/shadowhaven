@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Aseprite;
 using UnityEngine;
+using UnityEngine.UIElements;
 using UnityEngine.XR;
 
 public class ProjectileScript : MonoBehaviour
@@ -19,17 +21,26 @@ public class ProjectileScript : MonoBehaviour
 
     void Start()
     {
+        //Debug.Log("Fired projectile name: " + name);
+
         // References
+        string s = name.Split('-')[1];
+        targetLayers &= ~(1 << LayerMask.NameToLayer(s));
         rb = GetComponent<Rigidbody2D>();
-        if      (transform.name.Contains("Player"))
+        if      (s == "Player")
         {
+            /* Mozno inokedy
             Camera mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
             targetPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
+            */
+            targetPos = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).GetChild(1).position;
+            targets = 1;
         }
-        else if (transform.name.Contains("Enemy")) 
+        else // if (transform.name.Contains("Enemy")) 
         { 
             Transform playerTrans = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
             targetPos = playerTrans.position;
+            targets = 0;
         }
         // Variables
         Vector3 direction = targetPos - transform.position;
@@ -39,11 +50,6 @@ public class ProjectileScript : MonoBehaviour
         float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rot + 90);
         timeToDie = Time.time + timeToDie;
-
-        if (transform.name.Contains("Player"))
-            targets = 1;
-        else if (transform.name.Contains("Enemy"))
-            targets = 0;
     }
     void Update()
     {
@@ -58,20 +64,22 @@ public class ProjectileScript : MonoBehaviour
 
             if (hitTargets.Length > 0)
             {
-                switch (targets)
+                foreach (Collider2D target in hitTargets)
                 {
-                    case 0:
-                        hitTargets[0].GetComponent<PlayerScript>().TakeDamage(damage);
-                        break;
-                    case 1:
-                        foreach (Collider2D target in hitTargets)
-                            target.GetComponent<EnemyScript>().TakeDamage(damage);
-                        break;
+                    if (targets == 0)
+                    {
+                        target.GetComponent<PlayerScript>().TakeDamage(damage);
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        target.GetComponent<EnemyScript>().TakeDamage(damage);
+                        Destroy(gameObject);
+                    }
                 }
-                Destroy(transform.gameObject);
             }
-            else if (!rb.velocity.Equals(velocity))
-                Destroy(transform.gameObject);
+            if (!rb.velocity.Equals(velocity))
+                Destroy(gameObject);
         }
     }
     public int DoDamage() { return damage; }

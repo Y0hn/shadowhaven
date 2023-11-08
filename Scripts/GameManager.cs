@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,30 +16,31 @@ public class GameManager : MonoBehaviour
 
     public int level;
 
-    public static bool playerLives;
-    public static bool isPaused;
+    public static bool playerLives = true;
+    public static bool isPaused = false;
+    public static bool inventory = false;
 
-    private bool inventory = false;
-    private bool SceneLoaded = false;
+    private bool sceneLoaded = false;
+    //private bool bossBeaten = false;
 
-    private float refreshInvTime = 0.1f;
+    private const float refreshInvTime = 0.1f;
 
     void Start()
     {
+        // References
         // Debug.Log(Application.persistentDataPath);
-        if (player != null)
-            player = GameObject.FindGameObjectWithTag("Player");
         playerScript = player.GetComponent<PlayerScript>();
         items = GetComponent<ItemsList>();
-        playerLives = true;
-        isPaused = false;
-        SceneLoaded = true;
+
+        LevelLoad(level);
+
+        sceneLoaded = true;
     }
     private void Update()
     {
         if (Time.time > refreshInvTime)
             Inventory.instance.onItemChangeCallback.Invoke();
-        if (!SceneLoaded) 
+        if (!sceneLoaded) 
             ReloadScene();
         if (playerLives)
         {
@@ -57,6 +59,7 @@ public class GameManager : MonoBehaviour
     }
     private void PlayerDeath()
     {
+        Inventory.instance.ClearInventory();
         isPaused = true;
         Time.timeScale = 0f;
         UI.DisableUI(0);
@@ -64,14 +67,22 @@ public class GameManager : MonoBehaviour
     }
     private void PauseGame()
     {
-        UI.EnableUI("pause");
-        Time.timeScale = 0f;
-        isPaused = true;
+        if (inventory)
+        {
+            UI.DisableUI("inv");
+            inventory = false;
+        }
+        else
+        {
+            UI.EnableUI("pause");
+            Time.timeScale = 0f;
+            isPaused = true;
+        }
     }
     private void ReloadScene()
     {
         PlayerRevive();
-        SceneLoaded = true;
+        sceneLoaded = true;
     }
     private void OpenCloseInventory()
     {
@@ -92,8 +103,11 @@ public class GameManager : MonoBehaviour
         if (oldLvl != null)
             Destroy(oldLvl);
 
+
         Instantiate(Levels[l], transform.position, Quaternion.identity);
         items.SetAll(GameObject.FindGameObjectWithTag("Level").GetComponent<ItemsList>().GetAll());
+        // Odstrani uz vlastnene itemy z item poolu
+        items.RemoveArray(Inventory.instance.GetEquipment());
     }
 
 
@@ -119,7 +133,7 @@ public class GameManager : MonoBehaviour
     public void GoToMainMenu()
     { 
         Time.timeScale = 1f;
-        SceneLoaded = false;
+        sceneLoaded = false;
         SceneManager.LoadScene(0);
     }
     public void PlayerRevive()

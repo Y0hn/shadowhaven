@@ -52,7 +52,8 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
 
         if (Time.time >= nextAtk)
         {
-            Instantiate(projectile, spawn.position, Quaternion.identity);
+            GameObject o = Instantiate(projectile, spawn.position, Quaternion.identity);
+            o.name += "-" + (animator.gameObject.tag.Split(' ')[1]);
             nextAtk = Time.time + 1 / rate;
         }
     }

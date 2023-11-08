@@ -40,6 +40,7 @@ public class PlayerScript : MonoBehaviour
     private bool combatAct = false;
     private bool armed = false;
     private bool enablePiskup = true;
+    private bool weaponJustEquiped = false;
 
     #region Unity Funtions
 
@@ -63,6 +64,7 @@ public class PlayerScript : MonoBehaviour
         if (!GameManager.isPaused)
         {
             ProcessInput();
+            CombatInput();
             Move();
             AnimateMovement();
             CollisionCheck();
@@ -95,8 +97,13 @@ public class PlayerScript : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetMouseButton(0) && !combatAct && armed)
+        moveDir = new Vector2(moveX, moveY).normalized;
+    }
+    private void CombatInput()
+    {
+        if ((Input.GetMouseButton(0) && !combatAct && armed) || weaponJustEquiped)
         {
+            weaponJustEquiped = false;
             playerCom.enabled = true;
             combatAct = true;
         }
@@ -104,9 +111,7 @@ public class PlayerScript : MonoBehaviour
         {
             playerCom.enabled = false;
             combatAct = false;
-        }          
-
-        moveDir = new Vector2(moveX, moveY).normalized;
+        }
     }
     private void Move() 
     { 
@@ -152,6 +157,7 @@ public class PlayerScript : MonoBehaviour
     }
 
     #endregion
+
     private void UpdateEquipment()
     {
         for (int i = 0; i < numE; i++)
@@ -168,6 +174,8 @@ public class PlayerScript : MonoBehaviour
                         break;
                     case 3: 
                     case 4:
+                        if (!armed)
+                            weaponJustEquiped = true;
                         armed = true;
                         playerCom.EquipWeapon(e);
                         break;

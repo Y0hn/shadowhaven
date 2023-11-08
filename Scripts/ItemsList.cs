@@ -42,4 +42,11 @@ public class ItemsList : MonoBehaviour
         Items.Clear();
         Items = list;
     }
+    public void RemoveArray(Item[] it) 
+    {
+        if (it != null)
+            foreach(Item i in it)
+                if (i != null)
+                    Items.Remove(i);
+    }
 }

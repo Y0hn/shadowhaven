@@ -9,16 +9,15 @@ public class PlayerCombatScript : MonoBehaviour
     private Transform rotatePoint;
     private Transform Hand;
     private Transform HandS;
-    private Sprite empty;
 
     public float attackRange;
+    private string projectilePath;
 
     private PlayerScript player;
     private Collider2D col;
     private Camera cam;
 
     private Vector3 mousePos;
-
 
     public int damage;
     private const int posun = 3;    // ak sa v buducosti bude menit tak bude problem
@@ -29,6 +28,7 @@ public class PlayerCombatScript : MonoBehaviour
     private float rotZ;
     private float lastRotZ = 0;
 
+    private bool ableToFire;
     private bool melee;
     
     private void Start()
@@ -45,23 +45,25 @@ public class PlayerCombatScript : MonoBehaviour
     {
         if (!GameManager.isPaused)
         {
-            if (Input.GetMouseButton(0))
-            {
-                if (!melee)
-                    RangedAttack();
-            }
-            else if (Input.GetMouseButtonDown(1))
-            {
-                WeaponSwap();
-            }
-
+            #region rotZ
             mousePos = Input.mousePosition;
             mousePos = cam.ScreenToWorldPoint(mousePos);
 
             Vector2 rotation = mousePos - transform.position;
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
+            #endregion
 
+            if (!GameManager.inventory) // Unable to fire with inventory opened
+            {
+                if (Input.GetMouseButton(0))
+                {
+                    if (!melee)
+                        RangedAttack();
+                }
+                else if (Input.GetMouseButtonDown(1))
+                { WeaponSwap(); }
+            }
             if (melee)
             {
                 if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
@@ -88,10 +90,13 @@ public class PlayerCombatScript : MonoBehaviour
     {
         if (Time.time >= fireTime)
         {
-            Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+            GameObject o = Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+            o.name += "-" + gameObject.tag;
+            o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
             fireTime = Time.time + 1 / fireRate;
         }
     }
+
     public void EquipWeapon(Equipment weap)
     {
         // References
@@ -138,9 +143,15 @@ public class PlayerCombatScript : MonoBehaviour
         }
         
     }
-    private void OnEnable()
-    { transform.GetChild(0).gameObject.SetActive(true);     }
-    private void OnDisable()
-    { transform.GetChild(0).gameObject.SetActive(false);    }
 
+    #region Enable/Disabe
+    private void OnEnable()
+    { 
+        transform.GetChild(0).gameObject.SetActive(true);
+    }
+    private void OnDisable()
+    { 
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+    #endregion
 }

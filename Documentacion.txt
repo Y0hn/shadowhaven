@@ -525,6 +525,17 @@ Prvy Build:
 	*LINKS 1
 
 ----------------< 08. 11.  2023 >----------------
+Bug Fixes:
+	Skeleton bow Sprite Missing
+	Spawn Equiped Item
+	Player Ranged combat targeting
+	Ranged combat on open inv
+	On activation Ranged weapon Self Damage
+	Ranged Collider Self Damage
+
+Found Bugs:
+	Skeleton Behavior "kmitane" na kraji rangu
+
 ----------------< 09. 11.  2023 >----------------
 ----------------< 10. 11.  2023 >----------------
 ----------------< 11. 11.  2023 >----------------

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4832388025373577486}
   - component: {fileID: 648226578949599671}
   m_Layer: 10
-  m_Name: ProjectilePlayer
+  m_Name: arrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,7 +132,7 @@ MonoBehaviour:
   size: 0.4
   targetLayers:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 384
 --- !u!70 &648226578949599671
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

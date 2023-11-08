@@ -556,7 +556,7 @@ MonoBehaviour:
   targetTag: Player
   rate: 0.5
   hide: 1
-  projectile: {fileID: 8954253706964517091, guid: 0a9b291045e52ad4b9857653a1c7a1b9, type: 3}
+  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
 --- !u!114 &8129841794972191166
 MonoBehaviour:
   m_ObjectHideFlags: 1

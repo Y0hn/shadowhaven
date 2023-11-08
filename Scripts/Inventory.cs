@@ -32,7 +32,6 @@ public class Inventory : MonoBehaviour
         int n = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipment = new Equipment[n];
     }
-
     public bool Add(Item item)
     {
         if (items.Count >= space)
@@ -87,8 +86,17 @@ public class Inventory : MonoBehaviour
         }
         return true;
     }
+
     public Equipment Equiped(int i) 
     { 
         return equipment[i];
+    }
+    public Equipment[] GetEquipment()
+    {
+        return equipment;
+    }
+    public void ClearInventory()
+    {
+        items = new();
     }
 }
