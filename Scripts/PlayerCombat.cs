@@ -28,7 +28,6 @@ public class PlayerCombatScript : MonoBehaviour
     private float rotZ;
     private float lastRotZ = 0;
 
-    private bool ableToFire;
     private bool melee;
     
     private void Start()
@@ -61,8 +60,6 @@ public class PlayerCombatScript : MonoBehaviour
                     if (!melee)
                         RangedAttack();
                 }
-                else if (Input.GetMouseButtonDown(1))
-                { WeaponSwap(); }
             }
             if (melee)
             {
@@ -73,10 +70,6 @@ public class PlayerCombatScript : MonoBehaviour
                 }
             }
         }
-    }
-    private void WeaponSwap()
-    {
-        // Change weapons
     }
     private void MeleeAttack()
     {
@@ -96,43 +89,58 @@ public class PlayerCombatScript : MonoBehaviour
             fireTime = Time.time + 1 / fireRate;
         }
     }
-
     public void EquipWeapon(Equipment weap)
     {
         // References
         Hand = transform.GetChild(0).GetChild(0);
         HandS = transform.GetChild(0).GetChild(1);
-        SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
-        SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
-        col = Hand.GetComponent<Collider2D>();
-
-        int index = (int)weap.equipSlot - posun;
-        int type = (int)weap.type;
-
-        switch (index)
+        if (weap != null)
         {
-            case 0:
-                if (weap.texture != Weapon.sprite)
-                    Weapon.sprite = weap.texture;
-                damage = weap.damageModifier;
-                switch (type)
-                {
-                    case 0: melee = true; break;  // Melee
-                    case 1: 
-                    case 2: melee = false; break;  // Magic + Ranged
-                }
-                col.enabled = melee;
-                break;
-            case 1:
-                Debug.Log("Equipnuta secondary zbran: " + weap.name);
-                if (weap.texture != WeaponS.sprite)
-                    WeaponS.sprite = weap.texture;
-                // nejako modifinut damage alebo neco take
-                break;
-            default:
-                break;
+            SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
+            SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
+            col = Hand.GetComponent<Collider2D>();
+
+            int index = (int)weap.equipSlot - posun;
+            int type = (int)weap.type;
+
+            if (weap.texture != Weapon.sprite)
+                Weapon.sprite = weap.texture;
+            damage = weap.damageModifier;
+            switch (type)
+            {
+                case 0: melee = true; break;  // Melee
+                case 1:
+                case 2: melee = false; break;  // Magic + Ranged
+            }
+            col.enabled = melee;
+            /*
+            switch (index)
+            {
+                case 0:
+                    if (weap.texture != Weapon.sprite)
+                        Weapon.sprite = weap.texture;
+                    damage = weap.damageModifier;
+                    switch (type)
+                    {
+                        case 0: melee = true; break;  // Melee
+                        case 1:
+                        case 2: melee = false; break;  // Magic + Ranged
+                    }
+                    col.enabled = melee;
+                    break;
+                case 1:
+                    Debug.Log("Equipnuta secondary zbran: " + weap.name);
+                    if (weap.texture != WeaponS.sprite)
+                        WeaponS.sprite = weap.texture;
+                    // nejako modifinut damage alebo neco take
+                    break;
+                default:
+                    break;
+            }
+            */
         }
     }
+    /*
     public void EquipWeapon(Sprite s, int i)
     {
         i -= posun;
@@ -143,7 +151,7 @@ public class PlayerCombatScript : MonoBehaviour
         }
         
     }
-
+    */
     #region Enable/Disabe
     private void OnEnable()
     { 

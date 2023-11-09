@@ -6,7 +6,7 @@ public class Item : ScriptableObject
     new public string name = "New item";
     public Sprite icon = null;
     public Sprite texture = null;
-    public bool isDefaultItem = false;
+    public string colorModifier = "255 255 255 1";
 
     public virtual void Use()
     {

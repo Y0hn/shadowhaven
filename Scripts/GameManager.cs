@@ -103,9 +103,11 @@ public class GameManager : MonoBehaviour
         if (oldLvl != null)
             Destroy(oldLvl);
 
-
         Instantiate(Levels[l], transform.position, Quaternion.identity);
-        items.SetAll(GameObject.FindGameObjectWithTag("Level").GetComponent<ItemsList>().GetAll());
+        ItemsList levelItems = GameObject.FindGameObjectWithTag("Level").GetComponent<ItemsList>();
+
+        items.SetAll(levelItems.GetAll());
+        Destroy(levelItems);
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(Inventory.instance.GetEquipment());
     }

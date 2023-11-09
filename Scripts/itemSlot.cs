@@ -16,7 +16,8 @@ public class itemSlot : MonoBehaviour
 
         icon.sprite = item.icon;
         icon.enabled = true;
-        removeBtn.interactable = true;
+        if (equipment != null )
+            removeBtn.interactable = true;
     }
     public void AddItem(Equipment newItem)
     {
@@ -32,7 +33,8 @@ public class itemSlot : MonoBehaviour
         equipment = null;
         icon.sprite = null;
         icon.enabled = false;
-        removeBtn.interactable = false;
+        if (equipment != null)
+            removeBtn.interactable = false;
     }
     public void OnRemoveBtn()
     {

@@ -8,6 +8,8 @@ public class PlayerScript : MonoBehaviour
     public LayerMask enemyLayers;
     public Vector2 hitBox;
 
+    public bool primaryWeap;
+
     public float interRange;
     private int maxHealth;
     public int health;
@@ -36,6 +38,7 @@ public class PlayerScript : MonoBehaviour
     #endregion
 
     private int numE;
+    private Equipment[] equpedWeapons;
 
     private bool combatAct = false;
     private bool armed = false;
@@ -107,6 +110,8 @@ public class PlayerScript : MonoBehaviour
             playerCom.enabled = true;
             combatAct = true;
         }
+        else if (Input.GetMouseButtonDown(1) && armed && combatAct)
+            primaryWeap = !primaryWeap;
         else if ((Input.GetMouseButton(2) || !armed) && combatAct)
         {
             playerCom.enabled = false;
@@ -177,7 +182,6 @@ public class PlayerScript : MonoBehaviour
                         if (!armed)
                             weaponJustEquiped = true;
                         armed = true;
-                        playerCom.EquipWeapon(e);
                         break;
                     default:
                         break;
@@ -192,12 +196,17 @@ public class PlayerScript : MonoBehaviour
                         break;
                     case 3:
                         armed = false;
-                        playerCom.EquipWeapon(empty, i);
                         break;
                     default:
                         break;
                 }
         }
+        int j;
+        if (primaryWeap)
+            j = 2;
+        else
+            j = 3;
+        playerCom.EquipWeapon(Inventory.instance.Equiped(j));
     }
     private void Hurt(int damage) 
     {

@@ -8,8 +8,9 @@ public class ItemsList : MonoBehaviour
     public static ItemsList instance;
     private void Awake()
     {
-        if (transform.tag == "GameController")
+        if (transform.CompareTag("GameController"))
         {
+            //Debug.Log("Creating ItemList " + this + " under " + transform.name);
             if (instance != null)
                 Debug.LogWarning("More than one Instance of ItemList!");
             else
@@ -23,6 +24,8 @@ public class ItemsList : MonoBehaviour
 
     public Item GetRandItem()
     {
+        //Debug.Log("Item request to " + this + " under " + transform.name + " zvysny pocet itemov: " + Items.Count);
+
         if (Items.Count != 0)
         {
             int R = Random.Range(0, Items.Count);
@@ -37,9 +40,13 @@ public class ItemsList : MonoBehaviour
     {
         return Items;
     }
+    public void GetAllOut(out List<Item> list)
+    {
+        list = Items;
+        Destroy(this);
+    }
     public void SetAll(List<Item> list)
     {
-        Items.Clear();
         Items = list;
     }
     public void RemoveArray(Item[] it) 
@@ -48,5 +55,10 @@ public class ItemsList : MonoBehaviour
             foreach(Item i in it)
                 if (i != null)
                     Items.Remove(i);
+    }
+    private void OnDestroy()
+    {
+        //Debug.Log("Destroing ItemList " + this + " under " + transform.name);
+        Destroy(this);
     }
 }

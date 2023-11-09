@@ -15,8 +15,8 @@ MonoBehaviour:
   name: bow
   icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
   texture: {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
-  isDefaultItem: 0
+  colorModifier: 255 255 255 1
   type: 1
-  equipSlot: 3
+  equipSlot: 2
   armorModifier: 0
   damageModifier: 0

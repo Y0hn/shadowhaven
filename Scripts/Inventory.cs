@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -31,6 +33,8 @@ public class Inventory : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         int n = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipment = new Equipment[n];
+        
+        // Load Equipment From Save
     }
     public bool Add(Item item)
     {
@@ -56,9 +60,32 @@ public class Inventory : MonoBehaviour
 
         onItemChangeCallback?.Invoke();
     }
-    public void Equip (Equipment newEqu)
+    public void Equip (Equipment newEqu/*, bool overwrite*/)
     {
         int slotIndex = (int)newEqu.equipSlot;
+        if (equipment[slotIndex] != null)
+        {
+            if (slotIndex == 2/*&& !overwrite*/)
+            {
+                slotIndex++;
+                Equip(newEqu, slotIndex);
+            }
+            else if (newEqu != equipment[slotIndex])
+                if (Add(equipment[slotIndex]))
+                {
+                    equipment[slotIndex] = newEqu;
+                    Remove(newEqu);
+                }
+        }
+        else
+        {
+            equipment[slotIndex] = newEqu;
+            Remove(newEqu);
+        }
+        //Debug.Log("Equipment " + newEqu.name + " typu: " + newEqu.equipSlot + " equiped on slot " + slotIndex);
+    }
+    private void Equip(Equipment newEqu, int slotIndex)
+    {
         if (equipment[slotIndex] != null)
         {
             if (newEqu != equipment[slotIndex])
@@ -72,11 +99,12 @@ public class Inventory : MonoBehaviour
         {
             equipment[slotIndex] = newEqu;
             Remove(newEqu);
-        }        
+        }
     }
     public bool Unequip(Equipment newEqu)
     {
-        int slotIndex = (int)newEqu.equipSlot;
+        List<Equipment> list = equipment.ToList();
+        int slotIndex = list.IndexOf(newEqu);
         if (equipment[slotIndex] != null)
         {
             if (Add(equipment[slotIndex]))
@@ -88,15 +116,9 @@ public class Inventory : MonoBehaviour
     }
 
     public Equipment Equiped(int i) 
-    { 
-        return equipment[i];
-    }
+    { return equipment[i]; }
     public Equipment[] GetEquipment()
-    {
-        return equipment;
-    }
+    { return equipment; }
     public void ClearInventory()
-    {
-        items = new();
-    }
+    { items = new(); }
 }

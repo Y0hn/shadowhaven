@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Ezquipment")]
+[CreateAssetMenu(fileName = "New Equipment", menuName = "Inventory/Equipment")]
 public class Equipment : Item
 {
     public Type type;
@@ -24,7 +24,7 @@ public class Equipment : Item
 
 public enum EquipmentSlot
 {
-    Head, Chest, Legs, Weapon, SecWeapon
+    Head, Chest, Weapon, SecWeapon
 }
 public enum Type
 {

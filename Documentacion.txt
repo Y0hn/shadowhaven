@@ -537,6 +537,13 @@ Found Bugs:
 	Skeleton Behavior "kmitane" na kraji rangu
 
 ----------------< 09. 11.  2023 >----------------
+Pridane Funkcie:
+	Secondary weapon system
+	Quick item slots (only UI)
+
+Navrh na Zlepsenie:
+	Odelit player Input system od PlayerScriptu
+
 ----------------< 10. 11.  2023 >----------------
 ----------------< 11. 11.  2023 >----------------
 ----------------< 12. 11.  2023 >----------------
@@ -566,7 +573,40 @@ A je to Pain
 ______________/ EQUIPMENT  SYSTEM \______________
 
 ___________________/ SCRIPTS \___________________
-fill in later ;D
+Behaviors:
+	FollowBehavior
+	ShootAtTargetBehavior
+
+Spawners:
+	SpawnListRand
+	SpawnObject
+	LevelGener
+	Interactable
+
+Static:
+	PlayerData
+	(EnemyData)
+	Inventory
+	itemList
+	Item
+	Equipment
+	itemSlot
+	HealthBar
+
+MonoBehaviors:
+	Enemy
+	Player
+	PlayerCombat
+	Projectile
+	Interactable
+
+Managers:
+	GameManager
+	ManagerUI
+	SaveSyestem
+	MainMenuManager
+	
+rest fill in later ;D
 
 ____________________/ LINKS \____________________
 1.)

@@ -16,14 +16,20 @@ public class ManagerUI : MonoBehaviour
     private Inventory inventory;
     private itemSlot[] itemSlots;
     private itemSlot[] equiSlots;
+    private itemSlot[] quickSlots;
+    private int equipL;
 
     void Start()
     {
         ResetUI();
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateUI;
+
         itemSlots = UIs[1].GetChild(0).GetComponentsInChildren<itemSlot>();
+
+        equipL = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equiSlots = UIs[1].GetChild(1).GetComponentsInChildren<itemSlot>();
+        quickSlots = UIs[0].GetComponentsInChildren<itemSlot>();
     }
     void UpdateUI()
     {
@@ -38,7 +44,7 @@ public class ManagerUI : MonoBehaviour
                 itemSlots[i].Clear();
             }
         }
-        for (int i = 0;i < equiSlots.Length; i++)
+        for (int i = 0;i < equipL; i++)
         {
             Equipment e = inventory.Equiped(i);
             if (e != null)

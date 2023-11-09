@@ -76,6 +76,11 @@ public class LevelGener : MonoBehaviour
             // Slowness
             //nextRoom = Time.time + intervalRoom;
         }
+        else
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Assets"));
+            Destroy(gameObject);
+        }
     }
     private void Move()
     {
