@@ -13,19 +13,21 @@ public class itemSlot : MonoBehaviour
     public void AddItem(Item newItem)
     {
         item = newItem;
-
-        icon.sprite = item.icon;
+        if (item.icon != null )
+            icon.sprite = item.icon;
         icon.enabled = true;
-        if (equipment != null )
+        if (!(transform.parent.name.Contains("Left") || name.Contains("QuickSlot")))
             removeBtn.interactable = true;
     }
     public void AddItem(Equipment newItem)
     {
-
         equipment = newItem;
-
-        icon.sprite = equipment.icon;
+        if (equipment.icon != null)
+            icon.sprite = equipment.icon;
         icon.enabled = true;
+        if (!(transform.parent.name.Contains("Left") || name.Contains("QuickSlot")))
+            removeBtn.interactable = true;
+        item = null;
     }
     public void Clear()
     {
@@ -33,26 +35,42 @@ public class itemSlot : MonoBehaviour
         equipment = null;
         icon.sprite = null;
         icon.enabled = false;
-        if (equipment != null)
-            removeBtn.interactable = false;
+        removeBtn.interactable = false;
+        //Debug.Log(name + " cleared");
     }
     public void OnRemoveBtn()
     {
         Inventory.instance.Drop(item);
     }
-    public void UseItem()
+    public void UseItem()   // On Click event
     {
         if (item != null)
         {
-            item.Use();
+            if (name.Contains("QuickSlot"))
+            {
+                /*if (Time.time > cooldown)*/
+                if (int.TryParse(name.Split(' ')[1], out int i))
+                    GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>().eqiWeap = i;
+            }
+            else if (transform.parent.name.Equals("Left"))
+            {
+                Inventory.instance.Unequip((Equipment)item);
+                Clear();
+            }
+            else
+            {
+                item.Use();
+            }
         }
-        if (transform.parent.name == "Left")
+        else if (equipment != null)
         {
-            if (equipment != null)
+            if (transform.parent.name.Equals("Left"))
             {
                 Inventory.instance.Unequip(equipment);
                 Clear();
             }
+            else
+                equipment.Use();
         }
     }
 }

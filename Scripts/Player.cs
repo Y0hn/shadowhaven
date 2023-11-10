@@ -8,8 +8,6 @@ public class PlayerScript : MonoBehaviour
     public LayerMask enemyLayers;
     public Vector2 hitBox;
 
-    public bool primaryWeap;
-
     public float interRange;
     private int maxHealth;
     public int health;
@@ -38,8 +36,8 @@ public class PlayerScript : MonoBehaviour
     #endregion
 
     private int numE;
-    private Equipment[] equpedWeapons;
 
+    private bool primaryWeap = true;
     private bool combatAct = false;
     private bool armed = false;
     private bool enablePiskup = true;
@@ -169,7 +167,7 @@ public class PlayerScript : MonoBehaviour
         {
             Equipment e = inventory.Equiped(i);
             if (e != null)
-                switch (i) 
+                switch (i)
                 {
                     case 0:
                     case 1:
@@ -177,7 +175,7 @@ public class PlayerScript : MonoBehaviour
                         if (e.texture != clothes[i])
                             clothes[i] = e.texture;
                         break;
-                    case 3: 
+                    case 3:
                     case 4:
                         if (!armed)
                             weaponJustEquiped = true;
@@ -191,7 +189,7 @@ public class PlayerScript : MonoBehaviour
                 {
                     case 0:
                     case 1:
-                    case 2:                            
+                    case 2:
                         clothes[i] = empty;
                         break;
                     case 3:
@@ -200,13 +198,8 @@ public class PlayerScript : MonoBehaviour
                     default:
                         break;
                 }
+            ChangeWeapon(primaryWeap);
         }
-        int j;
-        if (primaryWeap)
-            j = 2;
-        else
-            j = 3;
-        playerCom.EquipWeapon(Inventory.instance.Equiped(j));
     }
     private void Hurt(int damage) 
     {
@@ -241,9 +234,24 @@ public class PlayerScript : MonoBehaviour
     public int GetLevel()                               { return level;         }
     public int GetHealth()                              { return health;        }
     public Vector2 GetPos()                             { return rb.position;   }
+    public void SetActiveCombat(bool set)
+    {
+        playerCom.enabled = set;
+        combatAct = set;
+    }
 
     #endregion
 
+    public void ChangeWeapon(bool primar)
+    {
+        int j;
+        if (primar)
+            j = 2;
+        else
+            j = 3;
+        playerCom.EquipWeapon(Inventory.instance.Equiped(j));
+        primaryWeap = primar;
+    }
     public void TakeDamage(int damage)
     { 
         Hurt(damage);         

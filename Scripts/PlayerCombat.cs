@@ -53,7 +53,7 @@ public class PlayerCombatScript : MonoBehaviour
             rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
             #endregion
 
-            if (!GameManager.inventory) // Unable to fire with inventory opened
+            if (!GameManager.inv) // Unable to fire with inventory opened
             {
                 if (Input.GetMouseButton(0))
                 {
@@ -113,45 +113,8 @@ public class PlayerCombatScript : MonoBehaviour
                 case 2: melee = false; break;  // Magic + Ranged
             }
             col.enabled = melee;
-            /*
-            switch (index)
-            {
-                case 0:
-                    if (weap.texture != Weapon.sprite)
-                        Weapon.sprite = weap.texture;
-                    damage = weap.damageModifier;
-                    switch (type)
-                    {
-                        case 0: melee = true; break;  // Melee
-                        case 1:
-                        case 2: melee = false; break;  // Magic + Ranged
-                    }
-                    col.enabled = melee;
-                    break;
-                case 1:
-                    Debug.Log("Equipnuta secondary zbran: " + weap.name);
-                    if (weap.texture != WeaponS.sprite)
-                        WeaponS.sprite = weap.texture;
-                    // nejako modifinut damage alebo neco take
-                    break;
-                default:
-                    break;
-            }
-            */
         }
     }
-    /*
-    public void EquipWeapon(Sprite s, int i)
-    {
-        i -= posun;
-        switch (i) 
-        { 
-            case 0: transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite = s; break;
-            case 1: transform.GetChild(0).GetChild(1).GetChild(0).GetComponent<SpriteRenderer>().sprite = s; break;
-        }
-        
-    }
-    */
     #region Enable/Disabe
     private void OnEnable()
     { 

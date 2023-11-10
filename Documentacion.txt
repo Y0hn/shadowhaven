@@ -545,6 +545,12 @@ Navrh na Zlepsenie:
 	Odelit player Input system od PlayerScriptu
 
 ----------------< 10. 11.  2023 >----------------
+Pridane Funkcie:
+	Quick item slots
+	
+Navrh na Zlepsenie:
+	Dropovanie itemov na nahodne miesta v Rangi
+
 ----------------< 11. 11.  2023 >----------------
 ----------------< 12. 11.  2023 >----------------
 ----------------< 13. 11.  2023 >----------------
@@ -607,6 +613,38 @@ Managers:
 	MainMenuManager
 	
 rest fill in later ;D
+
+________________/ LAYERS + TAGS \________________
+Tags:
+	Untagged
+	Respawn
+	Finish
+	EditorOnly
+	MainCamera
+	Player
+	GameControler
+	Weapon
+	Tile
+	Wall
+	Floor
+	Melee Enemy
+	Ranged Enemy
+	Level
+	Item
+	Assets
+
+Layers:
+	Default
+	TransparentFX
+	Ignore Raycast
+	Tile
+	Water
+	UI
+	Bedrock
+	Player
+	Enemy
+	PlayerWeapon
+	Projectile
 
 ____________________/ LINKS \____________________
 1.)

@@ -23,7 +23,8 @@ public class Inventory : MonoBehaviour
     public int space = 12;
     
     public List<Item> items = new();
-    Equipment[] equipment;
+    private Equipment[] equipment;
+    public List<int> quickSlots;
 
     private Transform player;
 
@@ -38,12 +39,17 @@ public class Inventory : MonoBehaviour
     }
     public bool Add(Item item)
     {
-        if (items.Count >= space)
-            return false;
-            
-        items.Add(item);
+        /*try   FOR BUGS >:|
+        {*/
+            if (items.Count >= space)
+                return false;
 
-        onItemChangeCallback.Invoke();
+            items.Add(item);
+
+            onItemChangeCallback.Invoke();
+        /*}
+        catch
+        { Debug.LogError("Item destroyed !!!"); }*/
         return true;
     }
     public void Remove (Item item) 
@@ -82,6 +88,7 @@ public class Inventory : MonoBehaviour
             equipment[slotIndex] = newEqu;
             Remove(newEqu);
         }
+        onItemChangeCallback.Invoke();
         //Debug.Log("Equipment " + newEqu.name + " typu: " + newEqu.equipSlot + " equiped on slot " + slotIndex);
     }
     private void Equip(Equipment newEqu, int slotIndex)
@@ -112,8 +119,30 @@ public class Inventory : MonoBehaviour
             else
                 return false;
         }
+        onItemChangeCallback.Invoke();
         return true;
     }
+    public void ChangeQuickSlot(Item item, int boundry)
+    {
+        if (quickSlots.Count < boundry)
+        {
+            quickSlots.Add(items.IndexOf(item));
+        }
+        else
+        {
+            quickSlots.Remove(quickSlots.First());
+            quickSlots.Add(items.IndexOf(item));
+        }
+    }
+    public void QuickUse(int i)
+    {
+        i -= 3;
+        if (items.Count > i)
+            items[i].Use();
+        else
+            player.GetComponent<PlayerScript>().SetActiveCombat(false);
+    }
+
 
     public Equipment Equiped(int i) 
     { return equipment[i]; }

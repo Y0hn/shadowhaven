@@ -44,12 +44,31 @@ public class ManagerUI : MonoBehaviour
                 itemSlots[i].Clear();
             }
         }
-        for (int i = 0;i < equipL; i++)
+        for (int i = 0; i < equipL; i++)
         {
             Equipment e = inventory.Equiped(i);
             if (e != null)
                 equiSlots[i].AddItem(e);
-        }        
+        }
+        for (int i = 0; i < quickSlots.Length; i++)
+        {
+            Item add = null;
+
+            if      (i == 0)
+                add = inventory.Equiped(2);
+            else if (i == 1)
+                add = inventory.Equiped(3);
+            else if (i > 1)
+            {
+                if (i - 2 < inventory.quickSlots.Count)
+                    add = inventory.items[inventory.quickSlots[i-2]];
+            }
+
+            if (add != null)
+                quickSlots[i].AddItem(add);
+            else
+                quickSlots[i].Clear();
+        }
     }
 
 
