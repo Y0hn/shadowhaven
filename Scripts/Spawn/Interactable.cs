@@ -8,10 +8,16 @@ public class Interactable : MonoBehaviour
     {
         if (item != null || transform.name.Contains("item"))
         {
+            SpriteRenderer sRend = GetComponent<SpriteRenderer>();
+
             if (item == null)
                 item = ItemsList.instance.GetRandItem();
+
             if (item != null)
-                transform.GetComponent<SpriteRenderer>().sprite = item.icon;
+            {
+                sRend.sprite = item.icon;
+                sRend.color = item.color;
+            }
             else
                 Destroy(gameObject);
         }

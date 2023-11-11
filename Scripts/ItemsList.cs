@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -55,10 +54,5 @@ public class ItemsList : MonoBehaviour
             foreach(Item i in it)
                 if (i != null)
                     Items.Remove(i);
-    }
-    private void OnDestroy()
-    {
-        //Debug.Log("Destroing ItemList " + this + " under " + transform.name);
-        Destroy(this);
     }
 }

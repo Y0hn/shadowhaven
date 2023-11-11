@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +18,7 @@ public class ManagerUI : MonoBehaviour
     private itemSlot[] quickSlots;
     private int equipL;
 
-    void Start()
+    private void Start()
     {
         ResetUI();
         inventory = Inventory.instance;
@@ -28,10 +27,11 @@ public class ManagerUI : MonoBehaviour
         itemSlots = UIs[1].GetChild(0).GetComponentsInChildren<itemSlot>();
 
         equipL = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        equipL++;
         equiSlots = UIs[1].GetChild(1).GetComponentsInChildren<itemSlot>();
         quickSlots = UIs[0].GetComponentsInChildren<itemSlot>();
     }
-    void UpdateUI()
+    private void UpdateUI()
     {
         for (int i = 0; i < itemSlots.Length; i++) 
         {

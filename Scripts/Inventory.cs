@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
@@ -33,23 +31,24 @@ public class Inventory : MonoBehaviour
         // References
         player = GameObject.FindGameObjectWithTag("Player").transform;
         int n = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        n++;
         equipment = new Equipment[n];
         
         // Load Equipment From Save
     }
     public bool Add(Item item)
     {
-        /*try   FOR BUGS >:|
-        {*/
+        try{ /**/  // FOR BUGS >:|
+        
             if (items.Count >= space)
                 return false;
 
             items.Add(item);
 
             onItemChangeCallback.Invoke();
-        /*}
+        }
         catch
-        { Debug.LogError("Item destroyed !!!"); }*/
+        { Debug.LogError("Item destroyed !!!"); }/**/
         return true;
     }
     public void Remove (Item item) 
@@ -66,12 +65,12 @@ public class Inventory : MonoBehaviour
 
         onItemChangeCallback?.Invoke();
     }
-    public void Equip (Equipment newEqu/*, bool overwrite*/)
+    public void Equip (Equipment newEqu)
     {
         int slotIndex = (int)newEqu.equipSlot;
         if (equipment[slotIndex] != null)
         {
-            if (slotIndex == 2/*&& !overwrite*/)
+            if (slotIndex == 2 && !Input.GetKey(KeyCode.LeftShift))
             {
                 slotIndex++;
                 Equip(newEqu, slotIndex);
@@ -88,8 +87,9 @@ public class Inventory : MonoBehaviour
             equipment[slotIndex] = newEqu;
             Remove(newEqu);
         }
-        onItemChangeCallback.Invoke();
+
         //Debug.Log("Equipment " + newEqu.name + " typu: " + newEqu.equipSlot + " equiped on slot " + slotIndex);
+        onItemChangeCallback.Invoke();
     }
     private void Equip(Equipment newEqu, int slotIndex)
     {
@@ -137,12 +137,11 @@ public class Inventory : MonoBehaviour
     public void QuickUse(int i)
     {
         i -= 3;
-        if (items.Count > i)
-            items[i].Use();
+        if (quickSlots.Count > i)
+            items[quickSlots[i]].Use();
         else
             player.GetComponent<PlayerScript>().SetActiveCombat(false);
     }
-
 
     public Equipment Equiped(int i) 
     { return equipment[i]; }

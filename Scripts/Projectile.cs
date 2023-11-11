@@ -29,10 +29,6 @@ public class ProjectileScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if      (s == "Player")
         {
-            /* Mozno inokedy
-            Camera mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
-            targetPos = mainCam.ScreenToWorldPoint(Input.mousePosition);
-            */
             targetPos = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).GetChild(1).position;
             targets = 1;
         }
@@ -64,21 +60,18 @@ public class ProjectileScript : MonoBehaviour
 
             if (hitTargets.Length > 0)
             {
-                foreach (Collider2D target in hitTargets)
+                if (targets == 0)                    
                 {
-                    if (targets == 0)
-                    {
-                        target.GetComponent<PlayerScript>().TakeDamage(damage);
-                        Destroy(gameObject);
-                    }
-                    else
-                    {
-                        target.GetComponent<EnemyScript>().TakeDamage(damage);
-                        Destroy(gameObject);
-                    }
+                    hitTargets[0].GetComponent<PlayerScript>().TakeDamage(damage);                      
+                    Destroy(gameObject);                    
+                }
+                else
+                {
+                    hitTargets[0].GetComponent<EnemyScript>().TakeDamage(damage);
+                    Destroy(gameObject);
                 }
             }
-            if (!rb.velocity.Equals(velocity))
+            else if (!rb.velocity.Equals(velocity))
                 Destroy(gameObject);
         }
     }

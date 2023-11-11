@@ -1,22 +1,20 @@
-using System;
 using UnityEngine;
 
 public class PlayerCombatScript : MonoBehaviour
 {
     public LayerMask enemyLayers;
-    public GameObject projectile;
 
     private Transform rotatePoint;
     private Transform Hand;
     private Transform HandS;
 
     public float attackRange;
-    private string projectilePath;
 
     private PlayerScript player;
     private Collider2D col;
     private Camera cam;
-
+    private GameObject projectile = null;
+    
     private Vector3 mousePos;
 
     public int damage;
@@ -33,8 +31,8 @@ public class PlayerCombatScript : MonoBehaviour
     private void Start()
     {
         // References
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerScript>();
-        cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        player = GetComponent<PlayerScript>();
+        cam = GetComponentInChildren<Camera>();
         rotatePoint = transform.GetChild(0);
         Hand = rotatePoint.transform.GetChild(0);
         HandS = rotatePoint.transform.GetChild(1);
@@ -89,7 +87,7 @@ public class PlayerCombatScript : MonoBehaviour
             fireTime = Time.time + 1 / fireRate;
         }
     }
-    public void EquipWeapon(Equipment weap)
+    public void EquipWeapon(Weapon weap)
     {
         // References
         Hand = transform.GetChild(0).GetChild(0);
@@ -99,21 +97,20 @@ public class PlayerCombatScript : MonoBehaviour
             SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
             SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
             col = Hand.GetComponent<Collider2D>();
+            
+            Weapon.sprite = weap.texture;            
+            Weapon.color = weap.color;
 
-            int index = (int)weap.equipSlot - posun;
-            int type = (int)weap.type;
-
-            if (weap.texture != Weapon.sprite)
-                Weapon.sprite = weap.texture;
-            damage = weap.damageModifier;
-            switch (type)
+            switch ((int)weap.type)
             {
-                case 0: melee = true; break;  // Melee
+                case 0: melee = true;  damage = weap.damageModifier; break;  // Melee
                 case 1:
-                case 2: melee = false; break;  // Magic + Ranged
+                case 2: melee = false; projectile = weap.projectile; break;  // Magic + Ranged
             }
             col.enabled = melee;
         }
+        else
+            enabled = false;
     }
     #region Enable/Disabe
     private void OnEnable()

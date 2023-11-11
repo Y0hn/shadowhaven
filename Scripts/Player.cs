@@ -1,5 +1,4 @@
-using System;
-using System.Collections;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {    
@@ -9,9 +8,10 @@ public class PlayerScript : MonoBehaviour
     public Vector2 hitBox;
 
     public float interRange;
-    private int maxHealth;
-    public int health;
+
     public int level;
+    public int health;
+    private int maxHealth;
 
     #region References
 
@@ -19,12 +19,10 @@ public class PlayerScript : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private Inventory inventory;
-    private Sprite[] clothes = new Sprite[3];    // tri typy oblecena
+    private SpriteRenderer torso;
+    private SpriteRenderer helmet;
 
     #endregion
-
-    private Vector2 moveDir;
-    private float moveSpeed = 5;
 
     #region Timers
 
@@ -36,18 +34,23 @@ public class PlayerScript : MonoBehaviour
     #endregion
 
     private int numE;
+    private int helmetTI = 0;   // texture index
+    private int torsoTI = 0;
 
-    private bool primaryWeap = true;
-    private bool combatAct = false;
+    private Vector2 moveDir;
+    private float moveSpeed = 5;
+
+    private bool weaponJustEquiped;
     private bool armed = false;
+    private bool combatAct = false;
+    private bool primaryWeap = true;
     private bool enablePiskup = true;
-    private bool weaponJustEquiped = false;
 
-    #region Unity Funtions
 
     private void Start() 
     {
-        // References
+        #region References
+
         playerCom = GetComponent<PlayerCombatScript>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
@@ -55,9 +58,23 @@ public class PlayerScript : MonoBehaviour
         healthBar.SetMaxHealth(health);
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateEquipment;
+
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
 
+        /* CHILDREN 
+         * 1 - BODY   
+         *      0 - head 
+         *          0 - helmet
+         *      1 - torso
+         *          0 - helmet
+         */
+        helmet = transform.GetChild(1).GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
+        torso = transform.GetChild(1).GetChild(1).GetChild(0).GetComponent<SpriteRenderer>();
+
+        #endregion
+
         // Set up
+        playerCom.enabled = false;
         combatAct = playerCom.enabled;
     }
     private void Update()
@@ -65,9 +82,9 @@ public class PlayerScript : MonoBehaviour
         if (!GameManager.isPaused)
         {
             ProcessInput();
-            CombatInput();
             Move();
             AnimateMovement();
+
             CollisionCheck();
             PickUpCheck();
         }
@@ -90,19 +107,16 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
-    #endregion
+    #region Input Syestem
 
-    #region In Update
     private void ProcessInput()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
         moveDir = new Vector2(moveX, moveY).normalized;
-    }
-    private void CombatInput()
-    {
-        if ((Input.GetMouseButton(0) && !combatAct && armed) || weaponJustEquiped)
+
+        if      ((Input.GetMouseButton(0) && !combatAct && armed) || weaponJustEquiped)
         {
             weaponJustEquiped = false;
             playerCom.enabled = true;
@@ -116,16 +130,76 @@ public class PlayerScript : MonoBehaviour
             combatAct = false;
         }
     }
-    private void Move() 
-    { 
-        rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed);
-    }
+    private void Move()
+    { rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed); }
     private void AnimateMovement()
     {
         animator.SetFloat("Horizontal", moveDir.x);
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
+
+
+        if (animator.GetFloat("Speed") > 0)
+        {
+            Armor a;
+            if (moveDir.y < 0)
+            {
+                helmetTI = 0;
+                torsoTI = 0;
+            }
+            else if (moveDir.x > 0)
+            {
+                helmetTI = 1;
+                torsoTI = 0;
+            }
+            else if (moveDir.x < 0)
+            {
+                helmetTI = 1;
+                torsoTI = 0;
+            }
+            else if (moveDir.y > 0)
+            {
+                helmetTI = 2;
+                torsoTI = 1;
+            }
+
+            a = (Armor)inventory.Equiped(0);
+            if (a != null)
+                if (a.texture.Length > 1)
+                {
+                    helmet.sprite = a.texture[helmetTI];
+                    helmet.flipX = (moveDir.x < 0);
+                }
+
+            a = (Armor)inventory.Equiped(1);
+            if (a != null)
+                if (a.texture.Length > 1)
+                {
+                    torso.sprite = a.texture[torsoTI];
+                }
+        }
+        else
+        {
+            Armor a;
+            if (helmetTI != 0)
+            {
+                a = (Armor)inventory.Equiped(0);
+                if (a != null)
+                    helmet.sprite = a.texture[0];
+                helmetTI = 0;
+            }
+            if (torsoTI != 0)
+            {
+                a = (Armor)inventory.Equiped(1);
+                if (a != null)
+                    torso.sprite = a.texture[0];
+                torsoTI = 0;
+            }
+        }
     }
+
+    #endregion
+
     private void CollisionCheck()
     {
         if (Time.time > nextDamage)
@@ -159,24 +233,36 @@ public class PlayerScript : MonoBehaviour
             enablePiskup = true;
     }
 
-    #endregion
-
     private void UpdateEquipment()
     {
         for (int i = 0; i < numE; i++)
         {
             Equipment e = inventory.Equiped(i);
+            Armor a;
+            bool b = false;
+
             if (e != null)
                 switch (i)
                 {
                     case 0:
-                    case 1:
-                    case 2:
-                        if (e.texture != clothes[i])
-                            clothes[i] = e.texture;
+                        a = (Armor)e;
+                        if (a.texture[0] != helmet.sprite)
+                        {
+                            helmetTI = 0;
+                            helmet.sprite = a.texture[helmetTI];
+                            helmet.color = a.color;
+                        }
                         break;
+                    case 1:
+                        a = (Armor)e;
+                        if (a.texture[0] != torso.sprite)
+                        {
+                            torso.sprite = a.texture[0];
+                            torso.color = a.color;
+                        }
+                        break;
+                    case 2:
                     case 3:
-                    case 4:
                         if (!armed)
                             weaponJustEquiped = true;
                         armed = true;
@@ -188,17 +274,23 @@ public class PlayerScript : MonoBehaviour
                 switch (i)
                 {
                     case 0:
+                        helmet.sprite = empty;
+                        break;
                     case 1:
+                        torso.sprite = empty;
+                        break;
                     case 2:
-                        clothes[i] = empty;
+                        b = armed;
                         break;
                     case 3:
-                        armed = false;
+                        if(b)
+                            armed = false;
                         break;
                     default:
                         break;
                 }
-            ChangeWeapon(primaryWeap);
+
+            ChangeWeapon(primaryWeap, false);
         }
     }
     private void Hurt(int damage) 
@@ -220,7 +312,7 @@ public class PlayerScript : MonoBehaviour
     {
         rb.simulated = false;
         playerCom.enabled = false;
-        combatAct = false;
+
         animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
@@ -234,28 +326,30 @@ public class PlayerScript : MonoBehaviour
     public int GetLevel()                               { return level;         }
     public int GetHealth()                              { return health;        }
     public Vector2 GetPos()                             { return rb.position;   }
-    public void SetActiveCombat(bool set)
-    {
-        playerCom.enabled = set;
-        combatAct = set;
-    }
+    public void SetActiveCombat(bool set)               { playerCom.enabled = set; }
 
     #endregion
 
-    public void ChangeWeapon(bool primar)
+    public void ChangeWeapon(bool primar, bool overwrite)
     {
         int j;
         if (primar)
             j = 2;
         else
             j = 3;
-        playerCom.EquipWeapon(Inventory.instance.Equiped(j));
+
+        playerCom.EquipWeapon((Weapon)Inventory.instance.Equiped(j));
+
         primaryWeap = primar;
+
+        if (overwrite)
+            if (armed)
+                playerCom.enabled = true;
     }
     public void TakeDamage(int damage)
     { 
         Hurt(damage);         
-    }
+    }   // Mozno odstranit kvoli Hurt
     public void DropedItem()
     {
         enablePiskup = false;

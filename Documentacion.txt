@@ -552,6 +552,10 @@ Navrh na Zlepsenie:
 	Dropovanie itemov na nahodne miesta v Rangi
 
 ----------------< 11. 11.  2023 >----------------
+Pridane Funkcie:
+	Equipment Clothes
+	New item system
+
 ----------------< 12. 11.  2023 >----------------
 ----------------< 13. 11.  2023 >----------------
 ----------------< 14. 11.  2023 >----------------

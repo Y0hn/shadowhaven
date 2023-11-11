@@ -5,12 +5,12 @@ public class Item : ScriptableObject
 {
     new public string name = "New item";
     public Sprite icon = null;
-    public Sprite texture = null;
-    public string colorModifier = "255 255 255 1";
+    public Color color = Color.white;
 
     public virtual void Use()
     {
         // Use item
+        Inventory.instance.onItemChangeCallback.Invoke();
     }
     public void RemoveFromInventory()
     {

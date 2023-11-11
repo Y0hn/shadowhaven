@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,13 +7,16 @@ public class GameManager : MonoBehaviour
     public ManagerUI UI;
     public GameObject[] Levels;
 
+    #region References
+
     private PlayerScript playerScript;
     private ItemsList items;
     private Inventory inventory;
 
+    #endregion
+
     public int level;
     public int eqiWeap;
-    public string log;
 
     public static bool playerLives = true;
     public static bool isPaused = false;
@@ -43,10 +42,11 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        /*  Neviem naco to tu je xd
+        /*  Neviem naco to tu je xd 
+         *  toto vobec nebol uneficient workaround :D
         if (Time.time > refreshInvTime)
             Inventory.instance.onItemChangeCallback.Invoke();
-        */
+        /**/
         if (!sceneLoaded) 
             ReloadScene();
         if (playerLives)
@@ -65,13 +65,21 @@ public class GameManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.Alpha1) || eqiWeap == 1)
             {
                 // Equip Primary
-                playerScript.ChangeWeapon(true);
+                if (inventory.Equiped(2) != null)
+                    playerScript.ChangeWeapon(true, true);
+                else
+                    playerScript.SetActiveCombat(false);
+
                 eqiWeap = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Alpha2) || eqiWeap == 2)
             {
                 // Equip Secondary
-                playerScript.ChangeWeapon(false);
+                if (inventory.Equiped(3) != null)
+                    playerScript.ChangeWeapon(false, true);
+                else
+                    playerScript.SetActiveCombat(false);
+
                 eqiWeap = 0;
             }
             else if (Input.GetKeyDown(KeyCode.Alpha3) || eqiWeap == 3)
@@ -81,9 +89,7 @@ public class GameManager : MonoBehaviour
             }
         }
         else
-        {
             PlayerDeath();
-        }
     }
     private void PlayerDeath()
     {
@@ -140,28 +146,14 @@ public class GameManager : MonoBehaviour
         items.RemoveArray(Inventory.instance.GetEquipment());
     }
 
-    private void Hlasatel()
-    {
-        Debug.Log(log);
-    }
+    #region Public Events
+
     public void ResumeGame()
     {
         UI.DisableUI("inv");
         UI.DisableUI("pause");
         Time.timeScale = 1f;
         isPaused = false;
-    }
-    public void Save()
-    {
-        SaveSystem.SavePlayer(playerScript);
-    }
-    public void Load()
-    {
-        PlayerData data = SaveSystem.LoadPlayer();
-
-        playerScript.SetHealth(data.health);
-        playerScript.SetLevel(data.level);
-        playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
     public void GoToMainMenu()
     { 
@@ -178,4 +170,18 @@ public class GameManager : MonoBehaviour
         UI.ResetUI();
         Time.timeScale = 1f;
     }
+    public void Save()
+    {
+        SaveSystem.SavePlayer(playerScript);
+    }
+    public void Load()
+    {
+        PlayerData data = SaveSystem.LoadPlayer();
+
+        playerScript.SetHealth(data.health);
+        playerScript.SetLevel(data.level);
+        playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
+    }
+
+    #endregion
 }
