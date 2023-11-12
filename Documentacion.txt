@@ -556,8 +556,17 @@ Pridane Funkcie:
 	Equipment Clothes
 	New item system
 
+Neuspesny pokus o:
+	Rozdelenie PlayerScriptu do PlayerInputu
+
 ----------------< 12. 11.  2023 >----------------
+Pridane Funkcie:
+	Spojenie Equipment scriptov
+	armorModifier
+
 ----------------< 13. 11.  2023 >----------------
+Plan: 
+	[Syetem.Serializable] Stat
 ----------------< 14. 11.  2023 >----------------
 ----------------< 15. 11.  2023 >----------------
 ----------------< 16. 11.  2023 >----------------
@@ -693,7 +702,7 @@ https://youtu.be/nkgGyO9VG54?si=O6PQFyM8uiZePHvp
 https://youtu.be/w6_fetj9PIw?si=utyHQJqJLoK98fta
 https://youtu.be/9tePzyL6dgc?si=a741tqaFgRBoRIfx
 https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
-
+https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
 
 
 ____________________/ TOOLS \____________________

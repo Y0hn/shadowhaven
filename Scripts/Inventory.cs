@@ -143,6 +143,7 @@ public class Inventory : MonoBehaviour
             player.GetComponent<PlayerScript>().SetActiveCombat(false);
     }
 
+    // Get Equiped
     public Equipment Equiped(int i) 
     { return equipment[i]; }
     public Equipment[] GetEquipment()

@@ -138,7 +138,7 @@ public class GameManager : MonoBehaviour
             Destroy(oldLvl);
 
         Instantiate(Levels[level], transform.position, Quaternion.identity);
-        ItemsList levelItems = GameObject.FindGameObjectWithTag("Level").GetComponent<ItemsList>();
+        ItemsList levelItems = GameObject.FindGameObjectWithTag("Assets").GetComponent<ItemsList>();
 
         items.SetAll(levelItems.GetAll());
         Destroy(levelItems);

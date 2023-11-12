@@ -1,4 +1,4 @@
-using Unity.Burst.Intrinsics;
+using System.Collections.Generic;
 using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {    
@@ -33,9 +33,12 @@ public class PlayerScript : MonoBehaviour
 
     #endregion
 
+    private List<int> armor = new List<int>() { 0, 0 };
     private int numE;
     private int helmetTI = 0;   // texture index
     private int torsoTI = 0;
+
+    private const int minDmg = 1;
 
     private Vector2 moveDir;
     private float moveSpeed = 5;
@@ -45,6 +48,7 @@ public class PlayerScript : MonoBehaviour
     private bool combatAct = false;
     private bool primaryWeap = true;
     private bool enablePiskup = true;
+
 
 
     private void Start() 
@@ -251,6 +255,7 @@ public class PlayerScript : MonoBehaviour
                             helmetTI = 0;
                             helmet.sprite = a.texture[helmetTI];
                             helmet.color = a.color;
+                            armor[0] = a.armorModifier;
                         }
                         break;
                     case 1:
@@ -259,6 +264,7 @@ public class PlayerScript : MonoBehaviour
                         {
                             torso.sprite = a.texture[0];
                             torso.color = a.color;
+                            armor[1] = a.armorModifier;
                         }
                         break;
                     case 2:
@@ -275,9 +281,11 @@ public class PlayerScript : MonoBehaviour
                 {
                     case 0:
                         helmet.sprite = empty;
+                        armor[0] = 0;
                         break;
                     case 1:
                         torso.sprite = empty;
+                        armor[1] = 0;
                         break;
                     case 2:
                         b = armed;
@@ -295,7 +303,11 @@ public class PlayerScript : MonoBehaviour
     }
     private void Hurt(int damage) 
     {
-        if (damage != 0)
+        foreach (int arm in armor)
+            damage -= arm;
+        damage = Mathf.Clamp(damage, minDmg, int.MaxValue);
+
+        if (damage > 0)
         {
             health -= damage;
             healthBar.SetHealth(health);

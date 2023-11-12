@@ -5,15 +5,16 @@ using UnityEngine;
 [System.Serializable]
 public class PlayerData
 {
-    private List<int> Inventory;
     public int level;
     public int health;
+    public Equipment[] equipment;
     public float[] position;
 
     public PlayerData (PlayerScript player)
     {
         level = player.GetLevel();
         health = player.GetHealth();
+        equipment = Inventory.instance.GetEquipment();
 
         Vector2 pos = player.GetPos();
         position = new float[2];
