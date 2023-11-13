@@ -63,7 +63,7 @@ public class PlayerScript : MonoBehaviour
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateEquipment;
 
-        numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length + 1;
 
         /* CHILDREN 
          * 1 - BODY   

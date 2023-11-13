@@ -567,6 +567,19 @@ Pridane Funkcie:
 ----------------< 13. 11.  2023 >----------------
 Plan: 
 	[Syetem.Serializable] Stat
+	- first failed misurebly :D
+	- then done some work on it and rise 
+
+Napady na buducich bossov:
+	Spider like
+	The Forest like boss (velke ruky a toci sa)
+	chapadla
+	skeleton ?
+	slime ?
+
+Napady na behavior:
+	bocny utok 
+
 ----------------< 14. 11.  2023 >----------------
 ----------------< 15. 11.  2023 >----------------
 ----------------< 16. 11.  2023 >----------------

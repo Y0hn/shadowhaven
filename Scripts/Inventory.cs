@@ -17,12 +17,19 @@ public class Inventory : MonoBehaviour
     public delegate void OnItemChange();
     public OnItemChange onItemChangeCallback;
 
+    public delegate void OnEquipChange();
+    public OnItemChange onEquipChangeCallback;
+
+    public delegate void OnCashChange();
+    public OnItemChange onCashChangeCallback;
+
     public GameObject droper;
     public int space = 12;
     
     public List<Item> items = new();
     private Equipment[] equipment;
     public List<int> quickSlots;
+    private int money = 0;
 
     private Transform player;
 
@@ -89,6 +96,7 @@ public class Inventory : MonoBehaviour
         }
 
         //Debug.Log("Equipment " + newEqu.name + " typu: " + newEqu.equipSlot + " equiped on slot " + slotIndex);
+        onEquipChangeCallback.Invoke();
         onItemChangeCallback.Invoke();
     }
     private void Equip(Equipment newEqu, int slotIndex)
@@ -119,6 +127,7 @@ public class Inventory : MonoBehaviour
             else
                 return false;
         }
+        onEquipChangeCallback.Invoke();
         onItemChangeCallback.Invoke();
         return true;
     }
@@ -149,5 +158,26 @@ public class Inventory : MonoBehaviour
     public Equipment[] GetEquipment()
     { return equipment; }
     public void ClearInventory()
-    { items = new(); }
+    { 
+        items = new();
+        onItemChangeCallback.Invoke();
+    }
+    public int GetMoney()
+    {
+        return money;
+    }
+    public void AddMoney(int add)
+    {
+        money += add;
+        onCashChangeCallback.Invoke();
+    }
+    public bool PayMoney(int pay) 
+    { 
+        if (money > pay)
+            money -= pay;
+        else
+            return false;
+        onCashChangeCallback.Invoke();
+        return true;
+    }
 }

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ManagerUI : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class ManagerUI : MonoBehaviour
         {"inv", 1},
         {"pause", 2},
         {"death", 3},
+        {"money", 4 }
     };
 
     private Inventory inventory;
@@ -18,18 +20,20 @@ public class ManagerUI : MonoBehaviour
     private itemSlot[] quickSlots;
     private int equipL;
 
+    private const string s = " $   ";
+
     private void Start()
     {
         ResetUI();
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateUI;
 
-        itemSlots = UIs[1].GetChild(0).GetComponentsInChildren<itemSlot>();
+        itemSlots = UIs[Dic["inv"]].GetChild(0).GetComponentsInChildren<itemSlot>();
 
         equipL = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipL++;
-        equiSlots = UIs[1].GetChild(1).GetComponentsInChildren<itemSlot>();
-        quickSlots = UIs[0].GetComponentsInChildren<itemSlot>();
+        equiSlots = UIs[Dic["inv"]].GetChild(1).GetComponentsInChildren<itemSlot>();
+        quickSlots = UIs[Dic["base"]].GetComponentsInChildren<itemSlot>();
     }
     private void UpdateUI()
     {
@@ -71,6 +75,10 @@ public class ManagerUI : MonoBehaviour
         }
     }
 
+    public void CashUpdate()
+    {
+        UIs[Dic["money"]].GetComponent<Text>().text = inventory.GetMoney() + s;
+    }
 
     public void ResetUI()
     {
