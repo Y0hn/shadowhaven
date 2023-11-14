@@ -54,6 +54,8 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
         {
             GameObject o = Instantiate(projectile, spawn.position, Quaternion.identity);
             o.name += "-" + (animator.gameObject.tag.Split(' ')[1]);
+            o.GetComponent<ProjectileScript>().damage = 
+                animator.transform.GetComponent<CharakterStats>().damage.GetValue();
             nextAtk = Time.time + 1 / rate;
         }
     }

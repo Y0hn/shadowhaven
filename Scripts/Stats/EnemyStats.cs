@@ -1,25 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 using UnityEngine;
 
 public class EnemyStats : CharakterStats
 {
+    public Text loot;
     private Collider2D collid;
-    public float lookRadius { get; private set; }
-    private bool stunable;
+    public float lookRadius;
+    private bool stunable = true;
+    private Inventory inv;
 
-    void Start()
+    protected override void Start()
     {
-        animator = GetComponent<Animator>();
-        collid = GetComponent<Collider2D>();
-        rb = GetComponent<Rigidbody2D>();
-    }
+        base.Start();
 
+        collid = GetComponent<Collider2D>();
+    }
     public override void TakeDamage(int damage)
     {
         base.TakeDamage(damage);
 
-        healthBar.SetHealth(curHealth);
         animator.SetTrigger("Hurt");
 
         if (stunable)
@@ -36,12 +37,27 @@ public class EnemyStats : CharakterStats
         if (lookRadius <= 15)
             lookRadius += 5;
     }
+    public int DoDamage()
+    {
+        return damage.GetValue();
+    }
     protected override void Die()
     {
+        // Reward Loot
+        int reward = Random.Range(level, level*5);
+        Inventory.instance.AddMoney(reward);
+        loot.text = reward + loot.text;
+
         animator.SetBool("isAlive", false);
+
         // Deconstruction
         rb.simulated = false;
         Destroy(collid);
         Destroy(transform.gameObject, 5);
+    }
+
+    public void SetLookRadius(float nLR)
+    {
+        lookRadius = nLR;
     }
 }

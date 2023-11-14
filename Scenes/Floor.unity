@@ -1510,6 +1510,7 @@ GameObject:
   - component: {fileID: 386169645}
   - component: {fileID: 386169644}
   - component: {fileID: 386169643}
+  - component: {fileID: 386169649}
   - component: {fileID: 386169648}
   m_Layer: 7
   m_Name: Player
@@ -1531,14 +1532,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   empty: {fileID: 21300000, guid: 2e560b858be5c364191ab5f85c11626e, type: 3}
-  healthBar: {fileID: 327625721}
   enemyLayers:
     serializedVersion: 2
     m_Bits: 256
   hitBox: {x: 1.1, y: 1.6}
   interRange: 1
-  level: 1
-  health: 100
 --- !u!95 &386169644
 Animator:
   serializedVersion: 5
@@ -1656,8 +1654,27 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   attackRange: 0.4
-  damage: 30
   fireRate: 2
+--- !u!114 &386169649
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 386169642}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 367db0d22fbf5034daf97bcfed969933, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 327625721}
+  maxHealth: 100
+  damage:
+    value: 0
+  armor:
+    value: 0
+  level: 1
+  nextDamage: 0
 --- !u!1 &436542393
 GameObject:
   m_ObjectHideFlags: 0
@@ -5262,7 +5279,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -120, y: 220}
+  m_AnchoredPosition: {x: -120, y: 215}
   m_SizeDelta: {x: 200, y: 35}
   m_Pivot: {x: 1, y: 0}
 --- !u!1 &1626567914

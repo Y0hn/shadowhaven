@@ -4,19 +4,27 @@ using Unity.Burst.Intrinsics;
 using UnityEngine;
 using UnityEngine.WSA;
 
-public class PlayerStat : CharakterStats
+public class PlayerStats : CharakterStats
 {
-    Inventory inv;
     private PlayerCombatScript playerCom;
+    private Inventory inv;
     private int numE;
 
-    private float nextDamage = 0;
+    public float nextDamage = 0;
     private const float inviTime = 0.5f;
 
-    private void Start()
+    public void SetHealth(int health)
     {
-        inv = Inventory.instance;
+        /// carefull does not change max HP
+        curHealth = health;
+    }
+    protected override void Start()
+    {
+        base.Start();
+
         playerCom = GetComponent<PlayerCombatScript>();
+        inv = Inventory.instance;
+
         inv.onEquipChangeCallback += EquipmentStatsRefresh;
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
     }
@@ -51,23 +59,34 @@ public class PlayerStat : CharakterStats
     }
     public override void TakeDamage(int dmg)
     {
-        base.TakeDamage(dmg);
+        if (nextDamage < Time.time)
+        {
+            //Debug.Log("Player Takain dmg!");
 
-        healthBar.SetHealth(curHealth);
-        animator.SetTrigger("Hurt");
+            base.TakeDamage(dmg);
 
-        // Invincibility
-        nextDamage = Time.time + inviTime;
+            healthBar.SetHealth(curHealth);
+            animator.SetTrigger("Hurt");
+
+            // Invincibility
+            nextDamage = Time.time + inviTime;
+        }
     }
     protected override void Die()
     {
-        base.Die();
-
         rb.simulated = false;
         playerCom.enabled = false;
 
         animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
         GameManager.playerLives = false;
+    }
+    public void Resurect()
+    {
+        curHealth = maxHealth;
+        healthBar.SetHealth(curHealth);
+        //playerCom.enabled = true;
+        rb.simulated = true;
+        animator.SetBool("isAlive", true);
     }
 }

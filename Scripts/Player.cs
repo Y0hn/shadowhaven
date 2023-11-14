@@ -3,22 +3,18 @@ using UnityEngine;
 public class PlayerScript : MonoBehaviour
 {    
     public Sprite empty;
-    public HealthBar healthBar;
     public LayerMask enemyLayers;
     public Vector2 hitBox;
 
     public float interRange;
 
-    public int level;
-    public int health;
-    private int maxHealth;
-
     #region References
 
     private PlayerCombatScript playerCom;
-    private Rigidbody2D rb;
-    private Animator animator;
     private Inventory inventory;
+    private Animator animator;
+    private PlayerStats stats;
+    private Rigidbody2D rb;
     private SpriteRenderer torso;
     private SpriteRenderer helmet;
 
@@ -26,14 +22,11 @@ public class PlayerScript : MonoBehaviour
 
     #region Timers
 
-    private float nextDamage = 0;
-    private const float inviTime = 0.5f;
     private float nextPickup = 0;
     private const float pickUpTime = 1;
 
     #endregion
 
-    private List<int> armor = new List<int>() { 0, 0 };
     private int numE;
     private int helmetTI = 0;   // texture index
     private int torsoTI = 0;
@@ -58,8 +51,7 @@ public class PlayerScript : MonoBehaviour
         playerCom = GetComponent<PlayerCombatScript>();
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        maxHealth = health;
-        healthBar.SetMaxHealth(health);
+        stats = GetComponent<PlayerStats>();
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateEquipment;
 
@@ -91,6 +83,9 @@ public class PlayerScript : MonoBehaviour
 
             CollisionCheck();
             PickUpCheck();
+
+            if (Input.GetKeyDown(KeyCode.P))
+                stats.TakeDamage(int.MaxValue);
         }
     }
     private void OnDrawGizmosSelected()
@@ -206,13 +201,13 @@ public class PlayerScript : MonoBehaviour
 
     private void CollisionCheck()
     {
-        if (Time.time > nextDamage)
+        if (Time.time > stats.nextDamage)
         {
             // Get Coilidning Enemies
             Collider2D[] Enemies = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
             // Enemis Doin Damage
             foreach (Collider2D enemy in Enemies)
-                Hurt(enemy.GetComponent<EnemyScript>().DoDamage());
+                stats.TakeDamage(enemy.GetComponent<EnemyStats>().DoDamage());
 
             if (Enemies.Length < 1)
             {
@@ -220,7 +215,7 @@ public class PlayerScript : MonoBehaviour
                 Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
                 // Projectiles Doin Damage
                 foreach (Collider2D projectile in Projectiles)
-                    Hurt(projectile.GetComponent<ProjectileScript>().DoDamage());
+                    stats.TakeDamage(projectile.GetComponent<ProjectileScript>().DoDamage());
             }
         }
     }
@@ -255,7 +250,6 @@ public class PlayerScript : MonoBehaviour
                             helmetTI = 0;
                             helmet.sprite = a.texture[helmetTI];
                             helmet.color = a.color;
-                            armor[0] = a.armorModifier;
                         }
                         break;
                     case 1:
@@ -264,7 +258,6 @@ public class PlayerScript : MonoBehaviour
                         {
                             torso.sprite = a.texture[0];
                             torso.color = a.color;
-                            armor[1] = a.armorModifier;
                         }
                         break;
                     case 2:
@@ -281,11 +274,9 @@ public class PlayerScript : MonoBehaviour
                 {
                     case 0:
                         helmet.sprite = empty;
-                        armor[0] = 0;
                         break;
                     case 1:
                         torso.sprite = empty;
-                        armor[1] = 0;
                         break;
                     case 2:
                         b = armed;
@@ -301,42 +292,10 @@ public class PlayerScript : MonoBehaviour
             ChangeWeapon(primaryWeap, false);
         }
     }
-    private void Hurt(int damage) 
-    {
-        foreach (int arm in armor)
-            damage -= arm;
-        damage = Mathf.Clamp(damage, minDmg, int.MaxValue);
-
-        if (damage > 0)
-        {
-            health -= damage;
-            healthBar.SetHealth(health);
-            animator.SetTrigger("Hurt");
-
-            if (health <= 0)
-                Die();
-
-            // Invincibility
-            nextDamage = Time.time + inviTime;
-        }
-    }
-    private void Die()
-    {
-        rb.simulated = false;
-        playerCom.enabled = false;
-
-        animator.SetBool("isAlive", false);
-        //Debug.Log("Hrac zomrel");
-        GameManager.playerLives = false;
-    }
 
     #region GetSet
 
     public void SetPos(Vector2 pos)                     { rb.position = pos;    }
-    public void SetLevel(int newlevel)                  { level = newlevel;     }
-    public void SetHealth(int newhealth)                {  health = newhealth;  }
-    public int GetLevel()                               { return level;         }
-    public int GetHealth()                              { return health;        }
     public Vector2 GetPos()                             { return rb.position;   }
     public void SetActiveCombat(bool set)               { playerCom.enabled = set; }
 
@@ -358,21 +317,13 @@ public class PlayerScript : MonoBehaviour
             if (armed)
                 playerCom.enabled = true;
     }
-    public void TakeDamage(int damage)
-    { 
-        Hurt(damage);         
-    }   // Mozno odstranit kvoli Hurt
     public void DropedItem()
     {
         enablePiskup = false;
         nextPickup = Time.time + pickUpTime;
     }
     public void Resurect() 
-    { 
-        health = maxHealth; 
-        healthBar.SetHealth(health);
-        //playerCom.enabled = true;
-        rb.simulated = true;
-        animator.SetBool("isAlive", true);
+    {
+        stats.Resurect();
     }
 }

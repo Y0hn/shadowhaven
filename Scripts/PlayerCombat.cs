@@ -11,13 +11,12 @@ public class PlayerCombatScript : MonoBehaviour
     public float attackRange;
 
     private PlayerScript player;
+    private PlayerStats stats;
     private Collider2D col;
     private Camera cam;
     private GameObject projectile = null;
     
     private Vector3 mousePos;
-
-    public int damage;
     private const int posun = 3;    // ak sa v buducosti bude menit tak bude problem
 
     private float attackDist = 45;  // distance for melee weapon to do damage
@@ -33,6 +32,7 @@ public class PlayerCombatScript : MonoBehaviour
         // References
         player = GetComponent<PlayerScript>();
         cam = GetComponentInChildren<Camera>();
+        stats = GetComponent<PlayerStats>();
         rotatePoint = transform.GetChild(0);
         Hand = rotatePoint.transform.GetChild(0);
         HandS = rotatePoint.transform.GetChild(1);
@@ -75,13 +75,14 @@ public class PlayerCombatScript : MonoBehaviour
 
         Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
         foreach (Collider2D enemy in hitEnemies)
-            enemy.GetComponent<EnemyScript>().TakeDamage(damage);
+            enemy.GetComponent<EnemyStats>().TakeDamage(stats.damage.GetValue());
     }
     private void RangedAttack()
     {
         if (Time.time >= fireTime)
         {
             GameObject o = Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+            o.GetComponent<ProjectileScript>().damage = stats.damage.GetValue();
             o.name += "-" + gameObject.tag;
             o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
             fireTime = Time.time + 1 / fireRate;
@@ -103,7 +104,7 @@ public class PlayerCombatScript : MonoBehaviour
 
             switch ((int)weap.type)
             {
-                case 0: melee = true;  damage = weap.damageModifier; break;  // Melee
+                case 0: melee = true;  break;  // Melee
                 case 1:
                 case 2: melee = false; projectile = weap.projectile; break;  // Magic + Ranged
             }

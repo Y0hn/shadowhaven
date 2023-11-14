@@ -162,6 +162,9 @@ public class Inventory : MonoBehaviour
         items = new();
         onItemChangeCallback.Invoke();
     }
+
+
+
     public int GetMoney()
     {
         return money;

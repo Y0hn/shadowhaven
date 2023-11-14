@@ -27,6 +27,7 @@ public class ManagerUI : MonoBehaviour
         ResetUI();
         inventory = Inventory.instance;
         inventory.onItemChangeCallback += UpdateUI;
+        inventory.onCashChangeCallback += UpdateCash;
 
         itemSlots = UIs[Dic["inv"]].GetChild(0).GetComponentsInChildren<itemSlot>();
 
@@ -75,7 +76,7 @@ public class ManagerUI : MonoBehaviour
         }
     }
 
-    public void CashUpdate()
+    public void UpdateCash()
     {
         UIs[Dic["money"]].GetComponent<Text>().text = inventory.GetMoney() + s;
     }

@@ -8,37 +8,28 @@ using UnityEngine.AI;
 
 public class EnemyScript : MonoBehaviour
 {
-    public float lookRadius;
-    public HealthBar healthBar;
-
     private Animator animator;
     private Transform target;
-    private PlayerScript playerScript;
-    private Collider2D collid;
+    private EnemyStats stats;
     private Rigidbody2D rb;
 
     private string eneName;
-
-    public int fullHealth;
-    public int damage;
-
-    private int health;
-
-    private bool stunable;
 
     private float rangeMax;
     private float rangeMin;
 
     private void OnDrawGizmosSelected()
     {
+        stats = GetComponent<EnemyStats>();
+
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, lookRadius);
+        Gizmos.DrawWireSphere(transform.position, stats.lookRadius);
         if (transform.name == "Skeleton")
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, lookRadius * 0.8f);
+            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.8f);
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, lookRadius * 0.25f);
+            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.4f);
         }
     }
     private void Start()
@@ -46,28 +37,20 @@ public class EnemyScript : MonoBehaviour
         // References
         eneName = transform.name;
         animator = GetComponent<Animator>();
-        collid = GetComponent<Collider2D>();
+        stats = GetComponent<EnemyStats>();
         rb = GetComponent<Rigidbody2D>();
-        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        playerScript = target.GetComponent<PlayerScript>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
         SetStats();
     }
     private void SetStats()
     {
-        // Stats
-        stunable = true;
-        //fullHealth += 20 * playerScript.GetLevel();
-        healthBar.SetMaxHealth(fullHealth);
-        health = fullHealth;
-        //damage += 5 * playerScript.GetLevel();
-
         if (eneName.Contains("Zombie"))
         {
         }
         else if (eneName.Contains("Skeleton"))
         {
-            rangeMax = lookRadius * 0.8f;
-            rangeMin = lookRadius * 0.5f;
+            rangeMax = stats.lookRadius * 0.8f;
+            rangeMin = stats.lookRadius * 0.4f;
         }
     }
     private void Update()
@@ -80,7 +63,7 @@ public class EnemyScript : MonoBehaviour
 
         if (eneName.Contains("Zombie"))
         {
-            if (distance < lookRadius)
+            if (distance < stats.lookRadius)
                 animator.SetBool("isFollowing", true);
             else if (animator.GetBool("isFollowing"))
             {
@@ -91,7 +74,7 @@ public class EnemyScript : MonoBehaviour
         }
         else if (eneName.Contains("Skeleton"))
         {
-            if ((rangeMax < distance || distance < rangeMin) && distance < lookRadius)
+            if ((rangeMax < distance || distance < rangeMin) && distance < stats.lookRadius)
             {
                 if (distance < rangeMin)
                     animator.SetBool("runAway", true);
@@ -117,40 +100,5 @@ public class EnemyScript : MonoBehaviour
             } 
 
         }
-    }
-    public int DoDamage()
-    {
-        return damage;
-    }
-    public void TakeDamage(int damage)
-    {
-        health -= damage;
-        healthBar.SetHealth(health);
-        animator.SetTrigger("Hurt");
-
-        if (health <= 0)
-            Die();
-
-        if (stunable)
-        {
-            rb.velocity = Vector2.zero;
-            Vector2 moveDir;
-
-            float hori = animator.GetFloat("Horizontal");
-            float vert = animator.GetFloat("Vertical");
-
-            moveDir = new Vector2(-hori, -vert);
-            rb.velocity = moveDir;
-        }
-        if (lookRadius <= 15)
-            lookRadius += 5;
-    }
-    private void Die() 
-    { 
-        animator.SetBool("isAlive", false);
-        // Deconstruction
-        rb.simulated = false;
-        Destroy(collid);
-        Destroy(transform.gameObject, 5);
     }
 }

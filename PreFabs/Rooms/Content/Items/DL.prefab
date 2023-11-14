@@ -43,7 +43,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1884201614146461870, guid: df27750890120ae418648495f819a78f, type: 3}
       propertyPath: m_Name
-      value: item (1)
+      value: item
       objectReference: {fileID: 0}
     - target: {fileID: 6452882157213702701, guid: df27750890120ae418648495f819a78f, type: 3}
       propertyPath: item
@@ -109,7 +109,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1884201614146461870, guid: df27750890120ae418648495f819a78f, type: 3}
       propertyPath: m_Name
-      value: item
+      value: weapon
       objectReference: {fileID: 0}
     - target: {fileID: 6452882157213702701, guid: df27750890120ae418648495f819a78f, type: 3}
       propertyPath: item

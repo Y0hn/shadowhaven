@@ -55,4 +55,40 @@ public class ItemsList : MonoBehaviour
                 if (i != null)
                     Items.Remove(i);
     }
+    public Item GetRandWeapon()
+    {
+        List<Item> weapons = new List<Item>();
+        foreach (Item i in Items)
+        {
+            if (i is Weapon)
+                weapons.Add(i);
+        }
+        if (weapons.Count > 0)
+        {
+            int R = Random.Range(0, weapons.Count);
+            Item w = weapons[R];
+            Items.Remove(w);
+            return w;
+        }
+        else
+            return null;
+    }
+    public Item GetRandArmor()
+    {
+        List<Item> armors = new List<Item>();
+        foreach (Item i in Items)
+        {
+            if (i is Armor)
+                armors.Add(i);
+        }
+        if (armors.Count != 0)
+        {
+            int R = Random.Range(0, armors.Count);
+            Item a = armors[R];
+            Items.Remove(a);
+            return a;
+        }
+        else
+            return null;
+    }
 }

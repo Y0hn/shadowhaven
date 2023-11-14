@@ -581,6 +581,14 @@ Napady na behavior:
 	bocny utok 
 
 ----------------< 14. 11.  2023 >----------------
+Pridane Funkcie:
+	Loot z enemy Movbiek [cash] (podla lvl)
+	always spawn weapon in spawn room
+	Implementovane Staty Charakterov
+	Debug [P] => KYS
+	Balancing Scripted Itemov
+
+
 ----------------< 15. 11.  2023 >----------------
 ----------------< 16. 11.  2023 >----------------
 ----------------< 17. 11.  2023 >----------------

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     #region References
 
     private PlayerScript playerScript;
+    private PlayerStats playerStats;
     private ItemsList items;
     private Inventory inventory;
 
@@ -23,7 +24,7 @@ public class GameManager : MonoBehaviour
     public static bool inv = false;
 
     private bool sceneLoaded = false;
-    //private bool bossBeaten = false;
+    private bool deathScreen = false;
 
     private const float refreshInvTime = 0.1f;
 
@@ -51,7 +52,7 @@ public class GameManager : MonoBehaviour
             ReloadScene();
         if (playerLives)
         {
-            if      (Input.GetKeyUp(KeyCode.Escape))
+            if (Input.GetKeyUp(KeyCode.Escape))
             {
                 if (isPaused)
                     ResumeGame();
@@ -89,11 +90,22 @@ public class GameManager : MonoBehaviour
             }
         }
         else
-            PlayerDeath();
+        {
+            if (deathScreen)
+            {
+                if (Input.anyKeyDown)
+                {
+                    PlayerRevive();
+                }
+            }
+            else
+                PlayerDeath();
+        }
     }
     private void PlayerDeath()
     {
         Inventory.instance.ClearInventory();
+        deathScreen = true;
         isPaused = true;
         Time.timeScale = 0f;
         UI.DisableUI(0);
@@ -141,7 +153,7 @@ public class GameManager : MonoBehaviour
         ItemsList levelItems = GameObject.FindGameObjectWithTag("Assets").GetComponent<ItemsList>();
 
         items.SetAll(levelItems.GetAll());
-        Destroy(levelItems);
+        Destroy(levelItems, 2);
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(Inventory.instance.GetEquipment());
     }
@@ -164,6 +176,7 @@ public class GameManager : MonoBehaviour
     public void PlayerRevive()
     {
         playerScript.Resurect();
+        deathScreen = false;
         playerLives = true;
         isPaused = false;
         LevelLoad();
@@ -172,14 +185,14 @@ public class GameManager : MonoBehaviour
     }
     public void Save()
     {
-        SaveSystem.SavePlayer(playerScript);
+        SaveSystem.SavePlayer(playerScript, playerStats);
     }
     public void Load()
     {
         PlayerData data = SaveSystem.LoadPlayer();
 
-        playerScript.SetHealth(data.health);
-        playerScript.SetLevel(data.level);
+        playerStats.SetHealth(data.health);
+        playerStats.level = data.level;
         playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
 

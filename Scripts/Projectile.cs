@@ -62,12 +62,12 @@ public class ProjectileScript : MonoBehaviour
             {
                 if (targets == 0)                    
                 {
-                    hitTargets[0].GetComponent<PlayerScript>().TakeDamage(damage);                      
+                    hitTargets[0].GetComponent<PlayerStats>().TakeDamage(damage);                      
                     Destroy(gameObject);                    
                 }
                 else
                 {
-                    hitTargets[0].GetComponent<EnemyScript>().TakeDamage(damage);
+                    hitTargets[0].GetComponent<EnemyStats>().TakeDamage(damage);
                     Destroy(gameObject);
                 }
             }

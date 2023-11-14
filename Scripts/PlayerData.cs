@@ -7,13 +7,15 @@ public class PlayerData
 {
     public int level;
     public int health;
+    public int maxHealth;
     public Equipment[] equipment;
     public float[] position;
 
-    public PlayerData (PlayerScript player)
+    public PlayerData (PlayerScript player, PlayerStats stats)
     {
-        level = player.GetLevel();
-        health = player.GetHealth();
+        level = stats.level;
+        health = stats.curHealth;
+        maxHealth = stats.maxHealth;
         equipment = Inventory.instance.GetEquipment();
 
         Vector2 pos = player.GetPos();
