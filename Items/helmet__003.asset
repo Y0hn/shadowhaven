@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: New item
   icon: {fileID: 21300000, guid: 6848b0e2265f89f42a14444738925dca, type: 3}
-  color: {r: 0, g: 0, b: 0, a: 1}
+  color: {r: 0.2264151, g: 0.2264151, b: 0.2264151, a: 1}
   equipSlot: 0
   armorModifier: 5
   texture:

@@ -52,14 +52,14 @@ public class GameManager : MonoBehaviour
             ReloadScene();
         if (playerLives)
         {
-            if (Input.GetKeyUp(KeyCode.Escape))
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (isPaused)
                     ResumeGame();
                 else
                     PauseGame();
             }
-            else if (Input.GetKeyUp(KeyCode.E))
+            else if (Input.GetKeyDown(KeyCode.E))
             {
                 OpenCloseInventory();
             }
@@ -113,7 +113,7 @@ public class GameManager : MonoBehaviour
     }
     private void PauseGame()
     {
-        if (inventory)
+        if (inv)
         {
             UI.DisableUI("inv");
             inv = false;

@@ -16,7 +16,7 @@ MonoBehaviour:
   icon: {fileID: 21300000, guid: a8d8e1b6937850546a23a6b2609ba82b, type: 3}
   color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   equipSlot: 1
-  armorModifier: 20
+  armorModifier: 10
   texture:
   - {fileID: 21300000, guid: 6c71b71cd30e05b4cac22701223e5de5, type: 3}
   - {fileID: 21300000, guid: e1bafb17a8e041b409cfb6a69b4d3e71, type: 3}
