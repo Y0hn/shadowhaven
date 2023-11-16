@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class PlayerStats : CharakterStats
 {
+    public HealthBar LvlBar;
+
     private PlayerCombatScript playerCom;
     private Inventory inv;
     private int numE;
+    private int numXP = 0;
+    private int tillnextLvl = 100;
+    private int tillnextLvlConst = 100;
+
 
     public float nextDamage = 0;
     private const float inviTime = 0.5f;
 
-    public void SetHealth(int health)
-    {
-        /// carefull does not change max HP
-        curHealth = health;
-    }
     protected override void Start()
     {
         base.Start();
@@ -23,6 +24,9 @@ public class PlayerStats : CharakterStats
 
         inv.onEquipChangeCallback += EquipmentStatsRefresh;
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+
+        LvlBar.SetHealth(0);
+        LvlBar.SetMaxHealth(tillnextLvl);
     }
     private void EquipmentStatsRefresh()
     {
@@ -84,5 +88,22 @@ public class PlayerStats : CharakterStats
         //playerCom.enabled = true;
         rb.simulated = true;
         animator.SetBool("isAlive", true);
+    }
+    public void SetHealth(int health)
+    {
+        /// carefull does not change max HP
+        curHealth = health;
+    }
+    public void AddXp(int xp)
+    {
+        numXP += xp;
+        if (numXP > tillnextLvl)
+        {
+            numXP = 0;
+            level++;
+            tillnextLvl = tillnextLvlConst * level;
+            LvlBar.SetMaxHealth(tillnextLvl);
+        }
+        LvlBar.SetHealth(numXP);
     }
 }

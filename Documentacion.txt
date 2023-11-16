@@ -588,8 +588,15 @@ Pridane Funkcie:
 	Debug [P] => KYS
 	Balancing Scripted Itemov
 
+Bug Fixes:
+	Unable to open pause menu
+
 
 ----------------< 15. 11.  2023 >----------------
+Pridane Funkcie:
+	Somewhat unusable level bar
+	Main menu background update (AI generated)
+
 ----------------< 16. 11.  2023 >----------------
 ----------------< 17. 11.  2023 >----------------
 ----------------< 18. 11.  2023 >----------------

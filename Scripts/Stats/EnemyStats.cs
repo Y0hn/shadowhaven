@@ -9,7 +9,6 @@ public class EnemyStats : CharakterStats
     private Collider2D collid;
     public float lookRadius;
     private bool stunable = true;
-    private Inventory inv;
 
     protected override void Start()
     {
@@ -44,13 +43,17 @@ public class EnemyStats : CharakterStats
     protected override void Die()
     {
         // Reward Loot
-        int reward = Random.Range(level, level*5);
+        int reward;
+        reward = Random.Range(level, level*5);
         Inventory.instance.AddMoney(reward);
         loot.text = reward + loot.text;
 
-        animator.SetBool("isAlive", false);
+        // Reward XP
+        reward = Random.Range(level, level*5);
+        GameManager.instance.AddXp(reward);
 
         // Deconstruction
+        animator.SetBool("isAlive", false);
         rb.simulated = false;
         Destroy(collid);
         Destroy(transform.gameObject, 5);

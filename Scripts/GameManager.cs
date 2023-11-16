@@ -3,6 +3,16 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    #region Singleton
+    public static GameManager instance;
+    private void Awake()
+    {
+        if (instance != null)
+            Debug.LogWarning("More than one Instance of GameManager!");
+        instance = this;
+    }
+    #endregion
+
     public GameObject player;
     public ManagerUI UI;
     public GameObject[] Levels;
@@ -11,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private PlayerScript playerScript;
     private PlayerStats playerStats;
+    private PlayerCombatScript playerCombat;
     private ItemsList items;
     private Inventory inventory;
 
@@ -32,9 +43,10 @@ public class GameManager : MonoBehaviour
     {
         // References
         // Debug.Log(Application.persistentDataPath);
+        playerCombat = player.GetComponent<PlayerCombatScript>();
         playerScript = player.GetComponent<PlayerScript>();
+        playerStats = player.GetComponent<PlayerStats>();
         inventory = GetComponent<Inventory>();
-        //inventory.onItemChangeCallback += Hlasatel;
         items = GetComponent<ItemsList>();
 
         LevelLoad();
@@ -194,6 +206,10 @@ public class GameManager : MonoBehaviour
         playerStats.SetHealth(data.health);
         playerStats.level = data.level;
         playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
+    }
+    public void AddXp(int xp) 
+    {
+        playerStats.AddXp(xp);
     }
 
     #endregion
