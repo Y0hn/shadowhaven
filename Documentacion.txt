@@ -598,6 +598,11 @@ Pridane Funkcie:
 	Main menu background update (AI generated)
 
 ----------------< 16. 11.  2023 >----------------
+Boss Desing:
+	Somehow not absolute waste of time
+	+ Boss.cs
+	+ ZomBoss.Textury
+
 ----------------< 17. 11.  2023 >----------------
 ----------------< 18. 11.  2023 >----------------
 ----------------< 19. 11.  2023 >----------------
