@@ -22,7 +22,8 @@ public class CharakterStats : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
-        healthBar.SetMaxHealth(maxHealth);
+        if (healthBar != null )
+            healthBar.SetMaxHealth(maxHealth);
     }
     /* Testing 
     private void Update()
