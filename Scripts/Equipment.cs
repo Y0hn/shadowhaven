@@ -14,11 +14,6 @@ public class Equipment : Item
         Inventory.instance.Unequip(this);
     }
 }
-
-public enum Type
-{
-    Melee, Ranged, Magic
-}
 public enum EquipmentSlot
 {
     Head, Chest, Weapon

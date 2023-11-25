@@ -7,6 +7,7 @@ public class PlayerCombatScript : MonoBehaviour
     private Transform rotatePoint;
     private Transform Hand;
     private Transform HandS;
+    private Transform WeaponIdleProjectile;
 
     public float attackRange;
 
@@ -15,13 +16,17 @@ public class PlayerCombatScript : MonoBehaviour
     private Collider2D col;
     private Camera cam;
     private GameObject projectile = null;
-    
+
+    private int weaponInvIndex;
+
     private Vector3 mousePos;
     private const int posun = 3;    // ak sa v buducosti bude menit tak bude problem
 
     private float attackDist = 45;  // distance for melee weapon to do damage
+
     public float fireRate;
     private float fireTime = 0;
+
     private float rotZ;
     private float lastRotZ = 0;
 
@@ -36,6 +41,7 @@ public class PlayerCombatScript : MonoBehaviour
         rotatePoint = transform.GetChild(0);
         Hand = rotatePoint.transform.GetChild(0);
         HandS = rotatePoint.transform.GetChild(1);
+        WeaponIdleProjectile = Hand.GetChild(0).GetChild(0);
         col = Hand.GetComponent<Collider2D>();
     }
     private void Update()
@@ -53,11 +59,42 @@ public class PlayerCombatScript : MonoBehaviour
 
             if (!GameManager.inv) // Unable to fire with inventory opened
             {
-                if (Input.GetMouseButton(0))
+                if (!melee && Input.GetMouseButton(1))
                 {
-                    if (!melee)
-                        RangedAttack();
+                    Sprite[] weaponsAdd = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).additional;
+                    bool multiSheet = weaponsAdd.Length > 0;
+
+                    if (fireTime == 0f)
+                        fireTime = Time.time + 1 / fireRate;
+                    else if (fireTime < Time.time)
+                    {
+                        if (multiSheet)
+                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[2];
+                        WeaponIdleProjectile.gameObject.SetActive(true);
+                        // Animacia naprahovania luku
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            RangedAttack();
+                            if (weaponsAdd.Length > 0)
+                                Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[0];
+                            WeaponIdleProjectile.gameObject.SetActive(false);
+                            fireTime = 0f;
+                        }
+                    }
+                    // Ranged Animation
+                    if (fireRate - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
+                    {
+                        if (multiSheet)
+                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[1];
+                    }
                 }
+                else if (fireTime != 0f)
+                {
+                    fireTime = 0f;
+                    Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture;
+                    WeaponIdleProjectile.gameObject.SetActive(false);
+                }
+
             }
             if (melee)
             {
@@ -79,20 +116,17 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void RangedAttack()
     {
-        if (Time.time >= fireTime)
-        {
-            GameObject o = Instantiate(projectile, Hand.transform.position, Quaternion.identity);
-            o.GetComponent<ProjectileScript>().damage = stats.damage.GetValue();
-            o.name += "-" + gameObject.tag;
-            o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
-            fireTime = Time.time + 1 / fireRate;
-        }
+        GameObject o = Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+        o.GetComponent<ProjectileScript>().damage = stats.damage.GetValue();
+        o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
+        o.name += "-" + gameObject.tag;
     }
     public void EquipWeapon(Weapon weap)
     {
         // References
         Hand = transform.GetChild(0).GetChild(0);
         HandS = transform.GetChild(0).GetChild(1);
+        SpriteRenderer rendProj = Hand.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
         if (weap != null)
         {
             SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
@@ -106,9 +140,16 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 case 0: melee = true;  break;  // Melee
                 case 1:
-                case 2: melee = false; projectile = weap.projectile; break;  // Magic + Ranged
+                case 2: 
+                    melee = false; 
+                    projectile = weap.projectile;
+                    rendProj.sprite = projectile.GetComponent<SpriteRenderer>().sprite;
+                    break;  // Magic + Ranged
             }
             col.enabled = melee;
+
+            rendProj.gameObject.SetActive(false);
+            weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
         }
         else
             enabled = false;

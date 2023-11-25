@@ -4,6 +4,7 @@ using UnityEngine;
 public class Item : ScriptableObject
 {
     new public string name = "New item";
+    public string description = string.Empty;
     public Sprite icon = null;
     public Color color = Color.white;
 

@@ -155,6 +155,10 @@ public class Inventory : MonoBehaviour
     // Get Equiped
     public Equipment Equiped(int i) 
     { return equipment[i]; }
+    public int GetIndexEquiped(Equipment e)
+    {
+        return equipment.ToList().IndexOf(e);
+    }
     public Equipment[] GetEquipment()
     { return equipment; }
     public void ClearInventory()

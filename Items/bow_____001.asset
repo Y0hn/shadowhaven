@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: bow_____001
   m_EditorClassIdentifier: 
   name: New item
+  description: 
   icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   equipSlot: 2
@@ -21,3 +22,7 @@ MonoBehaviour:
   onlySecondary: 0
   texture: {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
   projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
+  additional:
+  - {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
+  - {fileID: 21300000, guid: 2bd353b90d05ad2428999757dd88d90f, type: 3}
+  - {fileID: 21300000, guid: c6988c5f2a9771b43a2ac40b2b6cbcfc, type: 3}
