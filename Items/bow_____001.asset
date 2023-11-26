@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bow_____001
   m_EditorClassIdentifier: 
   name: Wooden bow
-  description: '#FrireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)'
+  description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)'
   icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   equipSlot: 2

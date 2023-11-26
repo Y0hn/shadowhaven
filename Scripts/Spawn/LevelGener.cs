@@ -220,7 +220,11 @@ public class LevelGener : MonoBehaviour
                 break;
         }
 
-        Instantiate(rooms[type], pos, Quaternion.identity, transform.parent);
+        // Room + Boss Spawn
+        GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
+        GameObject room = Instantiate(rooms[type], pos, Quaternion.identity, transform.parent);
+        Instantiate(bosses[Random.Range(0, bosses.Length)], room.transform.position, Quaternion.identity, room.transform);
+
         startEnd = true;
         pastDir = dir;
     }    
