@@ -6,9 +6,8 @@ public class Weapon : Equipment
     public Type type = Type.Melee;
     public int damageModifier = 0;
     public bool onlySecondary = false;
-    public Sprite texture = null;
+    public Sprite[] texture = null;
     public GameObject projectile = null;
-    public Sprite[] additional = null;
 }
 public enum Type
 {

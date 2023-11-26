@@ -12,17 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
   m_Name: bow_____001
   m_EditorClassIdentifier: 
-  name: New item
-  description: 
+  name: Wooden bow
+  description: '#FrireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)'
   icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   equipSlot: 2
   type: 1
   damageModifier: 20
   onlySecondary: 0
-  texture: {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
-  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
-  additional:
+  texture:
   - {fileID: 21300000, guid: cfbc3fb7528f80449b786e6ccaf43d7b, type: 3}
   - {fileID: 21300000, guid: 2bd353b90d05ad2428999757dd88d90f, type: 3}
   - {fileID: 21300000, guid: c6988c5f2a9771b43a2ac40b2b6cbcfc, type: 3}
+  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}

@@ -61,37 +61,37 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 if (!melee && Input.GetMouseButton(1))
                 {
-                    Sprite[] weaponsAdd = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).additional;
-                    bool multiSheet = weaponsAdd.Length > 0;
+                    Sprite[] texture = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture;
+                    bool multiSheet = texture.Length > 1;
 
                     if (fireTime == 0f)
                         fireTime = Time.time + 1 / fireRate;
                     else if (fireTime < Time.time)
                     {
                         if (multiSheet)
-                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[2];
+                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[2];
                         WeaponIdleProjectile.gameObject.SetActive(true);
                         // Animacia naprahovania luku
                         if (Input.GetMouseButtonDown(0))
                         {
                             RangedAttack();
-                            if (weaponsAdd.Length > 0)
-                                Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[0];
+                            if (texture.Length > 0)
+                                Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[0];
                             WeaponIdleProjectile.gameObject.SetActive(false);
                             fireTime = 0f;
                         }
                     }
                     // Ranged Animation
-                    if (fireRate - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
+                    if (fireTime - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
                     {
                         if (multiSheet)
-                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = weaponsAdd[1];
+                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[1];
                     }
                 }
                 else if (fireTime != 0f)
                 {
                     fireTime = 0f;
-                    Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture;
+                    Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[0];
                     WeaponIdleProjectile.gameObject.SetActive(false);
                 }
 
@@ -126,19 +126,23 @@ public class PlayerCombatScript : MonoBehaviour
         // References
         Hand = transform.GetChild(0).GetChild(0);
         HandS = transform.GetChild(0).GetChild(1);
-        SpriteRenderer rendProj = Hand.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>();
+        Transform idleProjectile = Hand.GetChild(0).GetChild(0);
+        SpriteRenderer rendProj = idleProjectile.GetComponent<SpriteRenderer>();
+
         if (weap != null)
         {
             SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
             SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
             col = Hand.GetComponent<Collider2D>();
             
-            Weapon.sprite = weap.texture;            
+            Weapon.sprite = weap.texture[0];            
             Weapon.color = weap.color;
 
             switch ((int)weap.type)
             {
-                case 0: melee = true;  break;  // Melee
+                case 0: 
+                    melee = true;  
+                    break;  // Melee
                 case 1:
                 case 2: 
                     melee = false; 
@@ -148,6 +152,42 @@ public class PlayerCombatScript : MonoBehaviour
             }
             col.enabled = melee;
 
+            // Weapon additional properties
+            string[] t = weap.description.Split('#');
+            if (t.Length > 1)
+            {
+                string s = t[1];
+                string[] sAr = s.Split(')');
+                for (int i = 0; i < sAr.Length-1; i++)
+                {
+                    string[] temp = sAr[i].Split('(');
+                    string parameter = temp[0];
+                    temp = temp[1].Split('_');
+
+                    switch (parameter)
+                    {
+                        case "ProjPos": // Porjectile position
+                            float x = float.Parse(temp[0]);
+                            float y = float.Parse(temp[1]);
+                            idleProjectile.localPosition = new Vector3(x, y, 0);
+                            //Debug.Log($"Idle projectile position set to ({x},{y},0)");
+                            break;
+                        case "ProjScale":
+                            x = float.Parse(temp[0]);
+                            y = float.Parse(temp[1]);
+                            idleProjectile.localScale = new Vector3(x, y, 1);
+                            //Debug.Log($"Idle projectile scale set to ({x},{y},0)");
+                            break;
+                        case "FireRate":
+                            fireRate = float.Parse(temp[0]);
+                            break;
+
+                        default:
+                            Debug.LogWarning($"Parameter \"{parameter}\" of {weap.name} was not recognized!");
+                            break;
+                    }
+                }
+            }
             rendProj.gameObject.SetActive(false);
             weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
         }

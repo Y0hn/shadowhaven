@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: sword___001
   m_EditorClassIdentifier: 
   name: New item
+  description: 
   icon: {fileID: 21300000, guid: 30f73f147012d964c9eaa7f662385bfb, type: 3}
   color: {r: 1, g: 1, b: 1, a: 1}
   equipSlot: 2
   type: 0
   damageModifier: 30
   onlySecondary: 0
-  texture: {fileID: 21300000, guid: 615a91d08bd3156419b827720648d8c4, type: 3}
+  texture:
+  - {fileID: 21300000, guid: 615a91d08bd3156419b827720648d8c4, type: 3}
   projectile: {fileID: 0}
