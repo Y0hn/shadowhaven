@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class ItemsList : MonoBehaviour
@@ -39,14 +41,30 @@ public class ItemsList : MonoBehaviour
     {
         return Items;
     }
-    public void GetAllOut(out List<Item> list)
+    public List<Item> GetRarity(Rarity rar)
     {
-        list = Items;
-        Destroy(this);
+        List<Item> list = new List<Item>();
+
+        foreach (Item i in Items) 
+            if (i.rarity == rar)
+                list.Add(i);
+
+        return list;
     }
-    public void SetAll(List<Item> list)
+    public List<Item> GetMultiRarity(Rarity[] rar)
     {
-        Items = list;
+        List<Item> list = new List<Item>();
+
+        foreach (Item i in Items)
+            foreach (Rarity r in rar)
+                if (i.rarity == r)
+                    list.Add(i);
+
+        return list;
+    }
+    public void SetAll(Item[] ar)
+    {
+        Items = ar.ToList();
     }
     public void RemoveArray(Item[] it) 
     {
@@ -54,6 +72,13 @@ public class ItemsList : MonoBehaviour
             foreach(Item i in it)
                 if (i != null)
                     Items.Remove(i);
+    }
+    public void AddRange(List<Item> list)
+    {
+        if (list != null)
+            foreach (Item i in list)
+                if (!Items.Contains(i))
+                    Items.Add(i);
     }
     public Item GetRandWeapon()
     {

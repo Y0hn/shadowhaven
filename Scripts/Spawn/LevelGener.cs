@@ -6,20 +6,9 @@ using UnityEngine;
 public class LevelGener : MonoBehaviour
 {
     public Transform[] startingPos;
-    public GameObject[] rooms;
-    /*  ROOM TYPES
-     * 0 - DL
-     * 1 - DR
-     * 2 - LR
-     * 3 - UD
-     * 4 - UL
-     * 5 - UR
-     * 6 - LRD
-     * 7 - LRU
-     * 8 - LRBU
-     */
-    private float nextRoom;
-    private float intervalRoom;
+
+    private Dictionary<string, int> RoomTypes = new Dictionary<string, int>();
+    private List<GameObject> rooms;
 
     public float minX;
     public float maxX;
@@ -30,6 +19,8 @@ public class LevelGener : MonoBehaviour
     private int dir = -1;
     private int pastDir = -1;
 
+    public bool deleteAssets = true;
+
     private bool stop;
     private bool path;
     private bool startEnd;
@@ -38,6 +29,43 @@ public class LevelGener : MonoBehaviour
     {
         // References
         Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        rooms = new List<GameObject>();
+        string[] roomer = new string[0];
+
+        switch (transform.parent.name)
+        {
+            case "Level_01":
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
+                roomer = new string[] { "10x10", "20x20" };
+                break;
+
+            default:
+                Debug.LogWarning("LevelGenerator destroied!");
+                Destroy(gameObject);
+                break;
+        }
+
+        foreach (GameObject room in rooms)
+        {
+            string[] s = room.name.Split(' ');
+            if (s.Length > 2)
+            {
+                if      (s[1].Equals(roomer[0]))
+                {
+                    s[1] = "Path";
+                }
+                else if (s[1].Equals(roomer[1]))
+                {
+                    s[1] = "Boss";
+                }
+                    
+                s[1] += s[2];
+            }
+            //Debug.Log($"Added record to dictionary ({s[1]},{rooms.IndexOf(room)})");
+            RoomTypes.Add(s[1], rooms.IndexOf(room));
+        }
+
         // Set Up
         int randStartPos = Random.Range(0, startingPos.Length);
         transform.position = startingPos[randStartPos].position;
@@ -45,7 +73,6 @@ public class LevelGener : MonoBehaviour
         startEnd = true;
         stop = false;
         path = false;
-        //nextRoom = 0; intervalRoom = 0.5f;
 
         // Inicializatin
         dir = Random.Range(0, 6);
@@ -56,29 +83,36 @@ public class LevelGener : MonoBehaviour
     }
     void Update()
     {
-        if (!stop /*&& Time.time >= nextRoom*/)
+        if (!stop)
         {
-            if (path)
+            try
             {
-                // Generate Path Room
-                GeneratePath();
-                Move();
+                if (path)
+                {
+                    // Generate Path Room
+                    GeneratePath();
+                    Move();
+                }
+                else if (startEnd)
+                {
+                    GenerateSpawnRoom();
+                    Move();
+                }
+                else
+                {
+                    GenerateBossRoom();
+                }
             }
-            else if (startEnd)
+            catch 
             {
-                GenerateSpawnRoom();
-                Move();
+                Debug.LogWarning("Something is wrong with Level Gener :d");
+                stop = true;
             }
-            else
-            {
-                GenerateBossRoom();
-            }
-            // Slowness
-            //nextRoom = Time.time + intervalRoom;
         }
         else
         {
-            Destroy(GameObject.FindGameObjectWithTag("Assets"));
+            if (deleteAssets)
+                Destroy(GameObject.FindGameObjectWithTag("Assets"));
             Destroy(gameObject);
         }
     }
@@ -139,26 +173,26 @@ public class LevelGener : MonoBehaviour
 
         if      (pastDir == 1 || pastDir == 3)      // FROM RIGHT
         {
-            if      (dir == 1 || dir == 3)
-                type = 2;
-            else if (dir == 0 || dir == 5)
-                type = 5;
+            if      (dir == 1 || dir == 3)  // to right
+                type = RoomTypes["PathLR"];
+            else if (dir == 0 || dir == 5)  // to up
+                type = RoomTypes["PathUR"];
         }
         else if (pastDir == 2 || pastDir == 4)      // FROM LEFT
         {
-            if      (dir == 2 || dir == 4)
-                type = 2;
-            else if (dir == 0 || dir == 5)
-                type = 4;
+            if      (dir == 2 || dir == 4)  // to left
+                type = RoomTypes["PathLR"];
+            else if (dir == 0 || dir == 5)  // to up
+                type = RoomTypes["PathUL"];
         }   
         else if (pastDir == 0 || pastDir == 5)      // FROM BOTTOM
         {
-            if      (dir == 1 || dir == 3)
-                type = 0;
-            else if (dir == 2 || dir == 4)
-                type = 1;
-            else if (dir == 0 || dir == 5)
-                type = 3;
+            if      (dir == 1 || dir == 3)  // to left
+                type = RoomTypes["PathDL"];
+            else if (dir == 2 || dir == 4)  // to right
+                type = RoomTypes["PathDR"];
+            else if (dir == 0 || dir == 5)  // to up
+                type = RoomTypes["PathUD"];
         }
 
         Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
@@ -173,9 +207,9 @@ public class LevelGener : MonoBehaviour
 
             switch (pastDir)
             {
-                case 1: case 3: type = 12; break;   // From Left
-                case 2: case 4: type = 11; break;   // From Right
-                case 0: case 5: type = 10; break;   // From Up
+                case 1: case 3: type = RoomTypes["SR"]; break;   // FROM LEFT
+                case 2: case 4: type = RoomTypes["SL"]; break;   // FROM RIGHT
+                case 0: case 5: type = RoomTypes["SD"]; break;   // FROM DOWN
             }
             stop = true;
         }
@@ -183,9 +217,9 @@ public class LevelGener : MonoBehaviour
         {
             switch (dir)
             {
-                case 1: case 3: type = 11; break;   // Left
-                case 2: case 4: type = 12; break;   // Right
-                case 0: case 5: type = 13; break;   // Up
+                case 1: case 3: type = RoomTypes["SL"]; break;   // Left
+                case 2: case 4: type = RoomTypes["SR"]; break;   // Right
+                case 0: case 5: type = RoomTypes["SU"]; break;   // Up
             }
             path = true;
         }
@@ -204,17 +238,17 @@ public class LevelGener : MonoBehaviour
         switch (dir)
         {
             case 1: case 3: 
-                type = 7; 
+                type = RoomTypes["BossR"]; 
                 transform.position = 
                     new Vector2(transform.position.x - 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
                 break;
             case 2: case 4: 
-                type = 8;
+                type = RoomTypes["BossL"];
                 transform.position =
                     new Vector2(transform.position.x + 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
                 break;
             case 0: case 5: 
-                type = 9;
+                type = RoomTypes["BossU"];
                 transform.position =
                     new Vector2(transform.position.x, transform.position.y + 2 * moveAmount.y);
                 break;
@@ -227,29 +261,5 @@ public class LevelGener : MonoBehaviour
 
         startEnd = true;
         pastDir = dir;
-    }    
-    /*private void OnDrawGizmosSelected()
-    {
-        float a, b;
-        Vector2 size, pos;
-        Gizmos.color = Color.yellow;
-
-        a = (maxX - minX) + moveAmount.x;
-        b = (maxY - startingPos[0].position.y) + moveAmount.y;
-        size = new Vector2(a,b);
-
-        Gizmos.DrawWireCube(transform.position, size);
-
-        Gizmos.color = Color.red;
-
-        a = transform.position.x;
-        b = startingPos[0].position.y + moveAmount.x * startingPos.Length + moveAmount.y * 0.5f;
-        pos = new Vector2 (a,b);
-        a = startingPos.Last().position.x - startingPos[0].position.x + 3 * moveAmount.x;
-        b = 2 * moveAmount.y;
-        size = new Vector2(a, b);
-
-        Gizmos.DrawWireCube(pos, size);
     }
-    */
 }

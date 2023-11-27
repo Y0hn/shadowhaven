@@ -37,8 +37,6 @@ public class GameManager : MonoBehaviour
     private bool sceneLoaded = false;
     private bool deathScreen = false;
 
-    private const float refreshInvTime = 0.1f;
-
     void Start()
     {
         // References
@@ -55,11 +53,6 @@ public class GameManager : MonoBehaviour
     }
     private void Update()
     {
-        /*  Neviem naco to tu je xd 
-         *  toto vobec nebol uneficient workaround :D
-        if (Time.time > refreshInvTime)
-            Inventory.instance.onItemChangeCallback.Invoke();
-        /**/
         if (!sceneLoaded) 
             ReloadScene();
         if (playerLives)
@@ -114,15 +107,7 @@ public class GameManager : MonoBehaviour
                 PlayerDeath();
         }
     }
-    private void PlayerDeath()
-    {
-        Inventory.instance.ClearInventory();
-        deathScreen = true;
-        isPaused = true;
-        Time.timeScale = 0f;
-        UI.DisableUI(0);
-        UI.EnableUI("death");
-    }
+    #region Events
     private void PauseGame()
     {
         if (inv)
@@ -136,11 +121,6 @@ public class GameManager : MonoBehaviour
             Time.timeScale = 0f;
             isPaused = true;
         }
-    }
-    private void ReloadScene()
-    {
-        PlayerRevive();
-        sceneLoaded = true;
     }
     private void OpenCloseInventory()
     {
@@ -161,14 +141,30 @@ public class GameManager : MonoBehaviour
         if (oldLvl != null)
             Destroy(oldLvl);
 
-        Instantiate(Levels[level], transform.position, Quaternion.identity);
-        ItemsList levelItems = GameObject.FindGameObjectWithTag("Assets").GetComponent<ItemsList>();
+        // Premenovanie Levela xdd
+        GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
+        levObj.name = levObj.name.Split('_')[0] + "_" +levObj.name.Split('_')[1].Split('(')[0];
+        items.SetAll(Resources.LoadAll<Item>($"Levels/{levObj.name}"));
 
-        items.SetAll(levelItems.GetAll());
-        Destroy(levelItems, 2);
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(Inventory.instance.GetEquipment());
     }
+    private void PlayerDeath()
+    {
+        Inventory.instance.ClearInventory();
+        deathScreen = true;
+        isPaused = true;
+        Time.timeScale = 0f;
+        UI.DisableUI(0);
+        UI.EnableUI("death");
+    }
+    private void ReloadScene()
+    {
+        PlayerRevive();
+        sceneLoaded = true;
+    }
+
+    #endregion
 
     #region Public Events
 

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
-  m_Name: bow_____001
+  m_Name: bow_1
   m_EditorClassIdentifier: 
   name: Wooden bow
   description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)'
