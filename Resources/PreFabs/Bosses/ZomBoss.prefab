@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 4083494729114260656}
   - component: {fileID: 4008646946072772892}
   m_Layer: 8
-  m_Name: LegR
+  m_Name: legR
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,7 +818,7 @@ GameObject:
   - component: {fileID: 1178168249686768024}
   - component: {fileID: 6295429422376607393}
   m_Layer: 8
-  m_Name: LegL
+  m_Name: legL
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

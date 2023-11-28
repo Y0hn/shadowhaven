@@ -616,6 +616,10 @@ Pridane Funkcie:
 	Loading From Resourses
 
 ----------------< 28. 11.  2023 >----------------
+Pridane Funkcie:
+	ZomBoss Animacie:
+		run { L, R, D, U }
+
 ----------------< 29. 11.  2023 >----------------
 ----------------< 30. 11.  2023 >----------------
 
