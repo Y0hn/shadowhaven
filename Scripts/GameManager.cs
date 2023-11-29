@@ -98,14 +98,19 @@ public class GameManager : MonoBehaviour
         {
             if (deathScreen)
             {
-                if (Input.anyKeyDown)
+                if      (Input.GetKeyDown(KeyCode.Space))
                 {
                     PlayerRevive();
+                }
+                else if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    GoToMainMenu();
                 }
             }
             else
                 PlayerDeath();
         }
+
     }
     #region Events
     private void PauseGame()
@@ -152,11 +157,11 @@ public class GameManager : MonoBehaviour
     private void PlayerDeath()
     {
         Inventory.instance.ClearInventory();
+        Destroy(GameObject.FindGameObjectWithTag("Level"));
+        UI.EnableUI("death");
+        UI.DisableUI(0);
         deathScreen = true;
         isPaused = true;
-        Time.timeScale = 0f;
-        UI.DisableUI(0);
-        UI.EnableUI("death");
     }
     private void ReloadScene()
     {

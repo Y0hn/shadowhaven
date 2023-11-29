@@ -4,7 +4,7 @@ Goal:
 		combat systemom
 			melee
 			ranged
-			magic
+			magic ?
 		equipment systemom
 		moznostou hrania na:
 			ovladaci
@@ -621,6 +621,11 @@ Pridane Funkcie:
 		run { L, R, D, U }
 
 ----------------< 29. 11.  2023 >----------------
+Pridane Funkcie:
+	ZombieBoss.roar
+	Better DeathScreen
+
+
 ----------------< 30. 11.  2023 >----------------
 
 ______________/ INVENTORY  SYSTEM \______________

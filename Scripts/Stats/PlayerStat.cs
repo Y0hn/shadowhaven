@@ -74,12 +74,12 @@ public class PlayerStats : CharakterStats
     }
     protected override void Die()
     {
-        rb.simulated = false;
+        GameManager.playerLives = false;
+
         playerCom.enabled = false;
 
         animator.SetBool("isAlive", false);
         //Debug.Log("Hrac zomrel");
-        GameManager.playerLives = false;
     }
     public void Resurect()
     {
