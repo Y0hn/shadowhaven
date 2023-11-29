@@ -1,17 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-
 public class CharakterStats : MonoBehaviour
 {
     public HealthBar healthBar;
     protected Animator animator;
     protected Rigidbody2D rb;
-
-    public int maxHealth = 100;
     public int curHealth {  get; protected set; }
-
+    public int maxHealth = 100;
     public Stat damage;
     public Stat armor;
     public int level;
@@ -25,13 +19,6 @@ public class CharakterStats : MonoBehaviour
         if (healthBar != null )
             healthBar.SetMaxHealth(maxHealth);
     }
-    /* Testing 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-            TakeDamage(50);
-    }*/
-
     private void Awake()
     {
         curHealth = maxHealth;
@@ -49,6 +36,6 @@ public class CharakterStats : MonoBehaviour
     }
     protected virtual void Die()
     {
-        // Override for metod will be more specified
+        // Metod will be more specified in override
     }
 }
