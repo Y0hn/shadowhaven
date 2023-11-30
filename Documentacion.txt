@@ -627,6 +627,8 @@ Pridane Funkcie:
 
 
 ----------------< 30. 11.  2023 >----------------
+Pridane Funkcie:
+	Boss foundation
 
 ______________/ INVENTORY  SYSTEM \______________
 Inventar sa zklada z 12 itemov 
@@ -664,6 +666,7 @@ MonoBehaviors:
 
 Managers:
 	GameManager
+
 	ManagerUI
 	SaveSyestem
 	MainMenuManager
