@@ -11,7 +11,8 @@ public class ManagerUI : MonoBehaviour
         {"inv", 1},
         {"pause", 2},
         {"death", 3},
-        {"money", 4 }
+        {"money", 4 },
+        {"bossBar", 5 },
     };
 
     private Inventory inventory;
@@ -84,9 +85,9 @@ public class ManagerUI : MonoBehaviour
     public void ResetUI()
     {
         EnableUI(0);
-        DisableUI(1);
-        DisableUI(2);
-        DisableUI(3);
+
+        for (int i = 1; i < UIs.Length; i++)
+            DisableUI(i);
     }
     public void DisableUI(int n)
     {

@@ -1,11 +1,16 @@
 using UnityEngine;
 
-public class BossStats : CharakterStats
+public class BossStats : EnemyStats
 {
+    public float activateBorderY = float.MaxValue;
+
+    private Transform target;
+    //private int bossType = 0;
+
     protected override void Start()
     {
         base.Start();
-
+        stunable = false;
         // Zistenie typu miestnosti
         switch (RoomType())
         {
@@ -17,8 +22,33 @@ public class BossStats : CharakterStats
                 // 10x10
                 break;
         }
+        target = GameObject.FindGameObjectWithTag("Player").transform;
+    }
+    private void Update()
+    {
+        if (target.position.y >= activateBorderY)
+        {
+            animator.enabled = true;
+            this.enabled = false;
+        }
 
+        /*switch (bossType)
+        {
+            case 1: // ZOM
 
+                break;
+            case 2: // BLOB
+
+                break;
+            case 3: // CENTIPIDE
+
+                break;
+
+            default:
+                Destroy(gameObject); 
+                break;
+        }
+        */
     }
     public override void TakeDamage(int dmg)
     {
@@ -26,7 +56,7 @@ public class BossStats : CharakterStats
     }
     protected override void Die()
     {
-
+        // Just die
     }
 
     private string RoomType()

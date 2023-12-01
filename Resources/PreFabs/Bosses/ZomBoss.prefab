@@ -418,7 +418,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5308562171726975304}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: ee25df46e9484724a979fe77b1046fd3, type: 2}
   m_CullingMode: 0
@@ -512,6 +512,7 @@ MonoBehaviour:
   armor:
     value: 10
   level: 3
+  activateBorderY: 3.4028235e+38
 --- !u!1 &5332177592732515746
 GameObject:
   m_ObjectHideFlags: 0

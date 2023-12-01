@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public int level;
     public int eqiWeap;
 
+    public static bool ongoingBossFight = false;
     public static bool playerLives = true;
     public static bool isPaused = false;
     public static bool inv = false;
@@ -173,6 +174,19 @@ public class GameManager : MonoBehaviour
 
     #region Public Events
 
+    public void BossFight()
+    {
+        if (ongoingBossFight)
+        {
+            ongoingBossFight = false;
+            UI.DisableUI("bossBar");
+        }
+        else
+        {
+            ongoingBossFight = true;
+            UI.EnableUI("bossBar");
+        }
+    }
     public void ResumeGame()
     {
         UI.DisableUI("inv");

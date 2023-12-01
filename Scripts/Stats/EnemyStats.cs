@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
 
@@ -8,7 +6,7 @@ public class EnemyStats : CharakterStats
     public Text loot;
     private Collider2D collid;
     public float lookRadius;
-    private bool stunable = true;
+    protected bool stunable = true;
 
     protected override void Start()
     {
