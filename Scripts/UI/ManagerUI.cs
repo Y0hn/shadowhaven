@@ -12,7 +12,6 @@ public class ManagerUI : MonoBehaviour
         {"pause", 2},
         {"death", 3},
         {"money", 4 },
-        {"bossBar", 5 },
     };
 
     private Inventory inventory;

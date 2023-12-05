@@ -261,7 +261,7 @@ public class LevelGener : MonoBehaviour
         // Spawn Boss
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
         GameObject boss = Instantiate(bosses[Random.Range(0, bosses.Length)], room.transform.position, Quaternion.identity, room.transform);
-        boss.GetComponent<BossStats>().activateBorderY = maxY;
+        boss.GetComponent<BossStats>().SetY(maxY + moveAmount.y);
 
         startEnd = true;
         pastDir = dir;

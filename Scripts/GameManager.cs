@@ -13,17 +13,19 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public GameObject FreeCamera;
     public GameObject player;
     public ManagerUI UI;
     public GameObject[] Levels;
 
     #region References
 
+    private PlayerCombatScript playerCombat;
     private PlayerScript playerScript;
     private PlayerStats playerStats;
-    private PlayerCombatScript playerCombat;
-    private ItemsList items;
+    private GameObject playerCamera;
     private Inventory inventory;
+    private ItemsList items;
 
     #endregion
 
@@ -32,16 +34,25 @@ public class GameManager : MonoBehaviour
 
     public static bool ongoingBossFight = false;
     public static bool playerLives = true;
-    public static bool isPaused = false;
+    public static bool ableToMove = true;
     public static bool inv = false;
+
+    public bool cameraFocused = false;
+
+    private const float cameraMove = 1f;
+    private float timerCamera;
 
     private bool sceneLoaded = false;
     private bool deathScreen = false;
+    private bool movingCamera = false;
+    private bool moveTowards = true;
+    private Vector2[] cameraPos = new Vector2[2];
 
     void Start()
     {
         // References
         // Debug.Log(Application.persistentDataPath);
+        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
         playerCombat = player.GetComponent<PlayerCombatScript>();
         playerScript = player.GetComponent<PlayerScript>();
         playerStats = player.GetComponent<PlayerStats>();
@@ -60,10 +71,10 @@ public class GameManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (isPaused)
-                    ResumeGame();
-                else
+                if (ableToMove)
                     PauseGame();
+                else
+                    ResumeGame();
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
@@ -112,8 +123,44 @@ public class GameManager : MonoBehaviour
                 PlayerDeath();
         }
 
+        if (movingCamera)
+        {
+            if (cameraFocused)
+            {
+                if (!moveTowards)
+                {
+                    movingCamera = false;
+                    ChangeCamera();
+                }
+                else if (timerCamera <= Time.time)
+                {
+                    moveTowards = false;
+                    cameraFocused = false;
+                }
+            }
+            else if (moveTowards)
+            {
+                MoveCamera(3, ref FreeCamera, cameraPos[1]);
+
+                if (FreeCamera.transform.position.x == cameraPos[1].x && FreeCamera.transform.position.y == cameraPos[1].y)
+                {
+                    cameraFocused = true;
+                    timerCamera = Time.time + timerCamera;
+                }
+            }
+            else
+            {
+                MoveCamera(5, ref FreeCamera, cameraPos[0]);
+
+                if (FreeCamera.transform.position.x == cameraPos[0].x && FreeCamera.transform.position.y == cameraPos[0].y)
+                {
+                    cameraFocused = true;
+                    timerCamera = Time.time + timerCamera;
+                }
+            }
+        }
     }
-    #region Events
+    #region Private Events
     private void PauseGame()
     {
         if (inv)
@@ -125,12 +172,12 @@ public class GameManager : MonoBehaviour
         {
             UI.EnableUI("pause");
             Time.timeScale = 0f;
-            isPaused = true;
+            ableToMove = false;
         }
     }
     private void OpenCloseInventory()
     {
-        if (!isPaused)
+        if (ableToMove)
         {
             if (inv)
                 UI.DisableUI("inv");
@@ -162,37 +209,45 @@ public class GameManager : MonoBehaviour
         UI.EnableUI("death");
         UI.DisableUI(0);
         deathScreen = true;
-        isPaused = true;
+        ableToMove = false;
+    }
+    private void ChangeCamera()
+    {
+        if (playerCamera.activeSelf)
+        {
+            Debug.Log("Camera changed to freeCam");
+            FreeCamera.transform.position = new Vector3(cameraPos[0].x, cameraPos[0].y, FreeCamera.transform.position.z);
+            playerCamera.SetActive(false);
+            ableToMove = false;
+            FreeCamera.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Camera changed to playerCam");
+            playerCamera.SetActive(true);
+            FreeCamera.SetActive(false);
+            ableToMove = true;
+        }
     }
     private void ReloadScene()
     {
         PlayerRevive();
         sceneLoaded = true;
     }
-
+    private void MoveCamera(float force, ref GameObject camera, Vector2 pos)
+    {
+        Vector2 move = Vector2.MoveTowards(camera.transform.position, pos, force * Time.deltaTime);
+        camera.transform.position = new Vector3(move.x, move.y, camera.transform.position.z);
+    }
     #endregion
 
     #region Public Events
-
-    public void BossFight()
-    {
-        if (ongoingBossFight)
-        {
-            ongoingBossFight = false;
-            UI.DisableUI("bossBar");
-        }
-        else
-        {
-            ongoingBossFight = true;
-            UI.EnableUI("bossBar");
-        }
-    }
     public void ResumeGame()
     {
         UI.DisableUI("inv");
         UI.DisableUI("pause");
         Time.timeScale = 1f;
-        isPaused = false;
+        ableToMove = true;
     }
     public void GoToMainMenu()
     { 
@@ -205,7 +260,7 @@ public class GameManager : MonoBehaviour
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;
-        isPaused = false;
+        ableToMove = true;
         LevelLoad();
         UI.ResetUI();
         Time.timeScale = 1f;
@@ -226,6 +281,27 @@ public class GameManager : MonoBehaviour
     {
         playerStats.AddXp(xp);
     }
-
+    public void MoveCameraTo(Vector2 B, float forTime)
+    {
+        if (!movingCamera)
+        {
+            cameraPos[0] = playerCamera.transform.position;
+            cameraPos[1] = B;
+            timerCamera = forTime;
+            movingCamera = true;
+            ChangeCamera();
+        }
+    }
+    public void MoveCameraTo(Vector2 A, Vector2 B, float forTime)
+    {
+        if (!movingCamera)
+        {
+            cameraPos[0] = A;
+            cameraPos[1] = B;
+            timerCamera = forTime;
+            movingCamera = true;
+            ChangeCamera();
+        }
+    }
     #endregion
 }

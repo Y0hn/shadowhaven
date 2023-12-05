@@ -75,7 +75,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Update()
     {
-        if (!GameManager.isPaused)
+        if (GameManager.ableToMove)
         {
             ProcessInput();
             Move();
@@ -86,6 +86,11 @@ public class PlayerScript : MonoBehaviour
 
             if (Input.GetKeyDown(KeyCode.P))
                 stats.TakeDamage(int.MaxValue);
+        }
+        else
+        {
+            animator.SetFloat("Speed", 0);
+            rb.velocity = Vector3.zero;
         }
     }
     private void OnDrawGizmosSelected()
@@ -99,10 +104,10 @@ public class PlayerScript : MonoBehaviour
         Transform hand = transform.GetChild(0).GetChild(0);
         if (hand.parent.gameObject.activeSelf)
         {
-        Vector2 pos = hand.position;
-        float range = GetComponent<PlayerCombatScript>().attackRange;
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(pos, range);
+            Vector2 pos = hand.position;
+            float range = GetComponent<PlayerCombatScript>().attackRange;
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(pos, range);
         }
     }
 

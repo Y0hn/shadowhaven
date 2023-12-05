@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemyStats : CharakterStats
 {
     public Text loot;
-    private Collider2D collid;
+    protected Collider2D collid;
     public float lookRadius;
     protected bool stunable = true;
 
@@ -40,15 +40,18 @@ public class EnemyStats : CharakterStats
     }
     protected override void Die()
     {
-        // Reward Loot
-        int reward;
-        reward = Random.Range(level, level*5);
-        Inventory.instance.AddMoney(reward);
-        loot.text = reward + loot.text;
+        if (loot != null)
+        {
+            // Reward Loot
+            int reward;
+            reward = Random.Range(level, level * 5);
+            Inventory.instance.AddMoney(reward);
+            loot.text = reward + loot.text;
 
-        // Reward XP
-        reward = Random.Range(level, level*5);
-        GameManager.instance.AddXp(reward);
+            // Reward XP
+            reward = Random.Range(level, level * 5);
+            GameManager.instance.AddXp(reward);
+        }
 
         // Deconstruction
         animator.SetBool("isAlive", false);

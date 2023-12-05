@@ -641,9 +641,10 @@ Plan:
 Revived Funkcie:
 	Boss Roar
 
-----------------< 03. 12.  2023 >----------------
-----------------< 04. 12.  2023 >----------------
 ----------------< 05. 12.  2023 >----------------
+Pridane Funkcie:
+	Boss entry
+
 ----------------< 06. 12.  2023 >----------------
 ----------------< 07. 12.  2023 >----------------
 ----------------< 08. 12.  2023 >----------------
@@ -789,7 +790,7 @@ https://youtu.be/w6_fetj9PIw?si=utyHQJqJLoK98fta
 https://youtu.be/9tePzyL6dgc?si=a741tqaFgRBoRIfx
 https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
 https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
-
+https://youtu.be/_yR9FL4LXGE?si=cg8oq0Hmypo1wRM9
 
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
