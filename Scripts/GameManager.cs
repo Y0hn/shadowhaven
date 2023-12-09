@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,9 +43,12 @@ public class GameManager : MonoBehaviour
     private const float cameraMove = 1f;
     private float timerCamera;
 
+    private Dictionary<DoorBehavior, DoorType> doors = new();
+
+    private bool movingCamera = false;
+    private bool bossDefeaded = false;
     private bool sceneLoaded = false;
     private bool deathScreen = false;
-    private bool movingCamera = false;
     private bool moveTowards = true;
     private Vector2[] cameraPos = new Vector2[2];
 
@@ -63,7 +67,7 @@ public class GameManager : MonoBehaviour
 
         sceneLoaded = true;
     }
-    private void Update()
+    void Update()
     {
         if (!sceneLoaded) 
             ReloadScene();
@@ -159,9 +163,20 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+
+        if (bossDefeaded) // Loot room opening
+        {
+            foreach (DoorBehavior d in doors.Keys)
+            {
+                if (doors[d].Equals(DoorType.BossIn) || doors[d].Equals(DoorType.BossIn))
+                {
+                    d.ChangeState(true);
+                }
+            }
+        }
     }
     #region Private Events
-    private void PauseGame()
+    void PauseGame()
     {
         if (inv)
         {
@@ -175,7 +190,7 @@ public class GameManager : MonoBehaviour
             ableToMove = false;
         }
     }
-    private void OpenCloseInventory()
+    void OpenCloseInventory()
     {
         if (ableToMove)
         {
@@ -187,7 +202,7 @@ public class GameManager : MonoBehaviour
             inv = !inv;
         }
     }
-    private void LevelLoad()
+    void LevelLoad()
     {
         GameObject oldLvl = GameObject.FindGameObjectWithTag("Level");
 
@@ -202,7 +217,7 @@ public class GameManager : MonoBehaviour
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(Inventory.instance.GetEquipment());
     }
-    private void PlayerDeath()
+    void PlayerDeath()
     {
         Inventory.instance.ClearInventory();
         Destroy(GameObject.FindGameObjectWithTag("Level"));
@@ -211,7 +226,7 @@ public class GameManager : MonoBehaviour
         deathScreen = true;
         ableToMove = false;
     }
-    private void ChangeCamera()
+    void ChangeCamera()
     {
         if (playerCamera.activeSelf)
         {
@@ -229,16 +244,17 @@ public class GameManager : MonoBehaviour
             ableToMove = true;
         }
     }
-    private void ReloadScene()
+    void ReloadScene()
     {
         PlayerRevive();
         sceneLoaded = true;
     }
-    private void MoveCamera(float force, ref GameObject camera, Vector2 pos)
+    void MoveCamera(float force, ref GameObject camera, Vector2 pos)
     {
         Vector2 move = Vector2.MoveTowards(camera.transform.position, pos, force * Time.deltaTime);
         camera.transform.position = new Vector3(move.x, move.y, camera.transform.position.z);
     }
+
     #endregion
 
     #region Public Events
@@ -277,9 +293,17 @@ public class GameManager : MonoBehaviour
         playerStats.level = data.level;
         playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
+    public void BossKilled()
+    {
+        bossDefeaded = true;
+    }
     public void AddXp(int xp) 
     {
         playerStats.AddXp(xp);
+    }
+    public void AddDoor(DoorBehavior newDoor)
+    {
+        doors.Add(newDoor, newDoor.type);
     }
     public void MoveCameraTo(Vector2 B, float forTime)
     {

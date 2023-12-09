@@ -10,11 +10,11 @@ public class SpawnTile : MonoBehaviour
     {
         GameObject spawn = null;
 
-        if (transform.name.Contains("Wall") || transform.name.Contains("Floor"))
+        if (name.Contains("Wall") || name.Contains("Floor"))
         {
             List<GameObject> temp = new List<GameObject>();
 
-            string[] s = transform.name.Split('-');
+            string[] s = name.Split('-');
             objects = GameObject.FindGameObjectsWithTag(s[0]);
 
             foreach (GameObject obj in objects)
@@ -33,7 +33,17 @@ public class SpawnTile : MonoBehaviour
             if (objects.Length != 0)
                 spawn = objects[rand];
         }
-        if (spawn != null)    
-            Instantiate(spawn, transform.position, Quaternion.identity, transform);
+        if (spawn != null)
+        {
+            spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform);
+            spawn.tag = "Untagged";
+
+            if (name.Contains("Door"))
+            {
+                DoorBehavior beh = spawn.GetComponent<DoorBehavior>();
+                beh.vertical = transform.position.x != transform.parent.position.x;  // Ak dvere niesu priamo pod stredom miestnosti tak su vertikalne
+                spawn.name = transform.parent.name + spawn.name;
+            }
+        }
     }
 }

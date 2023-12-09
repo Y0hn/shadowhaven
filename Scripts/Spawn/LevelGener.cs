@@ -1,6 +1,4 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class LevelGener : MonoBehaviour
@@ -85,22 +83,35 @@ public class LevelGener : MonoBehaviour
     {
         if (!stop)
         {
+            GameObject R = null;
             try
             {
                 if (path)
                 {
                     // Generate Path Room
-                    GeneratePath();
+                    R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, transform.parent);
                     Move();
                 }
                 else if (startEnd)
                 {
-                    GenerateSpawnRoom();
+                    R = Instantiate(GenerateSpawnRoom(), transform.position, Quaternion.identity, transform.parent);
                     Move();
                 }
                 else
                 {
-                    GenerateBossRoom();
+                    R = GenerateBossRoom();
+                    SpawnBoss(R);
+                }
+
+                if (R != null)
+                {
+                    string[] n = R.name.Split('(')[0].Split(' ');
+                    n[0] = "";
+                    for (int i = 1; i < n.Length; i++) 
+                    {
+                        n[0] += n[i] + " ";
+                    }
+                    R.name = n[0];
                 }
             }
             catch 
@@ -167,7 +178,7 @@ public class LevelGener : MonoBehaviour
 
         transform.position = newPos;
     }
-    private void GeneratePath()
+    private GameObject GeneratePath()
     {
         int type = 0;
 
@@ -195,10 +206,10 @@ public class LevelGener : MonoBehaviour
                 type = RoomTypes["PathUD"];
         }
 
-        Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
         pastDir = dir;
+        return rooms[type];
     }
-    private void GenerateSpawnRoom()
+    private GameObject GenerateSpawnRoom()
     {
         int type = 0;
 
@@ -224,11 +235,11 @@ public class LevelGener : MonoBehaviour
             path = true;
         }
 
-        Instantiate(rooms[type], transform.position, Quaternion.identity, transform.parent);
         pastDir = dir;
         startEnd = false;
+        return rooms[type];
     }
-    private void GenerateBossRoom()
+    private GameObject GenerateBossRoom()
     {
         dir = Random.Range(0, 3);
         int type = 0;
@@ -257,8 +268,10 @@ public class LevelGener : MonoBehaviour
 
         // Boss Room
         GameObject room = Instantiate(rooms[type], pos, Quaternion.identity, transform.parent);
-
-        // Spawn Boss
+        return room;        
+    }
+    private void SpawnBoss(GameObject room)
+    {
         GameObject[] bosses = GameObject.FindGameObjectsWithTag("Boss");
         GameObject boss = Instantiate(bosses[Random.Range(0, bosses.Length)], room.transform.position, Quaternion.identity, room.transform);
         boss.GetComponent<BossStats>().SetY(maxY + moveAmount.y);

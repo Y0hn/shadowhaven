@@ -88,7 +88,7 @@ public class BossStats : EnemyStats
         animator.SetTrigger("die");
         collid.enabled = false;
         rb.simulated = false;
-
+        GameManager.instance.BossKilled();
         Destroy(gameObject, 3);
     }
     private string RoomType()
