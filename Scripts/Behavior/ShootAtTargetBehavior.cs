@@ -53,7 +53,7 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
         if (Time.time >= nextAtk)
         {
             GameObject o = Instantiate(projectile, spawn.position, Quaternion.identity);
-            o.name += "-" + (animator.gameObject.tag.Split(' ')[1]);
+            o.name += "-" + LayerMask.LayerToName(animator.gameObject.layer);            
             o.GetComponent<ProjectileScript>().damage = 
                 animator.transform.GetComponent<CharakterStats>().damage.GetValue();
             nextAtk = Time.time + 1 / rate;

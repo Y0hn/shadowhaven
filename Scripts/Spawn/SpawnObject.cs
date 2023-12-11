@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,13 +7,15 @@ public class SpawnTile : MonoBehaviour
 
     void Start()
     {
+        bool destroyEvenMyParent = false;
         GameObject spawn = null;
+        string[] s;
 
-        if (name.Contains("Wall") || name.Contains("Floor"))
+        if (name.Contains("Wall") || name.Contains("Floor") || name.Contains("Door"))
         {
-            List<GameObject> temp = new List<GameObject>();
+            List<GameObject> temp = new();
 
-            string[] s = name.Split('-');
+            s = name.Split('-');
             objects = GameObject.FindGameObjectsWithTag(s[0]);
 
             foreach (GameObject obj in objects)
@@ -23,6 +24,7 @@ public class SpawnTile : MonoBehaviour
                     spawn = obj;
                     temp.Add(obj);
                 }
+
             int rand = Random.Range(0, temp.Count);
             spawn = temp[rand];
         }
@@ -35,15 +37,34 @@ public class SpawnTile : MonoBehaviour
         }
         if (spawn != null)
         {
-            spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform);
-            spawn.tag = "Untagged";
 
             if (name.Contains("Door"))
             {
+                spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent.parent);
+
                 DoorBehavior beh = spawn.GetComponent<DoorBehavior>();
-                beh.vertical = transform.position.x != transform.parent.position.x;  // Ak dvere niesu priamo pod stredom miestnosti tak su vertikalne
-                spawn.name = transform.parent.name + spawn.name;
+                // Ak dvere niesu priamo pod stredom miestnosti tak su vertikalne
+                switch (transform.parent.name.Split('=')[0])
+                {
+                    case "Boss": beh.type = DoorType.BossIn; break;
+                    case "Loot": beh.type = DoorType.BossOut; break;
+                    case "Spawn": beh.type = DoorType.Spawn; break;
+                    case "Path": beh.type = DoorType.Locked; break;
+                }
+                beh.vertical = transform.position.x != transform.parent.position.x;
+                destroyEvenMyParent = true;
             }
+            else
+                spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent);
+            spawn.tag = "Untagged";
+            spawn.name = spawn.name.Split('(')[0];
         }
+        else
+            Debug.LogWarning($"{name} is not a tag nor special");
+
+        // Destruction
+        if (destroyEvenMyParent)
+            Destroy(transform.parent.gameObject);
+        Destroy(gameObject);
     }
 }

@@ -94,11 +94,8 @@ public class BossStats : EnemyStats
     private string RoomType()
     {
         string[] s = transform.parent.name.Split(' ');
-
-        if (s.Length > 1)
-            return s[1];
-        else
-            return null;
+        
+        return s[0];
     }
     public void SetY(float newY)
     {

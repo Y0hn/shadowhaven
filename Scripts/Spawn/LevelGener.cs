@@ -1,3 +1,4 @@
+using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,14 +6,19 @@ public class LevelGener : MonoBehaviour
 {
     public Transform[] startingPos;
 
-    private Dictionary<string, int> RoomTypes = new Dictionary<string, int>();
+    private Dictionary<string, int> RoomTypes;
     private List<GameObject> rooms;
+    private Dictionary<string, int> DoorTypes;
+    private List<GameObject> doors;
 
     public float minX;
     public float maxX;
     public float maxY;
 
     public Vector2 moveAmount;
+    public string doorSize = "2x1";
+
+    private string[] roomer;
 
     private int dir = -1;
     private int pastDir = -1;
@@ -27,9 +33,13 @@ public class LevelGener : MonoBehaviour
     {
         // References
         Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
-        rooms = new List<GameObject>();
-        string[] roomer = new string[0];
+        RoomTypes = new();
+        rooms = new();
+        DoorTypes = new();
+        doors = new();
+        roomer = new string[2];
 
+        // Learnin Dictionary Rooms
         switch (transform.parent.name)
         {
             case "Level_01":
@@ -43,7 +53,6 @@ public class LevelGener : MonoBehaviour
                 Destroy(gameObject);
                 break;
         }
-
         foreach (GameObject room in rooms)
         {
             string[] s = room.name.Split(' ');
@@ -64,6 +73,11 @@ public class LevelGener : MonoBehaviour
             RoomTypes.Add(s[1], rooms.IndexOf(room));
         }
 
+        // Learnin Dictionary Doors
+        doors.AddRange(Resources.LoadAll<GameObject>("Rooms/Doors/Arangement"));
+        foreach (GameObject door in doors)
+            DoorTypes.Add(door.name, doors.IndexOf(door));
+
         // Set Up
         int randStartPos = Random.Range(0, startingPos.Length);
         transform.position = startingPos[randStartPos].position;
@@ -83,49 +97,67 @@ public class LevelGener : MonoBehaviour
     {
         if (!stop)
         {
-            GameObject R = null;
+            GameObject R;/*
             try
-            {
+            {*/
                 if (path)
                 {
                     // Generate Path Room
                     R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, transform.parent);
+                    
+                    R.name = "Path=" + NameCrop(R.name);
                     Move();
                 }
                 else if (startEnd)
                 {
-                    R = Instantiate(GenerateSpawnRoom(), transform.position, Quaternion.identity, transform.parent);
+                    string s = "";
+                    if (pastDir == -1)
+                        s = "Spawn=";
+                    else
+                        s = "Loot=";
+
+                    R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, transform.parent);
+                    R.name = s + NameCrop(R.name);
+                    GenerateDoor(roomer[0], false, R.transform);
                     Move();
                 }
                 else
                 {
-                    R = GenerateBossRoom();
+                    R = GenerateBoss();
+                    R.name = "Boss=" + NameCrop(R.name);
+                    GenerateDoor(roomer[1], false, R.transform);
+                    GenerateDoor(roomer[1], true, R.transform);
                     SpawnBoss(R);
-                }
-
-                if (R != null)
-                {
-                    string[] n = R.name.Split('(')[0].Split(' ');
-                    n[0] = "";
-                    for (int i = 1; i < n.Length; i++) 
-                    {
-                        n[0] += n[i] + " ";
-                    }
-                    R.name = n[0];
-                }
+                }/*
             }
             catch 
             {
-                Debug.LogWarning("Something is wrong with Level Gener :d");
+                Debug.LogWarning("Something is wrong with Level Generator D:");
                 stop = true;
-            }
+            }*/
         }
         else
         {
             if (deleteAssets)
+            {
                 Destroy(GameObject.FindGameObjectWithTag("Assets"));
-            Destroy(gameObject);
+                Destroy(gameObject);
+            }
         }
+    }
+    private string NameCrop(string s, char spliter = ' ')
+    {
+        s = s.Split('(')[0];
+        string[] ret = s.Split(spliter);
+        ret[0] = "";
+        for (int i = 1; i < ret.Length; i++)
+        {
+            ret[0] += ret[i];
+
+            if (i < ret.Length - 1)
+                ret[0] += "_";
+        }
+        return ret[0];
     }
     private void Move()
     {
@@ -209,7 +241,7 @@ public class LevelGener : MonoBehaviour
         pastDir = dir;
         return rooms[type];
     }
-    private GameObject GenerateSpawnRoom()
+    private GameObject GenerateSpawn()
     {
         int type = 0;
 
@@ -239,7 +271,7 @@ public class LevelGener : MonoBehaviour
         startEnd = false;
         return rooms[type];
     }
-    private GameObject GenerateBossRoom()
+    private GameObject GenerateBoss()
     {
         dir = Random.Range(0, 3);
         int type = 0;
@@ -265,9 +297,9 @@ public class LevelGener : MonoBehaviour
                 break;
         }
 
-
         // Boss Room
         GameObject room = Instantiate(rooms[type], pos, Quaternion.identity, transform.parent);
+        startEnd = true;
         return room;        
     }
     private void SpawnBoss(GameObject room)
@@ -278,5 +310,51 @@ public class LevelGener : MonoBehaviour
 
         startEnd = true;
         pastDir = dir;
+    }
+    private void GenerateDoor(string size, bool byDir, Transform room)
+    {
+        GameObject spawner = null;
+        //Debug.Log($"Spawnning doors of size {size} with use of dir {byDir} in parantage of {room.name}");
+
+        if (pastDir == -1)
+        {
+            byDir = true;
+        }
+        //Debug.Log($"Indexes for doors in DoorTypes: \nL = {size+"L"} index: {DoorTypes[size + "L"]}\nR = {size+"R"} index: {DoorTypes[size + "R"]}\nFromD = {"FromD"} index: {DoorTypes["FromD"]}");
+        if (byDir)
+            switch (dir)
+            {
+                case 0: // from DOWN door
+                case 5:
+                    spawner = doors[DoorTypes[size + "U"]];
+                    break;
+                case 1: // LEFT  door
+                case 3:
+                    spawner = doors[DoorTypes[size + "L"]];
+                    break;
+                case 2: // RIGHT door
+                case 4:
+                    spawner = doors[DoorTypes[size + "R"]];
+                    break;
+            }
+        else
+            switch (pastDir)
+            {
+                case 0: // from DOWN door
+                case 5:
+                    spawner = doors[DoorTypes["FromD"]];
+                    break;
+                case 1: // from LEFT  door
+                case 3:
+                    spawner = doors[DoorTypes[size + "L"]];
+                    break;
+                case 2: // RIGHT door
+                case 4:
+                    spawner = doors[DoorTypes[size + "R"]];
+                    break;
+            }
+
+        if (spawner != null)
+            Instantiate(spawner, transform.position, Quaternion.identity, room);
     }
 }

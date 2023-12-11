@@ -301,9 +301,13 @@ public class GameManager : MonoBehaviour
     {
         playerStats.AddXp(xp);
     }
-    public void AddDoor(DoorBehavior newDoor)
+    public void AddDoor(DoorBehavior newDoor, DoorType type)
     {
-        doors.Add(newDoor, newDoor.type);
+        doors.Add(newDoor, type);
+    }
+    public void RemoveDoor(DoorBehavior oldDoor)
+    {
+        doors.Remove(oldDoor);
     }
     public void MoveCameraTo(Vector2 B, float forTime)
     {
