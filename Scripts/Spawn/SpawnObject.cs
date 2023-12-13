@@ -7,7 +7,6 @@ public class SpawnTile : MonoBehaviour
 
     void Start()
     {
-        bool destroyEvenMyParent = false;
         GameObject spawn = null;
         string[] s;
 
@@ -28,43 +27,42 @@ public class SpawnTile : MonoBehaviour
             int rand = Random.Range(0, temp.Count);
             spawn = temp[rand];
         }
+        else if (name.Contains("Boss"))
+        {
+            s = name.Split('-');
+            objects = GameObject.FindGameObjectsWithTag(s[0]);
+            int rand = Random.Range(0, objects.Length);
+            if (objects.Length != 0)
+                spawn = objects[rand];
+        }
         else
         {
             objects = GameObject.FindGameObjectsWithTag(transform.name);
             int rand = Random.Range(0, objects.Length);
             if (objects.Length != 0)
                 spawn = objects[rand];
+
+            s = null;
         }
+
+        // Actual spawning
         if (spawn != null)
         {
+            spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent);
 
-            if (name.Contains("Door"))
-            {
-                spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent.parent);
-
-                DoorBehavior beh = spawn.GetComponent<DoorBehavior>();
-                // Ak dvere niesu priamo pod stredom miestnosti tak su vertikalne
-                switch (transform.parent.name.Split('=')[0])
-                {
-                    case "Boss": beh.type = DoorType.BossIn; break;
-                    case "Loot": beh.type = DoorType.BossOut; break;
-                    case "Spawn": beh.type = DoorType.Spawn; break;
-                    case "Path": beh.type = DoorType.Locked; break;
-                }
-                beh.vertical = transform.position.x != transform.parent.position.x;
-                destroyEvenMyParent = true;
-            }
-            else
-                spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent);
             spawn.tag = "Untagged";
             spawn.name = spawn.name.Split('(')[0];
+
+            // Additional settings
+            if      (name.Contains("Boss"))
+                spawn.GetComponent<BossStats>().SetY(float.Parse(s[1]));
+            else if (name.Contains("Door"))
+                spawn.transform.position = new Vector3(transform.position.x, transform.position.y, 0.05f);
         }
         else
             Debug.LogWarning($"{name} is not a tag nor special");
 
         // Destruction
-        if (destroyEvenMyParent)
-            Destroy(transform.parent.gameObject);
         Destroy(gameObject);
     }
 }

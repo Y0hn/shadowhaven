@@ -769,7 +769,7 @@ MonoBehaviour:
   maxY: 15
   moveAmount: {x: 10, y: 10}
   doorSize: 2x1
-  deleteAssets: 0
+  deleteAssets: 1
 --- !u!1 &9050784575132790910
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +854,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5940662985714349259, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5940662985714349259, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
       propertyPath: m_LocalRotation.w

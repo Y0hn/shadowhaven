@@ -23,7 +23,7 @@ MonoBehaviour:
     EdinburghIron _Rarity: Uncommon_Previous Owner: Francis_Place of origin: St.
     Petersburg'
   icon: {fileID: 21300000, guid: cfb09c7de0305074d8a68a905f2011e6, type: 3}
-  color: {r: 170, g: 169, b: 173, a: 1}
+  color: {r: 0.5188679, g: 0.5188679, b: 0.5188679, a: 1}
   equipSlot: 0
   armorModifier: 8
   texture:

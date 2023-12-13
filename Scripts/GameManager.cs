@@ -45,12 +45,13 @@ public class GameManager : MonoBehaviour
 
     private Dictionary<DoorBehavior, DoorType> doors = new();
 
+    private Vector2[] cameraPos = new Vector2[2];
     private bool movingCamera = false;
+    private bool moveTowards = true;
+
     private bool bossDefeaded = false;
     private bool sceneLoaded = false;
     private bool deathScreen = false;
-    private bool moveTowards = true;
-    private Vector2[] cameraPos = new Vector2[2];
 
     void Start()
     {
@@ -129,7 +130,13 @@ public class GameManager : MonoBehaviour
 
         if (movingCamera)
         {
-            if (cameraFocused)
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                movingCamera = false;
+                cameraFocused = true;
+                ChangeCamera();
+            }
+            else if (cameraFocused)
             {
                 if (!moveTowards)
                 {
@@ -168,7 +175,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (DoorBehavior d in doors.Keys)
             {
-                if (doors[d].Equals(DoorType.BossIn) || doors[d].Equals(DoorType.BossIn))
+                if (doors[d].Equals(DoorType.BossIn) || doors[d].Equals(DoorType.BossOut))
                 {
                     d.ChangeState(true);
                 }
@@ -233,8 +240,8 @@ public class GameManager : MonoBehaviour
             Debug.Log("Camera changed to freeCam");
             FreeCamera.transform.position = new Vector3(cameraPos[0].x, cameraPos[0].y, FreeCamera.transform.position.z);
             playerCamera.SetActive(false);
-            ableToMove = false;
             FreeCamera.SetActive(true);
+            ableToMove = false;
         }
         else
         {
@@ -309,6 +316,10 @@ public class GameManager : MonoBehaviour
     {
         doors.Remove(oldDoor);
     }
+    public bool GetMovingCam()
+    {
+        return movingCamera;
+    }
     public void MoveCameraTo(Vector2 B, float forTime)
     {
         if (!movingCamera)
@@ -317,6 +328,8 @@ public class GameManager : MonoBehaviour
             cameraPos[1] = B;
             timerCamera = forTime;
             movingCamera = true;
+            cameraFocused = false;
+            moveTowards = true;
             ChangeCamera();
         }
     }

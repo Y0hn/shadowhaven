@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class ProjectileScript : MonoBehaviour
 {
     public int damage;
@@ -80,7 +79,7 @@ public class ProjectileScript : MonoBehaviour
         }
     }
     public int DoDamage() { return damage; }
-    private void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, size);
     }

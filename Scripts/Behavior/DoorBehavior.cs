@@ -1,29 +1,84 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class DoorBehavior : MonoBehaviour
 {
-    public bool vertical;
+    public bool vertical = false;
     public DoorType type;
 
-    private Vector2 closedPosition;
-    private Vector2 openedPosition;
+    private Vector3 closedPosition;
+    private Vector3 openedPosition;
     private const float movinConst = 1;
-    private const float piecieOut = 0.05f;
+    private float waitTimer = 0;
+    private const float waitConst = 0.01f;
+    private const float roomCenter = 5;
 
     // True - opened
     // False - closed
     private bool state;
     private bool wanted;
+    private bool setup;
+    private bool renamed;
+    private bool interCheck = false;
+    private bool toRight = false;
 
     void Start()
     {
-        // name = Door_Spawn_10x10-1x2
-        string[] typ = new string[0];
-        typ = name.Split('_');
+        #region SmartSetup
+        // name = "Door:Spawn:10x10-U_-2x1"
+        string[] typ;
+        typ = name.Split(':');
 
-        if (typ.Length > 1)
+        if (typ.Length > 2)
         {
+            // typ[0] = "Door"
+
+            // typ[1] = "Spawn"
+            switch (typ[1])
+            {
+                case "Boss": 
+                    type = DoorType.BossIn;
+                    interCheck = true; break;
+                case "Loot": 
+                    type = DoorType.BossOut; break;
+                case "Spawn":
+                    type = DoorType.Spawn; 
+                    interCheck = true; break;
+                case "Path": 
+                    type = DoorType.Locked; break;
+                default:
+                    Debug.Log($"{typ[1]} is not an option for door");
+                    break;
+            }
+
+            // typ[2] = "10x10-U_-2x1"
+            typ = typ[2].Split('-');
+
+            // typ[0] = "10x10"
+            float roomX = float.Parse(typ[0].Split('x')[0])/2;
+            float roomY = float.Parse(typ[0].Split("x")[1]) - roomCenter;
+
+            // Position setup
+            // typ[1] = "U_"
+            switch (typ[1])
+            {
+                case "U_": transform.position = new Vector3(transform.position.x, transform.position.y + roomY, transform.position.z);
+                    break;
+                default:
+                case "D_": transform.position = new Vector3(transform.position.x, transform.position.y - roomCenter, transform.position.z);
+                    break;
+                case "_R": transform.position = new Vector3(transform.position.x + roomX, transform.position.y, transform.position.z); 
+                    vertical = true; toRight = true; break;
+                case "_L": transform.position = new Vector3(transform.position.x - roomX, transform.position.y, transform.position.z); 
+                    vertical = true; break;
+            }
+
+            // Verticality
+            if (vertical)
+                transform.rotation = Quaternion.Euler(0,0,90);
+
+            // Setup acording to Type (Role)
             switch (type)
             {
                 case DoorType.Spawn:
@@ -41,42 +96,95 @@ public class DoorBehavior : MonoBehaviour
                     break;
             }
 
-            // otoci o 90 stupnov
-            if (vertical)
-                transform.rotation = Quaternion.Euler(0, 0, 90);
-            // typ[1] = 10x10-R-1x2
-            typ = typ[1].Split('-');
-
-            wanted = state;
             closedPosition = transform.position;
+            wanted = state;
 
             // Opened position
-            float[] doorSize = new float[2];
-            typ = typ[2].Split('x');
-            doorSize[0] = float.Parse(typ[0]) - piecieOut;
-            doorSize[1] = float.Parse(typ[1]) - piecieOut;
+            // typ[2] = "2x1"
+            float doorSizeX = float.Parse(typ[2].Split('x')[0]);
+            
             if (vertical)
             {
-                openedPosition = new Vector2(transform.position.x, transform.position.y + doorSize[1]);
+                openedPosition = new Vector3(transform.position.x, transform.position.y + doorSizeX, transform.position.z);
             }
             else
             {
-                openedPosition = new Vector2(transform.position.x + doorSize[0], transform.position.y);
+                openedPosition = new Vector3(transform.position.x + doorSizeX, transform.position.y, transform.position.z);
             }
+            if (state)
+                transform.position = openedPosition;
+            #endregion
+
             GameManager.instance.AddDoor(this, type);
+            setup = true;
         }
-        else 
-            enabled = false;
+        else
+            setup = false;
     }
     void Update()
     {
-        if      (state && !wanted) // CLOSING
+        if (setup)
         {
-            Close();
+            if (interCheck)
+            {
+                Transform player = GameObject.FindGameObjectWithTag("Player").transform;
+                if (vertical)
+                {
+                    if (toRight)
+                    {
+                        if (transform.position.x < player.position.x)
+                        {
+                            interCheck = false;
+                            wanted = false;
+                        }
+                    }
+                    else
+                    {
+                        if (transform.position.x > player.position.x)
+                        {
+                            interCheck = false;
+                            wanted = false;
+                        }
+                    }
+                }
+                else
+                {
+                    if (player.position.y > transform.position.y)
+                    {
+                        interCheck = false;
+                        wanted = false;
+                    }
+                }
+            }
+
+            if (state && !wanted) // CLOSING
+            {
+                Close();
+            }
+            else if (!state && wanted) // OPENING
+            {
+                Open();
+            }
         }
-        else if (!state && wanted) // OPENING
-        { 
-            Open();
+        else if (Time.time > waitTimer)
+        {
+            // parent.name = "Spawn=10x10-U_"
+            string[] s = transform.parent.name.Split('=');
+            if (s.Length > 1)
+            {
+                if (!renamed)
+                {
+                    // name = "Door-2x1(clone)"
+                    // name = name.Split('(')[1];
+                    // name = "Door-2x1"
+                    string[] q = name.Split('-');
+                    name = q[0] + ":" + s[0] + ":" + s[1] + "-" + q[1];
+                    // name = "Door:Spawn:10x10-U_-2x1"
+                    renamed = true;
+                }
+                Start();
+            }
+            waitTimer = Time.time + waitConst;
         }
     }
     void Open()
@@ -101,9 +209,9 @@ public class DoorBehavior : MonoBehaviour
             state = false;
         }
     }
-    void MoveTowards(Vector2 pos)
+    void MoveTowards(Vector3 pos)
     {
-        transform.position = Vector2.MoveTowards(transform.position, pos, movinConst * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, pos, movinConst * Time.deltaTime);
     }
     public void ChangeState(bool newState)
     {

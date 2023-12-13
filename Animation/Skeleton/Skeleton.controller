@@ -572,3 +572,4 @@ MonoBehaviour:
   targetTag: Player
   speed: 2
   tol: 0.2
+  toClose: 1

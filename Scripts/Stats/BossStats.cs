@@ -1,13 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class BossStats : EnemyStats
 {
+    public int numberOfAttacks;
     private float activateBorderY = float.PositiveInfinity;
     private Transform target;
     private Transform heBar;
+    private float timer;
     private const float focusTime = 2.0f;
     private const float loadHealthTime = 2f;
-    private float timer = 0f;
+    private List<int> behavior;
     private int fakeHealth;
     private bool barFilling;
     private bool entry;
@@ -18,65 +21,137 @@ public class BossStats : EnemyStats
         base.Start();
         stunable = false;
         heBar = healthBar.transform;
-        // Zistenie typu miestnosti
-        switch (RoomType())
-        {
-            case "20x20":
-                transform.position = new Vector2(transform.position.x, transform.position.y + 10);
-                break;
-            default:
-                // 10x10
-                break;
-        }
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Reset variable
-        fakeHealth = 0;
-        barFilling = false;
+        timer = 0f;
         entry = true;
+        fakeHealth = 0;
+        behavior = new();
+        barFilling = false;
         healthBar.SetMaxHealth(maxHealth);
         healthBar.SetHealth(0);
     }
     private void Update()
     {
-        if (entry)  // ENTRY
+        // 1 => ENTRY
+        if (entry)
         {
-            if      (barFilling)
+            // 1.2
+            if (animator.enabled)
             {
-                if (fakeHealth < maxHealth)
+                // 1.2.1
+                if (barFilling)
                 {
-                    if (timer < Time.time)
+                    // 1.2.1.1
+                    if (fakeHealth < maxHealth)
                     {
-                        fakeHealth++;
-                        healthBar.SetHealth(fakeHealth);
-                        timer = Time.time + loadHealthTime / maxHealth;
+                        // If Skiped
+                        if (!GameManager.instance.GetMovingCam())
+                        {
+                            healthBar.SetHealth(maxHealth);
+                            animator.SetBool("move", true);
+                            barFilling = false;
+                            entry = false;
+                            timer = 0;
+                        }
+                        // Default path
+                        else if (timer < Time.time)
+                        {
+                            fakeHealth++;
+                            healthBar.SetHealth(fakeHealth);
+                            timer = Time.time + loadHealthTime / maxHealth;
+                        }
+                    }
+                    // 1.2.1.1.2 => LAST
+                    else
+                    {
+                        // Wait for camera to focus
+                        if (GameManager.instance.cameraFocused)
+                        {
+                            animator.SetBool("move", true);
+                            barFilling = false;
+                            entry = false;
+                            timer = 0;
+                        }
                     }
                 }
-                else
+                // 1.2.2
+                else if (GameManager.instance.cameraFocused)
                 {
-                    barFilling = false;
-                    entry = false;
-                    timer = 0;
+                    animator.SetTrigger("intro");
+                    fakeHealth = 0;
+                    barFilling = true;
                 }
             }
-            else if (GameManager.instance.cameraFocused)
-            {
-                animator.SetTrigger("roar");
-                fakeHealth = 0;
-                barFilling = true;
-            }
-            else if (target.position.y >= activateBorderY && !animator.enabled)
+            // 1.1
+            else if (target.position.y >= activateBorderY)
             {
                 heBar.gameObject.SetActive(true);
                 GameManager.instance.MoveCameraTo(transform.position, focusTime);
+                animator.SetBool("move", false);
                 animator.enabled = true;
             }
         }
+        // 2 => health refresh
         else
         {
             healthBar.SetHealth(curHealth);
-            animator.SetBool("follow", true);
+            /* Behavior
+            if (behavior.Count > 1)
+            {
+                if (Time.time > timer)
+                {
+                    AnimateMovement(behavior[1]);
+                    Debug.Log($"Attacking with attack {behavior[1]}");
+                    if (behavior.Count < 2)
+                        behavior[0] = behavior[1];
+                    behavior.RemoveAt(1);
+                }
+            }
+            else
+            {
+                GenerateMovement();
+            }
+            */
         }
+    }
+    private void GenerateMovement()
+    {
+        int n = numberOfAttacks + 1;
+        int rand;
+        int last = behavior[0];
+        behavior = new();
+
+        // Aby neutocil tym cim skoncil
+        do rand = Random.Range(0, n);
+        while (behavior.Contains(last));
+        behavior.Add(rand);
+
+        for (int i = 0; i < n; i++)
+        {
+            do rand = Random.Range(0, n);
+            while (behavior.Contains(rand));
+            behavior.Add(rand);
+        }
+    }
+    private void AnimateMovement(int moveId)
+    {
+        switch (moveId) 
+        { 
+            case 0:     // Follow
+                animator.SetBool("move", true);
+                timer = Random.Range(100, 500);
+                break;
+            default:    // Attack with id
+                animator.SetBool("move", false);
+                animator.SetTrigger("attack" + moveId);
+                timer = Random.Range(100, 200);
+                rb.velocity = Vector3.zero;
+                animator.ResetTrigger("attack" + moveId);
+                break;
+        }
+        timer = Time.time + timer/100;
     }
     public override void TakeDamage(int dmg)
     {
@@ -90,12 +165,6 @@ public class BossStats : EnemyStats
         rb.simulated = false;
         GameManager.instance.BossKilled();
         Destroy(gameObject, 3);
-    }
-    private string RoomType()
-    {
-        string[] s = transform.parent.name.Split(' ');
-        
-        return s[0];
     }
     public void SetY(float newY)
     {

@@ -210,18 +210,25 @@ public class PlayerScript : MonoBehaviour
         {
             // Get Coilidning Enemies
             Collider2D[] Enemies = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
-            // Enemis Doin Damage
-            foreach (Collider2D enemy in Enemies)
-                stats.TakeDamage(enemy.GetComponent<EnemyStats>().DoDamage());
+            // Get Coilidning Projectiles
+            Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
 
-            if (Enemies.Length < 1)
-            {
-                // Get Coilidning Projectiles
-                Collider2D[] Projectiles = Physics2D.OverlapBoxAll(transform.position, hitBox, 0, enemyLayers);
+            if (Enemies != null)
+                // Enemis Doin Damage
+                foreach (Collider2D enemy in Enemies)
+                    try
+                    {
+                        stats.TakeDamage(enemy.GetComponent<EnemyStats>().DoDamage());
+                    }
+                    catch { Debug.LogWarning($"Enemy {empty.name} has no EnemyStats"); }
+            else if (Projectiles != null)
                 // Projectiles Doin Damage
                 foreach (Collider2D projectile in Projectiles)
-                    stats.TakeDamage(projectile.GetComponent<ProjectileScript>().DoDamage());
-            }
+                    try
+                    {
+                        stats.TakeDamage(projectile.GetComponent<ProjectileScript>().DoDamage());
+                    }
+                    catch { Debug.LogWarning($"Projectile {empty.name} has no ProjectileScript"); }
         }
     }
     private void PickUpCheck()

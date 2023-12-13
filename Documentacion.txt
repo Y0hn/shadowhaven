@@ -656,9 +656,32 @@ Pridane Funkcie:
 ----------------< 11. 12.  2023 >----------------
 Pridane Funkcie:
 	Dooring
+	LevelGener update
 
 ----------------< 12. 12.  2023 >----------------
+Pridane Funkcie:
+	Finest door
+	Better spawning
+	Pain and sufering from Boss Behavior
+	Skeleton runaway fix
+
 ----------------< 13. 12.  2023 >----------------
+Pridane Funkcie:
+	Boss Beh
+		- attack "left stom" not working
+	textura end
+	player better protection
+	item.texture fix
+	
+Plan:
+	Boss
+		add rechrge animation
+			Reason:
+				attacks too fast
+		add shadow
+		fix "left stom"
+	Better Menu
+
 ----------------< 14. 12.  2023 >----------------
 ----------------< 15. 12.  2023 >----------------
 ----------------< 16. 12.  2023 >----------------

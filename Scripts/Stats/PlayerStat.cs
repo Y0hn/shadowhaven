@@ -79,6 +79,7 @@ public class PlayerStats : CharakterStats
         playerCom.enabled = false;
 
         animator.SetBool("isAlive", false);
+        transform.position = Vector2.zero;
         //Debug.Log("Hrac zomrel");
     }
     public void Resurect()
