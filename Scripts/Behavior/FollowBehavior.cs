@@ -42,6 +42,7 @@ public class FollowBehavior : StateMachineBehaviour
         Vector2 dir;
         Vector2 pos = animator.transform.position;
         Vector2 playerPos = targetTra.position;
+        settedTriger = "";
 
         // Set Direction 
         if      (pos.x - tol > playerPos.x)
@@ -109,7 +110,8 @@ public class FollowBehavior : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb.velocity = Vector2.zero;
-        if (settedTriger != "")
+
+        if (!settedTriger.Equals(""))
             animator.ResetTrigger(settedTriger);
     }
 }

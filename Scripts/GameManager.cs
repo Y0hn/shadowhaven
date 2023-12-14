@@ -57,12 +57,21 @@ public class GameManager : MonoBehaviour
     {
         // References
         // Debug.Log(Application.persistentDataPath);
-        playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
-        playerCombat = player.GetComponent<PlayerCombatScript>();
-        playerScript = player.GetComponent<PlayerScript>();
-        playerStats = player.GetComponent<PlayerStats>();
-        inventory = GetComponent<Inventory>();
-        items = GetComponent<ItemsList>();
+        if (player != null)
+        {
+            playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
+            playerCombat = player.GetComponent<PlayerCombatScript>();
+            playerScript = player.GetComponent<PlayerScript>();
+            playerStats = player.GetComponent<PlayerStats>();
+            inventory = GetComponent<Inventory>();
+            items = GetComponent<ItemsList>();
+        }
+        else
+        {
+            player = GameObject.FindWithTag("Player");
+            Start();
+            return;
+        }
 
         LevelLoad();
 
@@ -237,7 +246,7 @@ public class GameManager : MonoBehaviour
     {
         if (playerCamera.activeSelf)
         {
-            Debug.Log("Camera changed to freeCam");
+            //Debug.Log("Camera changed to freeCam");
             FreeCamera.transform.position = new Vector3(cameraPos[0].x, cameraPos[0].y, FreeCamera.transform.position.z);
             playerCamera.SetActive(false);
             FreeCamera.SetActive(true);
@@ -245,7 +254,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Camera changed to playerCam");
+            //Debug.Log("Camera changed to playerCam");
             playerCamera.SetActive(true);
             FreeCamera.SetActive(false);
             ableToMove = true;

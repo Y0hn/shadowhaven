@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnTile : MonoBehaviour
+public class SpawnObject : MonoBehaviour
 {
     private GameObject[] objects;
 

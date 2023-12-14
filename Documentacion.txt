@@ -565,7 +565,7 @@ Pridane Funkcie:
 	armorModifier
 
 ----------------< 13. 11.  2023 >----------------
-Plan: 
+Povodny Plan: 
 	[Syetem.Serializable] Stat
 	- first failed misurebly :D
 	- then done some work on it and rise 
@@ -681,8 +681,15 @@ Plan:
 		add shadow
 		fix "left stom"
 	Better Menu
+	textura dveri
 
 ----------------< 14. 12.  2023 >----------------
+Pridane Finkcie:
+	Boss rechrge
+	Door texture
+Plan:
+	Pridat earth quake
+
 ----------------< 15. 12.  2023 >----------------
 ----------------< 16. 12.  2023 >----------------
 ----------------< 17. 12.  2023 >----------------
@@ -699,6 +706,11 @@ Plan:
 ----------------< 29. 12.  2023 >----------------
 ----------------< 30. 12.  2023 >----------------
 ----------------< 31. 12.  2023 >----------------
+
+____________________/ PLANS \____________________
+Better Menu
+Pridat earth quake attack
+
 
 ______________/ INVENTORY  SYSTEM \______________
 Inventar sa zklada z 12 itemov 

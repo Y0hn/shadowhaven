@@ -51,7 +51,6 @@ public class BossStats : EnemyStats
                         {
                             healthBar.SetHealth(maxHealth);
                             animator.SetBool("move", true);
-                            barFilling = false;
                             entry = false;
                             timer = 0;
                         }

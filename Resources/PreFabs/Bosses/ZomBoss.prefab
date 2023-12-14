@@ -111,7 +111,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -1.1, z: 0.05}
-  m_LocalScale: {x: 1.5, y: 0.7, z: 1}
+  m_LocalScale: {x: 1.7, y: 0.7, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2139082619297811282}
@@ -949,6 +949,7 @@ GameObject:
   - component: {fileID: 5919982940378488292}
   - component: {fileID: 2546351215768170155}
   - component: {fileID: 1331840467955963715}
+  - component: {fileID: 6033470050311472105}
   m_Layer: 8
   m_Name: Hand
   m_TagString: Untagged
@@ -1058,6 +1059,28 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.6, y: 1.8}
   m_Direction: 0
+--- !u!114 &6033470050311472105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5589096042477200637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23f4b96af5d944b449c25fa1d7e52df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthBar: {fileID: 0}
+  maxHealth: 100
+  damage:
+    value: 0
+  armor:
+    value: 0
+  level: 0
+  loot: {fileID: 0}
+  lookRadius: 0
+  main: {fileID: 8255092691144983311}
 --- !u!1 &7204029460028569260
 GameObject:
   m_ObjectHideFlags: 0
