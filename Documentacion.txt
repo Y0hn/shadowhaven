@@ -712,6 +712,12 @@ Better Menu
 Pridat earth quake attack
 
 
+____________________/ BU GS \____________________
+Ked sa zacne animacia bosa oci hraca prejdu cez 
+	helmu (mal by sa pozerat hore)
+
+
+
 ______________/ INVENTORY  SYSTEM \______________
 Inventar sa zklada z 12 itemov 
 A je to Pain

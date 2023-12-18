@@ -201,6 +201,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            UI.DisableUI(0);
             UI.EnableUI("pause");
             Time.timeScale = 0f;
             ableToMove = false;
@@ -276,6 +277,7 @@ public class GameManager : MonoBehaviour
     #region Public Events
     public void ResumeGame()
     {
+        UI.EnableUI(0);
         UI.DisableUI("inv");
         UI.DisableUI("pause");
         Time.timeScale = 1f;
