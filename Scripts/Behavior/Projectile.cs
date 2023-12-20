@@ -2,15 +2,15 @@ using UnityEngine;
 public class ProjectileScript : MonoBehaviour
 {
     public int damage;
+    public float size;
     public float force;
     public float timeToDie;
-    public float size;
     public LayerMask targetLayers;
+    public bool ableToMove = true;
 
     private Vector3 targetPos;
     private Vector2 velocity;
     private Rigidbody2D rb;
-
     private int targets;
 
     void Start()
@@ -36,12 +36,20 @@ public class ProjectileScript : MonoBehaviour
                 targets = 0;
             }
             // Variables
-            Vector3 direction = targetPos - transform.position;
-            Vector3 rotation = transform.position - targetPos;
-            velocity = new Vector2(direction.x, direction.y).normalized * force;
-            rb.velocity = velocity;
-            float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, 0, rot + 90);
+            if (ableToMove)
+            {
+                Vector3 direction = targetPos - transform.position;
+                Vector3 rotation = transform.position - targetPos;
+                velocity = new Vector2(direction.x, direction.y).normalized * force;
+                rb.velocity = velocity;
+                float rot = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0, 0, rot + 90);
+            }
+            else
+            {
+                velocity = Vector2.zero;
+            }
+
             timeToDie = Time.time + timeToDie;
         }
         else
@@ -74,7 +82,7 @@ public class ProjectileScript : MonoBehaviour
                     Destroy(gameObject);
                 }
             }
-            else if (!rb.velocity.Equals(velocity))
+            else if (!rb.velocity.Equals(velocity) && ableToMove)
                 Destroy(gameObject);
         }
     }
