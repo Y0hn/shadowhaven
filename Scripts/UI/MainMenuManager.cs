@@ -1,34 +1,43 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    private Transform mainMenu;
-    private Transform setMenu;
+    public Transform titleScreen;
+    public Transform mainMenu;
+    public Transform setMenu;
+    private bool title;
     private bool main;
 
     void Start()
     {
         // References
-        mainMenu = GameObject.FindGameObjectWithTag("Melee Enemy").GetComponent<Transform>();
-        setMenu = GameObject.FindGameObjectWithTag("Ranged Enemy").GetComponent<Transform>();
         Transform vers = GameObject.FindGameObjectWithTag("Finish").transform;
-        Transform title = GameObject.FindGameObjectWithTag("Tile").transform;
+        Transform name = GameObject.FindGameObjectWithTag("Tile").transform;
         Transform comp = GameObject.FindGameObjectWithTag("Floor").transform;
-
+        // Set Up
         vers.GetComponent<Text>().text += Application.version;
-        title.GetComponent<Text>().text += Application.productName;
-        comp.GetComponent<Text>().text += Application.companyName;
-
-        main = true;
-        mainMenu.gameObject.SetActive(main);
-        setMenu.gameObject.SetActive(!main);
+        name.GetComponent<Text>().text = Application.productName;
+        comp.GetComponent<Text>().text = Application.companyName;
+        // Starting Values for variables
+        title = true;
+        main = false;
     }
     void Update()
     {
-
+        if (title)
+        {
+            if (Input.anyKeyDown)
+            {
+                StartGame();
+                //\\ remove this
+            }
+            // Add som animation
+        }
+        // Add some more opitions
     }
     public void StartGame()
     {
@@ -44,22 +53,4 @@ public class MenuManager : MonoBehaviour
     {
         Application.Quit();
     }
-    /*
-    public void SetWidth(int newWidth)
-    {
-        width = newWidth;
-    }
-    public void SetHeight(int newHeight)
-    {
-        height = newHeight;
-    }
-    public void SetFull(bool newFull)
-    {
-        Full = newFull;
-    }
-    public void SetRes()
-    {
-        Screen.SetResolution(width, height, Full);
-    }
-    */
 }

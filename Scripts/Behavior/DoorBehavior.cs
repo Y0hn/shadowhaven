@@ -18,6 +18,7 @@ public class DoorBehavior : MonoBehaviour
     // False - closed
     private bool state;
     private bool wanted;
+
     private bool setup;
     private bool renamed;
     private bool interCheck = false;
@@ -128,43 +129,69 @@ public class DoorBehavior : MonoBehaviour
             if (interCheck)
             {
                 Transform player = GameObject.FindGameObjectWithTag("Player").transform;
-                if (vertical)
+                if (type.Equals(DoorType.Spawn)) // Spawn room
                 {
-                    if (toRight)
+                    if (player.position.y > transform.position.y)
                     {
-                        if (transform.position.x < player.position.x)
+                        if (toRight)
                         {
-                            interCheck = false;
-                            wanted = false;
+                            if (transform.position.x < player.position.x)
+                            {
+                                wanted = false;
+                            }
+                        }
+                        else
+                        {
+                            if (transform.position.x > player.position.x)
+                            {
+                                wanted = false;
+                            }
+                        }
+                    }
+                    else if (!wanted)
+                    {
+                        wanted = true;
+                        Open();
+                    }
+
+                }
+                else
+                {
+                    if (vertical)
+                    {
+                        if (toRight)
+                        {
+                            if (transform.position.x < player.position.x)
+                            {
+                                interCheck = false;
+                                wanted = false;
+                            }
+                        }
+                        else
+                        {
+                            if (transform.position.x > player.position.x)
+                            {
+                                interCheck = false;
+                                wanted = false;
+                            }
                         }
                     }
                     else
                     {
-                        if (transform.position.x > player.position.x)
+                        if (player.position.y > transform.position.y)
                         {
                             interCheck = false;
                             wanted = false;
                         }
                     }
                 }
-                else
-                {
-                    if (player.position.y > transform.position.y)
-                    {
-                        interCheck = false;
-                        wanted = false;
-                    }
-                }
             }
 
-            if (state && !wanted) // CLOSING
-            {
-                Close();
-            }
-            else if (!state && wanted) // OPENING
-            {
-                Open();
-            }
+            if (state != wanted)
+                if      (state && !wanted) // CLOSING
+                    Close();
+                else if (!state && wanted) // OPENING
+                    Open();
         }
         else if (Time.time > waitTimer)
         {
@@ -195,7 +222,7 @@ public class DoorBehavior : MonoBehaviour
         }
         else
         {
-            state = true;
+            state = wanted;
         }
     }
     void Close()
@@ -206,7 +233,7 @@ public class DoorBehavior : MonoBehaviour
         }
         else
         {
-            state = false;
+            state = wanted;
         }
     }
     void MoveTowards(Vector3 pos)
