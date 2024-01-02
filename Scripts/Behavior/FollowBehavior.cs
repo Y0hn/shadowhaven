@@ -8,7 +8,6 @@ public class FollowBehavior : StateMachineBehaviour
     public float tol = 0.2f;
     public bool toClose = false;
     public bool onlySetTrajectory = false;
-    public string triger = "attack";
     public float stopingSpeed;
 
     private Transform targetTra;
@@ -45,17 +44,14 @@ public class FollowBehavior : StateMachineBehaviour
             // Set Direction 
             if (pos.x - tol > playerPos.x)
                 dir = Vector2.left;
-            else if (pos.x + tol < playerPos.x)
+            else // (pos.x + tol < playerPos.x)
                 dir = Vector2.right;
-            else if (pos.y > playerPos.y)
-                dir = Vector2.down;
-            else
-                dir = Vector2.up;
 
             Vector2 moveDir = playerPos - pos;
             moveDir = moveDir.normalized;
 
             rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
+            Debug.Log("Setting velocity to: " + moveDir.x + " " + moveDir.y);
             animator.SetFloat("Horizontal", dir.x);
         }
     }
@@ -92,17 +88,15 @@ public class FollowBehavior : StateMachineBehaviour
             animator.SetFloat("Horizontal", dir.x);
             animator.SetFloat("Vertical", dir.y);
         }
-        else if (rb.velocity.x == stopingSpeed)
+        else if (rb.velocity.x == stopingSpeed && rb.velocity.y == stopingSpeed)
         {
-            animator.SetTrigger(triger);
+            Debug.Log($"Setting of {"attack2"} because re.velocity {rb.velocity.x} = {stopingSpeed}");
+            animator.SetTrigger("attack2");
         }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         rb.velocity = Vector2.zero;
-
-        if (onlySetTrajectory)
-            animator.SetTrigger(triger);
     }
 }

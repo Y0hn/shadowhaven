@@ -1,15 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BossSelectorBehavior : StateMachineBehaviour
 {
-    public string triger = "attack";
-    public bool toClose = false;
     public string targetTag;
+    public bool toClose = false;
+    public string triger = "attack";
+    public float minChangeInterval = 0.01f;
 
     private Transform targetTra;
     private string settedTriger;
+    private float timer;
     private float range;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -31,6 +31,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 }
             }
         }
+        timer = Time.time + minChangeInterval;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -65,12 +66,13 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 break;
 
             default:
+                Debug.Log("Behavior was defaulted for: " + animator.name);
                 n = Random.Range(1, n);
                 behaviorChange = true;
                 break;
         }
 
-        if (behaviorChange)
+        if (behaviorChange && timer < Time.time)
         {
             settedTriger = triger + n;
             animator.SetTrigger(settedTriger);
