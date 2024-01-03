@@ -715,12 +715,16 @@ ____________________/ PLANS \____________________
 Sub MainMenu
 Dvere do boss room sa zavru so zaciatkom animacie
 	bossa
-
+Level_02
+	+ tranzition medzi nimi
 
 ____________________/ BUGSS \____________________
 Ked sa zacne animacia bosa oci hraca prejdu cez 
 	helmu (mal by sa pozerat hore)
 Boss Bar overflow
+Textture Overlay
+	enemy <-> player
+	enemy <-> dead enemy
 
 
 _________________/ FIXED  BUGS \_________________
@@ -814,6 +818,7 @@ ____________________/ LINKS \____________________
 1.)
 https://drive.google.com/drive/folders/1wD3EJGKzidaOD3VBCWk1KXh3JofZYSmR?usp=sharing
 2.)
+https://drive.google.com/drive/folders/1VhVsrBNsd2cp5ipRlpxBXxloCKWJqZWF?usp=sharing
 3.)
 4.)
 5.)
