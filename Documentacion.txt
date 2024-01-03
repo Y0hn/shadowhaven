@@ -710,13 +710,14 @@ Boss Health bar Upgrade
 	Fill size:
 		2873 * 94
 	Fill overflow
+Level_02 foundation
 
 ____________________/ PLANS \____________________
 Sub MainMenu
 Dvere do boss room sa zavru so zaciatkom animacie
 	bossa
 Level_02
-	+ tranzition medzi nimi
+	+ tranzition medzi levelami
 
 ____________________/ BUGSS \____________________
 Ked sa zacne animacia bosa oci hraca prejdu cez 

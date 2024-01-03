@@ -48,6 +48,12 @@ public class LevelGener : MonoBehaviour
                 roomer = new string[] { "10x10", "10x10", "20x20" };
                 break;
 
+            case "Level_02":
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
+                roomer = new string[] { "10x10", "10x10", "20x20" };
+                Destroy(gameObject);
+                break;
             default:
                 Debug.LogWarning("LevelGenerator destroied!");
                 Destroy(gameObject);

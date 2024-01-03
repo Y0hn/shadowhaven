@@ -221,10 +221,10 @@ public class GameManager : MonoBehaviour
     }
     void LevelLoad()
     {
-        GameObject oldLvl = GameObject.FindGameObjectWithTag("Level");
-
-        if (oldLvl != null)
-            Destroy(oldLvl);
+        GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
+        
+        foreach(GameObject lvl in oldLvls)
+            Destroy(lvl);
 
         // Premenovanie Levela xdd
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
