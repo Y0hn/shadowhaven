@@ -2426,17 +2426,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 717691723576359027}
     m_Modifications:
+    - target: {fileID: 2158697978025797313, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2158697978025797313, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5308562171726975304, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
       propertyPath: m_Name
       value: ZomBoss
       objectReference: {fileID: 0}
     - target: {fileID: 8553087839375130415, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 8553087839375130415, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -7
+      value: -6
       objectReference: {fileID: 0}
     - target: {fileID: 8553087839375130415, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
       propertyPath: m_LocalPosition.z

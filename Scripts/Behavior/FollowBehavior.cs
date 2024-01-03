@@ -5,11 +5,12 @@ public class FollowBehavior : StateMachineBehaviour
 {
     public string targetTag;
     public float speed;
-    public float tol = 0.2f;
+    public float rangeTolerancy = 0.2f;
     public bool toClose = false;
+    public bool stopOnExit = false;
     public bool onlySetTrajectory = false;
-    public float stopingSpeed;
 
+    private bool inMovement = false;
     private Transform targetTra;
     private Rigidbody2D rb;
 
@@ -18,6 +19,7 @@ public class FollowBehavior : StateMachineBehaviour
     {
         // References
         rb = animator.GetComponent<Rigidbody2D>();
+        inMovement = false;
 
         // Finding closet target
         if (targetTra == null)
@@ -42,61 +44,70 @@ public class FollowBehavior : StateMachineBehaviour
             Vector2 dir;
 
             // Set Direction 
-            if (pos.x - tol > playerPos.x)
+            if (pos.x - rangeTolerancy > playerPos.x)
                 dir = Vector2.left;
-            else // (pos.x + tol < playerPos.x)
+            else // (pos.x + rangeTolerancy < playerPos.x)
                 dir = Vector2.right;
 
             Vector2 moveDir = playerPos - pos;
             moveDir = moveDir.normalized;
 
-            rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
-            Debug.Log("Setting velocity to: " + moveDir.x + " " + moveDir.y);
+            rb.velocity = new Vector2 (moveDir.x * speed, moveDir.y * speed);
+            //Debug.Log($"Setting velocity to: [{rb.velocity.x},{rb.velocity.y}]");
             animator.SetFloat("Horizontal", dir.x);
+            inMovement = true;
         }
+        else
+            inMovement = true;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!onlySetTrajectory)
-        {
-            Vector2 pos = animator.transform.position;
-            Vector2 playerPos = targetTra.position;
-            Vector2 dir;
+        if (inMovement)
+            if (!onlySetTrajectory)
+            {
+                Vector2 pos = animator.transform.position;
+                Vector2 playerPos = targetTra.position;
+                Vector2 dir;
 
-            // Set Direction 
-            if (pos.x - tol > playerPos.x)
-                dir = Vector2.left;
-            else if (pos.x + tol < playerPos.x)
-                dir = Vector2.right;
-            else if (pos.y > playerPos.y)
-                dir = Vector2.down;
-            else
-                dir = Vector2.up;
+                // Set Direction 
+                if (pos.x - rangeTolerancy > playerPos.x)
+                    dir = Vector2.left;
+                else if (pos.x + rangeTolerancy < playerPos.x)
+                    dir = Vector2.right;
+                else if (pos.y > playerPos.y)
+                    dir = Vector2.down;
+                else
+                    dir = Vector2.up;
 
-            Vector2 moveDir = playerPos - pos;
-            moveDir = moveDir.normalized;
+                Vector2 moveDir = playerPos - pos;
+                moveDir = moveDir.normalized;
 
-            if (toClose)
-                if (animator.GetBool("runAway"))
-                {
-                    moveDir = new Vector2(0 - moveDir.x, 0 - moveDir.y);
-                    dir = new Vector2(0 - dir.x, 0 - dir.y);
-                }
+                if (toClose)
+                    if (animator.GetBool("runAway"))
+                    {
+                        moveDir = new Vector2(0 - moveDir.x, 0 - moveDir.y);
+                        dir = new Vector2(0 - dir.x, 0 - dir.y);
+                    }
 
-            rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
-            animator.SetFloat("Horizontal", dir.x);
-            animator.SetFloat("Vertical", dir.y);
-        }
-        else if (rb.velocity.x == stopingSpeed && rb.velocity.y == stopingSpeed)
-        {
-            Debug.Log($"Setting of {"attack2"} because re.velocity {rb.velocity.x} = {stopingSpeed}");
-            animator.SetTrigger("attack2");
-        }
+                rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
+                animator.SetFloat("Horizontal", dir.x);
+                animator.SetFloat("Vertical", dir.y);
+            }
+            else if (rb.velocity.x == 0)
+            {
+                //Debug.Log($"rb.velocity = 0");
+                animator.SetTrigger("attack1");
+                inMovement = false;
+                if (stopOnExit)
+                    rb.velocity = Vector2.zero;
+            }
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        rb.velocity = Vector2.zero;
+        if (stopOnExit)
+            rb.velocity = Vector2.zero;
+        //Debug.Log("Exiting Behavior Follow");
     }
 }

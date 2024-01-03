@@ -705,16 +705,26 @@ Any sing of progers
 	:O
 
 ----------------< 03. 01.  2024 >----------------
+ZomBoss Finished
+Boss Health bar Upgrade
+	Fill size:
+		2873 * 94
+	Fill overflow
 
 ____________________/ PLANS \____________________
-Sub Menu
-Pridat earth quake attack
-Boss refuses to die
+Sub MainMenu
+Dvere do boss room sa zavru so zaciatkom animacie
+	bossa
 
-____________________/ BU GS \____________________
+
+____________________/ BUGSS \____________________
 Ked sa zacne animacia bosa oci hraca prejdu cez 
 	helmu (mal by sa pozerat hore)
+Boss Bar overflow
 
+
+_________________/ FIXED  BUGS \_________________
+Boss refuses to die
 
 
 ______________/ INVENTORY  SYSTEM \______________
@@ -722,6 +732,13 @@ Inventar sa zklada z 12 itemov
 A je to Pain
 
 ______________/ EQUIPMENT  SYSTEM \______________
+
+
+____________/ IMPORTANT  DICOVERIES \____________
+Ak je animation tranzition != 0	
+	Behaviory oboch animacii idu sucastne
+		somehow (ZomBoss charge bug)
+
 
 ___________________/ SCRIPTS \___________________
 Behaviors:
@@ -762,35 +779,36 @@ rest fill in later ;D
 
 ________________/ LAYERS + TAGS \________________
 Tags:
-	Untagged
-	Respawn
-	Finish
-	EditorOnly
-	MainCamera
-	Player
-	GameControler
-	Weapon
-	Tile
-	Wall
-	Floor
-	Melee Enemy
-	Ranged Enemy
-	Level
-	Item
-	Assets
+	[ Untagged		]
+	[ Respawn		]
+	[ Finish		]
+	[ EditorOnly	]
+	[ MainCamera	]
+
+	" Player		"
+	" GameControler	"
+	" Weapon		"
+	" Tile			"
+	" Wall			"
+	" Floor			"
+	" Melee Enemy	"
+	" Ranged Enemy	"
+	" Level			"
+	" Item			"
+	" Assets		"
 
 Layers:
-	Default
-	TransparentFX
-	Ignore Raycast
-	Tile
-	Water
-	UI
-	Bedrock
-	Player
-	Enemy
-	PlayerWeapon
-	Projectile
+	[ Default		]
+	[ TransparentFX	]
+	[ Ignore Raycast]
+	" Tile			"
+	[ Water			]
+	[ UI			]
+	" Bedrock		"
+	" Player		"
+	" Enemy			"
+	" PlayerWeapon	"
+	" rojectile		"
 
 ____________________/ LINKS \____________________
 1.)
