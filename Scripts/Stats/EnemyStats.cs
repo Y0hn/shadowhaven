@@ -54,6 +54,7 @@ public class EnemyStats : CharakterStats
         }
 
         // Deconstruction
+        GetComponent<EnemyScript>().enabled = false;
         animator.SetBool("isAlive", false);
         rb.simulated = false;
         Destroy(collid);

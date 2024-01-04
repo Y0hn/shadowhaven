@@ -40,10 +40,8 @@ public class EnemyScript : MonoBehaviour
     }
     private void SetStats()
     {
-        if (eneName.Contains("Zombie"))
-        {
-        }
-        else if (eneName.Contains("Skeleton"))
+        // Only specials
+        if (eneName.Contains("Skeleton"))
         {
             rangeMax = stats.lookRadius * 0.8f;
             rangeMin = stats.lookRadius * 0.4f;
@@ -94,7 +92,13 @@ public class EnemyScript : MonoBehaviour
                     animator.SetBool("isFollowing", false);
                 rb.velocity = Vector3.zero;
             } 
-
+        }
+        else if (eneName.Contains("Slime"))
+        {
+            if  (distance < stats.lookRadius)
+                animator.SetBool("isFollowing", true);
+            else if (animator.GetBool("isFollowing"))
+                    animator.SetBool("isFollowing", false);
         }
     }
 }
