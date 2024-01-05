@@ -25,8 +25,8 @@ public class PlayerStats : CharakterStats
         inv.onEquipChangeCallback += EquipmentStatsRefresh;
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
 
-        LvlBar.SetHealth(0);
         LvlBar.SetMaxHealth(tillnextLvl);
+        LvlBar.SetHealth(0);
     }
     private void EquipmentStatsRefresh()
     {

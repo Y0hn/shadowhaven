@@ -721,6 +721,9 @@ Desprate pokus o Zoom v menu
 MainMenu Tranzition
 Better Main Menu BackGround
 + Continue BTN
+UI border
++ level Bar
+README update
 
 ----------------< 06. 01.  2024 >----------------
 ----------------< 07. 01.  2024 >----------------
@@ -752,7 +755,7 @@ Better Balancing
 
 _________________/ FIXED  BUGS \_________________
 Boss refuses to die
-
+LevelBar
 
 ______________/ INVENTORY  SYSTEM \______________
 Inventar sa zklada z 12 itemov 
@@ -852,16 +855,6 @@ Layers:
 	" Enemy			"
 	" PlayerWeapon	"
 	" rojectile		"
-
-____________________/ LINKS \____________________
-1.)
-https://drive.google.com/drive/folders/1wD3EJGKzidaOD3VBCWk1KXh3JofZYSmR?usp=sharing
-2.)
-https://drive.google.com/drive/folders/1VhVsrBNsd2cp5ipRlpxBXxloCKWJqZWF?usp=sharing
-3.)
-4.)
-5.)
-
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
