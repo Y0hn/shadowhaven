@@ -10,10 +10,10 @@ public class MenuManager : MonoBehaviour
     public Transform setMenu;
 
     private RectTransform tScreen;
-    private RectTransform mScreen;
+    private Image mScreen;
     private RectTransform sScreen;
 
-    private readonly static float[] titleZoomParam  = { 10f, -260f, 3780f };
+    private readonly static float[] titleZoomParam = { 10f, -260f, 3780f };
     private const float scaleChange = 3f;
     private float[] moveBy = new float[2];
     private bool main;
@@ -26,7 +26,7 @@ public class MenuManager : MonoBehaviour
         Transform comp = GameObject.FindGameObjectWithTag("Floor").transform;
         Transform name = GameObject.FindGameObjectWithTag("Tile").transform;
         tScreen = titleScreen.GetComponent<RectTransform>();
-        mScreen = mainMenu.GetComponent<RectTransform>();
+        mScreen = mainMenu.GetComponent<Image>();
         sScreen = setMenu.GetComponent<RectTransform>();
 
         // Set Up
@@ -42,6 +42,8 @@ public class MenuManager : MonoBehaviour
         titleScreen.gameObject.SetActive(true);
         mainMenu.gameObject.SetActive(false);
         setMenu.gameObject.SetActive(false);
+        mainMenu.GetChild(0).GetChild(0).GetComponent<Button>().interactable = SaveCheck();
+
     }
     void Update()
     {
@@ -57,7 +59,7 @@ public class MenuManager : MonoBehaviour
         {
             if (moveBy[0] == 0)
             {
-                int counter = (int)Math.Ceiling((titleZoomParam[0] -1) / scaleChange);
+                int counter = (int)Math.Ceiling((titleZoomParam[0] - 1) / scaleChange);
                 moveBy[0] = titleZoomParam[1] / counter;
                 moveBy[1] = titleZoomParam[2] / counter;
                 //Debug.Log($"Counter setted to {counter}");
@@ -75,17 +77,33 @@ public class MenuManager : MonoBehaviour
             else
             {
                 //Debug.Log("Zoomed");
+                mScreen.color = new Color(mScreen.color.r, mScreen.color.g, mScreen.color.b, 0);
                 mainMenu.gameObject.SetActive(true);
-                titleScreen.gameObject.SetActive(false);
-                tScreen.position = Vector3.zero;
-                tScreen.localScale = new Vector3(1,1,1);
                 sub = true;
             }
         }
         else // sub = true
         {
+            if (mScreen.color.a < 1)
+            {
+                float newA = mScreen.color.a + Time.deltaTime;
+                if (newA > 1)
+                    newA = 1;
 
+                //Debug.Log($"Color a set to {newA}");
+                mScreen.color = new Color(mScreen.color.r, mScreen.color.g, mScreen.color.b, newA);
+            }
+            else
+            {
+                titleScreen.gameObject.SetActive(false);
+                tScreen.localScale = new Vector3(1, 1, 1);
+                tScreen.position = Vector3.zero;
+            }
         }
+    }
+    public void ContinueGame()
+    {
+
     }
     public void StartGame()
     {
@@ -100,5 +118,10 @@ public class MenuManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
+    }
+
+    private bool SaveCheck()
+    {
+        return false;
     }
 }
