@@ -715,8 +715,11 @@ Level_02 foundation
 ----------------< 04. 01.  2024 >----------------
 Added Slime
 	+ upgrade FollowBeh
+Desprate pokus o Zoom v menu
 
 ----------------< 05. 01.  2024 >----------------
+MainMenu Tranzition
+
 ----------------< 06. 01.  2024 >----------------
 ----------------< 07. 01.  2024 >----------------
 ----------------< 08. 01.  2024 >----------------
@@ -733,6 +736,7 @@ Dvere do boss room sa zavru so zaciatkom animacie
 	bossa
 Level_02
 	+ tranzition medzi levelami
+After sword effect
 
 ____________________/ BUGSS \____________________
 Ked sa zacne animacia bosa oci hraca prejdu cez 
@@ -741,6 +745,7 @@ Boss Bar overflow
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
+Better Balancing
 
 
 _________________/ FIXED  BUGS \_________________
