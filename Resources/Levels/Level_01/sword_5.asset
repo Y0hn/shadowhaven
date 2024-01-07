@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
-  m_Name: sword_1
+  m_Name: sword_5
   m_EditorClassIdentifier: 
   rarity: 0
   name: mec
@@ -30,12 +30,12 @@ MonoBehaviour:
     Owner: Michael_Place of origin: MoscowIron _Rarity: Common_Previous Owner: Robert_Place
     of origin: TimbuktuCopper _Rarity: Common_Previous Owner: Robert_Place of origin:
     Seville'
-  icon: {fileID: 21300000, guid: 30f73f147012d964c9eaa7f662385bfb, type: 3}
+  icon: {fileID: 21300000, guid: 84e9b54831e26d7409bd7341d65765df, type: 3}
   color: {r: 122, g: 127, b: 128, a: 1}
   equipSlot: 2
   type: 0
-  damageModifier: 10
+  damageModifier: 30
   onlySecondary: 0
   texture:
-  - {fileID: 21300000, guid: 615a91d08bd3156419b827720648d8c4, type: 3}
+  - {fileID: 21300000, guid: 61121efc7eee595468d6c5bef7497ad4, type: 3}
   projectile: {fileID: 0}
