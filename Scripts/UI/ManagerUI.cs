@@ -78,6 +78,7 @@ public class ManagerUI : MonoBehaviour
 
     public void UpdateCash()
     {
+        EnableUI(Dic["money"]);
         UIs[Dic["money"]].GetComponent<Text>().text = inventory.GetMoney() + s;
     }
 

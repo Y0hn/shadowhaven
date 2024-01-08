@@ -730,7 +730,11 @@ New Weapons designs
 + UIalt
 
 ----------------< 07. 01.  2024 >----------------
+5 new weapon scripted objects
+
 ----------------< 08. 01.  2024 >----------------
+4.5 new helmet textures + scripted obj
+
 ----------------< 09. 01.  2024 >----------------
 ----------------< 10. 01.  2024 >----------------
 ----------------< 11. 01.  2024 >----------------
@@ -745,15 +749,22 @@ Dvere do boss room sa zavru so zaciatkom animacie
 Level_02
 	+ tranzition medzi levelami
 After sword effect
+Bow - tetiva seperate texture
+Popracovat na centrovani textur heliem
+
 
 ____________________/ BUGSS \____________________
 Ked sa zacne animacia bosa oci hraca prejdu cez 
-	helmu (mal by sa pozerat hore)
+	helmu, mal by sa pozerat hore/dole, ale 
+		hlevne nak sa neklipuje cez textury
+			helmy
 Boss Bar overflow
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
+arrow0001 - redo
+Slime nema drops
 
 
 _________________/ FIXED  BUGS \_________________
