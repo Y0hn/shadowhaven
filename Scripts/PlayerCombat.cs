@@ -138,13 +138,13 @@ public class PlayerCombatScript : MonoBehaviour
             Weapon.sprite = weap.texture[0];            
             Weapon.color = weap.color;
 
-            switch ((int)weap.type)
+            switch (weap.type)
             {
-                case 0: 
+                case Type.Melee: 
                     melee = true;  
                     break;  // Melee
-                case 1:
-                case 2: 
+                case Type.Ranged:
+                case Type.Magic: 
                     melee = false; 
                     projectile = weap.projectile;
                     rendProj.sprite = projectile.GetComponent<SpriteRenderer>().sprite;

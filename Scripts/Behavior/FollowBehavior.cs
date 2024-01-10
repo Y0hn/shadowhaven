@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class FollowBehavior : StateMachineBehaviour
@@ -97,6 +98,7 @@ public class FollowBehavior : StateMachineBehaviour
                     if (stopOnExit)
                         rb.velocity = Vector2.zero;
                     inMovement = false;
+                    animator.SetBool("isFollowing", false);
                 }
             }
             else if (rb.velocity.x == 0)
@@ -147,4 +149,6 @@ public class FollowBehavior : StateMachineBehaviour
         else
             inMovement = true;
     }
+
+    private static EventHandler eventStart;
 }

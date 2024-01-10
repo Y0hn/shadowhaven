@@ -3,6 +3,13 @@ using UnityEngine;
 
 public class EnemyStats : CharakterStats
 {
+    /* REQUIREMENTS
+     *  1.) Animator:
+     *      a.) trigger "Hurt"
+     *      b.) float "Horizontal"
+     *      c.) float "Vertical"
+     *      d.) bool "isAlive"
+     */
     public Text loot;
     protected Collider2D collid;
     public float lookRadius;
