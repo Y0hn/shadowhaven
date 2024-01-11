@@ -2,17 +2,14 @@ using UnityEngine;
 
 public class moveRandomDir : StateMachineBehaviour
 {
-    public float speed;
     public float rangeTolerancy = 0.2f;
-    public bool toClose = false;
-    public bool stopOnExit = false;
-    public bool onlySetTrajectory = false;
     public float trajectoryLimit = -1;
+    public bool stopOnExit = true;
     public float startDelay = 0;
+    public float speed;
+    public string exitName; // bool/trigger + string
 
-    private bool startDelayed = false;
     private bool inMovement = false;
-    private Transform targetTra;
     private Vector2 startPos;
     private Rigidbody2D rb;
     private float delay;
@@ -21,48 +18,61 @@ public class moveRandomDir : StateMachineBehaviour
     {
         // References
         rb = animator.GetComponent<Rigidbody2D>();
-        startDelayed = startDelay != 0;
         inMovement = false;
 
         // Limit Range
         if (trajectoryLimit != -1)
-        {
             startPos = animator.transform.position;
-        }
+        
+        // Set Random Direction
+        Vector2 dir;
+        dir.x = Random.Range(-1,2);
+        dir.y = Random.Range(-1,2);
+        dir = dir.normalized;
+
+        rb.velocity = new Vector2(dir.x * speed, dir.y * speed);
+        animator.SetFloat("Horizontal", dir.x);
+        animator.SetFloat("Vertical", dir.y);
+
+        inMovement = true;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        
-    }
-
-    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    {
-
-    }
-    private void SetTrajectory(Animator animator)
-    {
-        // Setting trajectory
-        if (onlySetTrajectory)
+        if (inMovement)
         {
-            Vector2 pos = animator.transform.position;
-            Vector2 playerPos = targetTra.position;
-            Vector2 dir;
-
-            // Set Direction 
-            if (pos.x - rangeTolerancy > playerPos.x)
-                dir = Vector2.left;
-            else // (pos.x + rangeTolerancy < playerPos.x)
-                dir = Vector2.right;
-
-            Vector2 moveDir = playerPos - pos;
-            moveDir = moveDir.normalized;
-
-            rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
-            //Debug.Log($"Setting velocity to: [{rb.velocity.x},{rb.velocity.y}]");
-            animator.SetFloat("Horizontal", dir.x);
-            inMovement = true;
+            if      (rangeTolerancy <= rb.velocity.x && rb.velocity.x <= rangeTolerancy
+                  && rangeTolerancy <= rb.velocity.y && rb.velocity.y <= rangeTolerancy)
+                // zastavil sa o stenu/hraca
+                inMovement = false;
+            
+            else if (trajectoryLimit != -1)
+            {
+                Vector2 v = new Vector2(animator.transform.position.x - startPos.x, animator.transform.position.y - startPos.y);
+                if (v.magnitude >= trajectoryLimit)
+                {
+                    inMovement = false;
+                }
+            }
         }
         else
-            inMovement = true;
+            Exit(animator);
+    }
+    private void Exit(Animator animator)
+    {
+        //Debug.Log("Exited");
+
+        if (stopOnExit)
+            rb.velocity = Vector2.zero;
+        string[] s = exitName.Split(' ');
+        switch (s[0].ToLower().Trim())
+        {
+            case "bool":
+                animator.SetBool(s[1], false);
+                break;
+            case "trigger":
+            case "triger":
+                animator.SetBool(s[1], false);
+                break;
+        }
     }
 }

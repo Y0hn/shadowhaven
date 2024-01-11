@@ -148,13 +148,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73b0b9fb18125cc4e9fee8acd39ee276, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
   rangeTolerancy: 0.2
-  toClose: 0
-  stopOnExit: 0
-  onlySetTrajectory: 0
-  trajectoryLimit: -1
+  trajectoryLimit: 1
+  stopOnExit: 1
   startDelay: 0
+  speed: 2
+  exitName: bool randomWalk
 --- !u!114 &-289576704594177383
 MonoBehaviour:
   m_ObjectHideFlags: 1

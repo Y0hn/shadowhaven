@@ -144,11 +144,7 @@ public class FollowBehavior : StateMachineBehaviour
             rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
             //Debug.Log($"Setting velocity to: [{rb.velocity.x},{rb.velocity.y}]");
             animator.SetFloat("Horizontal", dir.x);
-            inMovement = true;
         }
-        else
-            inMovement = true;
+        inMovement = true;
     }
-
-    private static EventHandler eventStart;
 }
