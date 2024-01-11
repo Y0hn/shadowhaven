@@ -110,18 +110,25 @@ public class EnemyScript : MonoBehaviour
                 break;
 
             case "Spider":
-                if (animator.GetBool("isFollowing"))
+                if (distance < stats.lookRadius && !animator.GetBool("isFollowing"))
                 {
-                    //int rand = (int)System.Math.Floor(Random.Range(0f, 3f));
+                    int rand = Random.Range(0, 2);
 
+                    if (rand == 0)
+                    {
+                        animator.SetBool("randomWalk", true);
+                    }
+                    else // follow
+                    {
+                        animator.SetBool("isFollowing", true);
+                    }
                 }
-                else if (distance < stats.lookRadius)
-                    animator.SetBool("isFollowing", true);
                 break;
 
             default:
                 Destroy(gameObject);
                 break;
         }
+        // pridat pre kazdeho enemaka nejaky nahodny behavior ?
     }
 }
