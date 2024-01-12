@@ -16,7 +16,7 @@
 ![Screenshot 2024-01-05 231513](https://github.com/Y0hn/project/assets/101512527/9836d482-7ad4-4e61-8445-771f796a6175)
 
 ### Kontrola 05. 11. 2023
-<iframe width="1346" height="525" src="https://www.youtube.com/embed/m57ylZGgtiE" title="Shadowhaven 05.11. 2023" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<a href="https://www.youtube.com/embed/m57ylZGgtiE"> Shadowhaven 05.11. 2023</a>
 	Dokoncene:
 		player charakter
 			animacie
