@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public class PlayerScript : MonoBehaviour
-{    
+{
     public Sprite empty;
     public LayerMask enemyLayers;
     public Vector2 hitBox;
@@ -44,7 +44,7 @@ public class PlayerScript : MonoBehaviour
 
 
 
-    private void Start() 
+    private void Start()
     {
         #region References
 
@@ -80,7 +80,7 @@ public class PlayerScript : MonoBehaviour
             ProcessInput();
             Move();
             AnimateMovement();
-
+            ArmorRenderer();
             CollisionCheck();
             PickUpCheck();
 
@@ -91,6 +91,7 @@ public class PlayerScript : MonoBehaviour
         {
             animator.SetFloat("Speed", 0);
             rb.velocity = Vector3.zero;
+            ArmorRenderer();
         }
     }
     private void OnDrawGizmosSelected()
@@ -120,7 +121,7 @@ public class PlayerScript : MonoBehaviour
 
         moveDir = new Vector2(moveX, moveY).normalized;
 
-        if      ((Input.GetMouseButton(0) && !combatAct && armed) || weaponJustEquiped)
+        if ((Input.GetMouseButton(0) && !combatAct && armed) || weaponJustEquiped)
         {
             weaponJustEquiped = false;
             playerCom.enabled = true;
@@ -141,8 +142,9 @@ public class PlayerScript : MonoBehaviour
         animator.SetFloat("Horizontal", moveDir.x);
         animator.SetFloat("Vertical", moveDir.y);
         animator.SetFloat("Speed", moveDir.sqrMagnitude);
-
-
+    }
+    private void ArmorRenderer()
+    {
         if (animator.GetFloat("Speed") > 0)
         {
             Armor a;
@@ -201,7 +203,6 @@ public class PlayerScript : MonoBehaviour
             }
         }
     }
-
     #endregion
 
     private void CollisionCheck()

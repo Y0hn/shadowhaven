@@ -762,24 +762,20 @@ Names:
 
 
 ____________________/ BUGSS \____________________
-Ked sa zacne animacia bosa oci hraca prejdu cez 
-	helmu, mal by sa pozerat hore/dole, ale 
-		hlevne nak sa neklipuje cez textury
-			helmy
 Boss Bar overflow
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
 arrow0001 - redo
-Slime nema drops
-
-
-
+better melee range 
+arrow in bow scalling error ?
 
 _________________/ FIXED  BUGS \_________________
 Boss refuses to die
+Slime nema drops
 LevelBar
+Oci hraca clip trou helmet
 
 ______________/ INVENTORY  SYSTEM \______________
 Inventar sa zklada z 12 itemov 
