@@ -745,17 +745,18 @@ Spider done
 Bug Fixes
 
 ----------------< 13. 01.  2024 >----------------
+OST - SFX branch merge
+
 ----------------< 14. 01.  2024 >----------------
 
 ____________________/ PLANS \____________________
 Sub MainMenu
-Dvere do boss room sa zavru so zaciatkom animacie
-	bossa
 Level_02
 	+ tranzition medzi levelami
 After sword effect
 Bow - tetiva seperate texture
 Popracovat na centrovani textur heliem
+Enemy hidden health bar while health is full
 
 Names:
 	IntoTheShadows
