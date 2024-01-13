@@ -1,36 +1,36 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PlayerCombatScript : MonoBehaviour
 {
+    public float attackRange;
     public LayerMask enemyLayers;
 
-    private Transform rotatePoint;
-    private Transform Hand;
-    private Transform HandS;
+    #region References
     private Transform WeaponIdleProjectile;
-
-    public float attackRange;
-
+    private GameObject projectile = null;
+    private Transform rotatePoint;
     private PlayerScript player;
     private PlayerStats stats;
+    private Transform target;
+    private Transform HandS;
+    private Transform Hand;
     private Collider2D col;
     private Camera cam;
-    private GameObject projectile = null;
+    #endregion
 
     private int weaponInvIndex;
-
     private Vector3 mousePos;
-    private const int posun = 3;    // ak sa v buducosti bude menit tak bude problem
 
-    private float attackDist = 45;  // distance for melee weapon to do damage
-
-    public float fireRate;
-    private float fireTime = 0;
-
-    private float rotZ;
+    private float attackDist = 45;  // distance for melee weapon to travel to do damage
     private float lastRotZ = 0;
+    private float rotZ;
 
+    private float fireTime = 0;
+    public float fireRate;
     private bool melee;
+
     
     private void Start()
     {
@@ -40,6 +40,7 @@ public class PlayerCombatScript : MonoBehaviour
         stats = GetComponent<PlayerStats>();
         rotatePoint = transform.GetChild(0);
         Hand = rotatePoint.transform.GetChild(0);
+        target = Hand.GetChild(1);
         HandS = rotatePoint.transform.GetChild(1);
         WeaponIdleProjectile = Hand.GetChild(0).GetChild(0);
         col = Hand.GetComponent<Collider2D>();
@@ -56,7 +57,6 @@ public class PlayerCombatScript : MonoBehaviour
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
             #endregion
-
             if (!GameManager.inv) // Unable to fire with inventory opened
             {
                 if (!melee && Input.GetMouseButton(1))
@@ -98,7 +98,7 @@ public class PlayerCombatScript : MonoBehaviour
             }
             if (melee)
             {
-                if (rotZ > lastRotZ + attackDist || lastRotZ - attackDist > rotZ)
+                if (!(lastRotZ - attackDist < rotZ && rotZ < lastRotZ + attackDist))
                 {
                     MeleeAttack();
                     lastRotZ = rotZ;
@@ -108,11 +108,24 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void MeleeAttack()
     {
-        Vector2 attP = new Vector2(Hand.transform.position.x, Hand.transform.position.y);
+        Vector2 v = target.position - Hand.position;
+        Vector2 attP1 = new Vector2(Hand.position.x, Hand.position.y);
+        Vector2 attP2 = new(Hand.position.x - v.y, Hand.position.y + v.x);
 
-        Collider2D[] hitEnemies = Physics2D.OverlapCircleAll(attP, attackRange, enemyLayers);
+        List<Collider2D> hitEnemies = new();
+        hitEnemies.AddRange(Physics2D.OverlapCircleAll(attP1, attackRange, enemyLayers));
+        // v = new(hitEnemies.Count, 0); // debug
+        foreach (Collider2D enemy in Physics2D.OverlapCircleAll(attP2, attackRange, enemyLayers))
+            if (!hitEnemies.Contains(enemy))
+            {
+                hitEnemies.Add(enemy);
+                v = new(v.x, v.y + 1);
+            }
+
         foreach (Collider2D enemy in hitEnemies)
             enemy.GetComponent<EnemyStats>().TakeDamage(stats.damage.GetValue());
+
+        //Debug.Log($"[Time: {Time.time}] Melee Attack Enemies hited {hitEnemies.Count}\nattP1[{attP1.x},{attP1.y}] hitted {v.x} enemies \nattP2[{attP2.x},{attP2.y}] hitted {v.y} enemies");
     }
     private void RangedAttack()
     {

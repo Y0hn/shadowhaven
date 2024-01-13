@@ -30,8 +30,6 @@ public class PlayerScript : MonoBehaviour
     private int helmetTI = 0;   // texture index
     private int torsoTI = 0;
 
-    private const int minDmg = 1;
-
     private Vector2 moveDir;
     private float moveSpeed = 5;
 
@@ -104,10 +102,21 @@ public class PlayerScript : MonoBehaviour
         Transform hand = transform.GetChild(0).GetChild(0);
         if (hand.parent.gameObject.activeSelf)
         {
-            Vector2 pos = hand.position;
+            Vector2 posHand = hand.position;
+            Vector2 posTarget = hand.GetChild(1).position;
             float range = GetComponent<PlayerCombatScript>().attackRange;
+
+            // Hrot meca
+            Vector2 v = posTarget - posHand;
+            Vector2 newTargPos = new (posHand.x - v.y, posHand.y + v.x);
+
+            // Kreslenie
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(pos, range);
+            Gizmos.DrawWireSphere(posHand, range);
+            Gizmos.DrawWireSphere(newTargPos, range);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(posTarget, 0.1f);
         }
     }
 

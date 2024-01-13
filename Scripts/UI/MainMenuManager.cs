@@ -14,7 +14,7 @@ public class MenuManager : MonoBehaviour
     private RectTransform sScreen;
 
     private readonly static float[] titleZoomParam = { 10f, -260f, 3780f };
-    private const float scaleChange = 3f;
+    private const float scaleChange = 2f;
     private float[] moveBy = new float[2];
     private bool main;
     private bool sub;
@@ -39,9 +39,9 @@ public class MenuManager : MonoBehaviour
         sub = false;
         moveBy[0] = 0;
         moveBy[1] = 0;
-        titleScreen.gameObject.SetActive(true);
-        mainMenu.gameObject.SetActive(false);
         setMenu.gameObject.SetActive(false);
+        mainMenu.gameObject.SetActive(false);
+        titleScreen.gameObject.SetActive(true);
         mainMenu.GetChild(0).GetChild(0).GetComponent<Button>().interactable = SaveCheck();
 
     }

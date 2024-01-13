@@ -746,6 +746,7 @@ Bug Fixes
 
 ----------------< 13. 01.  2024 >----------------
 OST - SFX branch merge
+Improvment in melee range
 
 ----------------< 14. 01.  2024 >----------------
 
@@ -770,11 +771,12 @@ Textture Overlay
 	enemy <-> dead enemy
 Better Balancing
 arrow0001 - redo
-better melee range 
 arrow in bow scalling error ?
+multiple melee attacks at same time
 
 _________________/ FIXED  BUGS \_________________
 Boss refuses to die
+better melee range 
 Slime nema drops
 LevelBar
 Oci hraca clip trou helmet
