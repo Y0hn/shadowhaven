@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
-  m_Name: bow_1
+  m_Name: bow_3
   m_EditorClassIdentifier: 
   rarity: 0
   name: Wooden bow
   description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
-  icon: {fileID: 21300000, guid: 139a364f389115544ab8e96b5eb3ba39, type: 3}
-  color: {r: 1, g: 1, b: 1, a: 1}
+  icon: {fileID: 21300000, guid: bd81a6ec4f97f3b4b8ba0db33d2a0f82, type: 3}
+  color: {r: 0.23222996, g: 0.33962262, b: 0.18743324, a: 1}
   equipSlot: 2
   type: 1
   damageModifier: 20
   onlySecondary: 0
   texture:
-  - {fileID: 21300000, guid: c61b75fca8c8ce44b8cc5539c6e8667c, type: 3}
+  - {fileID: 21300000, guid: a1649197d00ff2140a650beb2b5640f4, type: 3}
   - {fileID: 21300000, guid: ffb5a0bc949dbde48a5b4223831bf7d5, type: 3}
   - {fileID: 21300000, guid: 1d4bb51be2656004984e10742c1739cd, type: 3}
   - {fileID: 21300000, guid: 3a6bee52d78ead64fb58553508a5a8b3, type: 3}

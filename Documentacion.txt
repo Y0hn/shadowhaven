@@ -747,6 +747,9 @@ Bug Fixes
 ----------------< 13. 01.  2024 >----------------
 OST - SFX branch merge
 Improvment in melee range
+Bow - tetiva seperate texture
+Skeleton shootin animacia
+Main menu ESC close
 
 ----------------< 14. 01.  2024 >----------------
 
@@ -755,9 +758,13 @@ Sub MainMenu
 Level_02
 	+ tranzition medzi levelami
 After sword effect
-Bow - tetiva seperate texture
 Popracovat na centrovani textur heliem
 Enemy hidden health bar while health is full
+Secret Roomky
+Implementovat zvuk
+Vyfarbit cely/oraj slotu v inventary podla rarity
+	itemu
+Potions/Consumables
 
 Names:
 	IntoTheShadows
@@ -771,21 +778,18 @@ Textture Overlay
 	enemy <-> dead enemy
 Better Balancing
 arrow0001 - redo
+Skeleton Bow missing
 arrow in bow scalling error ?
 multiple melee attacks at same time
+Weapon weird behavior when pickup item
+ZomBoss when charged once no chargin anymore
 
 _________________/ FIXED  BUGS \_________________
+Oci hraca clip trou helmet
 Boss refuses to die
 better melee range 
 Slime nema drops
 LevelBar
-Oci hraca clip trou helmet
-
-______________/ INVENTORY  SYSTEM \______________
-Inventar sa zklada z 12 itemov 
-A je to Pain
-
-______________/ EQUIPMENT  SYSTEM \______________
 
 
 ____________/ IMPORTANT  DICOVERIES \____________
