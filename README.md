@@ -45,6 +45,47 @@
 		viac Nepriatelov
 		nejakych Bossov
 		vylespit textury UI
+
+### Kontrola 14. 01. 2023
+<p>
+	<a href="https://www.youtube.com/embed/m57ylZGgtiE">Shadowhaven 14.01. 2023</a>
+</p>
+
+	Dokoncene:
+		Prvy Boss
+			moveSet
+			animacie
+		4 typy nepriatelov
+			animacie
+			moveSet
+			+ upgrade predchadzajucich
+		Level
+			lepsie textury
+		UI
+			inventar
+			+ upgrade pause
+			+ upgrade death
+		MainMenu
+			BackGround
+			animacie
+		Vylapsenie combat systemu
+			+ animacie luku
+		Lepsia RoomGeneration
+		Inventory System
+			equipment
+				helmet
+				chestplate
+				weapons
+
+		Planujem pridat:
+			sound Effecty
+			soundtrack
+			este Viac Nepriatelov
+			viac Levelov
+			viac Itemov
+			viac Bossov
+			progresiu
+
 ### Experimental Versions:
 <p>
 	<a href = "https://drive.google.com/drive/folders/1wD3EJGKzidaOD3VBCWk1KXh3JofZYSmR?usp=drive_link">Version: 07-11-2023</a>

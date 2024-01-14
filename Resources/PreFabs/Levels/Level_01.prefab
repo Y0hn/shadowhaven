@@ -1440,6 +1440,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 10x10
       objectReference: {fileID: 0}
+    - target: {fileID: 7850567835950273141, guid: ce5088e1355fe8645adcf210e38cdd98, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 28d647cdbb6fb204b9f2475efa82ce36, type: 3}
     - target: {fileID: 9213670299168755051, guid: ce5088e1355fe8645adcf210e38cdd98, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2222,6 +2226,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 20x20
       objectReference: {fileID: 0}
+    - target: {fileID: 3249042801083960815, guid: 1b2ea7a4267c2664b8b147c58fe564f3, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 52b89cd42b87433429a9cd6d2d640b19, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

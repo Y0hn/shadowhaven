@@ -752,6 +752,8 @@ Skeleton shootin animacia
 Main menu ESC close
 
 ----------------< 14. 01.  2024 >----------------
+First Sound Impact
+AudioManager
 
 ____________________/ PLANS \____________________
 Sub MainMenu
@@ -921,7 +923,8 @@ https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
 https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
 https://youtu.be/_yR9FL4LXGE?si=cg8oq0Hmypo1wRM9
 https://youtu.be/AD4JIXQDw0s?si=9XXMOqWzlrF6cGhT
- 
+https://youtu.be/6OT43pvUyfY?si=q22mA6TPQVqGQfz6
+
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
 https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare

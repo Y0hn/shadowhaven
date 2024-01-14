@@ -1,0 +1,34 @@
+Dokoncene:
+	Prvy Boss
+		moveSet
+		animacie
+	4 typy nepriatelov
+		animacie
+		moveSet
+		+ upgrade predchadzajucich
+	Level
+		lepsie textury
+	UI
+		inventar
+		+ upgrade pause
+		+ upgrade death
+	MainMenu
+		BackGround
+		animacie
+	Vylapsenie combat systemu
+		+ animacie luku
+	Lepsia RoomGeneration
+	Inventory System
+		equipment
+			helmet
+			chestplate
+			weapons
+
+Planujem pridat:
+	sound Effecty
+	soundtrack
+	este Viac Nepriatelov
+	viac Levelov
+	viac Itemov
+	viac Bossov
+	progresiu
