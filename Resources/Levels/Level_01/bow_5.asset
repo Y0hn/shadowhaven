@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
   m_Name: bow_5
   m_EditorClassIdentifier: 
-  rarity: 0
+  rarity: 3
   name: Wooden bow
   description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
   icon: {fileID: 21300000, guid: 74325d1d1fd6dac4d8c9bcb0978b4543, type: 3}

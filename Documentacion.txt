@@ -755,6 +755,17 @@ Main menu ESC close
 First Sound Impact
 AudioManager
 
+----------------< 15. 01.  2024 >----------------
+Rarity vizualization
+
+----------------< 16. 01.  2024 >----------------
+----------------< 17. 01.  2024 >----------------
+----------------< 18. 01.  2024 >----------------
+----------------< 19. 01.  2024 >----------------
+----------------< 20. 01.  2024 >----------------
+----------------< 21. 01.  2024 >----------------
+----------------< 22. 01.  2024 >----------------
+
 ____________________/ PLANS \____________________
 Sub MainMenu
 Level_02
@@ -780,7 +791,6 @@ Textture Overlay
 	enemy <-> dead enemy
 Better Balancing
 arrow0001 - redo
-Skeleton Bow missing
 arrow in bow scalling error ?
 multiple melee attacks at same time
 Weapon weird behavior when pickup item
@@ -788,6 +798,7 @@ ZomBoss when charged once no chargin anymore
 
 _________________/ FIXED  BUGS \_________________
 Oci hraca clip trou helmet
+Skeleton Bow missing
 Boss refuses to die
 better melee range 
 Slime nema drops

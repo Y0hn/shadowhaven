@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4503899df0b63624dab497d99593b18d, type: 3}
   m_Name: helmet_5
   m_EditorClassIdentifier: 
-  rarity: 2
+  rarity: 3
   name: papuga
   description: 'Iron _Rarity: Common_Previous Owner: Thomas_Place of origin: AleppoCopper
     _Rarity: Uncommon_Previous Owner: Christopher_Place of origin: SamarkandWooden
