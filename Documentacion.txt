@@ -759,7 +759,12 @@ AudioManager
 Rarity vizualization
 
 ----------------< 16. 01.  2024 >----------------
+Better Rarity vizualization
+
 ----------------< 17. 01.  2024 >----------------
+Icons
+UI slight change
+
 ----------------< 18. 01.  2024 >----------------
 ----------------< 19. 01.  2024 >----------------
 ----------------< 20. 01.  2024 >----------------
@@ -775,9 +780,8 @@ Popracovat na centrovani textur heliem
 Enemy hidden health bar while health is full
 Secret Roomky
 Implementovat zvuk
-Vyfarbit cely/oraj slotu v inventary podla rarity
-	itemu
 Potions/Consumables
+Better UI imergion (shadows)
 
 Names:
 	IntoTheShadows
