@@ -747,17 +747,41 @@ Bug Fixes
 ----------------< 13. 01.  2024 >----------------
 OST - SFX branch merge
 Improvment in melee range
+Bow - tetiva seperate texture
+Skeleton shootin animacia
+Main menu ESC close
 
 ----------------< 14. 01.  2024 >----------------
+First Sound Impact
+AudioManager
+
+----------------< 15. 01.  2024 >----------------
+Rarity vizualization
+
+----------------< 16. 01.  2024 >----------------
+Better Rarity vizualization
+
+----------------< 17. 01.  2024 >----------------
+Icons
+UI slight change
+
+----------------< 18. 01.  2024 >----------------
+----------------< 19. 01.  2024 >----------------
+----------------< 20. 01.  2024 >----------------
+----------------< 21. 01.  2024 >----------------
+----------------< 22. 01.  2024 >----------------
 
 ____________________/ PLANS \____________________
 Sub MainMenu
 Level_02
 	+ tranzition medzi levelami
 After sword effect
-Bow - tetiva seperate texture
 Popracovat na centrovani textur heliem
 Enemy hidden health bar while health is full
+Secret Roomky
+Implementovat zvuk
+Potions/Consumables
+Better UI imergion (shadows)
 
 Names:
 	IntoTheShadows
@@ -773,19 +797,16 @@ Better Balancing
 arrow0001 - redo
 arrow in bow scalling error ?
 multiple melee attacks at same time
+Weapon weird behavior when pickup item
+ZomBoss when charged once no chargin anymore
 
 _________________/ FIXED  BUGS \_________________
+Oci hraca clip trou helmet
+Skeleton Bow missing
 Boss refuses to die
 better melee range 
 Slime nema drops
 LevelBar
-Oci hraca clip trou helmet
-
-______________/ INVENTORY  SYSTEM \______________
-Inventar sa zklada z 12 itemov 
-A je to Pain
-
-______________/ EQUIPMENT  SYSTEM \______________
 
 
 ____________/ IMPORTANT  DICOVERIES \____________
@@ -917,7 +938,8 @@ https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
 https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
 https://youtu.be/_yR9FL4LXGE?si=cg8oq0Hmypo1wRM9
 https://youtu.be/AD4JIXQDw0s?si=9XXMOqWzlrF6cGhT
- 
+https://youtu.be/6OT43pvUyfY?si=q22mA6TPQVqGQfz6
+
 ____________________/ TOOLS \____________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
 https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare

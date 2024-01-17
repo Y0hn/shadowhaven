@@ -49,7 +49,11 @@ public class MenuManager : MonoBehaviour
     {
         if (main)
         {
-            if (Input.anyKeyDown)
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                Quit();
+            }
+            else if (Input.anyKeyDown)
             {
                 main = false;
                 sub = false;

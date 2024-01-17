@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
   m_Name: sword_2
   m_EditorClassIdentifier: 
-  rarity: 0
+  rarity: 1
   name: mec
   description: 'Steel _Rarity: Common_Previous Owner: Benjamin_Place of origin: CuscoTin
     _Rarity: Uncommon_Previous Owner: Alexander_Place of origin: RomeCopper _Rarity:

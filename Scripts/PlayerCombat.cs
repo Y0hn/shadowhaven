@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class PlayerCombatScript : MonoBehaviour
@@ -10,12 +9,13 @@ public class PlayerCombatScript : MonoBehaviour
     #region References
     private Transform WeaponIdleProjectile;
     private GameObject projectile = null;
+    private SpriteRenderer bowString;
     private Transform rotatePoint;
     private PlayerScript player;
     private PlayerStats stats;
     private Transform target;
     private Transform HandS;
-    private Transform Hand;
+    private Transform hand;
     private Collider2D col;
     private Camera cam;
     #endregion
@@ -39,11 +39,13 @@ public class PlayerCombatScript : MonoBehaviour
         cam = GetComponentInChildren<Camera>();
         stats = GetComponent<PlayerStats>();
         rotatePoint = transform.GetChild(0);
-        Hand = rotatePoint.transform.GetChild(0);
-        target = Hand.GetChild(1);
-        HandS = rotatePoint.transform.GetChild(1);
-        WeaponIdleProjectile = Hand.GetChild(0).GetChild(0);
-        col = Hand.GetComponent<Collider2D>();
+        hand = rotatePoint.transform.GetChild(0);
+        target = hand.GetChild(1);
+        //HandS = rotatePoint.transform.GetChild(1);
+
+        col = hand.GetComponent<Collider2D>();
+        WeaponIdleProjectile = hand.GetChild(0).GetChild(0);
+        bowString = hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
@@ -69,14 +71,14 @@ public class PlayerCombatScript : MonoBehaviour
                     else if (fireTime < Time.time)
                     {
                         if (multiSheet)
-                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[2];
+                            hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = texture[3];
                         WeaponIdleProjectile.gameObject.SetActive(true);
                         // Animacia naprahovania luku
                         if (Input.GetMouseButtonDown(0))
                         {
                             RangedAttack();
                             if (texture.Length > 0)
-                                Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[0];
+                                hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = texture[1];
                             WeaponIdleProjectile.gameObject.SetActive(false);
                             fireTime = 0f;
                         }
@@ -85,13 +87,13 @@ public class PlayerCombatScript : MonoBehaviour
                     if (fireTime - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
                     {
                         if (multiSheet)
-                            Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = texture[1];
+                            bowString.sprite = texture[2];
                     }
                 }
                 else if (fireTime != 0f)
                 {
                     fireTime = 0f;
-                    Hand.GetChild(0).GetComponent<SpriteRenderer>().sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[0];
+                    bowString.sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[1];
                     WeaponIdleProjectile.gameObject.SetActive(false);
                 }
 
@@ -108,9 +110,9 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void MeleeAttack()
     {
-        Vector2 v = target.position - Hand.position;
-        Vector2 attP1 = new Vector2(Hand.position.x, Hand.position.y);
-        Vector2 attP2 = new(Hand.position.x - v.y, Hand.position.y + v.x);
+        Vector2 v = target.position - hand.position;
+        Vector2 attP1 = new Vector2(hand.position.x, hand.position.y);
+        Vector2 attP2 = new(hand.position.x - v.y, hand.position.y + v.x);
 
         List<Collider2D> hitEnemies = new();
         hitEnemies.AddRange(Physics2D.OverlapCircleAll(attP1, attackRange, enemyLayers));
@@ -129,7 +131,7 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void RangedAttack()
     {
-        GameObject o = Instantiate(projectile, Hand.transform.position, Quaternion.identity);
+        GameObject o = Instantiate(projectile, hand.transform.position, Quaternion.identity);
         o.GetComponent<ProjectileScript>().damage = stats.damage.GetValue();
         o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
         o.name += "-" + gameObject.tag;
@@ -137,16 +139,18 @@ public class PlayerCombatScript : MonoBehaviour
     public void EquipWeapon(Weapon weap)
     {
         // References
-        Hand = transform.GetChild(0).GetChild(0);
+        hand = transform.GetChild(0).GetChild(0);
         HandS = transform.GetChild(0).GetChild(1);
-        Transform idleProjectile = Hand.GetChild(0).GetChild(0);
+        Transform tetiva = hand.GetChild(0).GetChild(1);
+        Transform idleProjectile = hand.GetChild(0).GetChild(0);
         SpriteRenderer rendProj = idleProjectile.GetComponent<SpriteRenderer>();
+        tetiva.gameObject.SetActive(false);
 
         if (weap != null)
         {
-            SpriteRenderer Weapon = Hand.GetChild(0).GetComponent<SpriteRenderer>();
-            SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
-            col = Hand.GetComponent<Collider2D>();
+            SpriteRenderer Weapon = hand.GetChild(0).GetComponent<SpriteRenderer>();
+            //SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
+            col = hand.GetComponent<Collider2D>();
             
             Weapon.sprite = weap.texture[0];            
             Weapon.color = weap.color;
@@ -160,6 +164,9 @@ public class PlayerCombatScript : MonoBehaviour
                 case Type.Magic: 
                     melee = false; 
                     projectile = weap.projectile;
+                    tetiva.gameObject.SetActive(true);
+                    if (weap.texture.Length > 1)
+                        tetiva.GetComponent<SpriteRenderer>().sprite = weap.texture[1];
                     rendProj.sprite = projectile.GetComponent<SpriteRenderer>().sprite;
                     break;  // Magic + Ranged
             }
@@ -193,6 +200,14 @@ public class PlayerCombatScript : MonoBehaviour
                             break;
                         case "FireRate":
                             fireRate = float.Parse(temp[0]);
+                            break;
+
+                        case "StringColor":
+                            float 
+                                r = float.Parse(temp[0]),
+                                g = float.Parse(temp[1]),
+                                b = float.Parse(temp[2]);
+                            tetiva.GetComponent<SpriteRenderer>().color = new(r, g, b);
                             break;
 
                         default:

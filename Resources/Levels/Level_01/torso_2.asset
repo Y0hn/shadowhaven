@@ -19,7 +19,7 @@ MonoBehaviour:
     Rare_Previous Owner: Lionel_Place of origin: PaphosTin _Rarity: Uncommon_Previous
     Owner: Christopher_Place of origin: ViennaTin _Rarity: Common_Previous Owner:
     Norman_Place of origin: Cairo'
-  icon: {fileID: 21300000, guid: 9678bb619210b1e47ab57479e94645cf, type: 3}
+  icon: {fileID: 21300000, guid: e987ee248435b0748bf084cd78eb2444, type: 3}
   color: {r: 0.6226415, g: 0.5968918, b: 0.07871127, a: 1}
   equipSlot: 1
   armorModifier: 15
