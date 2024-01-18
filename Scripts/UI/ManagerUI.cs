@@ -19,6 +19,7 @@ public class ManagerUI : MonoBehaviour
     private itemSlot[] equiSlots;
     private itemSlot[] quickSlots;
     private int equipL;
+    private bool[] pastUIs;
 
     private const string s = " $   ";
 
@@ -84,10 +85,22 @@ public class ManagerUI : MonoBehaviour
 
     public void ResetUI()
     {
+        pastUIs = new bool[UIs.Length];
+
+        pastUIs[0] = UIs[0].gameObject.activeSelf;
         EnableUI(0);
 
         for (int i = 1; i < UIs.Length; i++)
+        {
+            pastUIs[i] = UIs[i].gameObject.activeSelf;
             DisableUI(i);
+        }
+    }
+    public void RevertUI()
+    {
+        for (int i = 0; i < pastUIs.Length; i++)
+            if (pastUIs[i])
+                EnableUI(i);
     }
     public void DisableUI(int n)
     {

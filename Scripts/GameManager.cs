@@ -252,6 +252,7 @@ public class GameManager : MonoBehaviour
             playerCamera.SetActive(false);
             FreeCamera.SetActive(true);
             ableToMove = false;
+            UI.ResetUI();
         }
         else
         {
@@ -259,6 +260,7 @@ public class GameManager : MonoBehaviour
             playerCamera.SetActive(true);
             FreeCamera.SetActive(false);
             ableToMove = true;
+            UI.RevertUI();
         }
     }
     void ReloadScene()
