@@ -766,6 +766,8 @@ Icons
 UI slight change
 
 ----------------< 18. 01.  2024 >----------------
+Titles screen
+
 ----------------< 19. 01.  2024 >----------------
 ----------------< 20. 01.  2024 >----------------
 ----------------< 21. 01.  2024 >----------------
@@ -782,6 +784,7 @@ Secret Roomky
 Implementovat zvuk
 Potions/Consumables
 Better UI imergion (shadows)
+Load titles from .txt file
 
 Names:
 	IntoTheShadows

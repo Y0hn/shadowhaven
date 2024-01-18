@@ -357,5 +357,11 @@ public class GameManager : MonoBehaviour
             ChangeCamera();
         }
     }
+    public void EndTheGame()
+    {
+        Time.timeScale = 1f;
+        sceneLoaded = false;
+        SceneManager.LoadScene(2);
+    }
     #endregion
 }
