@@ -43,15 +43,16 @@ public class AudioManager : MonoBehaviour
             s.source.playOnAwake = false;
         }
     }
-    public void Play (string name)
+    public bool Play (string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
         if (s == null)
         {
             Debug.Log($"Sound: {name} does not exist !");
-            return;
+            return false;
         }
         s.source.Play();
+        return true;
     }
     public void PlayAtRandom (string name)
     {
