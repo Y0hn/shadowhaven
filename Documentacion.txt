@@ -769,6 +769,9 @@ UI slight change
 Titles screen
 
 ----------------< 19. 01.  2024 >----------------
+Added ItemDrop Layer
+Some NOOB sound work
+
 ----------------< 20. 01.  2024 >----------------
 ----------------< 21. 01.  2024 >----------------
 ----------------< 22. 01.  2024 >----------------
@@ -789,6 +792,9 @@ Load titles from .txt file
 Names:
 	IntoTheShadows
 	DeepAssDungeon
+
+BETTER RELEASE DISTRIBUTION (GitHub)
+	+ better descp
 
 
 ____________________/ BUGSS \____________________
@@ -910,6 +916,7 @@ Layers:
 	" Enemy			"
 	" PlayerWeapon	"
 	" rojectile		"
+	" ItemDrop		"
 
 ___________________/ SOURCES \___________________
 https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_

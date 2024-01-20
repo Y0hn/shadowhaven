@@ -6,6 +6,7 @@ public class Interactable : MonoBehaviour
 
     private void Start()
     {
+        gameObject.layer = LayerMask.NameToLayer("ItemDrop");
         SpriteRenderer sRend = GetComponent<SpriteRenderer>();
         ItemsList itList = ItemsList.instance;
         if (item == null)

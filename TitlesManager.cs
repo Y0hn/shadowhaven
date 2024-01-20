@@ -7,11 +7,10 @@ using System;
 public class TitlesManager : MonoBehaviour
 {
     public List<Transform> UIs;
+    public float move = 100;
     RectTransform parent;
 
     private Dictionary<string, int> uiIndexer;
-    private const float move = 1000;
-    private bool spacePress;
     private float yTowards;
     private readonly string titles =
         "titititititititiititititititititititititititititititiititititi";
@@ -40,7 +39,6 @@ public class TitlesManager : MonoBehaviour
         
         parent.position = new(parent.position.x, -(parent.sizeDelta.y / 2));
         yTowards = Math.Abs(parent.position.y) + canvas.sizeDelta.y;
-        spacePress = false;
     }
     void Update()
     {
