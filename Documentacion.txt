@@ -798,10 +798,17 @@ Textture Overlay
 	enemy <-> dead enemy
 Better Balancing
 arrow0001 - redo
-arrow in bow scalling error ?
 multiple melee attacks at same time
 Weapon weird behavior when pickup item
-ZomBoss when charged once no chargin anymore
+
+Tim PC:
+	boss fight gate preopened
+	arrow in bow scalling error ? /GIANT sip
+	ZomBoss when charged once no chargin anymore
+	
+
+
+
 
 _________________/ FIXED  BUGS \_________________
 Oci hraca clip trou helmet
