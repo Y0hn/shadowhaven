@@ -773,6 +773,8 @@ Added ItemDrop Layer
 Some NOOB sound work
 
 ----------------< 20. 01.  2024 >----------------
+Added SubMenu (Settings) animations
+
 ----------------< 21. 01.  2024 >----------------
 ----------------< 22. 01.  2024 >----------------
 
@@ -813,9 +815,6 @@ Tim PC:
 	ZomBoss when charged once no chargin anymore
 	
 
-
-
-
 _________________/ FIXED  BUGS \_________________
 Oci hraca clip trou helmet
 Skeleton Bow missing
@@ -829,6 +828,9 @@ ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
 	Behaviory oboch animacii idu sucastne
 		somehow (ZomBoss charge bug)
+Hodnoty:
+	new Color(r,g,b,a);
+		- su vsetky od 0 - 1
 
 
 ___________________/ SCRIPTS \___________________
