@@ -750,42 +750,49 @@ MonoBehaviour:
   sounds:
   - name: player_step-1
     clip: {fileID: 8300000, guid: 5d70d7d6676c4b246b1b7525cb583ad0, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-2
     clip: {fileID: 8300000, guid: 6a55b72bcae78df4ab42de636a78ed76, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-3
     clip: {fileID: 8300000, guid: 5171bbcdc7b6f6b419da0d9ff63be453, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-4
     clip: {fileID: 8300000, guid: 5dfe883afde29094e94ef91cd9adb4f9, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-5
     clip: {fileID: 8300000, guid: b7650017d47f0034a9e3f33386f17b71, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-6
     clip: {fileID: 8300000, guid: 5e91003458a78344abcb666e0a5f01d6, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
     source: {fileID: 0}
   - name: player_step-7
     clip: {fileID: 8300000, guid: 84b269247a089d94585df98f62a2faf2, type: 3}
+    type: 0
     loop: 0
     volume: 1
     pitch: 1
@@ -7068,6 +7075,10 @@ PrefabInstance:
     - target: {fileID: 800695144796469298, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588085363034327541, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3504416709084399126, guid: cda92375bd6643b4886adba7ce7aba55, type: 3}
       propertyPath: m_AnchorMax.x

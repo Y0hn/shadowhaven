@@ -20,9 +20,16 @@ public class EnemyStats : CharakterStats
         base.Start();
 
         collid = GetComponent<Collider2D>();
+        healthBar.transform.parent.gameObject.SetActive(false);
+        //Debug.Log("Enemy: " + name +" start compete");
     }
     public override void TakeDamage(int damage)
     {
+        if (!healthBar.transform.parent.gameObject.activeSelf)
+        {
+            healthBar.transform.parent.gameObject.SetActive(true);
+            //Debug.Log("Health Bar activated: " + name);
+        }
         base.TakeDamage(damage);
 
         animator.SetTrigger("Hurt");

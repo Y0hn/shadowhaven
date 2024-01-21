@@ -486,7 +486,7 @@ Bugs:
 	Item Sprite can not be null !!!
 
 ----------------< 04. 11.  2023 >----------------
-Kontrola
+Kontrola - anco1.txt
 
 ----------------< 05. 11.  2023 >----------------
 Uhladzovanie
@@ -752,6 +752,7 @@ Skeleton shootin animacia
 Main menu ESC close
 
 ----------------< 14. 01.  2024 >----------------
+Kontrola - anco2.txt
 First Sound Impact
 AudioManager
 
@@ -776,20 +777,29 @@ Some NOOB sound work
 Added SubMenu (Settings) animations
 
 ----------------< 21. 01.  2024 >----------------
+Hidding Health Bar
+
 ----------------< 22. 01.  2024 >----------------
+----------------< 23. 01.  2024 >----------------
+----------------< 24. 01.  2024 >----------------
+----------------< 25. 01.  2024 >----------------
+----------------< 26. 01.  2024 >----------------
+----------------< 27. 01.  2024 >----------------
+----------------< 28. 01.  2024 >----------------
+----------------< 29. 01.  2024 >----------------
+----------------< 30. 01.  2024 >----------------
 
 ____________________/ PLANS \____________________
-Sub MainMenu
 Level_02
 	+ tranzition medzi levelami
 After sword effect
 Popracovat na centrovani textur heliem
-Enemy hidden health bar while health is full
 Secret Roomky
 Implementovat zvuk
 Potions/Consumables
 Better UI imergion (shadows)
 Load titles from .txt file
+Settings
 
 Names:
 	IntoTheShadows
@@ -868,7 +878,7 @@ Layers:
 	" ItemDrop		"
 
 ___________________/ SOURCES \___________________
-// Basics | Inspirations
+// Unity Basics | Inspirations
 https://youtu.be/XtQMytORBmM?si=P4C39XeGAqxAmMCF
 https://youtu.be/0wKo5WSImYY?si=w8hb-OUKRs5IU3ja
 https://youtu.be/0cYjreg7dpg?si=NFbaBdUP9c6YLFLC
@@ -921,7 +931,7 @@ https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
 // Audio
 https://youtu.be/6OT43pvUyfY?si=q22mA6TPQVqGQfz6
 
-____________________/ TOOLS \____________________
+________________________________________/ TOOLS \________________________________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
 https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare
 https://www.gimp.org/
