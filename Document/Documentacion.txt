@@ -830,61 +830,8 @@ Ak je animation tranzition != 0
 		somehow (ZomBoss charge bug)
 Hodnoty:
 	new Color(r,g,b,a);
-		- su vsetky od 0 - 1
+		- su vsetky v intervale ( 0 <=> 1 )
 
-
-___________________/ SCRIPTS \___________________
-Behaviors:
-	BossSelectorBehavior
-	DoorBehavior
-	FollowBehavior
-	ShootAtTargetBehavior
-	resetTriger
-
-Spawners:
-	SpawnListRand
-	SpawnObject
-	LevelGener
-	Interactable
-
-Data:
-	PlayerData
-	(EnemyData)
-	Inventory
-	itemList
-	Item
-		Equipment
-			Armor
-			Weapon
-
-Stats:
-	CharakterStats
-		PlayerStats
-		EnemyStats
-			BossStats
-			EnemyWeaponStats
-	Stat
-
-MonoBehaviors:
-	Enemy
-	Player
-	PlayerCombat
-	EnemyBehavior
-	Projectile
-	Interactable
-
-UIs:
-	HealthBar
-	itemSlot
-	MainMenuManager (MMM)
-	ManagerUI
-
-Systems:
-	GameManager
-	SaveSyestem
-	MainMenuManager
-	
-rest fill in later ;D
 
 ________________/ LAYERS + TAGS \________________
 Tags:
@@ -921,42 +868,57 @@ Layers:
 	" ItemDrop		"
 
 ___________________/ SOURCES \___________________
-https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
+// Basics | Inspirations
+https://youtu.be/XtQMytORBmM?si=P4C39XeGAqxAmMCF
 https://youtu.be/0wKo5WSImYY?si=w8hb-OUKRs5IU3ja
 https://youtu.be/0cYjreg7dpg?si=NFbaBdUP9c6YLFLC
 https://youtu.be/Hmw73vcUzsg?si=jWtaIKpS6MW7aojm
-https://youtu.be/2JCG4fCmeHk?si=c7WoJyNMkHQV1oNC
 https://youtu.be/6BrZryMz-ac?si=k33Q9D-j1r8polv8
-https://youtu.be/6BrZryMz-ac?si=OD4OciJ1a5TTLaZf
-https://youtu.be/x5wndRdBowo?si=LFq5gT0QsK24W7PM
-https://youtu.be/ecyK0vHmbpQ?si=xPRQ0EBkx1yZew1i
-https://youtu.be/XtQMytORBmM?si=P4C39XeGAqxAmMCF
 https://youtu.be/sPiVz1k-fEs?si=M6RXCrZqbpWfOjEl
 https://youtu.be/whzomFgjT50?si=nLri-Y23Awp7bVx3
-https://youtu.be/T1masuI3g8Q?si=q1ney6qAkLjSVEq9
+https://youtu.be/_yR9FL4LXGE?si=cg8oq0Hmypo1wRM9
+
+// Inventory | Equipment | Items
+https://youtu.be/w6_fetj9PIw?si=utyHQJqJLoK98fta
+https://youtu.be/kAPIWJJ6NQI?si=dtGXV_KJHr1iJj0_
+https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
+https://youtu.be/8_B3ZG_bIkE?si=N97oDbu5qH-KGheH
+https://youtu.be/9tePzyL6dgc?si=a741tqaFgRBoRIfx
+
+// Enemy | Boss
 https://youtu.be/dYi-i83sq5g?si=4F8LvQRTku0CLF_c
-https://youtu.be/bY4Hr2x05p8?si=T_NRcqnvBNXmht_y
-https://youtu.be/-GWjA6dixV4?si=BxiNDh8SuH6DyN5u
-https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
-https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
-https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5
-https://youtu.be/fBLpLZFNtVg?si=kCOCHyPgz0WF-_-a
+https://youtu.be/AD4JIXQDw0s?si=9XXMOqWzlrF6cGhT
+
+// Combat
 https://youtu.be/9_i6S_rDZuA?si=vg1gx6ZXdN0hwRUn
 https://youtu.be/-bkmPm_Besk?si=aAWwaijGnaOXileC
-https://youtu.be/dYi-i83sq5g?si=YnS8Wwb8MvGM7hFZ
-https://youtu.be/xppompv1DBg?si=2DIy2Y0cuFeizH6V
+
+// Menus
+https://youtu.be/9dYDBomQpBQ?si=gGbH1Rn3wYAdbxgZ
+https://youtu.be/-GWjA6dixV4?si=BxiNDh8SuH6DyN5u
+https://youtu.be/JivuXdrIHK0?si=cBBlbNwkbGhwQhN5
+
+// Multiplayer
+https://youtu.be/ecyK0vHmbpQ?si=xPRQ0EBkx1yZew1i
+
+// Map
+https://youtu.be/T1masuI3g8Q?si=q1ney6qAkLjSVEq9
+
+// Save Load
+https://youtu.be/XOjd_qU2Ido?si=w0lPABC6nbz2UC5V
+
+// Level Gener
 https://youtu.be/hk6cUanSfXQ?si=_7EgsK0a9S0vWZG9 
 https://youtu.be/XNQQLr0E9TY?si=r_mU_TGYO5eoJ2pO
 https://youtu.be/G9Wa0XZ2a2o?si=Uxsrz2hS4V7ct3-k
-https://youtu.be/-bkmPm_Besk?si=-V0cNSTUEG0mvq2U
-https://youtu.be/8_B3ZG_bIkE?si=N97oDbu5qH-KGheH
+
+// Light
 https://youtu.be/nkgGyO9VG54?si=O6PQFyM8uiZePHvp
-https://youtu.be/w6_fetj9PIw?si=utyHQJqJLoK98fta
-https://youtu.be/9tePzyL6dgc?si=a741tqaFgRBoRIfx
-https://youtu.be/d9oLS5hy0zU?si=jn4tYOACi-SM9ry5
+
+// Stats
 https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
-https://youtu.be/_yR9FL4LXGE?si=cg8oq0Hmypo1wRM9
-https://youtu.be/AD4JIXQDw0s?si=9XXMOqWzlrF6cGhT
+
+// Audio
 https://youtu.be/6OT43pvUyfY?si=q22mA6TPQVqGQfz6
 
 ____________________/ TOOLS \____________________
