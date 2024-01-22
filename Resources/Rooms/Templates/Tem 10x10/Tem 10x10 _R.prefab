@@ -9,9 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1383327851823490903}
-  - component: {fileID: 6055908343742956167}
   m_Layer: 0
-  m_Name: Tem S R
+  m_Name: Tem 10x10 _R
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33,20 +32,6 @@ Transform:
   - {fileID: 8972983281319310979}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6055908343742956167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891634902062156863}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6eb955ef519ebc45a7568c364432bfd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnList:
-  - {fileID: 7996389666958890170, guid: 85efbbeccd7dbb2459c70939a5f30acf, type: 3}
 --- !u!1001 &1051340725399983211
 PrefabInstance:
   m_ObjectHideFlags: 0

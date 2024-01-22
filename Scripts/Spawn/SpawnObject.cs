@@ -37,11 +37,19 @@ public class SpawnObject : MonoBehaviour
         }
         else
         {
-            objects = GameObject.FindGameObjectsWithTag(transform.name);
-            int rand = Random.Range(0, objects.Length);
-            if (objects.Length != 0)
-                spawn = objects[rand];
-
+            try
+            {
+                objects = GameObject.FindGameObjectsWithTag(name);
+                int rand = Random.Range(0, objects.Length);
+                if (objects.Length != 0)
+                    spawn = objects[rand];
+            }
+            catch 
+            {
+                Debug.LogWarning("GameObject Tag: " + name + " does not exits or sht like that ");
+                Destroy(gameObject);
+                return;
+            }
             s = null;
         }
 
@@ -63,6 +71,7 @@ public class SpawnObject : MonoBehaviour
             Debug.LogWarning($"{name} is not a tag nor special");
 
         // Destruction
+        //Debug.Log("SpawnObject script spawned new " + spawn.name + " with tag: " + name + " into the Scene" );
         Destroy(gameObject);
     }
 }

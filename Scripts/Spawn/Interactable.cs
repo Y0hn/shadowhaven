@@ -3,6 +3,7 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public Item item;
+    public Rarity maxRarity = Rarity.Rare;
 
     private void Start()
     {
