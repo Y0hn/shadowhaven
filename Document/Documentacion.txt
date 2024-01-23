@@ -780,6 +780,8 @@ Added SubMenu (Settings) animations
 Hidding Health Bar
 
 ----------------< 22. 01.  2024 >----------------
+Chest foundation
+
 ----------------< 23. 01.  2024 >----------------
 ----------------< 24. 01.  2024 >----------------
 ----------------< 25. 01.  2024 >----------------
@@ -805,9 +807,6 @@ Names:
 	IntoTheShadows
 	DeepAssDungeon
 
-BETTER RELEASE DISTRIBUTION (GitHub)
-	+ better descp
-
 
 ____________________/ BUGSS \____________________
 Boss Bar overflow
@@ -832,7 +831,6 @@ Boss refuses to die
 better melee range 
 Slime nema drops
 LevelBar
-
 
 ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
