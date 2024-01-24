@@ -252,10 +252,10 @@ public class LevelGener : MonoBehaviour
         {
             case "Spawn":
                 temp[0] = "Loot";
-                temp[1] = "Starter";
+                temp[1] = "Start";
                 break;
             case "Loot":
-                temp[1] = "Chest";
+                temp[1] = "Finish";
                 break;
             case "Path":
             //case "Enemy":
