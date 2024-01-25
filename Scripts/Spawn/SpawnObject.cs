@@ -35,6 +35,21 @@ public class SpawnObject : MonoBehaviour
             if (objects.Length != 0)
                 spawn = objects[rand];
         }
+        else if (name.Contains("item"))
+        {
+            GameObject[] temp = Resources.LoadAll<GameObject>("PreFabs");
+            foreach (GameObject obj in temp)
+            {
+                if (obj.name == "item")
+                {
+                    spawn = obj;
+                    break;
+                }
+            }
+            s = name.Split('|');
+            spawn.name = s[0];
+            spawn.GetComponent<Interactable>().maxRarity = Item.GetRarity(s[1]);
+        }
         else
         {
             try

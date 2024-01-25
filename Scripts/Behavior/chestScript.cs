@@ -4,16 +4,36 @@ using UnityEngine;
 
 public class chestScript : MonoBehaviour
 {
-    public bool open;
+    public GameObject interactable;
     private Animator animator;
+    private bool isEnabled;
+    private bool open;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        open = false;
+        isEnabled = true;
+        open = true;
     }
-    void Update()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        animator.SetBool("open", open);
+        if (collision.collider.name == "Player" && isEnabled)
+        {
+            if (open)
+            {
+                //Debug.Log("Dotyka sa chestky");
+                animator.SetBool("open", open);
+                interactable.SetActive(open);
+                interactable.GetComponent<Interactable>().enabled = open;
+                open = !open;
+            }
+            else
+            {
+                interactable.GetComponent<Interactable>().AddToInventory();
+                isEnabled = false;
+                // TO BE REMOVED
+                GameManager.instance.EndTheGame();
+            }
+        }
     }
 }

@@ -186,6 +186,23 @@ public class ItemsList : MonoBehaviour
         else
             return null;
     }
+    public Item GetItemOfRarityAndBelow(Rarity rarity)
+    {
+        List<Item> items = new List<Item>();
+        foreach (Item i in GetMultiRarity(RaritiesBelow(rarity)))
+        {
+            items.Add(i);
+        }
+        if (items.Count > 0)
+        {
+            int R = Random.Range(0, items.Count);
+            Item w = items[R];
+            Items.Remove(w);
+            return w;
+        }
+        else
+            return null;
+    }
     private Rarity[] RaritiesBelow(Rarity rarity)
     {
         Rarity[] r = new Rarity[(int)rarity + 1];

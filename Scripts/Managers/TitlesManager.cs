@@ -13,7 +13,7 @@ public class TitlesManager : MonoBehaviour
     private Dictionary<string, int> uiIndexer;
     private float yTowards;
     private readonly string titles =
-        "titititititititiititititititititititititititititititiititititi";
+        "Game Desing: Jan Anco\nCharakter desing: Jan Anco\nCharakter Animations: Jan Anco\nBehavior: Jan Anco\nSound desing: Tim";
     void Start()
     {
         // List add UIs

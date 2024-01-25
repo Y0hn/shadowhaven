@@ -21,6 +21,7 @@ public class BossStats : EnemyStats
         base.Start();
         stunable = false;
         heBar = healthBar.transform;
+        healthBar.transform.parent.gameObject.SetActive(true);
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Reset variable

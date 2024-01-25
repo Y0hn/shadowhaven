@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item: {fileID: 0}
+  maxRarity: 4
 --- !u!212 &4494544793104716524
 SpriteRenderer:
   m_ObjectHideFlags: 0

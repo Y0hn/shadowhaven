@@ -780,11 +780,18 @@ Added SubMenu (Settings) animations
 Hidding Health Bar
 
 ----------------< 22. 01.  2024 >----------------
-Chest foundation
+Improved level Generation
 
 ----------------< 23. 01.  2024 >----------------
+Chest Texture
+
 ----------------< 24. 01.  2024 >----------------
+Chest animacia + script
+
 ----------------< 25. 01.  2024 >----------------
+Chest Interactable completed
++ SomeWhat Of EndGame
+
 ----------------< 26. 01.  2024 >----------------
 ----------------< 27. 01.  2024 >----------------
 ----------------< 28. 01.  2024 >----------------
@@ -794,6 +801,7 @@ Chest foundation
 ____________________/ PLANS \____________________
 Level_02
 	+ tranzition medzi levelami
+		After chest is emptied
 After sword effect
 Popracovat na centrovani textur heliem
 Secret Roomky
@@ -817,6 +825,7 @@ Better Balancing
 arrow0001 - redo
 multiple melee attacks at same time
 Weapon weird behavior when pickup item
+Inicial Equipment can be Legendary (BAD)
 
 Tim PC:
 	boss fight gate preopened
@@ -828,6 +837,7 @@ _________________/ FIXED  BUGS \_________________
 Oci hraca clip trou helmet
 Skeleton Bow missing
 Boss refuses to die
+Boss Bar does hide
 better melee range 
 Slime nema drops
 LevelBar
