@@ -30,8 +30,8 @@ public class BossStats : EnemyStats
         fakeHealth = 0;
         behavior = new();
         barFilling = false;
-        healthBar.SetMaxHealth(maxHealth);
-        healthBar.SetHealth(0);
+        healthBar.SetMax(maxHealth);
+        healthBar.Set(0);
     }
     private void Update()
     {
@@ -50,7 +50,7 @@ public class BossStats : EnemyStats
                         // If Skiped
                         if (!GameManager.instance.GetMovingCam())
                         {
-                            healthBar.SetHealth(maxHealth);
+                            healthBar.Set(maxHealth);
                             animator.SetBool("move", true);
                             entry = false;
                             timer = 0;
@@ -59,7 +59,7 @@ public class BossStats : EnemyStats
                         else if (timer < Time.time)
                         {
                             fakeHealth++;
-                            healthBar.SetHealth(fakeHealth);
+                            healthBar.Set(fakeHealth);
                             timer = Time.time + loadHealthTime / maxHealth;
                         }
                     }
@@ -96,7 +96,7 @@ public class BossStats : EnemyStats
         // 2 => health refresh
         else
         {
-            healthBar.SetHealth(curHealth);
+            healthBar.Set(curHealth);
             /* Behavior
             if (behavior.Count > 1)
             {

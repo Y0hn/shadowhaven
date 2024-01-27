@@ -166,8 +166,12 @@ public class Inventory : MonoBehaviour
         items = new();
         onItemChangeCallback.Invoke();
     }
-
-
+    public void ClearEquipment()
+    {
+        for(int i = 0; i < equipment.Length; i++)
+            equipment[i] = null;
+        onEquipChangeCallback.Invoke();
+    }
 
     public int GetMoney()
     {
@@ -187,4 +191,5 @@ public class Inventory : MonoBehaviour
         onCashChangeCallback.Invoke();
         return true;
     }
+
 }

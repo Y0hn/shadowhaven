@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rarity: 3
   name: Wooden bow
-  description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
+  description: '#FireRate(2)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
   icon: {fileID: 21300000, guid: 74325d1d1fd6dac4d8c9bcb0978b4543, type: 3}
   color: {r: 0.3584906, g: 0.24519403, b: 0.24519403, a: 1}
   equipSlot: 2

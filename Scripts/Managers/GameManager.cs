@@ -14,12 +14,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region References
+
     public GameObject FreeCamera;
     public GameObject player;
     public ManagerUI UI;
     public GameObject[] Levels;
-
-    #region References
 
     private PlayerCombatScript playerCombat;
     private PlayerScript playerScript;

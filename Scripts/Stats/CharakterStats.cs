@@ -17,7 +17,7 @@ public class CharakterStats : MonoBehaviour
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         if (healthBar != null )
-            healthBar.SetMaxHealth(maxHealth);
+            healthBar.SetMax(maxHealth);
     }
     private void Awake()
     {
@@ -29,7 +29,7 @@ public class CharakterStats : MonoBehaviour
         dmg = Mathf.Clamp(dmg, minDmg, int.MaxValue);
         curHealth -= dmg;
 
-        healthBar.SetHealth(curHealth);
+        healthBar.Set(curHealth);
 
         if (curHealth <= 0)
             Die();

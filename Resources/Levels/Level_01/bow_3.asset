@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f415fb44be7b1464ba0eb11f4d732d9d, type: 3}
   m_Name: bow_3
   m_EditorClassIdentifier: 
-  rarity: 0
+  rarity: 1
   name: Wooden bow
-  description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
+  description: '#FireRate(1,4)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
   icon: {fileID: 21300000, guid: bd81a6ec4f97f3b4b8ba0db33d2a0f82, type: 3}
   color: {r: 0.23222996, g: 0.33962262, b: 0.18743324, a: 1}
   equipSlot: 2
   type: 1
-  damageModifier: 20
+  damageModifier: 10
   onlySecondary: 0
   texture:
   - {fileID: 21300000, guid: a1649197d00ff2140a650beb2b5640f4, type: 3}

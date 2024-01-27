@@ -218,6 +218,7 @@ public class PlayerCombatScript : MonoBehaviour
             }
             rendProj.gameObject.SetActive(false);
             weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
+            GetComponent<PlayerStats>().SetDamage(weap.damageModifier);
         }
         else
             enabled = false;

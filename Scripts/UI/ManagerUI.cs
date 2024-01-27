@@ -15,9 +15,9 @@ public class ManagerUI : MonoBehaviour
     };
 
     private Inventory inventory;
-    private itemSlot[] itemSlots;
+    private itemSlot[] inveSlots;
     private itemSlot[] equiSlots;
-    private itemSlot[] quickSlots;
+    private itemSlot[] quicSlots;
     private int equipL;
     private bool[] pastUIs;
 
@@ -27,62 +27,66 @@ public class ManagerUI : MonoBehaviour
     {
         ResetUI();
         inventory = Inventory.instance;
-        inventory.onItemChangeCallback += UpdateUI;
+        inventory.onItemChangeCallback += UpdateInventory;
+        inventory.onEquipChangeCallback += UpdateEquipment;
         inventory.onCashChangeCallback += UpdateCash;
 
-        itemSlots = UIs[Dic["inv"]].GetChild(0).GetComponentsInChildren<itemSlot>();
+        inveSlots = UIs[Dic["inv"]].GetChild(0).GetComponentsInChildren<itemSlot>();
 
         equipL = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipL++;
         equiSlots = UIs[Dic["inv"]].GetChild(1).GetComponentsInChildren<itemSlot>();
-        quickSlots = UIs[Dic["base"]].GetComponentsInChildren<itemSlot>();
+        quicSlots = UIs[Dic["base"]].GetComponentsInChildren<itemSlot>();
     }
-    private void UpdateUI()
+    private void UpdateInventory()
     {
-        for (int i = 0; i < itemSlots.Length; i++) 
+        for (int i = 0; i < inveSlots.Length; i++)
         {
             if (i < inventory.items.Count)
             {
-                itemSlots[i].AddItem(inventory.items[i]);
+                inveSlots[i].AddItem(inventory.items[i]);
             }
             else
             {
-                itemSlots[i].Clear();
+                inveSlots[i].Clear();
             }
         }
+    }
+    private void UpdateEquipment()
+    {
         for (int i = 0; i < equipL; i++)
         {
             Equipment e = inventory.Equiped(i);
             if (e != null)
                 equiSlots[i].AddItem(e);
+            else
+                equiSlots[i].Clear();
         }
-        for (int i = 0; i < quickSlots.Length; i++)
+        for (int i = 0; i < quicSlots.Length; i++)
         {
             Item add = null;
 
-            if      (i == 0)
+            if (i == 0)
                 add = inventory.Equiped(2);
             else if (i == 1)
                 add = inventory.Equiped(3);
             else if (i > 1)
             {
                 if (i - 2 < inventory.quickSlots.Count)
-                    add = inventory.items[inventory.quickSlots[i-2]];
+                    add = inventory.items[inventory.quickSlots[i - 2]];
             }
 
             if (add != null)
-                quickSlots[i].AddItem(add);
+                quicSlots[i].AddItem(add);
             else
-                quickSlots[i].Clear();
+                quicSlots[i].Clear();
         }
     }
-
     public void UpdateCash()
     {
         EnableUI(Dic["money"]);
         UIs[Dic["money"]].GetComponent<Text>().text = inventory.GetMoney() + s;
     }
-
     public void ResetUI()
     {
         pastUIs = new bool[UIs.Length];
