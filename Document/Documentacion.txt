@@ -802,9 +802,8 @@ Bow Balancing
 HealthBar Optimalization
 Level up heal 20%
 
-----------------< 28. 01.  2024 >----------------
-----------------< 29. 01.  2024 >----------------
 ----------------< 30. 01.  2024 >----------------
+Basic Light Implementation
 
 ____________________/ PLANS \____________________
 Level_02
@@ -942,6 +941,7 @@ https://youtu.be/G9Wa0XZ2a2o?si=Uxsrz2hS4V7ct3-k
 
 // Light
 https://youtu.be/nkgGyO9VG54?si=O6PQFyM8uiZePHvp
+https://youtu.be/Jf1w_wUibnA?si=SqV9dnlcSic9wu3d
 
 // Stats
 https://youtu.be/e8GmfoaOB4Y?si=fI2KWG_7aFuQMeTV
