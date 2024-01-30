@@ -14,12 +14,12 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    #region References
+
     public GameObject FreeCamera;
     public GameObject player;
     public ManagerUI UI;
     public GameObject[] Levels;
-
-    #region References
 
     private PlayerCombatScript playerCombat;
     private PlayerScript playerScript;
@@ -222,9 +222,12 @@ public class GameManager : MonoBehaviour
     void LevelLoad()
     {
         GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
-        
-        foreach(GameObject lvl in oldLvls)
+
+        foreach (GameObject lvl in oldLvls)
+        {
+            Debug.Log("Destroyed level: " + lvl.name);
             Destroy(lvl);
+        }
 
         // Premenovanie Levela xdd
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);

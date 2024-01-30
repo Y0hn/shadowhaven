@@ -1,16 +1,16 @@
+using System;
 using UnityEngine;
 
 public class PlayerStats : CharakterStats
 {
-    public HealthBar LvlBar;
+    public LevelBar LvlBar;
 
     private PlayerCombatScript playerCom;
     private Inventory inv;
     private int numE;
     private int numXP = 0;
-    private int tillnextLvl = 100;
-    private int tillnextLvlConst = 100;
-
+    private int tillnextLvl = 10;
+    private const int tillnextLvlConst = 10;
 
     public float nextDamage = 0;
     private const float inviTime = 0.5f;
@@ -18,44 +18,30 @@ public class PlayerStats : CharakterStats
     protected override void Start()
     {
         base.Start();
-
+        // Additional References
         playerCom = GetComponent<PlayerCombatScript>();
         inv = Inventory.instance;
-
         inv.onEquipChangeCallback += EquipmentStatsRefresh;
-        numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
 
-        LvlBar.SetMaxHealth(tillnextLvl);
-        LvlBar.SetHealth(0);
+        LvlBar.SetMax(tillnextLvl);
+        LvlBar.Set(0);
+        Debug.Log("Player stats started! ");
     }
     private void EquipmentStatsRefresh()
     {
         armor.ClearMod();
         damage.ClearMod();
 
-        for (int i = 0; i < numE; i++)
+        for (int i = 0; i < 2; i++)
         {
-            Equipment e = inv.Equiped(i);
-            Weapon w;
-            Armor a;
+            Armor a = (Armor)inv.Equiped(i);
 
-            if (e != null)
-                switch (i)
-                {
-                    case 0:
-                    case 1:
-                        a = (Armor)e;
-                        armor.AddMod(a.armorModifier);
-                        break;
-                    case 2:
-                    case 3:
-                        w = (Weapon)e;
-                        damage.AddMod(w.damageModifier);
-                        break;
-                    default:
-                        break;
-                }
+            if (a != null)
+                armor.AddMod(a.armorModifier);
+            else
+                Debug.Log("Equipment " + i + " is \"null\"");
         }
+        //Debug.Log("Player equipment armor updated");
     }
     public override void TakeDamage(int dmg)
     {
@@ -65,11 +51,13 @@ public class PlayerStats : CharakterStats
 
             base.TakeDamage(dmg);
 
-            healthBar.SetHealth(curHealth);
+            healthBar.Set(curHealth);
             animator.SetTrigger("Hurt");
 
             // Invincibility
             nextDamage = Time.time + inviTime;
+
+            //Debug.Log("Taken damage Armor is " + armor.GetValue() + " and current Damage is " + damage.GetValue());
         }
     }
     protected override void Die()
@@ -78,6 +66,15 @@ public class PlayerStats : CharakterStats
 
         playerCom.enabled = false;
 
+        level -= 5;
+        numXP = 0;
+
+        if (level < 0)
+        {
+            Inventory.instance.ClearEquipment();
+            level = 0;
+        }
+
         animator.SetBool("isAlive", false);
         transform.position = Vector2.zero;
         //Debug.Log("Hrac zomrel");
@@ -85,7 +82,7 @@ public class PlayerStats : CharakterStats
     public void Resurect()
     {
         curHealth = maxHealth;
-        healthBar.SetHealth(curHealth);
+        healthBar.Set(curHealth);
         //playerCom.enabled = true;
         rb.simulated = true;
         animator.SetBool("isAlive", true);
@@ -93,18 +90,34 @@ public class PlayerStats : CharakterStats
     public void SetHealth(int health)
     {
         /// carefull does not change max HP
-        curHealth = health;
+        if (health > maxHealth)
+            health = maxHealth;
+        else
+            curHealth = health;
     }
     public void AddXp(int xp)
     {
         numXP += xp;
-        if (numXP > tillnextLvl)
+        if (numXP >= tillnextLvl)
         {
             numXP = 0;
             level++;
             tillnextLvl = tillnextLvlConst * level;
-            LvlBar.SetMaxHealth(tillnextLvl);
+            maxHealth += 10;
+            SetHealth((int)Mathf.Floor(maxHealth*0.2f + curHealth));
+
+            // Visual
+            LvlBar.SetMax(tillnextLvl);
+            LvlBar.SetText("Lvl  " + level);
+            healthBar.SetMax(maxHealth);
+            healthBar.Set(curHealth);
         }
-        LvlBar.SetHealth(numXP);
+        LvlBar.Set(numXP);
+    }
+    public void SetDamage(int dam, bool add = false)
+    {
+        if (!add)
+            damage.ClearMod();
+        damage.AddMod(dam);
     }
 }

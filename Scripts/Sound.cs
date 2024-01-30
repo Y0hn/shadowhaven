@@ -13,6 +13,7 @@ public class Sound
     }*/
     public string name;
     public AudioClip clip;
+    public SoundType type = SoundType.SFX;
     public bool loop = false;
     [Range(0f, 1f)]
     public float volume = 1;
@@ -21,4 +22,8 @@ public class Sound
 
     [HideInInspector]
     public AudioSource source;
+}
+public enum SoundType
+{
+    SFX, OST
 }

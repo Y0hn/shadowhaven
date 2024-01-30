@@ -18,6 +18,20 @@ public class Item : ScriptableObject
     {
         Inventory.instance.Remove(this);
     }
+    public static Rarity GetRarity(string rarity)
+    {
+        Rarity r = Rarity.Common;
+
+        switch (rarity)
+        {
+            case "Uncommon": r = Rarity.Uncommon; break;
+            case "Rare": r = Rarity.Rare; break;
+            case "SuperRare": r = Rarity.SuperRare; break;
+            case "Legendary": r = Rarity.Legendary; break;
+        }
+
+        return r;
+    }
 }
 
 public enum Rarity

@@ -3,31 +3,34 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     public Item item;
+    public Rarity maxRarity = Rarity.Rare;
 
     private void Start()
     {
+        // References
         gameObject.layer = LayerMask.NameToLayer("ItemDrop");
         SpriteRenderer sRend = GetComponent<SpriteRenderer>();
         ItemsList itList = ItemsList.instance;
+
         if (item == null)
         {
             switch (transform.name)
             {
                 case "weapon":
-                    item = itList.GetRandWeapon();
+                    item = itList.GetWeaponOfRarityAndBelow(maxRarity);
                     break;
                 case "armor":
-                    item = itList.GetRandArmor();
+                    item = itList.GetArmorOfRarityAndBelow(maxRarity);
                     break;
                 case "weapon/armor":
                     int r = Random.Range(0, 2);
                     if (r == 0)
-                        item = itList.GetRandWeapon();
+                        item = itList.GetWeaponOfRarityAndBelow(maxRarity);
                     else
-                        item = itList.GetRandArmor();
+                        item = itList.GetArmorOfRarityAndBelow(maxRarity);
                     break;
                 default:
-                    item = itList.GetRandItem();
+                    item = itList.GetItemOfRarityAndBelow(maxRarity);
                     break;
             }
             if (item == null)
@@ -47,6 +50,9 @@ public class Interactable : MonoBehaviour
     public void AddToInventory()
     {
         if (Inventory.instance.Add(item))
+        {
             Destroy(gameObject);
+            maxRarity = Rarity.Rare;
+        }
     }
 }

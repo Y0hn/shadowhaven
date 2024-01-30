@@ -401,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: player_step
-  random: 1
+  name: player_step-5
+  random: 0
   onEnter: 0
   onExit: 0
   onUpdateTimer: 0.4

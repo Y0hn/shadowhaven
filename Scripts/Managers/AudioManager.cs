@@ -63,4 +63,15 @@ public class AudioManager : MonoBehaviour
 
         Play(list[UnityEngine.Random.Range(0, list.Count)].name);
     }
+    public void SetSoundVolume(SoundType type, float vol)
+    {
+        // vol = (0; 1)
+        foreach (Sound s in sounds)
+        {
+            if (s.type == type)
+            {
+                s.volume = vol;
+            }
+        }
+    }
 }
