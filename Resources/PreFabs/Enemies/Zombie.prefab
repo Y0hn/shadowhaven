@@ -318,7 +318,7 @@ MonoBehaviour:
   damage:
     value: 15
   armor:
-    value: 5
+    value: 0
   level: 1
   loot: {fileID: 5906422445418528148}
   lookRadius: 5

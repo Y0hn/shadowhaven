@@ -1,9 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Document",
-    "\\Scripts"
+    "\\Scripts",
+    "\\Scripts\\Behavior"
   ],
-  "SelectedNode": "\\Document\\Documentacion.txt",
+  "SelectedNode": "\\Scripts\\Behavior\\DoorBehavior.cs",
   "PreviewInSolutionExplorer": false
 }

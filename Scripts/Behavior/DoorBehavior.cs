@@ -1,10 +1,12 @@
 using System;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class DoorBehavior : MonoBehaviour
 {
     public bool vertical = false;
+    public ShadowCaster2D shadow;
     public DoorType type;
 
     private Vector3 closedPosition;
@@ -186,12 +188,6 @@ public class DoorBehavior : MonoBehaviour
                     }
                 }
             }
-
-            if (state != wanted)
-                if      (state && !wanted) // CLOSING
-                    Close();
-                else if (!state && wanted) // OPENING
-                    Open();
         }
         else if (Time.time > waitTimer)
         {
@@ -213,6 +209,12 @@ public class DoorBehavior : MonoBehaviour
             }
             waitTimer = Time.time + waitConst;
         }
+
+        if (state != wanted)
+            if (state && !wanted) // CLOSING
+                Close();
+            else if (!state && wanted) // OPENING
+                Open();
     }
     void Open()
     {
@@ -223,6 +225,7 @@ public class DoorBehavior : MonoBehaviour
         else
         {
             state = wanted;
+            Shadow(state);
         }
     }
     void Close()
@@ -234,6 +237,16 @@ public class DoorBehavior : MonoBehaviour
         else
         {
             state = wanted;
+            Shadow(state);
+        }
+    }
+    void Shadow(bool en)
+    {
+        // en = opened
+        if (shadow != null)
+        {
+            shadow.selfShadows = !en;
+            //shadow.castsShadows = en;
         }
     }
     void MoveTowards(Vector3 pos)
