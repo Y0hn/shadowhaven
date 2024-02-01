@@ -241,6 +241,7 @@ public class GameManager : MonoBehaviour
     {
         Inventory.instance.ClearInventory();
         Destroy(GameObject.FindGameObjectWithTag("Level"));
+        AudioManager.instance.PlayTheme("stop");
         UI.EnableUI("death");
         UI.DisableUI(0);
         deathScreen = true;
@@ -296,6 +297,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive()
     {
+        AudioManager.instance.PlayTheme("theme");
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;

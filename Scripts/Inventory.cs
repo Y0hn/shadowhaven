@@ -96,6 +96,8 @@ public class Inventory : MonoBehaviour
         }
 
         //Debug.Log("Equipment " + newEqu.name + " typu: " + newEqu.equipSlot + " equiped on slot " + slotIndex);
+
+        AudioManager.instance.Play("equip");
         onEquipChangeCallback.Invoke();
         onItemChangeCallback.Invoke();
     }

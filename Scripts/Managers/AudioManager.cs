@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,10 +9,11 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
 
     public Sound[] sounds;
+    private int curThemeIndex;
 
     void Start()
     {
-        Play("Theme");
+        PlayTheme("theme");
     }
     void Update()
     {
@@ -43,15 +45,35 @@ public class AudioManager : MonoBehaviour
             s.source.playOnAwake = false;
         }
     }
-    public bool Play (string name)
+    public bool Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
-        if (s == null)
+        if (s == null || !s.type.Equals(SoundType.SFX))
         {
-            Debug.Log($"Sound: {name} does not exist !");
+            Debug.Log($"SFX: {name} does not exist !");
             return false;
         }
         s.source.Play();
+        return true;
+    }
+    public bool PlayTheme(string name)
+    {
+        if (name != "stop")
+        {
+            Sound s = Array.Find(sounds, sound => sound.name == name);
+            if (s == null || !s.type.Equals(SoundType.OST))
+            {
+                Debug.Log($"OST: {name} does not exist !");
+                return false;
+            }
+            sounds[curThemeIndex].source.Stop();
+            // Not Optimal
+            curThemeIndex = sounds.ToList<Sound>().IndexOf(s);
+            s.source.Play();
+        }
+        else
+            sounds[curThemeIndex].source.Stop();
+
         return true;
     }
     public void PlayAtRandom (string name)

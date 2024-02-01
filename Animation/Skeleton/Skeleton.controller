@@ -16,6 +16,56 @@ MonoBehaviour:
   rate: 0
   hide: 0
   projectile: {fileID: 0}
+--- !u!114 &-7311856341551151831
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: skel-die
+  random: 0
+  onEnter: 1
+  onExit: 0
+  onUpdateTimer: -1
+--- !u!114 &-5496395151438872097
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: skel-step
+  random: 0
+  onEnter: 0
+  onExit: 0
+  onUpdateTimer: 0.25
+--- !u!114 &-5447758470787966981
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f13fd91426df94942b4580153b55a1fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetTag: 
+  rate: 0
+  hide: 0
+  projectile: {fileID: 0}
 --- !u!1101 &-4652941089138910773
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -66,6 +116,23 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-4010596440250644004
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: bow-fire
+  random: 0
+  onEnter: 0
+  onExit: 0
+  onUpdateTimer: 2
 --- !u!114 &-3741211233317073925
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,6 +226,23 @@ AnimatorStateTransition:
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
   m_CanTransitionToSelf: 1
+--- !u!114 &-2797763527967195240
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: skel-hit
+  random: 0
+  onEnter: 0
+  onExit: 0
+  onUpdateTimer: -1
 --- !u!1102 &-1083185171995273446
 AnimatorState:
   serializedVersion: 6
@@ -173,6 +257,7 @@ AnimatorState:
   - {fileID: 5384847086535582469}
   m_StateMachineBehaviours:
   - {fileID: 7798411135991274177}
+  - {fileID: -4010596440250644004}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -290,7 +375,8 @@ AnimatorState:
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -7311856341551151831}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -341,6 +427,7 @@ AnimatorState:
   - {fileID: -4652941089138910773}
   m_StateMachineBehaviours:
   - {fileID: 8129841794972191166}
+  - {fileID: -5496395151438872097}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
@@ -466,7 +553,8 @@ AnimatorState:
   - {fileID: -4083512072322176634}
   - {fileID: -2821509676132167629}
   - {fileID: 6746838860852589296}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -2797763527967195240}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
