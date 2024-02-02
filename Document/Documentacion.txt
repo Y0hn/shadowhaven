@@ -992,7 +992,7 @@ https://www.youtube.com/watch?v=DOz9vQYKHBg
 ___________________/ PAYROLL \___________________
 Sounds:
 	Sound Effects
-		15 x 1 $
+		10 x 0.3 $
 
 	OST
 		1  x 5 $
