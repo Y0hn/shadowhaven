@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5593852413654450335
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 974014be842248443b75ea872b807f8b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: melee-hit
+  random: 0
+  onEnter: 1
+  onExit: 0
+  onUpdateTimer: -1
 --- !u!1101 &-4652941089138910773
 AnimatorStateTransition:
   m_ObjectHideFlags: 1
@@ -219,7 +236,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetTag: Player
   speed: 3
-  tol: 0.5
+  rangeTolerancy: 0.2
+  toClose: 0
+  stopOnExit: 0
+  onlySetTrajectory: 0
+  trajectoryLimit: -1
+  startDelay: 0
 --- !u!1102 &2220131363780545869
 AnimatorState:
   serializedVersion: 6
@@ -413,7 +435,8 @@ AnimatorState:
   - {fileID: -458882132311872389}
   - {fileID: 765991247330579733}
   - {fileID: 7301924583867602513}
-  m_StateMachineBehaviours: []
+  m_StateMachineBehaviours:
+  - {fileID: -5593852413654450335}
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1

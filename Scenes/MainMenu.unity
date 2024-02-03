@@ -1175,17 +1175,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sounds:
-  - name: Theme
+  - name: theme
     clip: {fileID: 8300000, guid: 4e90c7c6043816e43b5c7152c4efd1b9, type: 3}
     type: 1
-    loop: 0
+    loop: 1
     volume: 1
     pitch: 1
     source: {fileID: 0}
-  - name: Theme2
+  - name: theme-1
     clip: {fileID: 8300000, guid: 0c259da44e215884f87075a5146e1db7, type: 3}
     type: 1
-    loop: 0
+    loop: 1
     volume: 1
     pitch: 1
     source: {fileID: 0}

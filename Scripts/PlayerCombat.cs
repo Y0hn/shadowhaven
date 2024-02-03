@@ -24,8 +24,6 @@ public class PlayerCombatScript : MonoBehaviour
     private Vector3 mousePos;
 
     private float attackDist = 45;  // distance for melee weapon to travel to do damage
-    private float meleeSoundTimer;
-    private float meleeSTime = 1f;
     private float lastRotZ = 0;
     private float rotZ;
 
@@ -48,8 +46,6 @@ public class PlayerCombatScript : MonoBehaviour
         col = hand.GetComponent<Collider2D>();
         WeaponIdleProjectile = hand.GetChild(0).GetChild(0);
         bowString = hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
-
-        meleeSoundTimer = 0;
     }
     private void Update()
     {
@@ -132,11 +128,6 @@ public class PlayerCombatScript : MonoBehaviour
             enemy.GetComponent<EnemyStats>().TakeDamage(stats.damage.GetValue());
 
         //Debug.Log($"[Time: {Time.time}] Melee Attack Enemies hited {hitEnemies.Count}\nattP1[{attP1.x},{attP1.y}] hitted {v.x} enemies \nattP2[{attP2.x},{attP2.y}] hitted {v.y} enemies");
-        if (hitEnemies.Count == 0 && meleeSoundTimer < Time.time)
-        {
-            AudioManager.instance.Play("sword-wush");
-            meleeSoundTimer = Time.time + meleeSTime;
-        }
     }
     private void RangedAttack()
     {

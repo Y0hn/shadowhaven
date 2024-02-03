@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: skel-hit
   random: 0
-  onEnter: 0
+  onEnter: 1
   onExit: 0
   onUpdateTimer: -1
 --- !u!1102 &-1083185171995273446
