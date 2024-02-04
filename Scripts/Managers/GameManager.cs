@@ -203,6 +203,7 @@ public class GameManager : MonoBehaviour
         {
             UI.DisableUI(0);
             UI.EnableUI("pause");
+            AudioManager.instance.PauseTheme();
             Time.timeScale = 0f;
             ableToMove = false;
         }
@@ -286,6 +287,7 @@ public class GameManager : MonoBehaviour
         UI.EnableUI(0);
         UI.DisableUI("inv");
         UI.DisableUI("pause");
+        AudioManager.instance.PauseTheme();
         Time.timeScale = 1f;
         ableToMove = true;
     }

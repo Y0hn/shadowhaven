@@ -15,11 +15,6 @@ public class AudioManager : MonoBehaviour
     {
         PlayTheme("theme");
     }
-    void Update()
-    {
-
-    }
-
     void Awake()
     {
         // Singleton
@@ -31,9 +26,7 @@ public class AudioManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         // DontDestroyOnLoad(gameObject);
-
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -45,6 +38,15 @@ public class AudioManager : MonoBehaviour
             s.source.playOnAwake = false;
         }
     }
+    public void PauseTheme()
+    {
+        if (sounds[curThemeIndex].paused)
+            sounds[curThemeIndex].source.UnPause();
+        else
+            sounds[curThemeIndex].source.Pause();
+
+        sounds[curThemeIndex].paused = !sounds[curThemeIndex].paused;
+    }
     public bool Play(string name)
     {
         Sound s = Array.Find(sounds, sound => sound.name == name);
@@ -54,6 +56,7 @@ public class AudioManager : MonoBehaviour
             return false;
         }
         s.source.Play();
+        s.paused = false;
         return true;
     }
     public bool PlayTheme(string name)
@@ -69,6 +72,7 @@ public class AudioManager : MonoBehaviour
             sounds[curThemeIndex].source.Stop();
             // Not Optimal
             curThemeIndex = sounds.ToList<Sound>().IndexOf(s);
+            s.paused = false;
             s.source.Play();
         }
         else

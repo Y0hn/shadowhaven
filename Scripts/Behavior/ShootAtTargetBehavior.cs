@@ -42,6 +42,8 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
                 minDistance = distance;
             }
         }
+        
+        nextAtk = Time.time + 1 / rate;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
