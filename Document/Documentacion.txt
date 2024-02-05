@@ -893,6 +893,7 @@ Ak je animation tranzition != 0
 Hodnoty:
 	new Color(r,g,b,a);
 		- su vsetky v intervale ( 0 <=> 1 )
+AudioMixer has no effect on sounds themsefls
 
 
 ________________/ LAYERS + TAGS \________________

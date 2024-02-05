@@ -7,7 +7,7 @@ using UnityEngine.Audio;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
-
+    public AudioMixerGroup masterGroup;
     public Sound[] sounds;
     private int curThemeIndex;
 
@@ -31,11 +31,14 @@ public class AudioManager : MonoBehaviour
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.source.playOnAwake = false;
+            if (s.group != null)
+                s.source.outputAudioMixerGroup = s.group;
+            else
+                s.source.outputAudioMixerGroup = masterGroup;
         }
     }
     public void PauseTheme()

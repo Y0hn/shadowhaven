@@ -14,6 +14,7 @@ public class Sound
     public string name;
     public AudioClip clip;
     public SoundType type = SoundType.SFX;
+    public AudioMixerGroup group;
     public bool paused = false;
     public bool loop = false;
 

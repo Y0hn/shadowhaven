@@ -145,4 +145,43 @@ public class BtnManager : MonoBehaviour
 
         animate = true;
     }
+    public void EnDisMenu(string name, bool enable)
+    {
+        int index = menusNames[name];
+        animated = menus[index];
+        shader = animated.GetComponent<AlfaShade>();
+        moveX = true;
+
+        if      (!enable && animated.gameObject.activeSelf)
+        {
+            animationSpeed = -Mathf.Abs(animationSpeed);
+            if (moveX)
+                targetPos = new(animated.position.x - animationDur, animated.position.y);
+            else
+                targetPos = new(animated.position.x, animated.position.y - animationDur);
+
+            Debug.Log("Disambling " + name);
+            shader.SetTransparency(1f);
+            deactivate = true;
+        }
+        else if (enable && !animated.gameObject.activeSelf)
+        {
+            animationSpeed = Mathf.Abs(animationSpeed);
+            targetPos = menusPos[index];
+
+            if (moveX)
+                animated.position = new(targetPos.x - animationDur, animated.position.y);
+            else
+                animated.position = new(targetPos.x, animated.position.y - animationDur);
+            animated.gameObject.SetActive(true);
+
+            Debug.Log("Enabling " + name);
+            shader.SetTransparency(0f);
+            deactivate = false;
+        }
+        else
+            return;
+
+        animate = true;
+    }
 }

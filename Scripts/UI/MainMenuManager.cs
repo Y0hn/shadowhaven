@@ -128,6 +128,11 @@ public class MenuManager : MonoBehaviour
     public void EnterExitSettings()
     {
         btnManager.EnDisMenu("Settings");
+
+    }
+    public void EnterExitAudio()
+    {
+        btnManager.EnDisMenu("Audio");
     }
     public void Quit()
     {
