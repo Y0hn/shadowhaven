@@ -111,7 +111,7 @@ public class MenuManager : MonoBehaviour
                     inMenu = true;
                     main = true;
                     if (!SaveCheck())
-                        btnManager.DisableBtn("Continue");
+                        btnManager.SetActiveBtn("Continue", false);
                     btnManager.EnDisMenu("Main");
                 }
             }

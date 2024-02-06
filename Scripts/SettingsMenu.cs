@@ -7,4 +7,12 @@ public class SettingsMenu : MonoBehaviour
     {
         mixer.SetFloat("MasterVolume", volume);
     }
+    public void SetVolOST (float volume)
+    {
+        mixer.SetFloat("OST", volume);
+    }
+    public void SetVolSFX (float volume)
+    {
+        mixer.SetFloat("SFX", volume);
+    }
 }

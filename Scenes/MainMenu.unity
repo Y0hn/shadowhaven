@@ -1047,6 +1047,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1098177342}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetVolume
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 8460902348352352169, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -1987,6 +2015,34 @@ PrefabInstance:
     - target: {fileID: 4576859882320144488, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1098177342}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetVolSFX
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: SettingsMenu, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5634118944538477932, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8460902348352352169, guid: c25e129d9fccf664eb1d5f627dd91907, type: 3}
       propertyPath: m_AnchorMax.x
@@ -3785,7 +3841,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1098177339}
   - {fileID: 821449193}
+  - {fileID: 1098177339}
   - {fileID: 1304609949}
   - {fileID: 124438336}
