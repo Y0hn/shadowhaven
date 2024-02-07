@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine;
 public class BtnManager : MonoBehaviour
 {
     public RectTransform[] menus;
@@ -16,24 +14,23 @@ public class BtnManager : MonoBehaviour
         for (int i = 0; i < menus.Length; i++)
         {
             menu[i] = new(menus[i], 50f);
+            if (menu[i].name == "Audio")
+            {
+                menu[i - 1].SetDepend(i);
+            }
         }
     }
-
+    private void Start()
+    {
+        if (menu.Length < 1)
+            Awake();
+    }
     void Update()
     {
         foreach (Menu m in menu)
         {
             if (m.animated)
-            {
-                if (m.IsOnMove())
-                    m.MoveTowards();
-                else
-                {
-                    m.enabled = !m.enabled;
-                    m.animated = false;
-                }
-                Debug.Log("Animating " + name);
-            }
+                m.MoveTowards();
         }
     }
     public void SetActiveBtn(string name, bool enable)
@@ -41,17 +38,13 @@ public class BtnManager : MonoBehaviour
         try
         {
             foreach (Menu m in menu)
-            {
                 foreach (Button b in m.buttons)
-                {
                     if (b.name == name)
                     {
-                        b.enabled = enable;
+                        b.interactable = enable;
                         Debug.Log("Disabled btn: " + name);
                         break;
                     }
-                }
-            }
         } 
         catch 
         {
@@ -61,12 +54,14 @@ public class BtnManager : MonoBehaviour
     public void EnDisMenu(string name)
     {
         foreach (Menu m in menu)
-        {
             if (m.name == name)
             {
                 m.MakeMove();
+
+                if (!m.enabled)
+                    foreach (int i in m.depend)
+                        menu[i].MakeMove(m.enabled);
             }
-        }
     }
     public void EnDisMenu(string name, bool enable)
     {
@@ -88,6 +83,7 @@ public class BtnManager : MonoBehaviour
         private readonly Vector2 originalPos;
         private readonly Vector2 targetedPos;
         private readonly float animationDur;
+        public List<int> depend { get; private set; }
         public bool animated { get; set; }
         private float animationSpeed;
         public bool enabled;
@@ -107,61 +103,75 @@ public class BtnManager : MonoBehaviour
                 children.Add(menu.GetChild(j));
             foreach (Transform child in children)
                 if (child.TryGetComponent(out Button tempB))
+                {
+                    tempB.name = tempB.name.Split('B')[0];
                     butList.Add(tempB);
+                }
              // else Debug.Log(child.name + " is not a Button! ");
             buttons = butList.ToArray();
-            targetedPos = new(- menu.position.x - menu.sizeDelta.x, menu.position.y + deltaY);
+            targetedPos = new(menu.position.x - animationDur, menu.position.y + deltaY);
             transform.position = targetedPos;
 
             shader = menu.GetComponent<AlfaShade>();
 
             // Hidding menu
+            depend = new();
             enabled = false;
             animated = false;
             menu.gameObject.SetActive(false);
+            shader.SetTransparency(0);
 
             // Debug 
-            Debug.Log($"Created Menu: [{name}] with:\norgPos = {originalPos}\ntarPos = {targetedPos}\nIs enabled = {enabled}");
-        }
-        public bool IsOnMove()
-        {
-            bool onMoveToRight, onMoveToLeft;
-
-            if (enabled)
-            {
-                onMoveToRight = (transform.position.x > targetedPos.x || transform.position.y > targetedPos.y) && 0 < animationSpeed;
-                onMoveToLeft  = (transform.position.x < targetedPos.x || transform.position.y < targetedPos.y) && 0 > animationSpeed;
-            }
-            else
-            {
-                onMoveToRight = (transform.position.x < targetedPos.x || transform.position.y < targetedPos.y) && 0 < animationSpeed;
-                onMoveToLeft  = (transform.position.x > targetedPos.x || transform.position.y > targetedPos.y) && 0 > animationSpeed;
-            }
-
-            if (!(onMoveToRight || onMoveToLeft))
-            {
-                animated = false;
-                enabled = !enabled;
-            }
-
-            return true; // onMoveToRight || onMoveToLeft;
+            //Debug.Log($"Created Menu: [{name}] with:\norgPos = {originalPos}\ntarPos = {targetedPos}\nIs enabled = {enabled}");
         }
         public void MakeMove()
         {
+            transform.gameObject.SetActive(true);
+            enabled = !enabled;
             animated = true;
+
             if (enabled)
-                animationSpeed = - Mathf.Abs(animationSpeed);
-            else 
                 animationSpeed =   Mathf.Abs(animationSpeed);
+            else 
+                animationSpeed = - Mathf.Abs(animationSpeed);
+        }
+        public void MakeMove(bool b)
+        {
+            if (enabled != b)
+            {
+                transform.gameObject.SetActive(true);
+                enabled = !enabled;
+                animated = true;
+
+                if (enabled)
+                    animationSpeed = Mathf.Abs(animationSpeed);
+                else
+                    animationSpeed = -Mathf.Abs(animationSpeed);
+            }
         }
         public void MoveTowards() 
         {
-            if (enabled)
-                transform.position = Vector2.MoveTowards(transform.position, originalPos, animationSpeed * Time.deltaTime);
+            float speed = Mathf.Abs(animationSpeed * Time.deltaTime);
+
+            if (!enabled)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, targetedPos, speed);
+                animated = !(transform.position.x == targetedPos.x && transform.position.y == targetedPos.y);
+            }
             else
-                transform.position = Vector2.MoveTowards(transform.position, targetedPos, animationSpeed * Time.deltaTime);
+            {
+                transform.position = Vector2.MoveTowards(transform.position, originalPos, speed);
+                animated = !(transform.position.x == originalPos.x && transform.position.y == originalPos.y);
+            }
 
             shader.AddTransparency(1 / (animationDur / (animationSpeed * Time.deltaTime)));
+
+            if (!animated && !enabled)
+                transform.gameObject.SetActive(false);
+        }
+        public void SetDepend(int index)
+        {
+            depend.Add(index);
         }
     }
 }
