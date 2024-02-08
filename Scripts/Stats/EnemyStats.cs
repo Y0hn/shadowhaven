@@ -14,7 +14,6 @@ public class EnemyStats : CharakterStats
     protected Collider2D collid;
     public float lookRadius;
     protected bool stunable = true;
-
     protected override void Start()
     {
         base.Start();

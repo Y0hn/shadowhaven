@@ -38,8 +38,8 @@ public class PlayerStats : CharakterStats
 
             if (a != null)
                 armor.AddMod(a.armorModifier);
-            else
-                Debug.Log("Equipment " + i + " is \"null\"");
+            
+            //else Debug.Log("Equipment " + i + " is \"null\"");
         }
         //Debug.Log("Player equipment armor updated");
     }
