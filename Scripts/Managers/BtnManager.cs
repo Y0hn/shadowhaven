@@ -15,9 +15,9 @@ public class BtnManager : MonoBehaviour
         {
             menu[i] = new(menus[i], 50f);
             if (menu[i].name == "Audio")
-            {
-                menu[i - 1].SetDepend(i);
-            }
+                menu[i-1].SetDepend(i);
+            else if (menu[i].name == "Video")
+                menu[i-2].SetDepend(i);
         }
     }
     private void Start()

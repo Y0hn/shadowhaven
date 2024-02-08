@@ -119,7 +119,7 @@ public class MenuManager : MonoBehaviour
     }
     public void ContinueGame()
     {
-
+        Debug.Log("Load saved data");
     }
     public void StartGame()
     {
@@ -133,6 +133,10 @@ public class MenuManager : MonoBehaviour
     public void EnterExitAudio()
     {
         btnManager.EnDisMenu("Audio");
+    }
+    public void EnterExitVideo()
+    {
+        btnManager.EnDisMenu("Video");
     }
     public void Quit()
     {

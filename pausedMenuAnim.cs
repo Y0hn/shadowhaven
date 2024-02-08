@@ -3,7 +3,7 @@ using UnityEngine;
 public class pausedMenuAnim : MonoBehaviour
 {
     public RectTransform panel;
-    public RectTransform audio;
+    public RectTransform aud;
 
     bool open, animating;
     float openSize = 500;
@@ -15,7 +15,7 @@ public class pausedMenuAnim : MonoBehaviour
     {
         open = false;
         animating = false;
-        audio.gameObject.SetActive(false);
+        aud.gameObject.SetActive(false);
         panel.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, closeSize);
     }
     private void Update()
@@ -28,7 +28,7 @@ public class pausedMenuAnim : MonoBehaviour
             if ((open && sizer >= openSize) || (!open && sizer <= closeSize))
             {
                 animating = false;
-                audio.gameObject.SetActive(open);
+                aud.gameObject.SetActive(open);
             }
         }
     }
@@ -46,7 +46,7 @@ public class pausedMenuAnim : MonoBehaviour
             {
                 sizer = closeSize;
                 speed = - Mathf.Abs(speed);
-                audio.gameObject.SetActive(false);
+                aud.gameObject.SetActive(false);
             }
             animating = true;
         }
