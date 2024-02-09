@@ -30,6 +30,7 @@ public class Inventory : MonoBehaviour
     private Equipment[] equipment;
     public List<int> quickSlots;
     private int money = 0;
+    public int equipmentCount;
 
     private Transform player;
 
@@ -37,9 +38,9 @@ public class Inventory : MonoBehaviour
     {
         // References
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        int n = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
-        n++;
-        equipment = new Equipment[n];
+        equipmentCount = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
+        equipmentCount++;
+        equipment = new Equipment[equipmentCount];
         
         // Load Equipment From Save
     }

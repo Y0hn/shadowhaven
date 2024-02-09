@@ -859,7 +859,7 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-arrow0001 - redo
+When equiped new sh*t Player damage set to 0
 multiple melee attacks at same time
 Spawn Doors verical closin not opening
 Bow damage not loading to arrow
@@ -873,6 +873,8 @@ Tim PC:
 _________________/ FIXED  BUGS \_________________
 Inicial Equipment can be Legendary (BAD)
 Weapon weird behavior when pickup item
+	- palyer onEquipChangeCallBack
+arrow - redo (some Warnings)
 Oci hraca clip trou helmet
 Skeleton Bow missing
 Rarity spwan overlap
@@ -891,6 +893,7 @@ Hodnoty:
 	new Color(r,g,b,a);
 		- su vsetky v intervale ( 0 <=> 1 )
 AudioMixer has no effect on sounds themsefls
+ - only when its added to audio source
 
 
 ________________/ LAYERS + TAGS \________________

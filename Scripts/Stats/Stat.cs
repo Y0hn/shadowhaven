@@ -6,7 +6,7 @@ public class Stat
 {
     [SerializeField]
     private int value;
-    private List<int> modifiers = new List<int>();
+    private List<int> modifiers = new();
     public int GetValue()
     {
         int finalValue = value;
@@ -17,6 +17,8 @@ public class Stat
     {
         if (mod != 0)
             modifiers.Add(mod);
+        else
+            Debug.Log("Modifier set to 0");
     }
     public void RemMod(int mod)
     {
@@ -28,5 +30,6 @@ public class Stat
     public void ClearMod()
     {
         modifiers.Clear();
+        modifiers = new();
     }
 }

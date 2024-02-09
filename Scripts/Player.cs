@@ -50,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         stats = GetComponent<PlayerStats>();
         inventory = Inventory.instance;
-        inventory.onItemChangeCallback += UpdateEquipment;
+        inventory.onEquipChangeCallback += UpdateEquipment;
 
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length + 1;
 
@@ -310,8 +310,8 @@ public class PlayerScript : MonoBehaviour
                         break;
                 }
 
-            ChangeWeapon(primaryWeap, false);
         }
+        ChangeWeapon(primaryWeap, false);
     }
 
     #region GetSet

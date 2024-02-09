@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerStats : CharakterStats
@@ -25,7 +24,7 @@ public class PlayerStats : CharakterStats
 
         LvlBar.SetMax(tillnextLvl);
         LvlBar.Set(0);
-        Debug.Log("Player stats started! ");
+        //Debug.Log("Player stats started! ");
     }
     private void EquipmentStatsRefresh()
     {

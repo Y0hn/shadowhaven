@@ -161,6 +161,7 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 case Type.Melee: 
                     melee = true;  
+                    fireRate = 0;
                     break;  // Melee
                 case Type.Ranged:
                 case Type.Magic: 
@@ -221,7 +222,7 @@ public class PlayerCombatScript : MonoBehaviour
             rendProj.gameObject.SetActive(false);
             weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
             GetComponent<PlayerStats>().SetDamage(weap.damageModifier);
-            //Debug.Log("Player Damage set to: " + weap.damageModifier);
+            Debug.Log("Equiped weapon " + weap.name + " with damage of " + weap.damageModifier);
         }
         else
             enabled = false;
