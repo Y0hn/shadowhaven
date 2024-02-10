@@ -14,6 +14,10 @@ public class EnemyStats : CharakterStats
     protected Collider2D collid;
     public float lookRadius;
     protected bool stunable = true;
+
+    public float nextDamage = 0;
+    private const float inviTime = 0.2f;
+
     protected override void Start()
     {
         base.Start();
@@ -24,28 +28,34 @@ public class EnemyStats : CharakterStats
     }
     public override void TakeDamage(int damage)
     {
-        if (!healthBar.transform.parent.gameObject.activeSelf)
+        if (nextDamage < Time.time)
         {
-            healthBar.transform.parent.gameObject.SetActive(true);
-            //Debug.Log("Health Bar activated: " + name);
+            if (!healthBar.transform.parent.gameObject.activeSelf)
+            {
+                healthBar.transform.parent.gameObject.SetActive(true);
+                //Debug.Log("Health Bar activated: " + name);
+            }
+            base.TakeDamage(damage);
+
+            animator.SetTrigger("Hurt");
+
+            if (stunable)
+            {
+                rb.velocity = Vector2.zero;
+                Vector2 moveDir;
+
+                float hori = animator.GetFloat("Horizontal");
+                float vert = animator.GetFloat("Vertical");
+
+                moveDir = new Vector2(-hori, -vert);
+                rb.velocity = moveDir;
+            }
+            if (lookRadius <= 15)
+                lookRadius += 5;
+
+            // Invincibility
+            nextDamage = Time.time + inviTime;
         }
-        base.TakeDamage(damage);
-
-        animator.SetTrigger("Hurt");
-
-        if (stunable)
-        {
-            rb.velocity = Vector2.zero;
-            Vector2 moveDir;
-
-            float hori = animator.GetFloat("Horizontal");
-            float vert = animator.GetFloat("Vertical");
-
-            moveDir = new Vector2(-hori, -vert);
-            rb.velocity = moveDir;
-        }
-        if (lookRadius <= 15)
-            lookRadius += 5;
     }
     public int DoDamage()
     {

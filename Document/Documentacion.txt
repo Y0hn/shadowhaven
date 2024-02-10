@@ -859,10 +859,8 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-multiple melee attacks at same time
-Spawn Doors verical closin not opening
 
-Tim PC:
+// Tim PC:
 	boss fight gate preopened
 	arrow in bow scalling error ? /GIANT sip
 	ZomBoss when charged once no chargin anymore
@@ -872,8 +870,12 @@ _________________/ FIXED  BUGS \_________________
 When equiped new equipment, but weapon stays same, Player damage set to 0
 arrow - redo (some Warnings) - nothing changed
 Inicial Equipment can be Legendary (BAD)
+Spawn Doors verical closin not opening
+	- removed spawn door
 Weapon weird behavior when pickup item 
 	- palyer onEquipChangeCallBack
+multiple melee attacks at same time !
+	- enemy invi time
 Bow damage not loading to arrow
 Oci hraca clip trou helmet
 Skeleton Bow missing

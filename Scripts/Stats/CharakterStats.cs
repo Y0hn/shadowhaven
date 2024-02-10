@@ -25,12 +25,12 @@ public abstract class CharakterStats : MonoBehaviour
     }
     public virtual void TakeDamage(int dmg)
     {
-        //string log = name + " got [" + dmg + "] damage";
+        string log = name + " got [" + dmg + "] damage";
         dmg -= armor.GetValue();
         dmg = Mathf.Clamp(dmg, minDmg, int.MaxValue);
         curHealth -= dmg;
-        //log += " and suffered only: " + dmg;
-        //Debug.Log(log);
+        log += " and suffered only: " + dmg;
+        Debug.Log(log);
 
         healthBar.Set(curHealth);
 
