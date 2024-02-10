@@ -69,7 +69,7 @@ public class BossStats : EnemyStats
                         // Wait for camera to focus
                         if (GameManager.instance.cameraFocused)
                         {
-                            AudioManager.instance.PlayTheme("boss-theme");
+                            AudioManager.instance.PlayTheme("stop");
                             animator.SetBool("move", true);
                             barFilling = false;
                             entry = false;
@@ -92,6 +92,7 @@ public class BossStats : EnemyStats
                 AudioManager.instance.PlayTheme("boss-intro");
                 heBar.gameObject.SetActive(true);
                 GameManager.instance.MoveCameraTo(transform.position, focusTime);
+                GameManager.instance.SetDoorType(DoorType.BossIn, false);
                 animator.SetBool("move", false);
                 animator.enabled = true;
             }

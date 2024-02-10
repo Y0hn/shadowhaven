@@ -42,7 +42,7 @@ public class DoorBehavior : MonoBehaviour
             {
                 case "Boss": 
                     type = DoorType.BossIn;
-                    interCheck = true; break;
+                    interCheck = false; break;
                 case "Loot": 
                     type = DoorType.BossOut; break;
                 case "Spawn":

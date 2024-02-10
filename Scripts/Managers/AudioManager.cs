@@ -74,7 +74,7 @@ public class AudioManager : MonoBehaviour
             }
             sounds[curThemeIndex].source.Stop();
             // Not Optimal
-            curThemeIndex = sounds.ToList<Sound>().IndexOf(s);
+            curThemeIndex = sounds.ToList().IndexOf(s);
             s.paused = false;
             s.source.Play();
         }

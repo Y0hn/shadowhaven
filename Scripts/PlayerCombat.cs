@@ -14,10 +14,12 @@ public class PlayerCombatScript : MonoBehaviour
     private PlayerScript player;
     private PlayerStats stats;
     private Transform target;
+    Transform idleProjectile;
     private Transform HandS;
     private Transform hand;
     private Collider2D col;
     private Camera cam;
+    Transform tetiva;
     #endregion
 
     private int weaponInvIndex;
@@ -31,10 +33,13 @@ public class PlayerCombatScript : MonoBehaviour
     public float fireRate;
     private bool melee;
 
-    
     private void Start()
     {
-        // References
+        if (player == null)
+            SetReferences();
+    }
+    private void SetReferences()
+    {
         player = GetComponent<PlayerScript>();
         cam = GetComponentInChildren<Camera>();
         stats = GetComponent<PlayerStats>();
@@ -42,10 +47,11 @@ public class PlayerCombatScript : MonoBehaviour
         hand = rotatePoint.transform.GetChild(0);
         target = hand.GetChild(1);
         //HandS = rotatePoint.transform.GetChild(1);
-
         col = hand.GetComponent<Collider2D>();
         WeaponIdleProjectile = hand.GetChild(0).GetChild(0);
-        bowString = hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>();
+        idleProjectile = hand.GetChild(0).GetChild(0);
+        tetiva = hand.GetChild(0).GetChild(1);
+        bowString = tetiva.GetComponent<SpriteRenderer>();
     }
     private void Update()
     {
@@ -59,44 +65,41 @@ public class PlayerCombatScript : MonoBehaviour
             rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
             #endregion
-            if (!GameManager.inv) // Unable to fire with inventory opened
+            // if (!GameManager.inv) // Unable to fire with inventory opened
+            if (!melee && Input.GetMouseButton(1))
             {
-                if (!melee && Input.GetMouseButton(1))
-                {
-                    Sprite[] texture = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture;
-                    bool multiSheet = texture.Length > 1;
+                Sprite[] texture = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture;
+                bool multiSheet = texture.Length > 1;
 
-                    if (fireTime == 0f)
-                        fireTime = Time.time + 1 / fireRate;
-                    else if (fireTime < Time.time)
+                if (fireTime == 0f)
+                    fireTime = Time.time + 1 / fireRate;
+                else if (fireTime < Time.time)
+                {
+                    if (multiSheet)
+                        bowString.sprite = texture[3];
+                    WeaponIdleProjectile.gameObject.SetActive(true);
+                    // Animacia naprahovania luku
+                    if (Input.GetMouseButtonDown(0))
                     {
-                        if (multiSheet)
-                            hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = texture[3];
-                        WeaponIdleProjectile.gameObject.SetActive(true);
-                        // Animacia naprahovania luku
-                        if (Input.GetMouseButtonDown(0))
-                        {
-                            RangedAttack();
-                            if (texture.Length > 0)
-                                hand.GetChild(0).GetChild(1).GetComponent<SpriteRenderer>().sprite = texture[1];
-                            WeaponIdleProjectile.gameObject.SetActive(false);
-                            fireTime = 0f;
-                        }
-                    }
-                    // Ranged Animation
-                    if (fireTime - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
-                    {
-                        if (multiSheet)
-                            bowString.sprite = texture[2];
+                        RangedAttack();
+                        if (texture.Length > 0)
+                            bowString.sprite = texture[1];
+                        WeaponIdleProjectile.gameObject.SetActive(false);
+                        fireTime = 0f;
                     }
                 }
-                else if (fireTime != 0f)
+                // Ranged Animation
+                if (fireTime - (1 / fireRate) / 2 < Time.time && Time.time < fireTime)
                 {
-                    fireTime = 0f;
-                    bowString.sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[1];
-                    WeaponIdleProjectile.gameObject.SetActive(false);
+                    if (multiSheet)
+                        bowString.sprite = texture[2];
                 }
-
+            }
+            else if (fireTime != 0f)
+            {
+                fireTime = 0f;
+                bowString.sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[1];
+                WeaponIdleProjectile.gameObject.SetActive(false);
             }
             if (melee)
             {
@@ -135,25 +138,23 @@ public class PlayerCombatScript : MonoBehaviour
         o.GetComponent<ProjectileScript>().damage = stats.damage.GetValue();
         o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
         o.name += "-" + gameObject.tag;
-
+        //Debug.Log("Projectile " + o.name + " seted damage to: " + stats.damage.GetValue());
         AudioManager.instance.Play("bow-fire");
     }
-    public void EquipWeapon(Weapon weap)
+    public bool EquipWeapon(Weapon weap)
     {
         // References
-        hand = transform.GetChild(0).GetChild(0);
-        HandS = transform.GetChild(0).GetChild(1);
-        Transform tetiva = hand.GetChild(0).GetChild(1);
-        Transform idleProjectile = hand.GetChild(0).GetChild(0);
-        SpriteRenderer rendProj = idleProjectile.GetComponent<SpriteRenderer>();
-        tetiva.gameObject.SetActive(false);
+        if (player == null)
+            SetReferences();
 
         if (weap != null)
         {
+            SpriteRenderer rendProj = idleProjectile.GetComponent<SpriteRenderer>();
+            weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
+            tetiva.gameObject.SetActive(false);
             SpriteRenderer Weapon = hand.GetChild(0).GetComponent<SpriteRenderer>();
             //SpriteRenderer WeaponS = HandS.GetChild(0).GetComponent<SpriteRenderer>();
             col = hand.GetComponent<Collider2D>();
-            
             Weapon.sprite = weap.texture[0];            
             Weapon.color = weap.color;
 
@@ -220,13 +221,18 @@ public class PlayerCombatScript : MonoBehaviour
                 }
             }
             rendProj.gameObject.SetActive(false);
-            weaponInvIndex = Inventory.instance.GetIndexEquiped(weap);
             GetComponent<PlayerStats>().SetDamage(weap.damageModifier);
-            Debug.Log("Equiped weapon " + weap.name + " with damage of " + weap.damageModifier);
+            //Debug.Log("Equiped weapon " + weap.name + " with damage of " + weap.damageModifier + " currrent value of damage is: " + stats.damage.GetValue());
+            return true;
         }
         else
+        {
+            //Debug.LogWarning("Equiping weapon was null");
             enabled = false;
+            return false;
+        }
     }
+    
     #region Enable/Disabe
     private void OnEnable()
     { 

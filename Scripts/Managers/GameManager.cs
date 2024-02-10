@@ -336,6 +336,12 @@ public class GameManager : MonoBehaviour
     {
         doors.Remove(oldDoor);
     }
+    public void SetDoorType(DoorType type, bool open = true)
+    {
+        foreach (DoorBehavior d in doors.Keys)
+            if (doors[d] == type)
+                d.ChangeState(open);
+    }
     public bool GetMovingCam()
     {
         return movingCamera;

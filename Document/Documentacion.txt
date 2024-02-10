@@ -859,10 +859,8 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-When equiped new sh*t Player damage set to 0
 multiple melee attacks at same time
 Spawn Doors verical closin not opening
-Bow damage not loading to arrow
 
 Tim PC:
 	boss fight gate preopened
@@ -871,10 +869,12 @@ Tim PC:
 	
 
 _________________/ FIXED  BUGS \_________________
+When equiped new equipment, but weapon stays same, Player damage set to 0
+arrow - redo (some Warnings) - nothing changed
 Inicial Equipment can be Legendary (BAD)
-Weapon weird behavior when pickup item
+Weapon weird behavior when pickup item 
 	- palyer onEquipChangeCallBack
-arrow - redo (some Warnings)
+Bow damage not loading to arrow
 Oci hraca clip trou helmet
 Skeleton Bow missing
 Rarity spwan overlap

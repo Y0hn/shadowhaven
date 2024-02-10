@@ -144,7 +144,8 @@ public class LevelGener : MonoBehaviour
                     R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, transform.parent);
                     pastPos = R.transform.position;
                     R.name = NameCrop(R.name);
-                    GenerateDoor(R.transform);
+                    if (s.Equals("Loot="))
+                        GenerateDoor(R.transform);
                     R.name = s + R.name;
 
                     C = Instantiate(GenerateContent(s+"-"), R.transform.position, Quaternion.identity, R.transform);

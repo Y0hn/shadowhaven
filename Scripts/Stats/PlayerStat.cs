@@ -27,7 +27,7 @@ public class PlayerStats : CharakterStats
         //Debug.Log("Player stats started! ");
     }
     private void EquipmentStatsRefresh()
-    {
+    {/*
         armor.ClearMod();
         damage.ClearMod();
 
@@ -40,7 +40,7 @@ public class PlayerStats : CharakterStats
             
             //else Debug.Log("Equipment " + i + " is \"null\"");
         }
-        //Debug.Log("Player equipment armor updated");
+        //Debug.Log("Player equipment armor updated");*/
     }
     public override void TakeDamage(int dmg)
     {
