@@ -1,14 +1,17 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class BossSelectorBehavior : StateMachineBehaviour
 {
     public string targetTag;
     public bool toClose = false;
-    public string triger = "attack";
+    public const string triger = "attack";
     public float minChangeInterval = 0.01f;
 
+    private const float tolerancy = 0.2f;
     private Transform targetTra;
-    private string settedTriger;
+    private int setTriger;
     private float timer;
     private float range;
 
@@ -31,60 +34,59 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 }
             }
         }
+
         timer = Time.time + minChangeInterval;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Vector2 pos = animator.transform.position;
-        bool behaviorChange = false;
+        if (setTriger == 0)
+            switch (animator.name)
+            {
+                case "ZomBoss":
+                    if      (ConditionForAttack(animator, "bonk"))
+                        setTriger = 1;
+                    else if (ConditionForAttack(animator, "charge") && setTriger != 2)
+                        setTriger = 2;
+                    else if (ConditionForAttack(animator, "spit"))
+                        setTriger = 3;
+                    break;
 
+                default:
+                    Debug.LogError("Boss " + name + " has no known behavior !");
+                    break;
+            }
+        else if (timer < Time.time)
+            animator.SetTrigger(triger + setTriger);
+    }
+    private bool ConditionForAttack(Animator animator, string atck)
+    {
+        bool condition = false;
+        Vector2 pos = animator.transform.position;
         float dist = Vector2.Distance(targetTra.position, pos);
 
-        int n = animator.GetComponent<BossStats>().numberOfAttacks + 1;
-
-        switch (animator.name)
+        switch (atck)
         {
-            case "ZomBoss":
-                // range = 5
-                const float tolerancy = 0.2f;
-                float targetY = targetTra.position.y,
-                thisY = pos.y;
-
-                if (dist < range)
-                {
-                    // Bonk
-                    behaviorChange = true;
-                    n = 1;
-                }
-                else if (thisY - tolerancy < targetY && targetY < thisY + tolerancy)
-                {
-                    // Charge
-                    behaviorChange = true;
-                    n = 2;
-                }
+            case "bonk":   
+                condition = dist < range;
+                break;
+            case "charge":
+                condition = pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy;
+                break;
+            case "spit":   
+                //condition = false;
                 break;
 
             default:
-                Debug.Log("Behavior was defaulted for: " + animator.name);
-                n = Random.Range(1, n);
-                behaviorChange = true;
+                Debug.LogError($"Fatal: Boss {name} does not have attack {atck} !!!");
                 break;
         }
 
-        if (behaviorChange && timer < Time.time)
-        {
-            settedTriger = triger + n;
-            animator.SetTrigger(settedTriger);
-        }
+        return condition;        
     }
-
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!settedTriger.Equals(""))
-        {
-            animator.ResetTrigger(settedTriger);
-            settedTriger = "";
-        }
+        animator.ResetTrigger(triger + setTriger);
+        setTriger = 0;
     }
 }
