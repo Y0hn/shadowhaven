@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class BossSelectorBehavior : StateMachineBehaviour
 {
@@ -11,14 +9,15 @@ public class BossSelectorBehavior : StateMachineBehaviour
 
     private const float tolerancy = 0.2f;
     private Transform targetTra;
-    private int setTriger;
+    private int pastTrigger = 0;
+    private int setTriger = 0;
     private float timer;
     private float range;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         range = animator.GetComponent<EnemyStats>().lookRadius;
-
+        //Debug.Log(name + " start walk with past triger: " + pastTriger);
         // Finding closet target
         if (targetTra == null)
         {
@@ -46,10 +45,14 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 case "ZomBoss":
                     if      (ConditionForAttack(animator, "bonk"))
                         setTriger = 1;
-                    else if (ConditionForAttack(animator, "charge") && setTriger != 2)
+                    else if (ConditionForAttack(animator, "charge"))
                         setTriger = 2;
                     else if (ConditionForAttack(animator, "spit"))
                         setTriger = 3;
+                    else
+                    {
+                        Debug.Log(name + " walk only");
+                    }
                     break;
 
                 default:
@@ -68,13 +71,13 @@ public class BossSelectorBehavior : StateMachineBehaviour
         switch (atck)
         {
             case "bonk":   
-                condition = dist < range;
+                condition = dist < range && pastTrigger != 1;
                 break;
             case "charge":
-                condition = pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy;
+                condition = pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger != 2;
                 break;
             case "spit":   
-                //condition = false;
+                condition = dist > range * 2 && pastTrigger != 3;
                 break;
 
             default:
@@ -87,6 +90,6 @@ public class BossSelectorBehavior : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.ResetTrigger(triger + setTriger);
-        setTriger = 0;
+        pastTrigger = setTriger;
     }
 }
