@@ -101,61 +101,7 @@ public class BossStats : EnemyStats
         else
         {
             healthBar.Set(curHealth);
-            /* Behavior
-            if (behavior.Count > 1)
-            {
-                if (Time.time > timer)
-                {
-                    AnimateMovement(behavior[1]);
-                    Debug.Log($"Attacking with attack {behavior[1]}");
-                    if (behavior.Count < 2)
-                        behavior[0] = behavior[1];
-                    behavior.RemoveAt(1);
-                }
-            }
-            else
-            {
-                GenerateMovement();
-            }
-            */
         }
-    }
-    private void GenerateMovement()
-    {
-        int n = numberOfAttacks + 1;
-        int rand;
-        int last = behavior[0];
-        behavior = new();
-
-        // Aby neutocil tym cim skoncil
-        do rand = Random.Range(0, n);
-        while (behavior.Contains(last));
-        behavior.Add(rand);
-
-        for (int i = 0; i < n; i++)
-        {
-            do rand = Random.Range(0, n);
-            while (behavior.Contains(rand));
-            behavior.Add(rand);
-        }
-    }
-    private void AnimateMovement(int moveId)
-    {
-        switch (moveId) 
-        { 
-            case 0:     // Follow
-                animator.SetBool("move", true);
-                timer = Random.Range(100, 500);
-                break;
-            default:    // Attack with id
-                animator.SetBool("move", false);
-                animator.SetTrigger("attack" + moveId);
-                timer = Random.Range(100, 200);
-                rb.velocity = Vector3.zero;
-                animator.ResetTrigger("attack" + moveId);
-                break;
-        }
-        timer = Time.time + timer/100;
     }
     public override void TakeDamage(int dmg)
     {

@@ -13,6 +13,7 @@ public class EnemyStats : CharakterStats
     public Text loot;
     protected Collider2D collid;
     public float lookRadius;
+    public GameObject projectile;
     protected bool stunable = true;
 
     public float nextDamage = 0;

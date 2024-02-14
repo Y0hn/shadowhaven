@@ -71,10 +71,10 @@ public class ProjectileScript : MonoBehaviour
 
             if (hitTargets.Length > 0)
             {
-                if (targets == 0)                    
+                if (targets == 0)
                 {
-                    hitTargets[0].GetComponent<PlayerStats>().TakeDamage(damage);                      
-                    Destroy(gameObject);                    
+                    hitTargets[0].GetComponent<PlayerStats>().TakeDamage(damage);
+                    Destroy(gameObject);
                 }
                 else
                 {

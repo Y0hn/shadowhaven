@@ -239,6 +239,7 @@ MonoBehaviour:
   level: 1
   loot: {fileID: 4515999510577055718}
   lookRadius: 5
+  projectile: {fileID: 3669296211370645970, guid: ace4ea0347d07fd4084346a0ed476d3c, type: 3}
   nextDamage: 0
 --- !u!1 &628351257532487261
 GameObject:

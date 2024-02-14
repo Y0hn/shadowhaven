@@ -5,7 +5,8 @@ public class BossSelectorBehavior : StateMachineBehaviour
     public string targetTag;
     public bool toClose = false;
     public const string triger = "attack";
-    public float minChangeInterval = 0.01f;
+    public const float minChangeInterval = 0.1f;
+    public const float maxChangeInterval = 2f;
 
     private const float tolerancy = 0.2f;
     private Transform targetTra;
@@ -34,7 +35,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
             }
         }
 
-        timer = Time.time + minChangeInterval;
+        timer = Time.time + Random.Range(minChangeInterval, maxChangeInterval);
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -51,7 +52,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
                         setTriger = 3;
                     else
                     {
-                        Debug.Log(name + " walk only");
+                        //Debug.Log(name + " walk only");
                     }
                     break;
 
