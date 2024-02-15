@@ -54,7 +54,7 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("Shooting");
+        //Debug.Log("Shooting");
         if (rotatePoint != null)
         {
             Vector2 rotation = targetTra.position - animator.transform.position;
@@ -92,6 +92,6 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
             rotatePoint.gameObject.SetActive(false);
         if (triggerOut != "")
             animator.ResetTrigger(triggerOut);
-        Debug.Log("Shooting out");
+        //Debug.Log("Shooting out");
     }
 }

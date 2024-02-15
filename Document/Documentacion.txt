@@ -822,13 +822,9 @@ ZomBoss spits
 ----------------< 08. 02.  2024 >----------------
 UI upgrades + bug fixes
 
-----------------< 09. 02.  2024 >----------------
-----------------< 10. 02.  2024 >----------------
-----------------< 11. 02.  2024 >----------------
-----------------< 12. 02.  2024 >----------------
-----------------< 13. 02.  2024 >----------------
-----------------< 14. 02.  2024 >----------------
 ----------------< 15. 02.  2024 >----------------
+ZomBoss ranged combat
+
 ----------------< 16. 02.  2024 >----------------
 ----------------< 17. 02.  2024 >----------------
 ----------------< 18. 02.  2024 >----------------
@@ -847,7 +843,8 @@ Potions/Consumables
 Better UI imergion (shadows)
 Load titles from .txt file
 Chce to lepsie movementy Zombosa
-Settings
+	- blood pool shots doing area dmg or slow
+	- boss room torches na spojovacich miestach zon
 
 Names:
 	IntoTheShadows
@@ -931,6 +928,7 @@ Layers:
 	" PlayerWeapon	"
 	" rojectile		"
 	" ItemDrop		"
+	" BossProjectile"
 
 ___________________/ SOURCES \___________________
 // Unity Basics | Inspirations

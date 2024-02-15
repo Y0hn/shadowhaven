@@ -22,8 +22,16 @@ public class ProjectileScript : MonoBehaviour
         if (temp.Length > 1)
         {
             string s = temp[1];
-            targetLayers &= ~(1 << LayerMask.NameToLayer(s));
+            if (s.Equals("BossProjectile"))
+            {
+                Debug.Log("Boss projectile");
+                targetLayers = LayerMask.NameToLayer("Player");
+                gameObject.layer = LayerMask.NameToLayer(s);
+            }
+            else
+                targetLayers &= ~(1 << LayerMask.NameToLayer(s));
             rb = GetComponent<Rigidbody2D>();
+
             if (s == "Player")
             {
                 targetPos = GameObject.FindGameObjectWithTag("Player").transform.GetChild(0).GetChild(0).GetChild(1).position;
@@ -67,22 +75,31 @@ public class ProjectileScript : MonoBehaviour
         }
         else
         {
-            Collider2D[] hitTargets = Physics2D.OverlapCircleAll(transform.position, size, targetLayers);
+            Collider2D[] hitTargets = Physics2D.OverlapCircleAll(transform.position, size);
 
-            if (hitTargets.Length > 0)
-            {
+            foreach (Collider2D hit in hitTargets)
+            { 
+                bool succsess;
+                CharakterStats hitted;
+
                 if (targets == 0)
                 {
-                    hitTargets[0].GetComponent<PlayerStats>().TakeDamage(damage);
-                    Destroy(gameObject);
+                    succsess = hit.TryGetComponent(out PlayerStats ps);
+                    hitted = ps;
                 }
                 else
                 {
-                    hitTargets[0].GetComponent<EnemyStats>().TakeDamage(damage);
+                    succsess = hit.TryGetComponent(out EnemyStats es);
+                    hitted = es;
+                }
+
+                if (succsess)
+                {
+                    hitted.TakeDamage(damage);
                     Destroy(gameObject);
                 }
             }
-            else if (!rb.velocity.Equals(velocity) && ableToMove)
+            if (!rb.velocity.Equals(velocity) && ableToMove)
                 Destroy(gameObject);
         }
     }

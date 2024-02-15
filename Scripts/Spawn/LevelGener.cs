@@ -172,6 +172,7 @@ public class LevelGener : MonoBehaviour
             if (deleteAssets)
             {
                 Destroy(GameObject.FindGameObjectWithTag("Assets"));
+                GameManager.generated = true;
                 Destroy(gameObject);
                 return;
             }
@@ -394,25 +395,5 @@ public class LevelGener : MonoBehaviour
         spawner = Instantiate(spawnObj, pastPos, Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
-    }
-    private string GetOutAllDictionaries()
-    {
-        string ret = "\n";
-
-        ret += "\nRoom Contents Dictionary:\n{";
-        foreach (string key in roomContent.Keys)
-        {
-            ret += key + "\t";
-        }
-        ret += "}\n";
-
-        ret += "\nRoom Types Dictionary\n{";
-        foreach (string key in RoomTypes.Keys)
-        {
-            ret += key + "\t";
-        }
-        ret += "}\n";
-
-        return ret;
     }
 }

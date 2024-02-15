@@ -14,11 +14,13 @@ public class BossStats : EnemyStats
     private int fakeHealth;
     private bool barFilling;
     private bool entry;
+    private bool start;
     //private int bossType = 0;
 
     protected override void Start()
     {
         base.Start();
+        start = true;
         stunable = false;
         heBar = healthBar.transform;
         healthBar.transform.parent.gameObject.SetActive(true);
@@ -35,6 +37,12 @@ public class BossStats : EnemyStats
     }
     private void Update()
     {
+        // 0 => START
+        if (start)
+        {
+            GameManager.instance.AddBoss(this);
+            start = !GameManager.generated;
+        }
         // 1 => ENTRY
         if (entry)
         {
@@ -113,11 +121,15 @@ public class BossStats : EnemyStats
         animator.SetTrigger("die");
         collid.enabled = false;
         rb.simulated = false;
-        GameManager.instance.BossKilled();
+        GameManager.instance.BossKilled(this);
         Destroy(gameObject, 3);
     }
     public void SetY(float newY)
     {
         activateBorderY = newY;
+    }
+    public void ShowBar(bool state)
+    {
+        healthBar.transform.parent.gameObject.SetActive(state);
     }
 }

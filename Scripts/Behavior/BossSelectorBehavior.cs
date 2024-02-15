@@ -12,6 +12,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
     private Transform targetTra;
     private int pastTrigger = 0;
     private int setTriger = 0;
+    private float lastAtc;
     private float timer;
     private float range;
 
@@ -34,7 +35,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 }
             }
         }
-
+        lastAtc = 0;
         timer = Time.time + Random.Range(minChangeInterval, maxChangeInterval);
     }
 
@@ -54,6 +55,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
                     {
                         //Debug.Log(name + " walk only");
                     }
+                    //Debug.Log("Choosed: " + setTriger);
                     break;
 
                 default:
@@ -68,17 +70,18 @@ public class BossSelectorBehavior : StateMachineBehaviour
         bool condition = false;
         Vector2 pos = animator.transform.position;
         float dist = Vector2.Distance(targetTra.position, pos);
+        bool timesUp = lastAtc <= Time.time - maxChangeInterval * maxChangeInterval;
 
         switch (atck)
         {
             case "bonk":   
-                condition = dist < range && pastTrigger != 1;
+                condition = dist < range && (pastTrigger != 1 || timesUp);
                 break;
             case "charge":
                 condition = pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger != 2;
                 break;
             case "spit":   
-                condition = dist > range * 2 && pastTrigger != 3;
+                condition = dist > range * 2 && (pastTrigger != 3 || timesUp);
                 break;
 
             default:
@@ -92,5 +95,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
     {
         animator.ResetTrigger(triger + setTriger);
         pastTrigger = setTriger;
+        lastAtc = Time.time;
+        setTriger = 0;
     }
 }

@@ -887,6 +887,10 @@ PrefabInstance:
       propertyPath: m_ShapePath.Array.data[3].x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2409565349500900261, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
+      propertyPath: m_InstanceId
+      value: -48182
+      objectReference: {fileID: 0}
     - target: {fileID: 5211106161256757757, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
       propertyPath: m_Name
       value: Door-2x1
@@ -1339,7 +1343,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 126893150055024085, guid: e0c35beec80e3ae4da720f6f7197bd7e, type: 3}
       propertyPath: m_InstanceId
-      value: -173388
+      value: -48402
       objectReference: {fileID: 0}
     - target: {fileID: 6375114768164233659, guid: e0c35beec80e3ae4da720f6f7197bd7e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2673,14 +2677,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 717691723576359027}
     m_Modifications:
-    - target: {fileID: 2158697978025797313, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2158697978025797313, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5308562171726975304, guid: 19713d53068e5a1448ef01d840ea7b6b, type: 3}
       propertyPath: m_Name
       value: ZomBoss

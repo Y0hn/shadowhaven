@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     public static bool ongoingBossFight = false;
     public static bool playerLives = true;
     public static bool ableToMove = true;
+    public static bool generated = false;
     public static bool inv = false;
 
     public bool cameraFocused = false;
@@ -44,6 +45,7 @@ public class GameManager : MonoBehaviour
     private float timerCamera;
 
     private Dictionary<DoorBehavior, DoorType> doors = new();
+    private List<BossStats> bosses = new();
 
     private Vector2[] cameraPos = new Vector2[2];
     private bool movingCamera = false;
@@ -56,7 +58,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // References
-        // Debug.Log(Application.persistentDataPath);
+            // Debug.Log(Application.persistentDataPath);
         if (player != null)
         {
             playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
@@ -89,6 +91,10 @@ public class GameManager : MonoBehaviour
                     PauseGame();
                 else
                     ResumeGame();
+
+                foreach (BossStats b in bosses)
+                    if (b.enabled)
+                        b.ShowBar(ableToMove);
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
@@ -320,13 +326,28 @@ public class GameManager : MonoBehaviour
         playerStats.level = data.level;
         playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
-    public void BossKilled()
+    public void AddBoss(BossStats boss)
     {
-        bossDefeaded = true;
+        if (generated)
+            bosses.Add(boss);
+    }
+    public void BossKilled(BossStats boss)
+    {
+        if (generated)
+        {
+            bossDefeaded = true;
+            bosses.Remove(boss);
+        }
     }
     public void AddXp(int xp) 
     {
         playerStats.AddXp(xp);
+    }
+    public void SetDoorType(DoorType type, bool open = true)
+    {
+        foreach (DoorBehavior d in doors.Keys)
+            if (doors[d] == type)
+                d.ChangeState(open);
     }
     public void AddDoor(DoorBehavior newDoor, DoorType type)
     {
@@ -335,12 +356,6 @@ public class GameManager : MonoBehaviour
     public void RemoveDoor(DoorBehavior oldDoor)
     {
         doors.Remove(oldDoor);
-    }
-    public void SetDoorType(DoorType type, bool open = true)
-    {
-        foreach (DoorBehavior d in doors.Keys)
-            if (doors[d] == type)
-                d.ChangeState(open);
     }
     public bool GetMovingCam()
     {
