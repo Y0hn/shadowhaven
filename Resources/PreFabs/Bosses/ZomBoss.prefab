@@ -862,7 +862,7 @@ MonoBehaviour:
     value: 10
   level: 3
   loot: {fileID: 0}
-  lookRadius: 4
+  lookRadius: 3
   projectile: {fileID: 3669296211370645970, guid: 82e7e41dd616f7e4c867a30e8fc0cbef, type: 3}
   nextDamage: 0
   numberOfAttacks: 2

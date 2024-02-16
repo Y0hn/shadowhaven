@@ -24,7 +24,7 @@ public class ProjectileScript : MonoBehaviour
             string s = temp[1];
             if (s.Equals("BossProjectile"))
             {
-                Debug.Log("Boss projectile");
+                //Debug.Log("Boss projectile");
                 targetLayers = LayerMask.NameToLayer("Player");
                 gameObject.layer = LayerMask.NameToLayer(s);
             }

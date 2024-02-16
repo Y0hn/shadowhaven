@@ -12,9 +12,11 @@ public class BossSelectorBehavior : StateMachineBehaviour
     private Transform targetTra;
     private int pastTrigger = 0;
     private int setTriger = 0;
-    private float lastAtc;
+    private float lastAtc = 0;
+    private float tChange;
     private float timer;
     private float range;
+    private bool ch;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -35,8 +37,9 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 }
             }
         }
-        lastAtc = 0;
-        timer = Time.time + Random.Range(minChangeInterval, maxChangeInterval);
+        ch = true;
+        tChange = Random.Range(minChangeInterval, maxChangeInterval);
+        timer = Time.time + tChange;
     }
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -60,10 +63,15 @@ public class BossSelectorBehavior : StateMachineBehaviour
 
                 default:
                     Debug.LogError("Boss " + name + " has no known behavior !");
+                    animator.enabled = false;
                     break;
             }
-        else if (timer < Time.time)
+        else if (timer < Time.time && ch)
+        {
+            //Debug.Log("Set Trigger is: " + setTriger + ", Last Trigger was: " + pastTrigger + " and time past: " + tChange + " last attack was: " + lastAtc + " and Time is: " + Time.time);
             animator.SetTrigger(triger + setTriger);
+            ch = false;
+        }
     }
     private bool ConditionForAttack(Animator animator, string atck)
     {
@@ -75,13 +83,13 @@ public class BossSelectorBehavior : StateMachineBehaviour
         switch (atck)
         {
             case "bonk":   
-                condition = dist < range && (pastTrigger != 1 || timesUp);
+                condition = dist < range && (pastTrigger % 10 != 1 || timesUp);
                 break;
             case "charge":
-                condition = pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger != 2;
+                condition = dist > 5*tolerancy && pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger % 10 != 2;
                 break;
             case "spit":   
-                condition = dist > range * 2 && (pastTrigger != 3 || timesUp);
+                condition = dist > range * 2 && (pastTrigger % 10 != 3 || (timesUp && setTriger < 23));
                 break;
 
             default:
@@ -94,7 +102,10 @@ public class BossSelectorBehavior : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.ResetTrigger(triger + setTriger);
-        pastTrigger = setTriger;
+        if (pastTrigger % 10 == setTriger)
+            pastTrigger += 10;
+        else
+            pastTrigger = setTriger;
         lastAtc = Time.time;
         setTriger = 0;
     }
