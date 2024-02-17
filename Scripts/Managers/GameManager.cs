@@ -307,6 +307,7 @@ public class GameManager : MonoBehaviour
     {
         AudioManager.instance.PlayTheme("theme");
         playerScript.Resurect();
+        bossDefeaded = false;
         deathScreen = false;
         playerLives = true;
         ableToMove = true;
@@ -333,7 +334,7 @@ public class GameManager : MonoBehaviour
     }
     public void BossKilled(BossStats boss)
     {
-        if (generated)
+        if (generated && bosses.Contains(boss))
         {
             bossDefeaded = true;
             bosses.Remove(boss);

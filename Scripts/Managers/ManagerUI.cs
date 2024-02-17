@@ -12,6 +12,7 @@ public class ManagerUI : MonoBehaviour
         {"pause", 2},
         {"death", 3},
         {"money", 4 },
+        {"quick", 5 },
     };
 
     private Inventory inventory;
@@ -36,7 +37,7 @@ public class ManagerUI : MonoBehaviour
         equipL = System.Enum.GetNames(typeof(EquipmentSlot)).Length;
         equipL++;
         equiSlots = UIs[Dic["inv"]].GetChild(1).GetComponentsInChildren<itemSlot>();
-        quicSlots = UIs[Dic["base"]].GetComponentsInChildren<itemSlot>();
+        quicSlots = UIs[Dic["quick"]].GetComponentsInChildren<itemSlot>();
     }
     private void UpdateInventory()
     {
@@ -96,14 +97,17 @@ public class ManagerUI : MonoBehaviour
 
         for (int i = 1; i < UIs.Length; i++)
         {
-            pastUIs[i] = UIs[i].gameObject.activeSelf;
-            DisableUI(i);
+            if (i != Dic["quick"])
+            {
+                pastUIs[i] = UIs[i].gameObject.activeSelf;
+                DisableUI(i);
+            }
         }
     }
     public void RevertUI()
     {
         for (int i = 0; i < pastUIs.Length; i++)
-            if (pastUIs[i])
+            if (pastUIs[i] && i != Dic["quick"])
                 EnableUI(i);
     }
     public void DisableUI(int n)

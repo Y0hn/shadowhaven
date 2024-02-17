@@ -132,4 +132,8 @@ public class BossStats : EnemyStats
     {
         healthBar.transform.parent.gameObject.SetActive(state);
     }
+    private void OnDestroy()
+    {
+        GameManager.instance.BossKilled(this);
+    }
 }
