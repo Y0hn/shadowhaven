@@ -829,6 +829,8 @@ ZomBoss ranged combat
 UI upgrade
 
 ----------------< 18. 02.  2024 >----------------
+Main Menu dependacies
+
 ----------------< 19. 02.  2024 >----------------
 
 ____________________/ PLANS \____________________
@@ -847,6 +849,7 @@ Chce to lepsie movementy Zombosa
 	- blood pool shots doing area dmg or slow
 	- boss room torches na spojovacich miestach zon
 Cutscene focus on closing door
+Sound Setting Saves in file
 
 Names:
 	IntoTheShadows

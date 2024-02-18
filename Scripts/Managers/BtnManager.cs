@@ -4,21 +4,38 @@ using UnityEngine;
 public class BtnManager : MonoBehaviour
 {
     public RectTransform[] menus;
+    /* * * * *  ORDER * * * * * *\
+     *                          *
+     *                          *
+     * 0    -   Main            *
+     * 1    -   Settings        *
+     * 2    -   Audio           *
+     * 3    -   Video           *
+     *                          *
+    \* * * * * * *  * * * * * * */
 
     private Menu[] menu;
 
     void Awake()
     {
-        // References
+        // REFERENCES
         menu = new Menu[menus.Length];
         for (int i = 0; i < menus.Length; i++)
-        {
-            menu[i] = new(menus[i], 50f);
-            if (menu[i].name == "Audio")
-                menu[i-1].SetDepend(i);
-            else if (menu[i].name == "Video")
-                menu[i-2].SetDepend(i);
-        }
+            menu[i] = new(menus[i], 50f, 25f);
+
+        // DEPEDNANCIES
+        for (int i = 0;i < menu.Length; i++)
+            switch (menu[i].name)
+            {
+                case "Audio":
+                    menu[1].SetDepend(i);
+                    menu[3].AddAntiDependancy(i);
+                    break;
+                case "Video":
+                    menu[1].SetDepend(i);
+                    menu[2].AddAntiDependancy(i);
+                    break;
+            }
     }
     private void Start()
     {
@@ -61,18 +78,25 @@ public class BtnManager : MonoBehaviour
                 if (!m.enabled)
                     foreach (int i in m.depend)
                         menu[i].MakeMove(m.enabled);
+                else
+                    foreach (int i in m.antiDepend)
+                        menu[i].MakeMove(!m.enabled);
             }
     }
     public void EnDisMenu(string name, bool enable)
     {
         foreach (Menu m in menu)
-        {
-            if (m.name == name)
+            if (m.name == name && m.enabled != enable)
             {
-                if (m.enabled != enable)
-                    m.MakeMove();
+                m.MakeMove();
+
+                if (!m.enabled)
+                    foreach (int i in m.depend)
+                        menu[i].MakeMove(m.enabled);
+                else
+                    foreach (int i in m.antiDepend)
+                        menu[i].MakeMove(!m.enabled);
             }
-        }
     }
     private class Menu
     {
@@ -84,17 +108,23 @@ public class BtnManager : MonoBehaviour
         private readonly Vector2 targetedPos;
         private readonly float animationDur;
         public List<int> depend { get; private set; }
+        public List<int> antiDepend { get; private set; }
         public bool animated { get; set; }
         private float animationSpeed;
         public bool enabled;
 
-        public Menu(RectTransform menu, float speedA, float deltaY = 0)
+        public Menu(RectTransform menu, float speed, float dur, float deltaY = 0)
         {
+            // Variables
+            depend = new();
+            enabled = false;
+            animated = false;
+            antiDepend = new();
             this.name = menu.name;
             this.transform = menu;
             originalPos = menu.position;
-            animationDur = speedA;
-            animationSpeed = animationDur;
+            animationDur = dur;
+            animationSpeed = speed;
 
             // Btn Setup
             List<Button> butList = new();
@@ -115,9 +145,6 @@ public class BtnManager : MonoBehaviour
             shader = menu.GetComponent<AlfaShade>();
 
             // Hidding menu
-            depend = new();
-            enabled = false;
-            animated = false;
             menu.gameObject.SetActive(false);
             shader.SetTransparency(0);
 
@@ -172,6 +199,10 @@ public class BtnManager : MonoBehaviour
         public void SetDepend(int index)
         {
             depend.Add(index);
+        }
+        public void AddAntiDependancy(int index)
+        {
+            antiDepend.Add(index);
         }
     }
 }
