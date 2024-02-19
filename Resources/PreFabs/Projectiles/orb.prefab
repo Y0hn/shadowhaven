@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 840476098728597292}
   - component: {fileID: 1034451831318231757}
   - component: {fileID: 3724763272054166639}
+  - component: {fileID: 1208504121911540871}
   m_Layer: 0
   m_Name: orb
   m_TagString: Untagged
@@ -169,3 +170,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ableToMove: 1
+--- !u!114 &1208504121911540871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669296211370645970}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72eca8a998d20b843ac215f0816bfdf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  preFab: {fileID: 6444661952577888022, guid: 28996e1c966129443a1846d29cf57fe2, type: 3}
+  pos:
+  - 0
+  - 0
+  - 0.1

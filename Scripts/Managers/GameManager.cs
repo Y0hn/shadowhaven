@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     private bool movingCamera = false;
     private bool moveTowards = true;
 
+    //private bool playingBossCutScene = false;
     private bool bossDefeaded = false;
     private bool sceneLoaded = false;
     private bool deathScreen = false;
@@ -362,7 +363,7 @@ public class GameManager : MonoBehaviour
     {
         return movingCamera;
     }
-    public void MoveCameraTo(Vector2 B, float forTime)
+    private void MoveCameraTo(Vector2 B, float forTime)
     {
         if (!movingCamera)
         {
@@ -374,6 +375,11 @@ public class GameManager : MonoBehaviour
             moveTowards = true;
             ChangeCamera();
         }
+    }
+    public void BossMoveCamera(Vector2 B, float forTime)
+    {
+        //playingBossCutScene = true;
+        MoveCameraTo(B, forTime);
     }
     public void MoveCameraTo(Vector2 A, Vector2 B, float forTime)
     {

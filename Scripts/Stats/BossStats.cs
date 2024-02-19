@@ -99,7 +99,7 @@ public class BossStats : EnemyStats
                 // Play Sound
                 AudioManager.instance.PlayTheme("boss-intro");
                 heBar.gameObject.SetActive(true);
-                GameManager.instance.MoveCameraTo(transform.position, focusTime);
+                GameManager.instance.BossMoveCamera(transform.position, focusTime);
                 GameManager.instance.SetDoorType(DoorType.BossIn, false);
                 animator.SetBool("move", false);
                 animator.enabled = true;

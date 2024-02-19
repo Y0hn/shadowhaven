@@ -833,6 +833,7 @@ Main Menu dependacies
 
 ----------------< 19. 02.  2024 >----------------
 
+
 ____________________/ PLANS \____________________
 Level_02
 	+ tranzition medzi levelami
@@ -849,6 +850,7 @@ Chce to lepsie movementy Zombosa
 	- blood pool shots doing area dmg or slow
 	- boss room torches na spojovacich miestach zon
 Cutscene focus on closing door
+	- make camera a class with list of targets in order
 Sound Setting Saves in file
 
 Names:
