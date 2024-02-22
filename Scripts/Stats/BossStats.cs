@@ -3,12 +3,11 @@ using UnityEngine;
 
 public class BossStats : EnemyStats
 {
+    public bool onCamera { get; set; }
     public int numberOfAttacks;
     private float activateBorderY = float.PositiveInfinity;
     private Transform target;
-    private Transform heBar;
     private float timer;
-    private const float focusTime = 2.0f;
     private const float loadHealthTime = 2f;
     private List<int> behavior;
     private int fakeHealth;
@@ -22,8 +21,7 @@ public class BossStats : EnemyStats
         base.Start();
         start = true;
         stunable = false;
-        heBar = healthBar.transform;
-        healthBar.transform.parent.gameObject.SetActive(true);
+        healthBar.gameObject.SetActive(true);
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         // Reset variable
@@ -31,9 +29,11 @@ public class BossStats : EnemyStats
         entry = true;
         fakeHealth = 0;
         behavior = new();
+        onCamera = false;
         barFilling = false;
         healthBar.SetMax(maxHealth);
         healthBar.Set(0);
+        ShowBar(false);
     }
     private void Update()
     {
@@ -56,7 +56,7 @@ public class BossStats : EnemyStats
                     if (fakeHealth < maxHealth)
                     {
                         // If Skiped
-                        if (!GameManager.instance.GetMovingCam())
+                        if (GameManager.instance.IsCameraFocused("player"))
                         {
                             healthBar.Set(maxHealth);
                             animator.SetBool("move", true);
@@ -74,10 +74,9 @@ public class BossStats : EnemyStats
                     // 1.2.1.1.2 => LAST
                     else
                     {
-                        // Wait for camera to focus
-                        if (GameManager.instance.cameraFocused)
+                        // Wait for camera to focus on Boss
+                        if (!onCamera)
                         {
-                            AudioManager.instance.PlayTheme("stop");
                             animator.SetBool("move", true);
                             barFilling = false;
                             entry = false;
@@ -86,11 +85,13 @@ public class BossStats : EnemyStats
                     }
                 }
                 // 1.2.2
-                else if (GameManager.instance.cameraFocused)
+                else if (onCamera)
                 {
+                    AudioManager.instance.PlayTheme("stop");
                     animator.SetTrigger("intro");
-                    fakeHealth = 0;
                     barFilling = true;
+                    fakeHealth = 0;
+                    ShowBar(true);
                 }
             }
             // 1.1
@@ -98,8 +99,7 @@ public class BossStats : EnemyStats
             {
                 // Play Sound
                 AudioManager.instance.PlayTheme("boss-intro");
-                heBar.gameObject.SetActive(true);
-                GameManager.instance.BossMoveCamera(transform.position, focusTime);
+                GameManager.instance.CameraSequence("boss");
                 GameManager.instance.SetDoorType(DoorType.BossIn, false);
                 animator.SetBool("move", false);
                 animator.enabled = true;
@@ -113,7 +113,8 @@ public class BossStats : EnemyStats
     }
     public override void TakeDamage(int dmg)
     {
-        base.TakeDamage(dmg);
+        if (!entry)
+            base.TakeDamage(dmg);
     }
     protected override void Die()
     {
@@ -127,6 +128,10 @@ public class BossStats : EnemyStats
     public void SetY(float newY)
     {
         activateBorderY = newY;
+    }
+    public bool Active()
+    {
+        return !entry;
     }
     public void ShowBar(bool state)
     {

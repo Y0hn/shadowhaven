@@ -264,6 +264,10 @@ public class DoorBehavior : MonoBehaviour
         vertical = newVert;
         type = newType;
     }
+    public Vector2 GetClosedPos()
+    {
+        return closedPosition;
+    }
     private void OnDestroy()
     {
         GameManager.instance.RemoveDoor(this);
