@@ -176,37 +176,39 @@ public class GameManager : MonoBehaviour
             }
 
             Kamera k = Kamera.GetFocusedCamera(cameras);
-            if (k.moving && k.haltTime < Time.time)
+            if (k.moving)
             {
-                if (k.moving)
-                {
+                if (k.haltTime < Time.time)
                     proceedInSeq = k.MoveTowards(Time.deltaTime * camSpeed);
-                }
-                else
-                    k.SetUp((int)camModer[cameraSequence[cameraSeqFollower]]);
             }
-            else if (cameraSeqFollower > 0 && cameraSeqFollower < cameraSequence.Count)
+            else
             {
-                if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !bosses[0].onCamera)
-                    bosses[0].onCamera = true;
+                if (cameraSeqFollower > 0 && cameraSeqFollower < cameraSequence.Count)
+                {
+                    if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !bosses[0].onCamera)
+                        bosses[0].onCamera = true;
+                }
+                if (k.haltTime < Time.time)
+                    k.SetUp((int)camModer[cameraSequence[cameraSeqFollower]]);
             }
 
             if (proceedInSeq)
             {
                 k.haltTime += Time.time;
                 cameraSeqFollower++;
+                string debug = "Proseed in sequence to step " + cameraSeqFollower;
 
                 if (cameraSequence.Count <= cameraSeqFollower)
                 {
-                    cameraSequence = new();
                     Kamera.ChangeCamera(cameras, 0);
-                    ableToMove = true;
-
-                    if (bosses[0].onCamera)
-                        bosses[0].onCamera = false;
-                }
-                else if (bosses[0].onCamera && cameraSequence[cameraSeqFollower] == "toBoss")
                     bosses[0].onCamera = false;
+                    cameraSequence = new();
+                    ableToMove = true;                    
+
+                    debug += " which ended the Sequence";
+                }
+
+                Debug.Log(debug);
             }
         }
     }
@@ -417,14 +419,18 @@ public class GameManager : MonoBehaviour
         }
         public bool MoveTowards(float speed)
         {
-            if (target.x != camera.position.x && target.y != camera.position.y)
+            if (target.x == camera.position.x && target.y == camera.position.y)
+            {
+                Debug.Log($"Target [{target.x}, {target.y}] reached!");
+                moving = false;
+            }
+            else // if need moving
             {
                 Vector2 move = Vector2.MoveTowards(camera.transform.position, target, speed * moveSpeed);
                 camera.transform.position = new Vector3(move.x, move.y, camera.transform.position.z);
+                Debug.Log($"Moving {name.ToUpper()} towards [{target.x}, {target.y}]");
             }
-            else // if done moving
-                moving = false;
-            Debug.Log($"Moving {name.ToUpper()} from [{camera.position.x}, {camera.position.y}] towards [{target.x}, {target.y}]");
+
             return !moving;
         }
         public bool Focused(Vector2 target)
@@ -442,10 +448,12 @@ public class GameManager : MonoBehaviour
         }
         public void SetUp(int mode)
         {
+            instance.GetModeTarget(mode, out target);
             haltTime = camModer["haltTime " + mode];
             moveSpeed = camModer["speed " + mode];
-            instance.GetModeTarget(mode, out target);
             moving = true;
+
+            Debug.Log($"Camera {name} set to Mode [{instance.GetModReverse(mode)}]:\ntarget on: [{target.x}, {target.y}]\nhalt time: {haltTime}\nmove speed: {moveSpeed}");
         }
         public static void ChangeCamera(Kamera[] list, string camName)
         {
@@ -487,17 +495,9 @@ public class GameManager : MonoBehaviour
             return null;
         }
     }
-    public bool IsCameraFocused(Vector2 target, string name)
-    {
-        return Kamera.GetCamera(cameras, name).Focused(target);
-    }
     public bool IsCameraFocused(string name)
     {
         return Kamera.GetCamera(cameras, name).focused;
-    }
-    public bool IsCameraMoving(string name)
-    {
-        return Kamera.GetCamera(cameras, name).moving;
     }
     public void CameraSequence(string seqName)
     {
@@ -517,6 +517,7 @@ public class GameManager : MonoBehaviour
     }
     private void GetModeTarget(int mode, out Vector2 position)
     {
+        bool suc = true;
         switch (mode)
         {
             case 0:
@@ -532,8 +533,17 @@ public class GameManager : MonoBehaviour
             default:
                 Debug.LogWarning("Mode " + mode + " was not identified! ");
                 position = Vector2.zero;
+                suc = false;
                 break;
         }
-        Debug.Log($"Target of mode: {mode} position recieved [{position.x}, {position.y}]");
+        if (suc)
+            Debug.Log($"Target of mode: {GetModReverse(mode)}({mode}) position recieved [{position.x}, {position.y}]");
+    }
+    private string GetModReverse(float val)
+    {
+        foreach (string s in camModer.Keys)
+            if (camModer[s] == val)
+                return s;
+        return "[NULL]";
     }
 }
