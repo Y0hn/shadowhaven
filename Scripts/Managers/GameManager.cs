@@ -6,11 +6,19 @@ public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static GameManager instance;
+    public static LightManager lights;
+    public static Inventory inventory;
+    public new static AudioManager audio;
     private void Awake()
     {
         if (instance != null)
+        {
             Debug.LogWarning("More than one Instance of GameManager!");
+        }
         instance = this;
+        lights = GetComponent<LightManager>();
+        inventory = GetComponent<Inventory>();
+        audio = GetComponent<AudioManager>();
     }
     #endregion
 
@@ -24,7 +32,6 @@ public class GameManager : MonoBehaviour
     private PlayerCombatScript playerCombat;
     private PlayerScript playerScript;
     private PlayerStats playerStats;
-    private Inventory inventory;
     private ItemsList items;
 
     #endregion
@@ -224,7 +231,7 @@ public class GameManager : MonoBehaviour
         {
             UI.DisableUI(0);
             UI.EnableUI("pause");
-            AudioManager.instance.PauseTheme();
+            audio.PauseTheme();
             Time.timeScale = 0f;
             ableToMove = false;
         }
@@ -251,7 +258,7 @@ public class GameManager : MonoBehaviour
     {
         Inventory.instance.ClearInventory();
         Destroy(GameObject.FindGameObjectWithTag("Level"));
-        AudioManager.instance.PlayTheme("stop");
+        audio.PlayTheme("stop");
         UI.EnableUI("death");
         UI.DisableUI(0);
         deathScreen = true;
@@ -283,7 +290,7 @@ public class GameManager : MonoBehaviour
         UI.EnableUI(0);
         UI.DisableUI("inv");
         UI.DisableUI("pause");
-        AudioManager.instance.PauseTheme();
+        audio.PauseTheme();
         Time.timeScale = 1f;
         ableToMove = true;
     }
@@ -295,7 +302,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive()
     {
-        AudioManager.instance.PlayTheme("theme");
+        audio.PlayTheme("theme");
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;

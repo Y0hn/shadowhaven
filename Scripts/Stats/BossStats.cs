@@ -87,7 +87,7 @@ public class BossStats : EnemyStats
                 // 1.2.2
                 else if (onCamera)
                 {
-                    AudioManager.instance.PlayTheme("stop");
+                    GameManager.audio.PlayTheme("stop");
                     animator.SetTrigger("intro");
                     barFilling = true;
                     fakeHealth = 0;
@@ -98,7 +98,7 @@ public class BossStats : EnemyStats
             else if (target.position.y >= activateBorderY)
             {
                 // Play Sound
-                AudioManager.instance.PlayTheme("boss-intro");
+                GameManager.audio.PlayTheme("boss-intro");
                 GameManager.instance.CameraSequence("boss");
                 GameManager.instance.SetDoorType(DoorType.BossIn, false);
                 animator.SetBool("move", false);

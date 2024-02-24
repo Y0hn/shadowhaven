@@ -6,27 +6,12 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
     public AudioMixerGroup masterGroup;
     public Sound[] sounds;
     private int curThemeIndex;
 
     void Start()
     {
-        PlayTheme("theme");
-    }
-    void Awake()
-    {
-        // Singleton
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Debug.Log("More than one Instance of AudioManager!");
-            Destroy(gameObject);
-            return;
-        }
-        // DontDestroyOnLoad(gameObject);
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
@@ -40,6 +25,8 @@ public class AudioManager : MonoBehaviour
             else
                 s.source.outputAudioMixerGroup = masterGroup;
         }
+
+        PlayTheme("theme");
     }
     public void PauseTheme()
     {

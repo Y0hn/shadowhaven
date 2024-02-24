@@ -39,8 +39,8 @@ public class playSoundBehavior : StateMachineBehaviour
     private void PlaySound()
     {
         if (random)
-            AudioManager.instance.PlayAtRandom(name);
+            GameManager.audio.PlayAtRandom(name);
         else
-            AudioManager.instance.Play(name);
+            GameManager.audio.Play(name);
     }
 }

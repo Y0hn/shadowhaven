@@ -139,7 +139,7 @@ public class PlayerCombatScript : MonoBehaviour
         o.transform.rotation = Quaternion.Euler(0, 0, rotZ);
         o.name += "-" + gameObject.tag;
         //Debug.Log("Projectile " + o.name + " seted damage to: " + stats.damage.GetValue());
-        AudioManager.instance.Play("bow-fire");
+        GameManager.audio.Play("bow-fire");
     }
     public bool EquipWeapon(Weapon weap)
     {
