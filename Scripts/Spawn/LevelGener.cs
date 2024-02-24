@@ -126,7 +126,7 @@ public class LevelGener : MonoBehaviour
                 {
                     // Generate Path Room
                     string s = "Path=";
-                    R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, transform.parent);
+                    R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, GetRoomSpawnPath());
                     R.name = s + NameCrop(R.name);
 
                     C = Instantiate(GenerateContent(s + "Enemy"), R.transform.position, Quaternion.identity, R.transform);
@@ -141,7 +141,7 @@ public class LevelGener : MonoBehaviour
                     else
                         s = "Loot=";
 
-                    R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, transform.parent);
+                    R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, GetRoomSpawnPath());
                     pastPos = R.transform.position;
                     R.name = NameCrop(R.name);
                     if (s.Equals("Loot="))
@@ -169,13 +169,7 @@ public class LevelGener : MonoBehaviour
         }
         else
         {
-            if (deleteAssets)
-            {
-                Destroy(GameObject.FindGameObjectWithTag("Assets"));
-                GameManager.generated = true;
-                Destroy(gameObject);
-                return;
-            }
+            End();
         }
     }
     private string NameCrop(string s,bool simle = false, char spliter = ' ')
@@ -367,7 +361,7 @@ public class LevelGener : MonoBehaviour
         }
 
         // Boss Room
-        GameObject room = Instantiate(rooms[RoomTypes[s]], pastPos, Quaternion.identity, transform.parent);
+        GameObject room = Instantiate(rooms[RoomTypes[s]], pastPos, Quaternion.identity, GetRoomSpawnPath());
         startEnd = true;
         return room;        
     }
@@ -395,5 +389,20 @@ public class LevelGener : MonoBehaviour
         spawner = Instantiate(spawnObj, pastPos, Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
+    }
+    private void End()
+    {
+        if (deleteAssets)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("Assets"));
+            GameManager.generated = true;
+        }
+        // Destroy(gameobject);
+        name = "Generated Floor";
+        Destroy(this);
+    }
+    private Transform GetRoomSpawnPath()
+    {
+        return transform.parent;
     }
 }

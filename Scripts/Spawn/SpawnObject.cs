@@ -8,7 +8,7 @@ public class SpawnObject : MonoBehaviour
     void Start()
     {
         GameObject spawn = null;
-        string[] s;
+        string[] s = null;
 
         if (name.Contains("Wall") || name.Contains("Floor") || name.Contains("Door"))
         {
@@ -50,6 +50,20 @@ public class SpawnObject : MonoBehaviour
             spawn.name = s[0];
             spawn.GetComponent<Interactable>().maxRarity = Item.GetRarity(s[1]);
         }
+        else if (name.Contains("Light"))
+        {
+            s = name.Split('-');
+            objects = GameObject.FindGameObjectsWithTag(s[0]);
+            List<GameObject> temp = new List<GameObject>();
+            foreach (GameObject obj in objects)
+                if (obj.name.Contains(s[1]))
+                    temp.Add(obj);
+
+            if (temp.Count != 0)
+                spawn = temp[Random.Range(0, temp.Count)];
+            else
+                Debug.LogWarning("Light with name: " + s[1] + " was not found");
+        }
         else
         {
             try
@@ -61,11 +75,10 @@ public class SpawnObject : MonoBehaviour
             }
             catch 
             {
-                Debug.LogWarning("GameObject Tag: " + name + " does not exits or sht like that ");
+                Debug.LogWarning("GameObject Tag: " + name + " does not exits or sh*t like that ");
                 Destroy(gameObject);
                 return;
             }
-            s = null;
         }
 
         // Actual spawning
@@ -81,6 +94,10 @@ public class SpawnObject : MonoBehaviour
                 spawn.GetComponent<BossStats>().SetY(float.Parse(s[1]));
             else if (name.Contains("Door"))
                 spawn.transform.position = new Vector3(transform.position.x, transform.position.y, 0.05f);
+            else if (name.Contains("Light"))
+            {
+                GameManager.lights.Register(spawn, s[2]);
+            }
         }
         else
             Debug.LogWarning($"{name} is not a tag nor special");
