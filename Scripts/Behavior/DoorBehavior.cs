@@ -116,7 +116,7 @@ public class DoorBehavior : MonoBehaviour
                 transform.position = openedPosition;
             #endregion
 
-            GameManager.instance.AddDoor(this, type);
+            GameManager.instance.AddDoor(this);
             setup = true;
         }
         else

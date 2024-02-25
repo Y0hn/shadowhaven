@@ -100,7 +100,6 @@ public class BossStats : EnemyStats
                 // Play Sound
                 GameManager.audio.PlayTheme("boss-intro");
                 GameManager.instance.CameraSequence("boss");
-                GameManager.instance.SetDoorType(DoorType.BossIn, false);
                 animator.SetBool("move", false);
                 animator.enabled = true;
             }

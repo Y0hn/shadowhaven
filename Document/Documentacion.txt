@@ -835,27 +835,33 @@ Main Menu dependacies
 
 
 ____________________/ PLANS \____________________
-Level_02
-	+ tranzition medzi levelami
-		After chest is emptied
-After sword effect
-Nakreslit tortch do quick slotu 3 ako place holder
-Popracovat na centrovani textur heliem
+
+
+---/ ADD \---
+Camera Manager
 Secret Roomky
-Implementovat zvuk
-Potions/Consumables
-Better UI imergion (shadows)
-Load titles from .txt file
+funkciu 3 quick slotu 
+- Potions/Consumables
+After sword effect
+Black square nad dvere
+
+Level_02
+- tranzition medzi levelami
+- After chest is emptied
+
 Chce to lepsie movementy Zombosa
-	- blood pool shots doing area dmg or slow
-	- boss room torches na spojovacich miestach zon
-Cutscene focus on closing door
-	- make camera a class with list of targets in order
+- blood pool shots doing area dmg or slow
+- boss room torches na spojovacich miestach zon
+
+
+---/ MODIFY \---
+Popracovat na centrovani textur heliem
+Load titles from .txt file
 Sound Setting Saves in file
 
-Names:
-	IntoTheShadows
-	DeepAssDungeon
+Maybe Names:
+- IntoTheShadows
+- DeepAssDungeon
 
 
 ____________________/ BUGSS \____________________
@@ -863,7 +869,6 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-Boss Hittable before cutScene
 
 // Tim PC:
 	boss fight gate preopened
@@ -882,6 +887,7 @@ Weapon weird behavior when pickup item
 multiple melee attacks at same time !
 	- enemy invi time
 Bow damage not loading to arrow
+Boss Hittable before cutScene
 Oci hraca clip trou helmet
 Skeleton Bow missing
 Rarity spwan overlap

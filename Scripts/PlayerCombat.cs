@@ -7,19 +7,18 @@ public class PlayerCombatScript : MonoBehaviour
     public LayerMask enemyLayers;
 
     #region References
-    private Transform WeaponIdleProjectile;
     private GameObject projectile = null;
+    private Transform idleProjectile;
     private SpriteRenderer bowString;
     private Transform rotatePoint;
     private PlayerScript player;
     private PlayerStats stats;
+    private Transform tetiva;
     private Transform target;
-    Transform idleProjectile;
     private Transform HandS;
     private Transform hand;
     private Collider2D col;
     private Camera cam;
-    Transform tetiva;
     #endregion
 
     private int weaponInvIndex;
@@ -48,7 +47,6 @@ public class PlayerCombatScript : MonoBehaviour
         target = hand.GetChild(1);
         //HandS = rotatePoint.transform.GetChild(1);
         col = hand.GetComponent<Collider2D>();
-        WeaponIdleProjectile = hand.GetChild(0).GetChild(0);
         idleProjectile = hand.GetChild(0).GetChild(0);
         tetiva = hand.GetChild(0).GetChild(1);
         bowString = tetiva.GetComponent<SpriteRenderer>();
@@ -73,18 +71,19 @@ public class PlayerCombatScript : MonoBehaviour
 
                 if (fireTime == 0f)
                     fireTime = Time.time + 1 / fireRate;
+                // Animacia naprahovania luku
                 else if (fireTime < Time.time)
                 {
                     if (multiSheet)
                         bowString.sprite = texture[3];
-                    WeaponIdleProjectile.gameObject.SetActive(true);
-                    // Animacia naprahovania luku
+                    idleProjectile.gameObject.SetActive(true);
+
                     if (Input.GetMouseButtonDown(0))
                     {
                         RangedAttack();
                         if (texture.Length > 0)
                             bowString.sprite = texture[1];
-                        WeaponIdleProjectile.gameObject.SetActive(false);
+                        idleProjectile.gameObject.SetActive(false);
                         fireTime = 0f;
                     }
                 }
@@ -99,7 +98,7 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 fireTime = 0f;
                 bowString.sprite = ((Weapon)Inventory.instance.Equiped(weaponInvIndex)).texture[1];
-                WeaponIdleProjectile.gameObject.SetActive(false);
+                idleProjectile.gameObject.SetActive(false);
             }
             if (melee)
             {

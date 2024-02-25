@@ -48,8 +48,8 @@ public class GameManager : MonoBehaviour
     private Kamera[] cameras;
     private int cameraSeqFollower;
     private List<BossStats> bosses = new();
+    private List<DoorBehavior> doors = new();
     private List<string> cameraSequence = new();
-    private Dictionary<DoorBehavior, DoorType> doors = new();
     private static readonly Dictionary<string, float> camModer = new()
     {
         // Modes
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
         { "haltTime 1", 2f},
 
         { "speed 2", 1f},
-        { "haltTime 2", 0.5f},
+        { "haltTime 2", 1.5f},
     };
 
     private bool sceneLoaded = false;
@@ -193,7 +193,12 @@ public class GameManager : MonoBehaviour
                 if (cameraSeqFollower > 0 && cameraSeqFollower < cameraSequence.Count)
                 {
                     if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !bosses[0].onCamera)
+                    {
+                        lights.LightTypeTurn(0, LightManager.LightType.Boss);
                         bosses[0].onCamera = true;
+                    }
+                    else if (cameraSequence[cameraSeqFollower - 1] == "toDoor" && cameraSequence[cameraSeqFollower] == "toBoss")
+                        OpenDoors(DoorType.BossIn, false);
                 }
                 if (k.haltTime < Time.time)
                     k.SetUp((int)camModer[cameraSequence[cameraSeqFollower]]);
@@ -215,7 +220,7 @@ public class GameManager : MonoBehaviour
                     debug += " which ended the Sequence";
                 }
 
-                Debug.Log(debug);
+                //Debug.Log(debug);
             }
         }
     }
@@ -267,6 +272,7 @@ public class GameManager : MonoBehaviour
     void ReloadScene()
     {
         PlayerRevive();
+        lights.Start();
         sceneLoaded = true;
     }
     void OpenCloseInventory()
@@ -351,32 +357,27 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Doors
-    public void SetDoorType(DoorType type, bool open = true)
+    public void AddDoor(DoorBehavior newDoor)
     {
-        foreach (DoorBehavior d in doors.Keys)
-            if (doors[d] == type)
-                d.ChangeState(open);
-    }
-    public void AddDoor(DoorBehavior newDoor, DoorType type)
-    {
-        doors.Add(newDoor, type);
+        doors.Add(newDoor);
     }
     public void RemoveDoor(DoorBehavior oldDoor)
     {
         doors.Remove(oldDoor);
     }
-    private void OpenDoors(DoorType type)
+    public void OpenDoors(DoorType type, bool open = true)
     {
-        foreach (DoorBehavior d in doors.Keys)
-            if (doors[d].Equals(type))
-                d.ChangeState(true);
+        foreach (DoorBehavior d in doors)
+            if (d.type.Equals(type))
+                d.ChangeState(open);
     }
-    public DoorBehavior GetDoors(DoorType type)
+    public DoorBehavior[] GetDoors(DoorType type)
     {
-        foreach (DoorBehavior d in doors.Keys)
-            if (doors[d] == type)
-                return d;
-        return null;
+        List<DoorBehavior> dos = new();
+        foreach (DoorBehavior d in doors)
+            if (d.type == type)
+                dos.Add(d);
+        return dos.ToArray();
     }
 
     #endregion
@@ -428,14 +429,14 @@ public class GameManager : MonoBehaviour
         {
             if (target.x == camera.position.x && target.y == camera.position.y)
             {
-                Debug.Log($"Target [{target.x}, {target.y}] reached!");
+                //Debug.Log($"Target [{target.x}, {target.y}] reached!");
                 moving = false;
             }
             else // if need moving
             {
                 Vector2 move = Vector2.MoveTowards(camera.transform.position, target, speed * moveSpeed);
                 camera.transform.position = new Vector3(move.x, move.y, camera.transform.position.z);
-                Debug.Log($"Moving {name.ToUpper()} towards [{target.x}, {target.y}]");
+                //Debug.Log($"Moving {name.ToUpper()} towards [{target.x}, {target.y}]");
             }
 
             return !moving;
@@ -460,7 +461,7 @@ public class GameManager : MonoBehaviour
             moveSpeed = camModer["speed " + mode];
             moving = true;
 
-            Debug.Log($"Camera {name} set to Mode [{instance.GetModReverse(mode)}]:\ntarget on: [{target.x}, {target.y}]\nhalt time: {haltTime}\nmove speed: {moveSpeed}");
+            //Debug.Log($"Camera {name} set to Mode [{instance.GetModReverse(mode)}]:\ntarget on: [{target.x}, {target.y}]\nhalt time: {haltTime}\nmove speed: {moveSpeed}");
         }
         public static void ChangeCamera(Kamera[] list, string camName)
         {
@@ -524,33 +525,35 @@ public class GameManager : MonoBehaviour
     }
     private void GetModeTarget(int mode, out Vector2 position)
     {
-        bool suc = true;
+        //bool suc = true;
         switch (mode)
         {
             case 0:
-                position = player.transform.position;
+                position = Kamera.GetCamera(cameras, "player").camera.transform.position;
                 break;
             case 1:
                 position = bosses[0].transform.position;
                 break;
             case 2:
-                position = GetDoors(DoorType.BossIn).GetClosedPos();
+                position = GetDoors(DoorType.BossIn)[0].GetClosedPos();
                 break;
 
             default:
                 Debug.LogWarning("Mode " + mode + " was not identified! ");
                 position = Vector2.zero;
-                suc = false;
+                //suc = false;
                 break;
         }
+        /*
         if (suc)
-            Debug.Log($"Target of mode: {GetModReverse(mode)}({mode}) position recieved [{position.x}, {position.y}]");
+            Debug.Log($"Target of mode: {GetModReverse(mode)}({mode}) position recieved [{position.x}, {position.y}]");*/
     }
-    private string GetModReverse(float val)
+    
+    /*private string GetModReverse(float val)
     {
         foreach (string s in camModer.Keys)
             if (camModer[s] == val)
                 return s;
         return "[NULL]";
-    }
+    }*/
 }
