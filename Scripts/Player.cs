@@ -73,7 +73,7 @@ public class PlayerScript : MonoBehaviour
     }
     private void Update()
     {
-        if (GameManager.ableToMove)
+        if (GameManager.instance.ableToMove)
         {
             ProcessInput();
             Move();

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class ManagerUI : MonoBehaviour
 {
     public Transform[] UIs;
-    static readonly Dictionary<string, int> Dic = new()
+    private static readonly Dictionary<string, int> Dic = new()
     {
         {"base", 0},
         {"inv", 1},
@@ -14,11 +14,10 @@ public class ManagerUI : MonoBehaviour
         {"money", 4 },
         {"quick", 5 },
     };
-
-    private Inventory inventory;
     private itemSlot[] inveSlots;
     private itemSlot[] equiSlots;
     private itemSlot[] quicSlots;
+    private Inventory inventory;
     private int equipL;
     private bool[] pastUIs;
 

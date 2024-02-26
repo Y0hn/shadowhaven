@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LightManager : MonoBehaviour
 {
+    public Light2D globalLight;
     List<LightSource> lights;
 
     public void Start()

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LevelGener : MonoBehaviour
 {
+    #region References
     public Transform[] startingPos;
 
     private Dictionary<string, GameObject> roomContent;
@@ -14,6 +15,7 @@ public class LevelGener : MonoBehaviour
     public float minX;
     public float maxX;
     public float maxY;
+    #endregion
 
     public Vector2 moveAmount;
     public string doorSize = "2x1";
@@ -386,7 +388,7 @@ public class LevelGener : MonoBehaviour
     {
         GameObject spawner;
 
-        spawner = Instantiate(spawnObj, pastPos, Quaternion.identity, room);
+        spawner = Instantiate(spawnObj, new(pastPos.x, pastPos.y), Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
     }
@@ -395,7 +397,7 @@ public class LevelGener : MonoBehaviour
         if (deleteAssets)
         {
             Destroy(GameObject.FindGameObjectWithTag("Assets"));
-            GameManager.generated = true;
+            GameManager.instance.generated = true;
         }
         // Destroy(gameobject);
         name = "Generated Floor";

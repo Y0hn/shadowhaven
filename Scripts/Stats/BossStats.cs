@@ -41,7 +41,7 @@ public class BossStats : EnemyStats
         if (start)
         {
             GameManager.instance.AddBoss(this);
-            start = !GameManager.generated;
+            start = !GameManager.instance.generated;
         }
         // 1 => ENTRY
         if (entry)
@@ -55,16 +55,7 @@ public class BossStats : EnemyStats
                     // 1.2.1.1
                     if (fakeHealth < maxHealth)
                     {
-                        // If Skiped
-                        if (GameManager.instance.IsCameraFocused("player"))
-                        {
-                            healthBar.Set(maxHealth);
-                            animator.SetBool("move", true);
-                            entry = false;
-                            timer = 0;
-                        }
-                        // Default path
-                        else if (timer < Time.time)
+                        if (timer < Time.time)
                         {
                             fakeHealth++;
                             healthBar.Set(fakeHealth);
@@ -77,7 +68,9 @@ public class BossStats : EnemyStats
                         // Wait for camera to focus on Boss
                         if (!onCamera)
                         {
+                            GameManager.audio.PlayTheme("boss-theme");
                             animator.SetBool("move", true);
+                            healthBar.Set(maxHealth);
                             barFilling = false;
                             entry = false;
                             timer = 0;
@@ -93,13 +86,22 @@ public class BossStats : EnemyStats
                     fakeHealth = 0;
                     ShowBar(true);
                 }
+                // SKIPED
+                else if (GameManager.camera.IsCameraFocused("player"))
+                {
+                    GameManager.audio.PlayTheme("boss-theme");
+                    animator.SetBool("move", true);
+                    healthBar.Set(maxHealth);
+                    entry = false;
+                    timer = 0;
+                }
             }
             // 1.1
             else if (target.position.y >= activateBorderY)
             {
                 // Play Sound
                 GameManager.audio.PlayTheme("boss-intro");
-                GameManager.instance.CameraSequence("boss");
+                GameManager.camera.CameraSequence("boss");
                 animator.SetBool("move", false);
                 animator.enabled = true;
             }

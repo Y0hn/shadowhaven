@@ -61,7 +61,7 @@ public class PlayerStats : CharakterStats
     }
     protected override void Die()
     {
-        GameManager.playerLives = false;
+        GameManager.instance.playerLives = false;
 
         playerCom.enabled = false;
 

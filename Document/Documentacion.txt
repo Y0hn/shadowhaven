@@ -838,7 +838,6 @@ ____________________/ PLANS \____________________
 
 
 ---/ ADD \---
-Camera Manager
 Secret Roomky
 funkciu 3 quick slotu 
 - Potions/Consumables
@@ -855,7 +854,6 @@ Chce to lepsie movementy Zombosa
 
 
 ---/ MODIFY \---
-Popracovat na centrovani textur heliem
 Load titles from .txt file
 Sound Setting Saves in file
 

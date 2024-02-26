@@ -53,7 +53,7 @@ public class PlayerCombatScript : MonoBehaviour
     }
     private void Update()
     {
-        if (GameManager.ableToMove)
+        if (GameManager.instance.ableToMove)
         {
             #region rotZ
             mousePos = Input.mousePosition;

@@ -1,5 +1,5 @@
-using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine;
 
 public class DoorBehavior : MonoBehaviour
 {
@@ -9,9 +9,9 @@ public class DoorBehavior : MonoBehaviour
 
     private Vector3 closedPosition;
     private Vector3 openedPosition;
-    private const float movinConst = 1;
     private float waitTimer = 0;
     private const float waitConst = 0.01f;
+    private const float movinConst = 1;
     private const float roomCenter = 5;
 
     // True - opened
@@ -26,101 +26,115 @@ public class DoorBehavior : MonoBehaviour
 
     void Start()
     {
-        #region SmartSetup
         // name = "Door:Spawn:10x10-U_-2x1"
         string[] typ;
         typ = name.Split(':');
 
         if (typ.Length > 2)
         {
-            // typ[0] = "Door"
-
-            // typ[1] = "Spawn"
-            switch (typ[1])
-            {
-                case "Boss": 
-                    type = DoorType.BossIn;
-                    interCheck = false; break;
-                case "Loot": 
-                    type = DoorType.BossOut; break;
-                case "Spawn":
-                    type = DoorType.Spawn; 
-                    interCheck = true; break;
-                case "Path": 
-                    type = DoorType.Locked; break;
-                default:
-                    Debug.Log($"{typ[1]} is not an option for door");
-                    break;
-            }
-
-            // typ[2] = "10x10-U_-2x1"
-            typ = typ[2].Split('-');
-
-            // typ[0] = "10x10"
-            float roomX = float.Parse(typ[0].Split('x')[0])/2;
-            float roomY = float.Parse(typ[0].Split("x")[1]) - roomCenter;
-
-            // Position setup
-            // typ[1] = "U_"
-            switch (typ[1])
-            {
-                case "U_": transform.position = new Vector3(transform.position.x, transform.position.y + roomY, transform.position.z);
-                    break;
-                default:
-                case "D_": transform.position = new Vector3(transform.position.x, transform.position.y - roomCenter, transform.position.z);
-                    break;
-                case "_R": transform.position = new Vector3(transform.position.x + roomX, transform.position.y, transform.position.z); 
-                    vertical = true; toRight = true; break;
-                case "_L": transform.position = new Vector3(transform.position.x - roomX, transform.position.y, transform.position.z); 
-                    vertical = true; break;
-            }
-
-            // Verticality
-            if (vertical)
-                transform.rotation = Quaternion.Euler(0,0,90);
-
-            // Setup acording to Type (Role)
-            switch (type)
-            {
-                case DoorType.Spawn:
-                case DoorType.BossIn:
-                    state = true;
-                    break;
-
-                case DoorType.Locked:
-                case DoorType.BossOut:
-                    state = false;
-                    break;
-
-                default:
-                    Destroy(gameObject);
-                    break;
-            }
-
-            closedPosition = transform.position;
-            wanted = state;
-
-            // Opened position
-            // typ[2] = "2x1"
-            float doorSizeX = float.Parse(typ[2].Split('x')[0]);
-            
-            if (vertical)
-            {
-                openedPosition = new Vector3(transform.position.x, transform.position.y + doorSizeX, transform.position.z);
-            }
-            else
-            {
-                openedPosition = new Vector3(transform.position.x + doorSizeX, transform.position.y, transform.position.z);
-            }
-            if (state)
-                transform.position = openedPosition;
-            #endregion
-
-            GameManager.instance.AddDoor(this);
-            setup = true;
+            SetUp(typ, transform);
         }
         else
-            setup = false;
+        {
+            typ = transform.parent.name.Split(':');
+            if (typ.Length > 2)
+            {
+                SetUp(typ, transform.parent);
+            }
+            else
+                setup = false;
+        }
+    }
+    void SetUp(string[] parameters, Transform transform)
+    {
+        // typ[0] = "Door"
+
+        // typ[1] = "Spawn"
+        switch (parameters[1])
+        {
+            case "Boss":
+                type = DoorType.BossIn;
+                interCheck = false; break;
+            case "Loot":
+                type = DoorType.BossOut; break;
+            case "Spawn":
+                type = DoorType.Spawn;
+                interCheck = true; break;
+            case "Path":
+                type = DoorType.Locked; break;
+            default:
+                Debug.Log($"{parameters[1]} is not an option for door");
+                break;
+        }
+
+        // typ[2] = "10x10-U_-2x1"
+        parameters = parameters[2].Split('-');
+
+        // typ[0] = "10x10"
+        float roomX = float.Parse(parameters[0].Split('x')[0]) / 2;
+        float roomY = float.Parse(parameters[0].Split("x")[1]) - roomCenter;
+
+        // Position setup
+        // typ[1] = "U_"
+        switch (parameters[1])
+        {
+            case "U_":
+                transform.position = new Vector3(transform.position.x, transform.position.y + roomY, transform.position.z);
+                break;
+            default:
+            case "D_":
+                transform.position = new Vector3(transform.position.x, transform.position.y - roomCenter, transform.position.z);
+                break;
+            case "_R":
+                transform.position = new Vector3(transform.position.x + roomX, transform.position.y, transform.position.z);
+                vertical = true; toRight = true; break;
+            case "_L":
+                transform.position = new Vector3(transform.position.x - roomX, transform.position.y, transform.position.z);
+                vertical = true; break;
+        }
+
+        // Verticality
+        if (vertical)
+            transform.rotation = Quaternion.Euler(0, 0, 90);
+
+        // Setup acording to Type (Role)
+        switch (type)
+        {
+            case DoorType.Spawn:
+            case DoorType.BossIn:
+                state = true;
+                break;
+
+            case DoorType.Locked:
+            case DoorType.BossOut:
+                state = false;
+                break;
+
+            default:
+                Destroy(gameObject);
+                break;
+        }
+
+        closedPosition = transform.position;
+        wanted = state;
+
+        // Opened position
+        // typ[2] = "2x1"
+        float doorSizeX = float.Parse(parameters[2].Split('x')[0]);
+
+        if (vertical)
+        {
+            openedPosition = new Vector3(transform.position.x, transform.position.y + doorSizeX, transform.position.z);
+        }
+        else
+        {
+            openedPosition = new Vector3(transform.position.x + doorSizeX, transform.position.y, transform.position.z);
+        }
+        if (state)
+            transform.position = openedPosition;
+
+        GameManager.enviroment.AddDoor(this);
+        setup = true;
     }
     void Update()
     {
@@ -187,22 +201,23 @@ public class DoorBehavior : MonoBehaviour
                 }
             }
         }
-        else if (Time.time > waitTimer)
+        else if (Time.time > waitTimer && !renamed)
         {
-            // parent.name = "Spawn=10x10-U_"
-            string[] s = transform.parent.name.Split('=');
-            if (s.Length > 1)
+            // room.name = "Spawn=10x10-U_"
+            Transform t = transform.parent;
+            string[] s;
+
+            s = t.parent.name.Split('=');
+            // name = "Door-2x1(clone)"
+            // name = name.Split('(')[0];
+            // name = "Door-2x1"
+            string[] q = t.name.Split('-');
+
+            if (2 <= s.Length && q.Length >= 2)
             {
-                if (!renamed)
-                {
-                    // name = "Door-2x1(clone)"
-                    // name = name.Split('(')[1];
-                    // name = "Door-2x1"
-                    string[] q = name.Split('-');
-                    name = q[0] + ":" + s[0] + ":" + s[1] + "-" + q[1];
-                    // name = "Door:Spawn:10x10-U_-2x1"
-                    renamed = true;
-                }
+                t.name = q[0] + ":" + s[0] + ":" + s[1] + "-" + q[1];
+                // t.name = "Door:Spawn:10x10-U_-2x1"
+                renamed = true;
                 Start();
             }
             waitTimer = Time.time + waitConst;
@@ -268,7 +283,7 @@ public class DoorBehavior : MonoBehaviour
     }
     private void OnDestroy()
     {
-        GameManager.instance.RemoveDoor(this);
+        GameManager.enviroment.RemoveDoor(this);
     }
 }
 public enum DoorType
