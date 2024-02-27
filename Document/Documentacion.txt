@@ -16,10 +16,8 @@ Goal:
 __________________/ PROGRESS \__________________
 ----------------< 03. 10. 2023 >----------------
 Zaciatok Dokumetacie
-
 Pridane Funkcie: 
 	pohyb hraca + kamery
-
 Pridane Textury:
 	Enviroment = { background, rock1, 
 		rock2, tree1, tree2 
@@ -27,161 +25,122 @@ Pridane Textury:
 	Player = { torso, head, armL, armR, legL, 
 		legR 
 		}
-
 Pridane Animacie:
 	Player = { RunR, RunL, RunU, RunD, Idle}
 		Movement(RunR, RunL, RunU, RunD)
 	  Tanzisions:
 		Idle => Movement
-		Movement => Idle
-		
+		Movement => Idle		
 Vytvorene Animatory:
 	Player.Player
 		Variables { float Horizontal, 
 			float Vertical, float speed
 			}
 		Tranzicion time (Movement <=> Idle) = 0.1
-
-
 Pridane UI:
 	Canvas + EventSystem
-
 Pridane Sceny:
 	InGame
 	MainMenu
-
 Pridane Scripty:
 	PlayerScript
 	GameManager
 	MenuManager
-
 ----------------< 04. 10.  2023 >----------------
 Pridane Scripty:
 	PlayerData
 	SaveSystem
-
 Upravene Scripty:
 	PlayerSystem
 	GameManager
-
 Pridane Textury:
 	Weapons = { sword, bow, knife }
-
 Pridane Objekty:
 	Player.body.armL.WeaponL
 	Player.body.armR.WeaponR
 	Canvas.PauseMenu
-
 GitHub Commit:
 	First Sample Commit
-
 ----------------< 05. 10.  2023 >----------------
 Pridane Funkcie:
 	Save
 	Load
 	Pause
 	Resume
-
 Neuspesne Pokusy o:
 	Pohyb PauseMenu mysou
 	Load v PauseMenu 
 	- (aby sa prejavil je potrebne z neho vystupit)
-
 Upravene Scripty:
 	GameManager
 	PlayerScript
-
 Pridane UI:
 	Pause Menu = { 
 		resume-button, save-button, 
 		load-button, quit-button 
 		}
-
 ----------------< 06. 10.  2023 >----------------
 Pridane Funkcie:
 	Attack
 	Hit
 	Die
 	Enemy Random Health
-
 Pridane Animacie:
 	AttackL
-
 Pridane Objekty:
 	Player.body.armL.MeleeWeaponL.AttackPointL
 	Player.body.armR.MeleeWeaponR.AttackPointR
 		+ render ich range v scripte
-
 Pridane Objekty:
 	Enemy
-
 Pridane Layery:
 	Enemy
-
 Pridane Scripty:
 	EnemyScript
-
 Upravene Animacie:
 	Player.{ RunR, RunL, RunU, RunD }
 		pridanie animacie pre MeleeWeapons
-
 Uprava Animatory:
 	Player.Player
 		Tranzicion time (Movement <=> Idle) = 0
 		pridane Variables { Trigger Attack, bool Melee, bool Ranged }
-
 Upravene Objekty:
 	WeaponL	=> MeleeWeaponL
 	WeaponR	=> MeleeWeaponR
-
 Upravene Scripty:
 	PlayerScript
-
 ----------------< 07. 10.  2023 >----------------
 Pridane Funkcie:
 	Directional Attack
-
 Pridane Animacie:
 	MeleeAttack = { AttackR, AttackL, AttackU, AttackD }
-
 Upravene Scripty:
 	PlayerScript
-
 Upravene Animatory:
 	Player.Player
-
 ----------------< 08. 10.  2023 >----------------
 Pridane Textury:
 	Zombie = { grey(player) + damage(limbs, torso, head) }
-	
 ----------------< 09. 10.  2023 >----------------
 Pridane Scripty:
 	ZombieScript
-
 Pridane Animacie
-	Zombie = { goR, goL, idle }
-
-	
+	Zombie = { goR, goL, idle }	
 ----------------< 10. 10.  2023 >----------------
 Pridane Funkcie:
 	Zombie.Follow
-
 Pridane Animacie
 	Zombie = { goU, goD, attackR, attackL, attackU, attackD }
-
 Upravene Animacie:
 	Zombie.idle
-	
 ----------------< 11. 10.  2023 >----------------
 Bug Fixes: 
 	Animacie:
 		Zombie
 	Scripty:
 		ZombieScript
-
 Pridane Animacie:
 	Zombie = { dieR, dieL}
-	
 ----------------< 12. 10.  2023 >----------------
 Bug Fixes:
 	GameObjekty:
@@ -189,30 +148,21 @@ Bug Fixes:
 	Scripty:
 		ZombieScript
 		EnemyScript
-
 Pridane Scripty:
 	EnemiesData
-
 Zombie Prefab Nedokonceny:
 	Chyba - Load playerScript v enemyScripte
-
 IMPORTANT REWORK SCHEDULED:
 	Prerobenie visualu aby sa podobal viac na BOI
 		vacsi pomer hlavy k telu
-		
 ----------------< 13. 10.  2023 >----------------
 Graficky Update:
 	Rework Player Body
 		Sprites
 		Weapons
-
 Nova Koncepcia Combatu:
 	odelene ruk do tela
-
 Vymazane nepotrebne stare Sprity
-
-// Pokracovat v raw animovani player.runUD
-
 ----------------< 14. 10.  2023 >----------------
 Animacie Dokoncene:
 	Player = { runR, runL, runU, runD, IDLE,
@@ -220,10 +170,8 @@ Animacie Dokoncene:
 		}
 Velke Changes:
 	PlayerScript
-
 Pridane Scripty:
 	PlayerCombatScript
-
 ----------------< 15. 10.  2023 >----------------
 Pridane Scripty:
 	ProjectileScript
@@ -231,202 +179,130 @@ Pridane Scripty:
 	playerManager
 	ItemData
 	LootScript
-
 Pridane GameObjecty:
 	Zombie
-
 Neuspesne Pokusy o:
 	Loot
 	Ranged
 	Damage.Enemy
 	Item list
 	. . .
-
 ----------------< 16. 10.  2023 >----------------
 Pridane Funkcie:
 	Health Bar
 	Player.TakeDamage
-
 Pridane Scripty:
 	HealthBar
-
 Pomenene nazvy Scriptov:
 	Odstraneny Retazec "Script
-
 ----------------< 17. 10.  2023 >----------------
 Pridane Funkcie:
 	Dokonceny Basic Combat
-
 Update Animacii:
 	Zombie Death
-
 ----------------< 18. 10.  2023 >----------------
 Pridane Funkcie:
 	if player dies game pauses
-	
 Bug Fixses:
 	Player Combat Death
 	Zombie Texture Gliting
-
 ----------------< 19. 10.  2023 >----------------
 Bug Fixes:
 	Zombie.FollowBehavior
-
 Nedokonceny pokus o:
 	Tile Map Random Generovanie
-
 ----------------< 20. 10.  2023 >----------------
 Pridane:
 	Zaciatok Auto Generacie Levelov
-
 Pridane Scripty:
 	LevelGener
 	SpawnObject
-
 Pridane Prefaby:
 	Room = { RL, UR, UL ...}
 	Tile
-
 ----------------< 21. 10.  2023 >----------------
 Pridane Funkcie:
 	Simple Map Generation
-
 Work On Hold:
 	Room Content Tempates
-
 ----------------< 22. 10.  2023 >----------------
 Pridane Funkcie:
 	Ranged Combat
 	Weapon change
-
-Bugs:
-	Texture overlay:
-		Hand		<=> Projectile
-		Hand		<=> Zombie.body
-		Projectile	<=> Player.body
-
 ----------------< 23. 10.  2023 >----------------
-Pridane Prefaby
-	Skeleton
-
-Pridane textury:
-	Sekeleton = { torso, head, legRL }
-
 Bug Fixes:
 	enemy behind sword glitch
-
+Pridane Prefaby
+	Skeleton
+Pridane textury:
+	Sekeleton = { torso, head, legRL }
 Neuspesne pokusy o:
 	Melee Weapon fliper
-
 ----------------< 24. 10.  2023 >----------------
 Pridane Funkcie:
 	Enemy Generation
-
 Grafical Update:
 	Skeleton
-
 Pridane Aniamcie:
 	Skeleton = { skel-runD, skel-runU }
-
 Pridane Scripty:
 	SpawnListRand
-
 ----------------< 25. 10.  2023 >----------------
 Textury Update:
 	Skeleton
-
 Animacie Update:
 	Skleton
-
 Pridane Sripty:
 	ShootAtTargetBehavior
-
-Bugs:
-	Player dont take projectile damage
-	Skeleton range multiplays
-	Skeleton acuracy
-	Skeleton arrow spawning direction
-	Zombie damage TOO OP :S
-	
 ----------------< 26. 10.  2023 >----------------
-Prev Bugs Found:
-	Sword Hidbox Rotation offset inconsistency
-
 Bud Fixes:
 	Skelelton Bug Fixes	
 	Sword Hidbox Rotation offset inconsistency	
 	Player dont take projectile damage
 	Skeleton range multiplays
 	Skeleton acuracy
-	
 Pridane Aniamcie:
 	Skeleton.skel-death
-
 ----------------< 27. 10.  2023 >----------------
-Balancing Gugs:
-	Damages
-	Health Player
-	Damage Burts
-	 . . . 
-
 Pridane Funkcie:
 	You Died screen
 		Test repawn
 	UI cover
 	Respawn player
-
 Pridane Prefaby:
 	Level
 	PlayerBlueprint
-
 ----------------< 28. 10.  2023 >----------------
 Fixes:
 	Animation Fix:
 		Skleton face
-
-Pridane Funkcie:
+		Pridane Funkcie:
 	Combat Hurt
 	Skeleton contact behavior
-
 Plan:
 	Mozno odstranit Enemy invincibility
-
 ----------------< 29. 10.  2023 >----------------
 Pridane Funkcie:
 	Health bar Update
 	Better Room Generation:
 		Borders
 		LRDU Modularity
-
 Pridane Prefaby:
 	L R D U
-		
 Pridane textury:
 	Walls placeholders
-
-Unity Warnings:
-	[Worker0] SendMessage cannot be called 
-	during Awake, CheckConsistency, 
-	or OnValidate (ProjectileEnemy: 
-	OnSpriteTilingPropertyChange)
-	UnityEngine.GUIUtility:ProcessEvent 
-	(int,intptr,bool&)
-
 ----------------< 30. 10.  2023 >----------------
 Pridane Funkcie:
 	Even Better Room Generation
 	Working Main Menu 
-
 Pridane Textury:
 	Walls
 	Floor 
-
 ----------------< 31. 10.  2023 >----------------
 Fixes:
 	Scene change bug
 		unable to move
 		no map regeneration
-
 Pridane Funkcie:
 	Level Generation Changes:
 		- border
@@ -434,25 +310,13 @@ Pridane Funkcie:
 		+ Start Gener - Spawn Room
 		+ End Gener   - Boss Room
 		+ Gizmos
-
 Pridane Textury:
 	Boss Room Floor
-
 Pridane Prefaby:
 	Boss Room
 	Tem Boss
 	Spawn R/L/U
 	Tem S R/L/U
-
-Add Plan:
-	+ itemy do spawn Roomky
-	+ dropy z mobiek
-	+ texturu podlahy
-	+ skeleton runaway
-		+ runAway behavior
-	- Tem S R/L/U
-		+ Tem Spawn
-
 ----------------< 01. 11.  2023 >----------------
 Pridane Funkcie:
 	Boss Romm	=> 20x20
@@ -460,70 +324,46 @@ Pridane Funkcie:
 	Imroved Room Generation
 		+ Content
 	Behavior Run Away (FollowBeh)
-
-Found Bugs:
-	Enemy Heatht bar is overlaped by 
-	room pathBlocks
-
 ----------------< 02. 11.  2023 >----------------
 Pridane Funkcie:
 	End Room
-
 Pridane textury:
 	Boss. head1
-
 ----------------< 03. 11.  2023 >----------------
 Pridane Funkcie:
 	Inventory
 	Pickup itemov
 	ManagerUI
 	Equipment System
-
 Pridane textury:
 	UI backgound
-
-Bugs:
-	Item Sprite can not be null !!!
-
 ----------------< 04. 11.  2023 >----------------
 Kontrola - anco1.txt
-
 ----------------< 05. 11.  2023 >----------------
 Uhladzovanie
-
 ----------------< 06. 11.  2023 >----------------
 Fixes:
 	Room Generator Bug
 		transform.position
 	Screen Bug
 		pixalated grafics in Editor
-
 Weapon Equipment System:
 	Da sa menit zbrane v inventari
 	da sa unequipovat zbrane
 	da sa nimi nastavovat dmg
 	. . .
-
-WARNING 
-	Rovnake zbrane sa overwrituju.
-
-
 ----------------< 07. 11.  2023 >----------------
 Fixes:
 	Skeleton Health bar overlap
-
 Pridane Textury:
 	Ikony = { box, sword }
-	
 Pridane funkcie:
 	Player drop item
 	level contains items
 	spawn items from certain level
 	Vylepsene Main Menu
-
 Prvy Build:
 	*LINKS 1
-
 ----------------< 08. 11.  2023 >----------------
 Bug Fixes:
 	Skeleton bow Sprite Missing
@@ -532,54 +372,38 @@ Bug Fixes:
 	Ranged combat on open inv
 	On activation Ranged weapon Self Damage
 	Ranged Collider Self Damage
-
-Found Bugs:
-	Skeleton Behavior "kmitane" na kraji rangu
-
 ----------------< 09. 11.  2023 >----------------
 Pridane Funkcie:
 	Secondary weapon system
 	Quick item slots (only UI)
-
 Navrh na Zlepsenie:
 	Odelit player Input system od PlayerScriptu
-
 ----------------< 10. 11.  2023 >----------------
 Pridane Funkcie:
 	Quick item slots
-	
-Navrh na Zlepsenie:
-	Dropovanie itemov na nahodne miesta v Rangi
-
 ----------------< 11. 11.  2023 >----------------
 Pridane Funkcie:
 	Equipment Clothes
 	New item system
-
 Neuspesny pokus o:
 	Rozdelenie PlayerScriptu do PlayerInputu
-
 ----------------< 12. 11.  2023 >----------------
 Pridane Funkcie:
 	Spojenie Equipment scriptov
 	armorModifier
-
 ----------------< 13. 11.  2023 >----------------
 Povodny Plan: 
 	[Syetem.Serializable] Stat
 	- first failed misurebly :D
 	- then done some work on it and rise 
-
 Napady na buducich bossov:
 	Spider like
 	The Forest like boss (velke ruky a toci sa)
 	chapadla
 	skeleton ?
 	slime ?
-
 Napady na behavior:
 	bocny utok 
-
 ----------------< 14. 11.  2023 >----------------
 Pridane Funkcie:
 	Loot z enemy Movbiek [cash] (podla lvl)
@@ -587,84 +411,62 @@ Pridane Funkcie:
 	Implementovane Staty Charakterov
 	Debug [P] => KYS
 	Balancing Scripted Itemov
-
 Bug Fixes:
 	Unable to open pause menu
-
-
 ----------------< 15. 11.  2023 >----------------
 Pridane Funkcie:
 	Somewhat unusable level bar
 	Main menu background update (AI generated)
-
 ----------------< 16. 11.  2023 >----------------
 Boss Desing:
 	Somehow not absolute waste of time
 	+ Boss.cs
 	+ ZomBoss.Textury
-
 ----------------< 24. 11.  2023 >----------------
 Pridane Funkcie:
 	MeinMenu Upgrade
-
 ----------------< 25. 11.  2023 >----------------
 Pridane Funkcie:
 	Better Bow
-
 ----------------< 27. 11.  2023 >----------------
 Pridane Funkcie:
 	Loading From Resourses
-
 ----------------< 28. 11.  2023 >----------------
 Pridane Funkcie:
 	ZomBoss Animacie:
 		run { L, R, D, U }
-
 ----------------< 29. 11.  2023 >----------------
 Pridane Funkcie:
 	ZombieBoss.roar
 	Better DeathScreen
-
-
 ----------------< 30. 11.  2023 >----------------
 Pridane Funkcie:
 	Boss foundation
-	
 ----------------< 01. 12.  2023 >----------------
 Pridane Funkcie:
 	Boss iniciative
-
-Plan:
-	praca s Boss animatorom + BossStats
-
 ----------------< 02. 12.  2023 >----------------
 Revived Funkcie:
 	Boss Roar
-
 ----------------< 05. 12.  2023 >----------------
 Pridane Funkcie:
 	Boss entry
-
 ----------------< 06. 12.  2023 >----------------
 Pridane Funkcie:
 	Boss Animacia Stomp
-
 ----------------< 09. 12.  2023 >----------------
 Pridane Funkcie:
 	Doors
-
 ----------------< 11. 12.  2023 >----------------
 Pridane Funkcie:
 	Dooring
 	LevelGener update
-
 ----------------< 12. 12.  2023 >----------------
 Pridane Funkcie:
 	Finest door
 	Better spawning
 	Pain and sufering from Boss Behavior
 	Skeleton runaway fix
-
 ----------------< 13. 12.  2023 >----------------
 Pridane Funkcie:
 	Boss Beh
@@ -672,38 +474,21 @@ Pridane Funkcie:
 	textura end
 	player better protection
 	item.texture fix
-	
-Plan:
-	Boss
-		add rechrge animation
-			Reason:
-				attacks too fast
-		add shadow
-		fix "left stom"
-	Better Menu
-	textura dveri
-
 ----------------< 14. 12.  2023 >----------------
 Pridane Finkcie:
 	Boss rechrge
 	Door texture
-Plan:
-	Pridat earth quake
-
 ----------------< 27. 12.  2023 >----------------
 Nejaka zmena v Spawn Room Beh
 	este nedokoncene
-
 ----------------< 01. 01.  2024 >----------------
 ZomBoss:
 	+ Charge anim
 	- stomp anim
 	+ Boss beh selecter
-
 ----------------< 02. 01.  2024 >----------------
 Any sing of progers
 	:O
-
 ----------------< 03. 01.  2024 >----------------
 ZomBoss Finished
 Boss Health bar Upgrade
@@ -711,12 +496,10 @@ Boss Health bar Upgrade
 		2873 * 94
 	Fill overflow
 Level_02 foundation
-
 ----------------< 04. 01.  2024 >----------------
 Added Slime
 	+ upgrade FollowBeh
 Desprate pokus o Zoom v menu
-
 ----------------< 05. 01.  2024 >----------------
 MainMenu Tranzition
 Better Main Menu BackGround
@@ -724,119 +507,94 @@ Better Main Menu BackGround
 UI border
 + level Bar
 README update
-
 ----------------< 06. 01.  2024 >----------------
 New Weapons designs
 + UIalt
-
 ----------------< 07. 01.  2024 >----------------
 5 new weapon scripted objects
-
 ----------------< 08. 01.  2024 >----------------
 4.5 new helmet textures + scripted obj
-
 ----------------< 10. 01.  2024 >----------------
 Spider 
-
 ----------------< 11. 01.  2024 >----------------
 Spider done
-
 ----------------< 12. 01.  2024 >----------------
 Bug Fixes
-
 ----------------< 13. 01.  2024 >----------------
 OST - SFX branch merge
 Improvment in melee range
 Bow - tetiva seperate texture
 Skeleton shootin animacia
 Main menu ESC close
-
 ----------------< 14. 01.  2024 >----------------
 Kontrola - anco2.txt
 First Sound Impact
 AudioManager
-
 ----------------< 15. 01.  2024 >----------------
 Rarity vizualization
-
 ----------------< 16. 01.  2024 >----------------
 Better Rarity vizualization
-
 ----------------< 17. 01.  2024 >----------------
 Icons
 UI slight change
-
 ----------------< 18. 01.  2024 >----------------
 Titles screen
-
 ----------------< 19. 01.  2024 >----------------
 Added ItemDrop Layer
 Some NOOB sound work
-
 ----------------< 20. 01.  2024 >----------------
 Added SubMenu (Settings) animations
-
 ----------------< 21. 01.  2024 >----------------
 Hidding Health Bar
-
 ----------------< 22. 01.  2024 >----------------
 Improved level Generation
-
 ----------------< 23. 01.  2024 >----------------
 Chest Texture
-
 ----------------< 24. 01.  2024 >----------------
 Chest animacia + script
-
 ----------------< 25. 01.  2024 >----------------
 Chest Interactable completed
 + SomeWhat Of EndGame
-
 ----------------< 26. 01.  2024 >----------------
 Rarity spawn fix
-
 ----------------< 27. 01.  2024 >----------------
 Damage difference weapons fix
 Better Level bar 
 Bow Balancing
 HealthBar Optimalization
 Level up heal 20%
-
 ----------------< 30. 01.  2024 >----------------
 Basic Light Implementation
-
 ----------------< 31. 01.  2024 >----------------
 Shadow Casting - Walls
 	Path Shadows are from L and D
-
 ----------------< 01. 02.  2024 >----------------
 ZomBoss Mutli direcitonal ROAR
 	+ Improved Textures
-
 SFX implementation
 temporary OST import
-
 ----------------< 02. 02.  2024 >----------------
 ZomBoss spits
-
 ----------------< 08. 02.  2024 >----------------
 UI upgrades + bug fixes
-
 ----------------< 15. 02.  2024 >----------------
 ZomBoss ranged combat
-
 ----------------< 17. 02.  2024 >----------------
 UI upgrade
-
 ----------------< 18. 02.  2024 >----------------
 Main Menu dependacies
-
 ----------------< 19. 02.  2024 >----------------
-
-
+Spawn On Destroy
+----------------< 22. 02.  2024 >----------------
+----------------< 23. 02.  2024 >----------------
+Free Camera Improvement Proces
+----------------< 24. 02.  2024 >----------------
+Moveing every instance into GameManager
+----------------< 25. 02.  2024 >----------------
+Boss Torches
+----------------< 26. 02.  2024 >----------------
+OverAll manager improvement
 ____________________/ PLANS \____________________
-
-
 ---/ ADD \---
 Secret Roomky
 funkciu 3 quick slotu 
@@ -872,29 +630,6 @@ Better Balancing
 	boss fight gate preopened
 	arrow in bow scalling error ? / GIANT sip
 	Fast bow (very fast very bad)
-		
-
-_________________/ FIXED  BUGS \_________________
-When equiped new equipment, but weapon stays same, Player damage set to 0
-arrow - redo (some Warnings) - nothing changed
-Inicial Equipment can be Legendary (BAD)
-Spawn Doors verical closin not opening
-	- removed spawn door
-Weapon weird behavior when pickup item 
-	- palyer onEquipChangeCallBack
-multiple melee attacks at same time !
-	- enemy invi time
-Bow damage not loading to arrow
-Boss Hittable before cutScene
-Oci hraca clip trou helmet
-Skeleton Bow missing
-Rarity spwan overlap
-Boss refuses to die
-Boss Bar does hide
-better melee range 
-Boss Bar overflow
-Slime nema drops
-LevelBar
 
 ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
@@ -938,7 +673,7 @@ Layers:
 	" Player		"
 	" Enemy			"
 	" PlayerWeapon	"
-	" rojectile		"
+	" Projectile	"
 	" ItemDrop		"
 	" BossProjectile"
 
