@@ -11,6 +11,7 @@ public class FollowBehavior : StateMachineBehaviour
     public bool onlySetTrajectory = false;
     public float trajectoryLimit = -1;
     public float startDelay = 0;
+    public float velocityStopTreshold = 0;
 
     private bool startDelayed = false;
     private bool inMovement = false;
@@ -18,6 +19,7 @@ public class FollowBehavior : StateMachineBehaviour
     private Vector2 startPos;
     private Rigidbody2D rb;
     private float delay;
+    private const float upperTimeLimit = 5f;
 
     // Start
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -57,8 +59,10 @@ public class FollowBehavior : StateMachineBehaviour
 
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        // MOVEMENT start
         if (inMovement)
         {
+            // CONTINUAL follow
             if (!onlySetTrajectory)
             {
                 Vector2 pos = animator.transform.position;
@@ -89,6 +93,7 @@ public class FollowBehavior : StateMachineBehaviour
                 animator.SetFloat("Horizontal", dir.x);
                 animator.SetFloat("Vertical", dir.y);
             }
+            // TRAJECTORY set
             else if (trajectoryLimit != -1)
             {
                 Vector2 v = new Vector2(animator.transform.position.x - startPos.x, animator.transform.position.y - startPos.y);
@@ -101,7 +106,8 @@ public class FollowBehavior : StateMachineBehaviour
                     animator.SetBool("isFollowing", false);
                 }
             }
-            else if (rb.velocity.x == 0)
+            // STOP condition
+            else if (rb.velocity.x == 0 || (velocityStopTreshold != 0 && (rb.velocity.x <= velocityStopTreshold)))
             {
                 //Debug.Log($"rb.velocity = 0");
                 animator.SetTrigger("attack1");
@@ -109,7 +115,12 @@ public class FollowBehavior : StateMachineBehaviour
                 if (stopOnExit)
                     rb.velocity = Vector2.zero;
             }
+            else if (Time.time < upperTimeLimit)
+            {
+                rb.velocity = Vector2.zero;
+            }
         }
+        // ANIMATION delay
         else if (startDelayed && delay < Time.time)
         {
             SetTrajectory(animator);

@@ -373,6 +373,7 @@ MonoBehaviour:
   onlySetTrajectory: 1
   trajectoryLimit: -1
   startDelay: 0
+  velocityStopTreshold: 0
 --- !u!1102 &-2753475829265376443
 AnimatorState:
   serializedVersion: 6
@@ -510,6 +511,7 @@ MonoBehaviour:
   onlySetTrajectory: 0
   trajectoryLimit: -1
   startDelay: 0
+  velocityStopTreshold: 0
 --- !u!1107 &-905484799157392252
 AnimatorStateMachine:
   serializedVersion: 6

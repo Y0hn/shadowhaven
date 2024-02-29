@@ -594,13 +594,15 @@ Moveing every instance into GameManager
 Boss Torches
 ----------------< 26. 02.  2024 >----------------
 OverAll manager improvement
+----------------< 29. 02.  2024 >----------------
+Boss Bug Fixes:
+	run to da wall 
 ____________________/ PLANS \____________________
 ---/ ADD \---
 Secret Roomky
 funkciu 3 quick slotu 
 - Potions/Consumables
 After sword effect
-Black square nad dvere
 
 Level_02
 - tranzition medzi levelami
@@ -608,8 +610,6 @@ Level_02
 
 Chce to lepsie movementy Zombosa
 - blood pool shots doing area dmg or slow
-- boss room torches na spojovacich miestach zon
-
 
 ---/ MODIFY \---
 Load titles from .txt file
