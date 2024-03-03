@@ -614,23 +614,15 @@ Chce to lepsie movementy Zombosa
 ---/ MODIFY \---
 Load titles from .txt file
 Sound Setting Saves in file
-
-Maybe Names:
-- IntoTheShadows
-- DeepAssDungeon
-
-
 ____________________/ BUGSS \____________________
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-
 // Tim PC:
 	boss fight gate preopened
 	arrow in bow scalling error ? / GIANT sip
 	Fast bow (very fast very bad)
-
 ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
 	Behaviory oboch animacii idu sucastne
@@ -640,43 +632,39 @@ Hodnoty:
 		- su vsetky v intervale ( 0 <=> 1 )
 AudioMixer has no effect on sounds themsefls
  - only when its added to audio source
-
-
 ________________/ LAYERS + TAGS \________________
 Tags:
-	[ Untagged		]
-	[ Respawn		]
-	[ Finish		]
-	[ EditorOnly	]
-	[ MainCamera	]
+	[ Untagged			]
+	[ Respawn			]
+	[ Finish			]
+	[ EditorOnly		]
+	[ MainCamera		]
 
-	" Player		"
-	" GameControler	"
-	" Weapon		"
-	" Tile			"
-	" Wall			"
-	" Floor			"
-	" Melee Enemy	"
-	" Ranged Enemy	"
-	" Level			"
-	" Item			"
-	" Assets		"
-
+	" Player			"
+	" GameControler		"
+	" Weapon			"
+	" Tile				"
+	" Wall				"
+	" Floor				"
+	" Melee Enemy		"
+	" Ranged Enemy		"
+	" Level				"
+	" Item				"
+	" Assets			"
 Layers:
-	[ Default		]
-	[ TransparentFX	]
-	[ Ignore Raycast]
-	" Tile			"
-	[ Water			]
-	[ UI			]
-	" Bedrock		"
-	" Player		"
-	" Enemy			"
-	" PlayerWeapon	"
-	" Projectile	"
-	" ItemDrop		"
-	" BossProjectile"
-
+	[ Default			]
+	[ TransparentFX		]
+	[ Ignore Raycast	]
+	" Tile				"
+	[ Water				]
+	[ UI				]
+	" Bedrock			"
+	" Player			"
+	" Enemy				"
+	" PlayerWeapon		"
+	" Projectile		"
+	" ItemDrop			"
+	" BossProjectile	"
 ___________________/ SOURCES \___________________
 // Unity Basics | Inspirations
 https://youtu.be/XtQMytORBmM?si=P4C39XeGAqxAmMCF
@@ -738,8 +726,6 @@ https://www.youtube.com/watch?v=DOz9vQYKHBg
 
 // UI
 https://youtu.be/YOaYQrN1oYQ?si=C1TnCYHSVUPsyLEq
-
-
 ___________________/ PAYROLL \___________________
 Sounds:
 	Sound Effects
@@ -747,7 +733,6 @@ Sounds:
 
 	OST
 		1  x 5 $
-
 ________________________________________/ TOOLS \________________________________________
 https://www.microsoft.com/store/productid/9PCFS5B6T72H?ocid=pdpshare
 https://apps.microsoft.com/store/detail/XPDCFJDKLZJLP8?ocid=pdpshare

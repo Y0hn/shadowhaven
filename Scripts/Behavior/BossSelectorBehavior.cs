@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class BossSelectorBehavior : StateMachineBehaviour
 {
     public string targetTag;
@@ -17,7 +16,6 @@ public class BossSelectorBehavior : StateMachineBehaviour
     private float timer;
     private float range;
     private bool ch;
-
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         range = animator.GetComponent<EnemyStats>().lookRadius;
@@ -41,7 +39,6 @@ public class BossSelectorBehavior : StateMachineBehaviour
         tChange = Random.Range(minChangeInterval, maxChangeInterval);
         timer = Time.time + tChange;
     }
-
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (setTriger == 0)

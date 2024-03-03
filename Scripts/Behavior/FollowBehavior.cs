@@ -1,6 +1,4 @@
-using System;
 using UnityEngine;
-
 public class FollowBehavior : StateMachineBehaviour
 {
     public string targetTag;
@@ -20,8 +18,6 @@ public class FollowBehavior : StateMachineBehaviour
     private Rigidbody2D rb;
     private float delay;
     private const float upperTimeLimit = 5f;
-
-    // Start
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // References
@@ -56,7 +52,6 @@ public class FollowBehavior : StateMachineBehaviour
         else
             delay = Time.time + startDelay;
     }
-
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         // MOVEMENT start
@@ -127,7 +122,6 @@ public class FollowBehavior : StateMachineBehaviour
             startDelayed = false;
         }
     }
-
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         if (stopOnExit)

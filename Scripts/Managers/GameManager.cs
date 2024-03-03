@@ -1,7 +1,6 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class GameManager : MonoBehaviour
 {
     #region Singleton

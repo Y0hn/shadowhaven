@@ -1,5 +1,4 @@
 using UnityEngine;
-
 public class Grow : MonoBehaviour
 {
     public float rate;
