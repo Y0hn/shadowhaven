@@ -8,6 +8,7 @@ public class ProjectileScript : MonoBehaviour
     public LayerMask targetLayers;
     public bool ableToMove = true;
 
+    private SpawnOnDestroy sod;
     private Vector3 targetPos;
     private Vector2 velocity;
     private Rigidbody2D rb;
@@ -19,6 +20,7 @@ public class ProjectileScript : MonoBehaviour
 
         // References
         string[] temp = name.Split('-');
+        TryGetComponent(out sod);
         if (temp.Length > 1)
         {
             string s = temp[1];
@@ -96,16 +98,22 @@ public class ProjectileScript : MonoBehaviour
                 if (succsess)
                 {
                     hitted.TakeDamage(damage);
-                    Destroy(gameObject);
+                    BefDestroy();
                 }
             }
             if (!rb.velocity.Equals(velocity) && ableToMove)
-                Destroy(gameObject);
+                BefDestroy();
         }
     }
     public int DoDamage() { return damage; }
     void OnDrawGizmosSelected()
     {
         Gizmos.DrawWireSphere(transform.position, size);
+    }
+    void BefDestroy()
+    {
+        if (sod != null)
+            sod.SpawnPreFab();
+        Destroy(gameObject);
     }
 }

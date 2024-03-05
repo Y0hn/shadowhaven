@@ -3,11 +3,6 @@ public class SpawnOnDestroy : MonoBehaviour
 {
     public GameObject preFab;
     public float[] pos = new float[3];
-    
-    /*private void OnDestroy()
-    {
-        SpawnPreFab();
-    }*/
     public bool SpawnPreFab()
     {
         bool ret = preFab != null;

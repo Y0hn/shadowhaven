@@ -597,6 +597,11 @@ OverAll manager improvement
 ----------------< 29. 02.  2024 >----------------
 Boss Bug Fixes:
 	run to da wall 
+----------------< 05. 03.  2024 >----------------
+Bug Fixes:
+	On reload scene OnDestroySpawn()
+
+
 ____________________/ PLANS \____________________
 ---/ ADD \---
 Secret Roomky
@@ -615,6 +620,9 @@ Chce to lepsie movementy Zombosa
 Load titles from .txt file
 Sound Setting Saves in file
 ____________________/ BUGSS \____________________
+Camera
+	Freezes For moment when intro skiped
+	if intro skiped on Boss animation sequence is not competed
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
