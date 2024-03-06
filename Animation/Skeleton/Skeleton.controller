@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: skel-hit
   random: 0
-  onEnter: 0
+  onEnter: 1
   onExit: 0
   onUpdateTimer: -1
 --- !u!1102 &-1083185171995273446
@@ -644,7 +644,7 @@ MonoBehaviour:
   targetTag: Player
   rate: 0.5
   hide: 1
-  projectile: {fileID: 8954253706964517091, guid: e83ef89ef0f418144bd48bf92ee76644, type: 3}
+  projectile: {fileID: 3669296211370645970, guid: ace4ea0347d07fd4084346a0ed476d3c, type: 3}
 --- !u!114 &8129841794972191166
 MonoBehaviour:
   m_ObjectHideFlags: 1

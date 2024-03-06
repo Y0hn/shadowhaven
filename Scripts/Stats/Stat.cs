@@ -5,28 +5,37 @@ using UnityEngine;
 public class Stat
 {
     [SerializeField]
-    private int value;
-    private List<int> modifiers = new List<int>();
+    private int value = 0;
+    private List<int> modifiers;
     public int GetValue()
     {
+        if (modifiers == null)
+            modifiers = new();
         int finalValue = value;
-        modifiers.ForEach(x => finalValue += x);
+        foreach (int mod in modifiers)
+            finalValue += mod;
+        //Debug.Log("returning: " + finalValue + " number of mods: " + modifiers.Count);
         return finalValue; 
     }
     public void AddMod(int mod)
     {
+        if (modifiers == null)
+            modifiers = new();
         if (mod != 0)
+        {
             modifiers.Add(mod);
+            //Debug.Log("Modifier added: " + mod + " total current value: " + GetValue());
+        }
+        //else Debug.Log("Modifier not added: 0");
     }
     public void RemMod(int mod)
     {
-        if (mod != 0)
-            for (int i = 0; i < modifiers.Count; i++) 
-                if (modifiers[i] == mod)
-                    modifiers.RemoveAt(i);
+        modifiers.RemoveAt(modifiers.IndexOf(mod));
     }
     public void ClearMod()
     {
+        if (modifiers == null)
+            modifiers = new();
         modifiers.Clear();
     }
 }

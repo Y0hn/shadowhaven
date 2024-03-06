@@ -6,44 +6,36 @@ using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
-
+    public AudioMixerGroup masterGroup;
     public Sound[] sounds;
     private int curThemeIndex;
 
     void Start()
     {
-        PlayTheme("theme");
-    }
-    void Update()
-    {
-
-    }
-
-    void Awake()
-    {
-        // Singleton
-        if (instance == null)
-            instance = this;
-        else
-        {
-            Debug.Log("More than one Instance of AudioManager!");
-            Destroy(gameObject);
-            return;
-        }
-
-        // DontDestroyOnLoad(gameObject);
-
         foreach (Sound s in sounds)
         {
             s.source = gameObject.AddComponent<AudioSource>();
             s.source.clip = s.clip;
-
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
             s.source.loop = s.loop;
             s.source.playOnAwake = false;
+            if (s.group != null)
+                s.source.outputAudioMixerGroup = s.group;
+            else
+                s.source.outputAudioMixerGroup = masterGroup;
         }
+
+        PlayTheme("theme");
+    }
+    public void PauseTheme()
+    {
+        if (sounds[curThemeIndex].paused)
+            sounds[curThemeIndex].source.UnPause();
+        else
+            sounds[curThemeIndex].source.Pause();
+
+        sounds[curThemeIndex].paused = !sounds[curThemeIndex].paused;
     }
     public bool Play(string name)
     {
@@ -54,6 +46,7 @@ public class AudioManager : MonoBehaviour
             return false;
         }
         s.source.Play();
+        s.paused = false;
         return true;
     }
     public bool PlayTheme(string name)
@@ -68,7 +61,8 @@ public class AudioManager : MonoBehaviour
             }
             sounds[curThemeIndex].source.Stop();
             // Not Optimal
-            curThemeIndex = sounds.ToList<Sound>().IndexOf(s);
+            curThemeIndex = sounds.ToList().IndexOf(s);
+            s.paused = false;
             s.source.Play();
         }
         else

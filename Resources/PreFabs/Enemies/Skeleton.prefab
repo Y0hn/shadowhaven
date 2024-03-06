@@ -118,9 +118,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1286236174840056466}
   - {fileID: 5054247479548100345}
   - {fileID: 3014592429493327446}
-  - {fileID: 1286236174840056466}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!70 &6781398571071733223
@@ -239,6 +239,8 @@ MonoBehaviour:
   level: 1
   loot: {fileID: 4515999510577055718}
   lookRadius: 5
+  projectile: {fileID: 3669296211370645970, guid: ace4ea0347d07fd4084346a0ed476d3c, type: 3}
+  nextDamage: 0
 --- !u!1 &628351257532487261
 GameObject:
   m_ObjectHideFlags: 0

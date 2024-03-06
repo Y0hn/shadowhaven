@@ -36,7 +36,7 @@ public class PlayerScript : MonoBehaviour
     private bool weaponJustEquiped;
     private bool armed = false;
     private bool combatAct = false;
-    private bool primaryWeap = true;
+    private bool primaryWeap;
     private bool enablePiskup = true;
 
 
@@ -50,7 +50,7 @@ public class PlayerScript : MonoBehaviour
         animator = GetComponent<Animator>();
         stats = GetComponent<PlayerStats>();
         inventory = Inventory.instance;
-        inventory.onItemChangeCallback += UpdateEquipment;
+        inventory.onEquipChangeCallback += UpdateEquipment;
 
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length + 1;
 
@@ -67,12 +67,13 @@ public class PlayerScript : MonoBehaviour
         #endregion
 
         // Set up
+        primaryWeap = true;
         playerCom.enabled = false;
         combatAct = playerCom.enabled;
     }
     private void Update()
     {
-        if (GameManager.ableToMove)
+        if (GameManager.instance.ableToMove)
         {
             ProcessInput();
             Move();
@@ -180,14 +181,16 @@ public class PlayerScript : MonoBehaviour
             a = (Armor)inventory.Equiped(0);
             if (a != null)
                 if (a.texture.Length > 1)
+                //if (helmet.sprite != a.texture[helmetTI] && helmet.flipX == (moveDir.x < 0))
                 {
                     helmet.sprite = a.texture[helmetTI];
-                    helmet.flipX = (moveDir.x < 0);
+                    helmet.flipX = moveDir.x < 0;
                 }
 
             a = (Armor)inventory.Equiped(1);
             if (a != null)
                 if (a.texture.Length > 1)
+                //if (helmet.sprite != a.texture[helmetTI])
                 {
                     torso.sprite = a.texture[torsoTI];
                 }
@@ -255,11 +258,11 @@ public class PlayerScript : MonoBehaviour
 
     private void UpdateEquipment()
     {
-        for (int i = 0; i < numE; i++)
+        Armor a;
+        Equipment e;
+        for (int i = 0; i < Inventory.instance.equipmentCount; i++)
         {
-            Equipment e = inventory.Equiped(i);
-            Armor a;
-            bool b = false;
+            e = inventory.Equiped(i);
 
             if (e != null)
                 switch (i)
@@ -282,6 +285,11 @@ public class PlayerScript : MonoBehaviour
                         }
                         break;
                     case 2:
+                        if (!armed)
+                            weaponJustEquiped = true;
+                        primaryWeap = true;
+                        armed = true;
+                        break;
                     case 3:
                         if (!armed)
                             weaponJustEquiped = true;
@@ -300,18 +308,14 @@ public class PlayerScript : MonoBehaviour
                         torso.sprite = empty;
                         break;
                     case 2:
-                        b = armed;
-                        break;
-                    case 3:
-                        if(b)
-                            armed = false;
+                        primaryWeap = false;
+                        armed = false;
                         break;
                     default:
                         break;
                 }
-
-            ChangeWeapon(primaryWeap, false);
         }
+        ChangeWeapon(primaryWeap, false);
     }
 
     #region GetSet
@@ -325,18 +329,15 @@ public class PlayerScript : MonoBehaviour
     public void ChangeWeapon(bool primar, bool overwrite)
     {
         int j;
-        if (primar)
-            j = 2;
-        else
-            j = 3;
 
-        playerCom.EquipWeapon((Weapon)Inventory.instance.Equiped(j));
+        if (primar) j = 2;
+        else        j = 3;
 
+        armed = playerCom.EquipWeapon((Weapon)Inventory.instance.Equiped(j));
         primaryWeap = primar;
 
-        if (overwrite)
-            if (armed)
-                playerCom.enabled = true;
+        if (overwrite && armed)
+            playerCom.enabled = true;
     }
     public void DropedItem()
     {

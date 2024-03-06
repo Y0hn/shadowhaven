@@ -1,94 +1,93 @@
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-
 public class GameManager : MonoBehaviour
 {
     #region Singleton
+    public static EviromentManager enviroment;
+    public new static CameraManager camera;
+    public new static AudioManager audio;
     public static GameManager instance;
+    public static LightManager lights;
+    public static Inventory inventory;
+    public static ManagerUI ui;
     private void Awake()
     {
         if (instance != null)
+        {
             Debug.LogWarning("More than one Instance of GameManager!");
+        }
         instance = this;
+        enviroment = GetComponent<EviromentManager>();
+        camera = GetComponent<CameraManager>();
+        inventory = GetComponent<Inventory>();
+        lights = GetComponent<LightManager>();
+        audio = GetComponent<AudioManager>();
+        ui = GetComponent<ManagerUI>();
     }
     #endregion
 
     #region References
 
-    public GameObject FreeCamera;
-    public GameObject player;
-    public ManagerUI UI;
     public GameObject[] Levels;
+    public GameObject player;
 
-    private PlayerCombatScript playerCombat;
     private PlayerScript playerScript;
     private PlayerStats playerStats;
-    private GameObject playerCamera;
-    private Inventory inventory;
     private ItemsList items;
 
     #endregion
 
-    public int level;
     public int eqiWeap;
+    public int level;
+    public bool ableToMove { get; set; }
+    public bool playerLives = true;
+    public bool generated = false;
+    public bool inv = false;
 
-    public static bool ongoingBossFight = false;
-    public static bool playerLives = true;
-    public static bool ableToMove = true;
-    public static bool inv = false;
+    // Lists
+    public List<BossStats> bosses = new();
 
-    public bool cameraFocused = false;
-
-    private const float cameraMove = 1f;
-    private float timerCamera;
-
-    private Dictionary<DoorBehavior, DoorType> doors = new();
-
-    private Vector2[] cameraPos = new Vector2[2];
-    private bool movingCamera = false;
-    private bool moveTowards = true;
-
-    private bool bossDefeaded = false;
     private bool sceneLoaded = false;
     private bool deathScreen = false;
 
     void Start()
     {
-        // References
-        // Debug.Log(Application.persistentDataPath);
-        if (player != null)
-        {
-            playerCamera = GameObject.FindGameObjectWithTag("MainCamera");
-            playerCombat = player.GetComponent<PlayerCombatScript>();
-            playerScript = player.GetComponent<PlayerScript>();
-            playerStats = player.GetComponent<PlayerStats>();
-            inventory = GetComponent<Inventory>();
-            items = GetComponent<ItemsList>();
-        }
-        else
+        //// REFERENCES \\\\
+        
+        // Player References
+        if (player == null) // if player reference not set manualy
         {
             player = GameObject.FindWithTag("Player");
             Start();
             return;
         }
+        playerScript = player.GetComponent<PlayerScript>();
+        playerStats = player.GetComponent<PlayerStats>();
+        inventory = GetComponent<Inventory>();
+        items = GetComponent<ItemsList>();
 
+        // Level SetUp
         LevelLoad();
-
         sceneLoaded = true;
     }
     void Update()
     {
-        if (!sceneLoaded) 
+        if (!sceneLoaded)
             ReloadScene();
         if (playerLives)
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
+            // INPUT \\
+            if      (Input.GetKeyDown(KeyCode.Escape))
             {
                 if (ableToMove)
                     PauseGame();
                 else
                     ResumeGame();
+
+                foreach (BossStats b in bosses)
+                    if (b.Active())
+                        b.ShowBar(ableToMove);
             }
             else if (Input.GetKeyDown(KeyCode.E))
             {
@@ -119,12 +118,19 @@ public class GameManager : MonoBehaviour
                 inventory.QuickUse(3);
                 eqiWeap = 0;
             }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (camera.IsCameraFocused("free"))
+                {
+                    camera.SkipCurrentSequence();
+                }
+            }
         }
         else
         {
             if (deathScreen)
             {
-                if      (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space))
                 {
                     PlayerRevive();
                 }
@@ -136,87 +142,23 @@ public class GameManager : MonoBehaviour
             else
                 PlayerDeath();
         }
-
-        if (movingCamera)
-        {
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                movingCamera = false;
-                cameraFocused = true;
-                ChangeCamera();
-            }
-            else if (cameraFocused)
-            {
-                if (!moveTowards)
-                {
-                    movingCamera = false;
-                    ChangeCamera();
-                }
-                else if (timerCamera <= Time.time)
-                {
-                    moveTowards = false;
-                    cameraFocused = false;
-                }
-            }
-            else if (moveTowards)
-            {
-                MoveCamera(3, ref FreeCamera, cameraPos[1]);
-
-                if (FreeCamera.transform.position.x == cameraPos[1].x && FreeCamera.transform.position.y == cameraPos[1].y)
-                {
-                    cameraFocused = true;
-                    timerCamera = Time.time + timerCamera;
-                }
-            }
-            else
-            {
-                MoveCamera(5, ref FreeCamera, cameraPos[0]);
-
-                if (FreeCamera.transform.position.x == cameraPos[0].x && FreeCamera.transform.position.y == cameraPos[0].y)
-                {
-                    cameraFocused = true;
-                    timerCamera = Time.time + timerCamera;
-                }
-            }
-        }
-
-        if (bossDefeaded) // Loot room opening
-        {
-            foreach (DoorBehavior d in doors.Keys)
-            {
-                if (doors[d].Equals(DoorType.BossIn) || doors[d].Equals(DoorType.BossOut))
-                {
-                    d.ChangeState(true);
-                }
-            }
-        }
     }
+
     #region Private Events
     void PauseGame()
     {
         if (inv)
         {
-            UI.DisableUI("inv");
+            ui.DisableUI("inv");
             inv = false;
         }
         else
         {
-            UI.DisableUI(0);
-            UI.EnableUI("pause");
+            ui.DisableUI(0);
+            ui.EnableUI("pause");
+            audio.PauseTheme();
             Time.timeScale = 0f;
             ableToMove = false;
-        }
-    }
-    void OpenCloseInventory()
-    {
-        if (ableToMove)
-        {
-            if (inv)
-                UI.DisableUI("inv");
-            else
-                UI.EnableUI("inv");
-
-            inv = !inv;
         }
     }
     void LevelLoad()
@@ -233,7 +175,7 @@ public class GameManager : MonoBehaviour
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
         levObj.name = levObj.name.Split('_')[0] + "_" +levObj.name.Split('_')[1].Split('(')[0];
         items.SetAll(Resources.LoadAll<Item>($"Levels/{levObj.name}"));
-
+        ableToMove = true;
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(Inventory.instance.GetEquipment());
     }
@@ -241,51 +183,40 @@ public class GameManager : MonoBehaviour
     {
         Inventory.instance.ClearInventory();
         Destroy(GameObject.FindGameObjectWithTag("Level"));
-        AudioManager.instance.PlayTheme("stop");
-        UI.EnableUI("death");
-        UI.DisableUI(0);
+        audio.PlayTheme("stop");
+        ui.EnableUI("death");
+        ui.DisableUI(0);
         deathScreen = true;
         ableToMove = false;
-    }
-    void ChangeCamera()
-    {
-        if (playerCamera.activeSelf)
-        {
-            //Debug.Log("Camera changed to freeCam");
-            FreeCamera.transform.position = new Vector3(cameraPos[0].x, cameraPos[0].y, FreeCamera.transform.position.z);
-            playerCamera.SetActive(false);
-            FreeCamera.SetActive(true);
-            ableToMove = false;
-            UI.ResetUI();
-        }
-        else
-        {
-            //Debug.Log("Camera changed to playerCam");
-            playerCamera.SetActive(true);
-            FreeCamera.SetActive(false);
-            ableToMove = true;
-            UI.RevertUI();
-        }
     }
     void ReloadScene()
     {
         PlayerRevive();
+        lights.Start();
         sceneLoaded = true;
     }
-    void MoveCamera(float force, ref GameObject camera, Vector2 pos)
+    void OpenCloseInventory()
     {
-        Vector2 move = Vector2.MoveTowards(camera.transform.position, pos, force * Time.deltaTime);
-        camera.transform.position = new Vector3(move.x, move.y, camera.transform.position.z);
+        if (ableToMove)
+        {
+            if (inv)
+                ui.DisableUI("inv");
+            else
+                ui.EnableUI("inv");
+
+            inv = !inv;
+        }
     }
 
     #endregion
 
-    #region Public Events
+    #region Game Events
     public void ResumeGame()
     {
-        UI.EnableUI(0);
-        UI.DisableUI("inv");
-        UI.DisableUI("pause");
+        ui.EnableUI(0);
+        ui.DisableUI("inv");
+        ui.DisableUI("pause");
+        audio.PauseTheme();
         Time.timeScale = 1f;
         ableToMove = true;
     }
@@ -297,13 +228,13 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive()
     {
-        AudioManager.instance.PlayTheme("theme");
+        audio.PlayTheme("theme");
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;
         ableToMove = true;
         LevelLoad();
-        UI.ResetUI();
+        ui.ResetUI();
         Time.timeScale = 1f;
     }
     public void Save()
@@ -318,48 +249,22 @@ public class GameManager : MonoBehaviour
         playerStats.level = data.level;
         playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
     }
-    public void BossKilled()
-    {
-        bossDefeaded = true;
-    }
     public void AddXp(int xp) 
     {
         playerStats.AddXp(xp);
     }
-    public void AddDoor(DoorBehavior newDoor, DoorType type)
+    public void AddBoss(BossStats boss)
     {
-        doors.Add(newDoor, type);
+        if (generated)
+            bosses.Add(boss);
     }
-    public void RemoveDoor(DoorBehavior oldDoor)
+    public void BossKilled(BossStats boss)
     {
-        doors.Remove(oldDoor);
-    }
-    public bool GetMovingCam()
-    {
-        return movingCamera;
-    }
-    public void MoveCameraTo(Vector2 B, float forTime)
-    {
-        if (!movingCamera)
+        if (generated && bosses.Contains(boss))
         {
-            cameraPos[0] = playerCamera.transform.position;
-            cameraPos[1] = B;
-            timerCamera = forTime;
-            movingCamera = true;
-            cameraFocused = false;
-            moveTowards = true;
-            ChangeCamera();
-        }
-    }
-    public void MoveCameraTo(Vector2 A, Vector2 B, float forTime)
-    {
-        if (!movingCamera)
-        {
-            cameraPos[0] = A;
-            cameraPos[1] = B;
-            timerCamera = forTime;
-            movingCamera = true;
-            ChangeCamera();
+            enviroment.OpenDoors(DoorType.BossOut);
+            enviroment.OpenDoors(DoorType.BossIn);
+            bosses.Remove(boss);
         }
     }
     public void EndTheGame()
@@ -368,5 +273,6 @@ public class GameManager : MonoBehaviour
         sceneLoaded = false;
         SceneManager.LoadScene(2);
     }
+
     #endregion
 }

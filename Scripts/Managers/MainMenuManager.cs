@@ -111,7 +111,7 @@ public class MenuManager : MonoBehaviour
                     inMenu = true;
                     main = true;
                     if (!SaveCheck())
-                        btnManager.DisableBtn("Continue");
+                        btnManager.SetActiveBtn("Continue", false);
                     btnManager.EnDisMenu("Main");
                 }
             }
@@ -119,7 +119,7 @@ public class MenuManager : MonoBehaviour
     }
     public void ContinueGame()
     {
-
+        Debug.Log("Load saved data");
     }
     public void StartGame()
     {
@@ -128,6 +128,15 @@ public class MenuManager : MonoBehaviour
     public void EnterExitSettings()
     {
         btnManager.EnDisMenu("Settings");
+
+    }
+    public void EnterExitAudio()
+    {
+        btnManager.EnDisMenu("Audio");
+    }
+    public void EnterExitVideo()
+    {
+        btnManager.EnDisMenu("Video");
     }
     public void Quit()
     {

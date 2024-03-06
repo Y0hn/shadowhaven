@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 
 public class PlayerStats : CharakterStats
@@ -25,10 +24,10 @@ public class PlayerStats : CharakterStats
 
         LvlBar.SetMax(tillnextLvl);
         LvlBar.Set(0);
-        Debug.Log("Player stats started! ");
+        //Debug.Log("Player stats started! ");
     }
     private void EquipmentStatsRefresh()
-    {
+    {/*
         armor.ClearMod();
         damage.ClearMod();
 
@@ -38,10 +37,10 @@ public class PlayerStats : CharakterStats
 
             if (a != null)
                 armor.AddMod(a.armorModifier);
-            else
-                Debug.Log("Equipment " + i + " is \"null\"");
+            
+            //else Debug.Log("Equipment " + i + " is \"null\"");
         }
-        //Debug.Log("Player equipment armor updated");
+        //Debug.Log("Player equipment armor updated");*/
     }
     public override void TakeDamage(int dmg)
     {
@@ -62,7 +61,7 @@ public class PlayerStats : CharakterStats
     }
     protected override void Die()
     {
-        GameManager.playerLives = false;
+        GameManager.instance.playerLives = false;
 
         playerCom.enabled = false;
 

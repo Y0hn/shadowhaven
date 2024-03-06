@@ -1,148 +1,208 @@
 using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine;
 public class BtnManager : MonoBehaviour
 {
     public RectTransform[] menus;
+    /* * * * *  ORDER * * * * * *\
+     *                          *
+     *                          *
+     * 0    -   Main            *
+     * 1    -   Settings        *
+     * 2    -   Audio           *
+     * 3    -   Video           *
+     *                          *
+    \* * * * * * *  * * * * * * */
 
-    private Dictionary<string, RectTransform> buttonsRect;
-    private Dictionary<string, Button> buttons;
-    private Dictionary<string, int> menusNames;
-    private Dictionary<int, Vector2> menusPos;
-    private Dictionary<string, int> menuBtns;
+    private Menu[] menu;
 
-    // Animation
-    private const float animationDur = 50f;
-    public float animationSpeed = 50f;
-    private RectTransform animated;
-    private Vector2 targetPos;
-    private AlfaShade shader;
-    private bool deactivate;
-    private bool animate;
-    private bool moveX;
-
-    void Start()
+    void Awake()
     {
-        // References
-        buttons = new();
-        menuBtns = new();
-        menusPos = new();
-        menusNames = new();
-        buttonsRect = new();
+        // REFERENCES
+        menu = new Menu[menus.Length];
         for (int i = 0; i < menus.Length; i++)
-        {
-            RectTransform child = menus[i];
-            List<Transform> grandChildren = new();
-            for (int j = 0; j < child.childCount; j++)
-                grandChildren.Add(child.GetChild(j));
-            foreach (Transform grandChild in grandChildren)
+            menu[i] = new(menus[i], 50f, 25f);
+
+        // DEPEDNANCIES
+        for (int i = 0;i < menu.Length; i++)
+            switch (menu[i].name)
             {
-                try
-                {
-                    if (grandChild.name.Contains("B"))
-                        grandChild.name = grandChild.name.Split('B')[0];
-                    buttonsRect.Add(grandChild.name, grandChild.GetComponent<RectTransform>());
-                    buttons.Add(grandChild.name, grandChild.GetComponent<Button>());
-                    menuBtns.Add(grandChild.name, i);
-                } catch { Debug.LogWarning("GrandChild: " + grandChild.name + " is not a button or is not compatible"); }
+                case "Audio":
+                    menu[1].SetDepend(i);
+                    menu[3].AddAntiDependancy(i);
+                    break;
+                case "Video":
+                    menu[1].SetDepend(i);
+                    menu[2].AddAntiDependancy(i);
+                    break;
             }
-            menusNames.Add(child.name, i);
-            menusPos.Add(i, child.position);
-
-            // Btn Setup
-            child.position = new(- child.position.x - child.sizeDelta.x, child.position.y);
-            child.gameObject.SetActive(false);
-        }
     }
-
+    private void Start()
+    {
+        if (menu.Length < 1)
+            Awake();
+    }
     void Update()
     {
-        if (animate)
+        foreach (Menu m in menu)
         {
-            if (
-                ((animated.position.x < targetPos.x || animated.position.y < targetPos.y) && 0 < animationSpeed)
-                    ||
-                ((animated.position.x > targetPos.x || animated.position.y > targetPos.y) && 0 > animationSpeed)
-                )
-            {
-                if (moveX)
-                    animated.position = new(animated.position.x + animationSpeed * Time.deltaTime, animated.position.y);
-                else
-                    animated.position = new(animated.position.x, animated.position.y + animationSpeed * Time.deltaTime);
-
-                // Shading
-                animated.GetComponent<AlfaShade>().AddTransparency(1/(animationDur/(animationSpeed * Time.deltaTime)));
-            }
-            else
-            {
-                animated.gameObject.SetActive(!deactivate);
-                animate = false;
-            }
+            if (m.animated)
+                m.MoveTowards();
         }
     }
-    public void DisableBtn(string name)
+    public void SetActiveBtn(string name, bool enable)
     {
         try
         {
-            buttons[name].interactable = false;
-            Debug.Log("Disabled btn: " + name);
+            foreach (Menu m in menu)
+                foreach (Button b in m.buttons)
+                    if (b.name == name)
+                    {
+                        b.interactable = enable;
+                        Debug.Log("Disabled btn: " + name);
+                        break;
+                    }
         } 
         catch 
         {
-            string btns = "";
-
-            string[] temp = { "" };
-            if (buttonsRect != null)
-                temp = buttonsRect.Keys.ToArray();
-            if (!temp[0].Equals(string.Empty))
-
-                foreach (string key in temp)
-                {
-                    btns += "\n" + key;
-                }
-            else
-                btns = "[ is empty ]";
-
-            Debug.LogWarning("Button " + name + " is not in Dictionaries (yet)\nList of Buttons:" + btns);
+            Debug.LogWarning(name + " button does make me hurt! ");
         }
     }
     public void EnDisMenu(string name)
     {
-        int index = menusNames[name];
-        animated = menus[index];
-        shader = animated.GetComponent<AlfaShade>();
-        moveX = true;
+        foreach (Menu m in menu)
+            if (m.name == name)
+            {
+                m.MakeMove();
 
-        if (animated.gameObject.activeSelf)
+                if (!m.enabled)
+                    foreach (int i in m.depend)
+                        menu[i].MakeMove(m.enabled);
+                else
+                    foreach (int i in m.antiDepend)
+                        menu[i].MakeMove(!m.enabled);
+            }
+    }
+    public void EnDisMenu(string name, bool enable)
+    {
+        foreach (Menu m in menu)
+            if (m.name == name && m.enabled != enable)
+            {
+                m.MakeMove();
+
+                if (!m.enabled)
+                    foreach (int i in m.depend)
+                        menu[i].MakeMove(m.enabled);
+                else
+                    foreach (int i in m.antiDepend)
+                        menu[i].MakeMove(!m.enabled);
+            }
+    }
+    private class Menu
+    {
+        public  readonly string name;
+        private readonly RectTransform transform;
+        public  readonly Button[] buttons;
+        private readonly AlfaShade shader;
+        private readonly Vector2 originalPos;
+        private readonly Vector2 targetedPos;
+        private readonly float animationDur;
+        public List<int> depend { get; private set; }
+        public List<int> antiDepend { get; private set; }
+        public bool animated { get; set; }
+        private float animationSpeed;
+        public bool enabled;
+
+        public Menu(RectTransform menu, float speed, float dur, float deltaY = 0)
         {
-            animationSpeed = -Mathf.Abs(animationSpeed);
-            if (moveX)
-                targetPos = new(animated.position.x - animationDur, animated.position.y);
-            else
-                targetPos = new(animated.position.x, animated.position.y - animationDur);
+            // Variables
+            depend = new();
+            enabled = false;
+            animated = false;
+            antiDepend = new();
+            this.name = menu.name;
+            this.transform = menu;
+            originalPos = menu.position;
+            animationDur = dur;
+            animationSpeed = speed;
 
-            Debug.Log("Disambling " + name);
-            shader.SetTransparency(1f);
-            deactivate = true;
+            // Btn Setup
+            List<Button> butList = new();
+            List<Transform> children = new();
+            for (int j = 0; j < menu.childCount; j++)
+                children.Add(menu.GetChild(j));
+            foreach (Transform child in children)
+                if (child.TryGetComponent(out Button tempB))
+                {
+                    tempB.name = tempB.name.Split('B')[0];
+                    butList.Add(tempB);
+                }
+             // else Debug.Log(child.name + " is not a Button! ");
+            buttons = butList.ToArray();
+            targetedPos = new(menu.position.x - animationDur, menu.position.y + deltaY);
+            transform.position = targetedPos;
+
+            shader = menu.GetComponent<AlfaShade>();
+
+            // Hidding menu
+            menu.gameObject.SetActive(false);
+            shader.SetTransparency(0);
+
+            // Debug 
+            //Debug.Log($"Created Menu: [{name}] with:\norgPos = {originalPos}\ntarPos = {targetedPos}\nIs enabled = {enabled}");
         }
-        else
+        public void MakeMove()
         {
-            animationSpeed = Mathf.Abs(animationSpeed);
-            targetPos = menusPos[index];
+            transform.gameObject.SetActive(true);
+            enabled = !enabled;
+            animated = true;
 
-            if (moveX)
-                animated.position = new(targetPos.x - animationDur, animated.position.y);
-            else
-                animated.position = new(targetPos.x, animated.position.y - animationDur);
-            animated.gameObject.SetActive(true);
-
-            Debug.Log("Enabling " + name);
-            shader.SetTransparency(0f);
-            deactivate = false;
+            if (enabled)
+                animationSpeed =   Mathf.Abs(animationSpeed);
+            else 
+                animationSpeed = - Mathf.Abs(animationSpeed);
         }
+        public void MakeMove(bool b)
+        {
+            if (enabled != b)
+            {
+                transform.gameObject.SetActive(true);
+                enabled = !enabled;
+                animated = true;
 
-        animate = true;
+                if (enabled)
+                    animationSpeed = Mathf.Abs(animationSpeed);
+                else
+                    animationSpeed = -Mathf.Abs(animationSpeed);
+            }
+        }
+        public void MoveTowards() 
+        {
+            float speed = Mathf.Abs(animationSpeed * Time.deltaTime);
+
+            if (!enabled)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, targetedPos, speed);
+                animated = !(transform.position.x == targetedPos.x && transform.position.y == targetedPos.y);
+            }
+            else
+            {
+                transform.position = Vector2.MoveTowards(transform.position, originalPos, speed);
+                animated = !(transform.position.x == originalPos.x && transform.position.y == originalPos.y);
+            }
+
+            shader.AddTransparency(1 / (animationDur / (animationSpeed * Time.deltaTime)));
+
+            if (!animated && !enabled)
+                transform.gameObject.SetActive(false);
+        }
+        public void SetDepend(int index)
+        {
+            depend.Add(index);
+        }
+        public void AddAntiDependancy(int index)
+        {
+            antiDepend.Add(index);
+        }
     }
 }

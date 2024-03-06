@@ -125,7 +125,7 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
 
-            default:
+            default:                
                 Destroy(gameObject);
                 break;
         }
