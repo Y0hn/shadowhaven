@@ -606,8 +606,8 @@ Bus Fixes:
 	Door cover Mask
 ----------------< 10. 03.  2024 >----------------
 Torch
-
-
+Bug Fixes:
+	if intro skiped on Boss animation sequence is not competed
 ____________________/ PLANS \____________________
 ---/ ADD \---
 Secret Roomky
@@ -628,8 +628,8 @@ Load titles from .txt file
 Sound Setting Saves in file
 ____________________/ BUGSS \____________________
 Camera
+	if Camera Seq skiped sometimes DoorClosedPos returns old (destroyed) door pos
 	Freezes For moment when intro skiped
-	if intro skiped on Boss animation sequence is not competed
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy

@@ -25,9 +25,9 @@ public class CameraManager : MonoBehaviour
     private const float camSpeed = 5f;
     private int cameraSeqFollower;
     private bool proceedInSeq;
+    private string curCamSeq;
     private Kamera[] cameras;
     public Transform freeCam;
-    private string curCamSeq;
 
     void Start()
     {
@@ -272,13 +272,13 @@ public class CameraManager : MonoBehaviour
         //bool suc = true;
         switch (mode)
         {
-            case 0:
+            case 0: // toPlayer
                 position = Kamera.GetCamera(cameras, "player").camera.transform.position;
                 break;
-            case 1:
+            case 1: // toBoss
                 position = GameManager.instance.bosses[0].transform.position;
                 break;
-            case 2:
+            case 2: // toDoor
                 position = GameManager.enviroment.GetDoors(DoorType.BossIn)[0].GetClosedPos();
                 break;
 

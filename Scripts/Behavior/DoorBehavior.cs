@@ -14,15 +14,12 @@ public class DoorBehavior : MonoBehaviour
     private const float movinConst = 1;
     private const float roomCenter = 5;
 
-    // True - opened
-    // False - closed
+    // True     = opened
+    // False    = closed
     private bool state;
     private bool wanted;
-
     private bool setup;
     private bool renamed;
-    private bool interCheck = false;
-    private bool toRight = false;
 
     void Start()
     {
@@ -54,12 +51,12 @@ public class DoorBehavior : MonoBehaviour
         {
             case "Boss":
                 type = DoorType.BossIn;
-                interCheck = false; break;
+                break;
             case "Loot":
                 type = DoorType.BossOut; break;
             case "Spawn":
                 type = DoorType.Spawn;
-                interCheck = true; break;
+                break;
             case "Path":
                 type = DoorType.Locked; break;
             default:
@@ -87,7 +84,7 @@ public class DoorBehavior : MonoBehaviour
                 break;
             case "_R":
                 transform2.position = new Vector3(transform2.position.x + roomX, transform2.position.y, transform2.position.z);
-                vertical = true; toRight = true; break;
+                vertical = true; break;
             case "_L":
                 transform2.position = new Vector3(transform2.position.x - roomX, transform2.position.y, transform2.position.z);
                 vertical = true; break;
@@ -279,13 +276,13 @@ public class DoorBehavior : MonoBehaviour
     {
         wanted = newState;
     }
-    public void SetUpDoor(string size, DoorType newType, bool newVert)
+    /*public void SetUpDoor(string size, DoorType newType, bool newVert)
     {
         // NAME: Door_10x10-2x1
         name = "Door_" + size;
         vertical = newVert;
         type = newType;
-    }
+    }*/
     public Vector2 GetClosedPos()
     {
         return closedPosition;
