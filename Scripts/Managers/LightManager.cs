@@ -50,6 +50,17 @@ public class LightManager : MonoBehaviour
             }
         enabled = true;
     }
+    public void Remove(Light2D light)
+    {
+        for (int i = 0; i < lights.Count; i++) 
+        { 
+            if (lights[i].GetLight2D() == light)
+            {
+                lights.RemoveAt(i); 
+                break;
+            }
+        }
+    }
     private class LightSource
     {
         private readonly SpriteRenderer flameSprite;
@@ -132,6 +143,10 @@ public class LightManager : MonoBehaviour
                 Light(false);
 
             return light2D.intensity >= 1;
+        }
+        public Light2D GetLight2D()
+        {
+            return light2D;
         }
     }
     public enum LightType

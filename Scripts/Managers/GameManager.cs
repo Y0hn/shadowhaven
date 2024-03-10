@@ -258,12 +258,15 @@ public class GameManager : MonoBehaviour
         if (generated)
             bosses.Add(boss);
     }
-    public void BossKilled(BossStats boss)
+    public void BossKilled(BossStats boss, bool onDestroy = false)
     {
         if (generated && bosses.Contains(boss))
         {
-            enviroment.OpenDoors(DoorType.BossOut);
-            enviroment.OpenDoors(DoorType.BossIn);
+            if (!onDestroy)
+            {
+                enviroment.OpenDoors(DoorType.BossOut);
+                enviroment.OpenDoors(DoorType.BossIn);
+            }
             bosses.Remove(boss);
         }
     }

@@ -45,7 +45,7 @@ public class DoorBehavior : MonoBehaviour
                 setup = false;
         }
     }
-    void SetUp(string[] parameters, Transform transform)
+    void SetUp(string[] parameters, Transform transform2)
     {
         // typ[0] = "Door"
 
@@ -79,23 +79,23 @@ public class DoorBehavior : MonoBehaviour
         switch (parameters[1])
         {
             case "U_":
-                transform.position = new Vector3(transform.position.x, transform.position.y + roomY, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y + roomY, transform2.position.z);
                 break;
             default:
             case "D_":
-                transform.position = new Vector3(transform.position.x, transform.position.y - roomCenter, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y - roomCenter, transform2.position.z);
                 break;
             case "_R":
-                transform.position = new Vector3(transform.position.x + roomX, transform.position.y, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x + roomX, transform2.position.y, transform2.position.z);
                 vertical = true; toRight = true; break;
             case "_L":
-                transform.position = new Vector3(transform.position.x - roomX, transform.position.y, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x - roomX, transform2.position.y, transform2.position.z);
                 vertical = true; break;
         }
 
         // Verticality
         if (vertical)
-            transform.rotation = Quaternion.Euler(0, 0, 90);
+            transform2.rotation = Quaternion.Euler(0, 0, 90);
 
         // Setup acording to Type (Role)
         switch (type)
@@ -115,7 +115,7 @@ public class DoorBehavior : MonoBehaviour
                 break;
         }
 
-        closedPosition = transform.position;
+        closedPosition = transform2.position;
         wanted = state;
 
         // Opened position
@@ -124,14 +124,23 @@ public class DoorBehavior : MonoBehaviour
 
         if (vertical)
         {
-            openedPosition = new Vector3(transform.position.x, transform.position.y + doorSizeX, transform.position.z);
+            openedPosition = new Vector3(transform2.position.x, transform2.position.y + doorSizeX, transform2.position.z);
         }
         else
         {
-            openedPosition = new Vector3(transform.position.x + doorSizeX, transform.position.y, transform.position.z);
+            openedPosition = new Vector3(transform2.position.x + doorSizeX, transform2.position.y, transform2.position.z);
         }
+
+        // Setting Positions
+        transform2.position = closedPosition;
+        
+        if (transform2.childCount > 1)
+            transform2.GetChild(1).position = openedPosition;
+
         if (state)
-            transform.position = openedPosition;
+            transform2.GetChild(0).position = openedPosition;
+        else
+            transform2.GetChild(0).position = closedPosition;
 
         GameManager.enviroment.AddDoor(this);
         setup = true;
@@ -139,7 +148,7 @@ public class DoorBehavior : MonoBehaviour
     void Update()
     {
         if (setup)
-        {
+        {/*
             if (interCheck)
             {
                 Transform player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -200,7 +209,7 @@ public class DoorBehavior : MonoBehaviour
                     }
                 }
             }
-        }
+        */}
         else if (Time.time > waitTimer && !renamed)
         {
             // room.name = "Spawn=10x10-U_"

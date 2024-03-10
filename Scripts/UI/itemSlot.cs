@@ -7,7 +7,7 @@ public class itemSlot : MonoBehaviour
     public Image bg;
     public Image icon;
     public Button removeBtn;
-
+    [SerializeField]
     Item item;
 
     public static readonly Dictionary<Rarity, Color> rarityC = new()

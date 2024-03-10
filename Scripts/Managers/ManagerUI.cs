@@ -72,13 +72,12 @@ public class ManagerUI : MonoBehaviour
                 add = inventory.Equiped(3);
             else if (i > 1)
             {
-                if (i - 2 < inventory.quickSlots.Count)
-                    add = inventory.items[inventory.quickSlots[i - 2]];
+                // Torch
             }
 
             if (add != null)
                 quicSlots[i].AddItem(add);
-            else
+            else if (i < 2)
                 quicSlots[i].Clear();
         }
     }

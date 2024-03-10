@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -26,6 +27,7 @@ public class CameraManager : MonoBehaviour
     private bool proceedInSeq;
     private Kamera[] cameras;
     public Transform freeCam;
+    private string curCamSeq;
 
     void Start()
     {
@@ -221,28 +223,47 @@ public class CameraManager : MonoBehaviour
     {
         return Kamera.GetCamera(cameras, name).focused;
     }
-    public void CameraSequence(string seqName)
+    public string[] CameraSequence(string seqName, bool get = false)
     {
+        string[] output;
         switch (seqName)
         {
             case "boss":
-                cameraSequence = new()
+                output = new string[3]
                 { "toDoor", "toBoss", "toPlayer" };
                 cameraSeqFollower = 0;
                 proceedInSeq = true;
                 break;
 
             default:
+                output = null;
                 Debug.LogWarning("There is no such camera seqeunce as: " + seqName);
                 break;
+        }
+
+        // Output
+        if (get)
+        {
+            return output;
+        }
+        else
+        {
+            cameraSequence = output.ToList();
+            curCamSeq = seqName;
+            return null;
         }
     }
     public void SkipCurrentSequence()
     {
-        GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
-        Kamera.ChangeCamera(cameras, "player");
-        GameManager.instance.ableToMove = true;
         cameraSequence = new();
+        if (curCamSeq == "boss")
+        {
+            GameManager.lights.LightTypeTurn(0, LightManager.LightType.Boss);
+            GameManager.lights.LightTypeTurn(1, LightManager.LightType.Boss);
+            GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
+        }
+        Kamera.ChangeCamera(cameras,0);
+        GameManager.instance.ableToMove = true;
         cameraSeqFollower = 0;
         proceedInSeq = true;
     }

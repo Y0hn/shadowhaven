@@ -86,12 +86,14 @@ public class BossStats : EnemyStats
                     fakeHealth = 0;
                     ShowBar(true);
                 }
+
                 // SKIPED
-                else if (GameManager.camera.IsCameraFocused("player"))
+                if (GameManager.camera.IsCameraFocused("player"))
                 {
                     GameManager.audio.PlayTheme("boss-theme");
                     animator.SetBool("move", true);
                     healthBar.Set(maxHealth);
+                    ShowBar(true);
                     entry = false;
                     timer = 0;
                 }
@@ -140,6 +142,6 @@ public class BossStats : EnemyStats
     }
     private void OnDestroy()
     {
-        GameManager.instance.BossKilled(this);
+        GameManager.instance.BossKilled(this, true);
     }
 }
