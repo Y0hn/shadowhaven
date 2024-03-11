@@ -31,8 +31,6 @@ public class chestScript : MonoBehaviour
             {
                 interactable.GetComponent<Interactable>().AddToInventory();
                 isEnabled = false;
-                // TO BE REMOVED
-                GameManager.instance.EndTheGame();
             }
         }
     }

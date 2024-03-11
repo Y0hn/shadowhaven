@@ -147,7 +147,10 @@ public class LevelGener : MonoBehaviour
                     pastPos = R.transform.position;
                     R.name = NameCrop(R.name);
                     if (s.Equals("Loot="))
+                    {
                         GenerateDoor(R.transform);
+                        GenerateGate(R.transform);
+                    }
                     R.name = s + R.name;
 
                     C = Instantiate(GenerateContent(s+"-"), R.transform.position, Quaternion.identity, R.transform);
@@ -391,6 +394,14 @@ public class LevelGener : MonoBehaviour
         spawner = Instantiate(spawnObj, new(pastPos.x, pastPos.y), Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
+    }
+    private void GenerateGate(Transform room)
+    {
+        GameObject spawner;
+        Vector3 pos = new(room.position.x, room.position.y + 5.5f, -1);
+        spawner = Instantiate(spawnObj, pos, Quaternion.identity, room);
+        // spawner.name => "Door-2x1"
+        spawner.name = "Wall-GATE";
     }
     private void End()
     {

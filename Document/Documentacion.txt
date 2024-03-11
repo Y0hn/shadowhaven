@@ -612,16 +612,11 @@ ____________________/ PLANS \____________________
 ---/ ADD \---
 Secret Roomky
 funkciu 3 quick slotu 
-- torch (pripnuta na pravu stranu tela)
-- Potions/Consumables
-After sword effect
+- Potions/Consumables ?
 
 Level_02
 - tranzition medzi levelami
 - After chest is emptied
-
-Chce to lepsie movementy Zombosa
-- blood pool shots doing area dmg or slow
 
 ---/ MODIFY \---
 Load titles from .txt file
