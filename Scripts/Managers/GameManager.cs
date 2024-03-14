@@ -173,7 +173,7 @@ public class GameManager : MonoBehaviour
 
         // Premenovanie Levela xdd
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
-        levObj.name = levObj.name.Split('_')[0] + "_" +levObj.name.Split('_')[1].Split('(')[0];
+        levObj.name = levObj.name.Split('_')[0] + "_" + levObj.name.Split('_')[1].Split('-')[1].Split('(')[0];
         items.SetAll(Resources.LoadAll<Item>($"Levels/{levObj.name}"));
         ableToMove = true;
         // Odstrani uz vlastnene itemy z item poolu

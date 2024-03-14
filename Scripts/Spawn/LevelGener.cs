@@ -47,6 +47,7 @@ public class LevelGener : MonoBehaviour
         switch (transform.parent.name)
         {
             case "Level_01":
+            case "Level_var-01":
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
@@ -60,7 +61,7 @@ public class LevelGener : MonoBehaviour
                 Destroy(gameObject);
                 break;
             default:
-                Debug.LogWarning("LevelGenerator destroied!");
+                Debug.LogWarning($"Level Generator of {transform.parent.name} was destroied!");
                 Destroy(gameObject);
                 break;
         }
