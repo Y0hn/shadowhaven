@@ -84,6 +84,7 @@ public class PlayerStats : CharakterStats
         healthBar.Set(curHealth);
         //playerCom.enabled = true;
         rb.simulated = true;
+        speed.DeModify();
         animator.SetBool("isAlive", true);
     }
     public void SetHealth(int health)

@@ -31,7 +31,6 @@ public class PlayerScript : MonoBehaviour
     private int torsoTI = 0;
 
     private Vector2 moveDir;
-    private float moveSpeed = 5;
 
     private bool weaponJustEquiped;
     private bool armed = false;
@@ -145,12 +144,16 @@ public class PlayerScript : MonoBehaviour
         }
     }
     private void Move()
-    { rb.velocity = new Vector2(moveDir.x * moveSpeed, moveDir.y * moveSpeed); }
+    {
+        float v = stats.speed.GetValue();
+        rb.velocity = new Vector2(moveDir.x * v, moveDir.y * v);
+        Debug.Log("Speed: " + v);
+    }
     private void AnimateMovement()
     {
         animator.SetFloat("Horizontal", moveDir.x);
-        animator.SetFloat("Vertical", moveDir.y);
-        animator.SetFloat("Speed", moveDir.sqrMagnitude);
+        animator.SetFloat("Vertical",   moveDir.y);
+        animator.SetFloat("Speed",      moveDir.sqrMagnitude);
     }
     private void ArmorRenderer()
     {

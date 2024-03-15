@@ -41,7 +41,7 @@ public class LevelGener : MonoBehaviour
         RoomTypes = new();
         rooms = new();
         // Learn Spawn
-        spawnObj = Resources.LoadAll<GameObject>("PreFabs/Spawner")[0];
+        spawnObj = Resources.LoadAll<GameObject>("Objects/Spawner")[0];
 
         // Learnin Dictionary Rooms
         switch (transform.parent.name)

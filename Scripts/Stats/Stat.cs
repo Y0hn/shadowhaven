@@ -5,8 +5,10 @@ using UnityEngine;
 public class Stat
 {
     [SerializeField]
-    private int value = 0;
+    public int value = 0;
+    private float mod = 1;
     private List<int> modifiers;
+    private EffectInArea effArea;
     public int GetValue()
     {
         if (modifiers == null)
@@ -14,7 +16,10 @@ public class Stat
         int finalValue = value;
         foreach (int mod in modifiers)
             finalValue += mod;
-        //Debug.Log("returning: " + finalValue + " number of mods: " + modifiers.Count);
+
+        finalValue = (int)Mathf.Round(finalValue * mod);
+        
+        //Debug.Log("returning: " + finalValue + " number of mods: " + modifiers.Count);        
         return finalValue; 
     }
     public void AddMod(int mod)
@@ -31,6 +36,36 @@ public class Stat
     public void RemMod(int mod)
     {
         modifiers.RemoveAt(modifiers.IndexOf(mod));
+    }
+    public void Modify(EffectInArea effectInArea)
+    {
+        if (mod == 1)
+        {
+            effArea = effectInArea;
+            mod = effArea.modifier;
+        }
+        else if (mod > effectInArea.modifier)
+        {
+            effArea = effectInArea;
+            mod = effArea.modifier;
+        }
+    }
+    public bool DeModify(EffectInArea effectInArea)
+    {
+        if (effArea != null)
+            if (effArea == effectInArea)
+            {
+                effArea = null;
+                mod = 1;
+            }
+            else
+                return false;
+        return true;
+    }
+    public void DeModify()
+    {
+        effArea = null;
+        mod = 1;
     }
     public void ClearMod()
     {

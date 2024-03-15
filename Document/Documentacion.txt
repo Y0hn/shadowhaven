@@ -608,6 +608,9 @@ Bus Fixes:
 Torch
 Bug Fixes:
 	if intro skiped on Boss animation sequence is not competed
+----------------< 15. 03.  2024 >----------------
+Area Effects:
+	Speed
 ____________________/ PLANS \____________________
 ---/ ADD \---
 Secret Roomky
