@@ -270,7 +270,17 @@ public class GameManager : MonoBehaviour
             bosses.Remove(boss);
         }
     }
-    public void EndTheGame()
+    public void NextLevel()
+    {
+        level++;
+        if (level < Levels.Length)
+        {
+            LevelLoad();
+        }
+        else
+            EndTheGame();
+    }
+    private void EndTheGame()
     {
         Time.timeScale = 1f;
         sceneLoaded = false;

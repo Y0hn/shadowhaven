@@ -616,7 +616,6 @@ ____________________/ PLANS \____________________
 Secret Roomky
 funkciu 3 quick slotu 
 - Potions/Consumables ?
-
 Level_02
 - tranzition medzi levelami
 - After chest is emptied

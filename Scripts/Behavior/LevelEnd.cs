@@ -23,7 +23,7 @@ public class LevelEnd : MonoBehaviour
                     //Debug.Log($"{col.name} was overlaped by destroy");
                     if (col.name == "Player")
                     {
-                        GameManager.instance.EndTheGame();
+                        GameManager.instance.NextLevel();
                         break;
                     }
                 }
