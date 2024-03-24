@@ -80,9 +80,6 @@ public class PlayerScript : MonoBehaviour
             ArmorRenderer();
             CollisionCheck();
             PickUpCheck();
-
-            if (Input.GetKeyDown(KeyCode.P))
-                stats.TakeDamage(int.MaxValue);
         }
         else
         {
@@ -147,7 +144,7 @@ public class PlayerScript : MonoBehaviour
     {
         float v = stats.speed.GetValue();
         rb.velocity = new Vector2(moveDir.x * v, moveDir.y * v);
-        Debug.Log("Speed: " + v);
+        // Debug.Log("Speed: " + v);
     }
     private void AnimateMovement()
     {

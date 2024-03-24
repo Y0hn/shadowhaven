@@ -1,10 +1,12 @@
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
     public static EviromentManager enviroment;
+    public static NotificationsManager notifi;
     public new static CameraManager camera;
     public new static AudioManager audio;
     public static GameManager instance;
@@ -19,6 +21,7 @@ public class GameManager : MonoBehaviour
         }
         instance = this;
         enviroment = GetComponent<EviromentManager>();
+        notifi = GetComponent<NotificationsManager>();
         camera = GetComponent<CameraManager>();
         inventory = GetComponent<Inventory>();
         lights = GetComponent<LightManager>();
@@ -124,6 +127,11 @@ public class GameManager : MonoBehaviour
                 {
                     camera.SkipCurrentSequence();
                 }
+            }
+            else if (Input.GetKeyDown(KeyCode.P)) // DEBUG !!!!!
+            {
+                //playerStats.TakeDamage(int.MaxValue);
+                playerStats.LevelUp();
             }
         }
         else
