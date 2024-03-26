@@ -44,7 +44,7 @@ public class itemSlot : MonoBehaviour
     }
     public void OnRemoveBtn()
     {
-        Inventory.instance.Drop(item);
+        GameManager.inventory.Drop(item);
     }
     public void UseItem()   // On Click event
     {
@@ -58,7 +58,7 @@ public class itemSlot : MonoBehaviour
             }
             else if (transform.parent.name.Equals("Left"))
             {
-                Inventory.instance.Unequip((Equipment)item);
+                GameManager.inventory.Unequip((Equipment)item);
                 Clear();
             }
             else

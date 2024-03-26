@@ -10,7 +10,6 @@ public class PlayerScript : MonoBehaviour
     #region References
 
     private PlayerCombatScript playerCom;
-    private Inventory inventory;
     private Animator animator;
     private PlayerStats stats;
     private Rigidbody2D rb;
@@ -48,8 +47,7 @@ public class PlayerScript : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         stats = GetComponent<PlayerStats>();
-        inventory = Inventory.instance;
-        inventory.onEquipChangeCallback += UpdateEquipment;
+        GameManager.inventory.onEquipChangeCallback += UpdateEquipment;
 
         numE = System.Enum.GetNames(typeof(EquipmentSlot)).Length + 1;
 
@@ -178,7 +176,7 @@ public class PlayerScript : MonoBehaviour
                 torsoTI = 1;
             }
 
-            a = (Armor)inventory.Equiped(0);
+            a = (Armor)GameManager.inventory.Equiped(0);
             if (a != null)
                 if (a.texture.Length > 1)
                 //if (helmet.sprite != a.texture[helmetTI] && helmet.flipX == (moveDir.x < 0))
@@ -187,7 +185,7 @@ public class PlayerScript : MonoBehaviour
                     helmet.flipX = moveDir.x < 0;
                 }
 
-            a = (Armor)inventory.Equiped(1);
+            a = (Armor)GameManager.inventory.Equiped(1);
             if (a != null)
                 if (a.texture.Length > 1)
                 //if (helmet.sprite != a.texture[helmetTI])
@@ -200,14 +198,14 @@ public class PlayerScript : MonoBehaviour
             Armor a;
             if (helmetTI != 0)
             {
-                a = (Armor)inventory.Equiped(0);
+                a = (Armor)GameManager.inventory.Equiped(0);
                 if (a != null)
                     helmet.sprite = a.texture[0];
                 helmetTI = 0;
             }
             if (torsoTI != 0)
             {
-                a = (Armor)inventory.Equiped(1);
+                a = (Armor)GameManager.inventory.Equiped(1);
                 if (a != null)
                     torso.sprite = a.texture[0];
                 torsoTI = 0;
@@ -260,9 +258,9 @@ public class PlayerScript : MonoBehaviour
     {
         Armor a;
         Equipment e;
-        for (int i = 0; i < Inventory.instance.equipmentCount; i++)
+        for (int i = 0; i < GameManager.inventory.equipmentCount; i++)
         {
-            e = inventory.Equiped(i);
+            e = GameManager.inventory.Equiped(i);
 
             if (e != null)
                 switch (i)
@@ -333,7 +331,7 @@ public class PlayerScript : MonoBehaviour
         if (primar) j = 2;
         else        j = 3;
 
-        armed = playerCom.EquipWeapon((Weapon)Inventory.instance.Equiped(j));
+        armed = playerCom.EquipWeapon((Weapon)GameManager.inventory.Equiped(j));
         primaryWeap = primar;
 
         if (overwrite && armed)

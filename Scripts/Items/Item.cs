@@ -12,11 +12,11 @@ public class Item : ScriptableObject
     public virtual void Use()
     {
         // Use item
-        Inventory.instance.onItemChangeCallback.Invoke();
+        GameManager.inventory.onItemChangeCallback.Invoke();
     }
     public void RemoveFromInventory()
     {
-        Inventory.instance.Remove(this);
+        GameManager.inventory.Remove(this);
     }
     public static Rarity GetRarity(string rarity)
     {

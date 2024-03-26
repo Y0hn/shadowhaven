@@ -17,7 +17,6 @@ public class ManagerUI : MonoBehaviour
     private itemSlot[] inveSlots;
     private itemSlot[] equiSlots;
     private itemSlot[] quicSlots;
-    private Inventory inventory;
     private int equipL;
     private bool[] pastUIs;
 
@@ -26,10 +25,9 @@ public class ManagerUI : MonoBehaviour
     private void Start()
     {
         ResetUI();
-        inventory = Inventory.instance;
-        inventory.onItemChangeCallback += UpdateInventory;
-        inventory.onEquipChangeCallback += UpdateEquipment;
-        inventory.onCashChangeCallback += UpdateCash;
+        GameManager.inventory.onItemChangeCallback += UpdateInventory;
+        GameManager.inventory.onEquipChangeCallback += UpdateEquipment;
+        GameManager.inventory.onCashChangeCallback += UpdateCash;
 
         inveSlots = UIs[Dic["inv"]].GetChild(0).GetComponentsInChildren<itemSlot>();
 
@@ -42,9 +40,9 @@ public class ManagerUI : MonoBehaviour
     {
         for (int i = 0; i < inveSlots.Length; i++)
         {
-            if (i < inventory.items.Count)
+            if (i < GameManager.inventory.items.Count)
             {
-                inveSlots[i].AddItem(inventory.items[i]);
+                inveSlots[i].AddItem(GameManager.inventory.items[i]);
             }
             else
             {
@@ -56,7 +54,7 @@ public class ManagerUI : MonoBehaviour
     {
         for (int i = 0; i < equipL; i++)
         {
-            Equipment e = inventory.Equiped(i);
+            Equipment e = GameManager.inventory.Equiped(i);
             if (e != null)
                 equiSlots[i].AddItem(e);
             else
@@ -67,9 +65,9 @@ public class ManagerUI : MonoBehaviour
             Item add = null;
 
             if (i == 0)
-                add = inventory.Equiped(2);
+                add = GameManager.inventory.Equiped(2);
             else if (i == 1)
-                add = inventory.Equiped(3);
+                add = GameManager.inventory.Equiped(3);
             else if (i > 1)
             {
                 // Torch
@@ -84,7 +82,7 @@ public class ManagerUI : MonoBehaviour
     public void UpdateCash()
     {
         EnableUI(Dic["money"]);
-        UIs[Dic["money"]].GetComponent<Text>().text = inventory.GetMoney() + s;
+        UIs[Dic["money"]].GetComponent<Text>().text = GameManager.inventory.GetMoney() + s;
     }
     public void ResetUI()
     {

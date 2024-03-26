@@ -14,7 +14,7 @@ public class PlayerData
         level = stats.level;
         health = stats.curHealth;
         maxHealth = stats.maxHealth;
-        equipment = Inventory.instance.GetEquipment();
+        equipment = GameManager.inventory.GetEquipment();
 
         Vector2 pos = player.GetPos();
         position = new float[2];

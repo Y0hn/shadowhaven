@@ -53,7 +53,6 @@ public class GameManager : MonoBehaviour
 
     private bool sceneLoaded = false;
     private bool deathScreen = false;
-
     void Start()
     {
         //// REFERENCES \\\\
@@ -81,7 +80,7 @@ public class GameManager : MonoBehaviour
         if (playerLives)
         {
             // INPUT \\
-            if      (Input.GetKeyDown(KeyCode.Escape))
+            if      (Input.GetButtonDown("Pause"))
             {
                 if (ableToMove)
                     PauseGame();
@@ -92,7 +91,7 @@ public class GameManager : MonoBehaviour
                     if (b.Active())
                         b.ShowBar(ableToMove);
             }
-            else if (Input.GetKeyDown(KeyCode.E))
+            else if (Input.GetButtonDown("Inventory"))
             {
                 OpenCloseInventory();
             }
@@ -130,8 +129,8 @@ public class GameManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.P)) // DEBUG !!!!!
             {
-                //playerStats.TakeDamage(int.MaxValue);
-                playerStats.LevelUp();
+                playerStats.TakeDamage(int.MaxValue);
+                //playerStats.LevelUp();
             }
         }
         else
@@ -153,22 +152,6 @@ public class GameManager : MonoBehaviour
     }
 
     #region Private Events
-    public void PauseGame()
-    {
-        if (inv)
-        {
-            ui.DisableUI("inv");
-            inv = false;
-        }
-        else
-        {
-            ui.DisableUI(0);
-            ui.EnableUI("pause");
-            audio.PauseTheme();
-            Time.timeScale = 0f;
-            ableToMove = false;
-        }
-    }
     void LevelLoad()
     {
         GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
@@ -185,11 +168,11 @@ public class GameManager : MonoBehaviour
         items.SetAll(Resources.LoadAll<Item>($"Items/{levObj.name}"));
         ableToMove = true;
         // Odstrani uz vlastnene itemy z item poolu
-        items.RemoveArray(Inventory.instance.GetEquipment());
+        items.RemoveArray(inventory.GetEquipment());
     }
     void PlayerDeath()
     {
-        Inventory.instance.ClearInventory();
+        //GameManager.inventory.ClearInventory();
         Destroy(GameObject.FindGameObjectWithTag("Level"));
         audio.PlayTheme("stop");
         ui.EnableUI("death");
@@ -203,22 +186,26 @@ public class GameManager : MonoBehaviour
         lights.Start();
         sceneLoaded = true;
     }
-    public void OpenCloseInventory()
-    {
-        if (ableToMove)
-        {
-            if (inv)
-                ui.DisableUI("inv");
-            else
-                ui.EnableUI("inv");
-
-            inv = !inv;
-        }
-    }
 
     #endregion
 
     #region Game Events
+    public void PauseGame()
+    {
+        if (inv)
+        {
+            ui.DisableUI("inv");
+            inv = false;
+        }
+        else
+        {
+            ui.DisableUI(0);
+            ui.EnableUI("pause");
+            audio.PauseTheme();
+            Time.timeScale = 0f;
+            ableToMove = false;
+        }
+    }
     public void ResumeGame()
     {
         ui.EnableUI(0);
@@ -233,6 +220,18 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         sceneLoaded = false;
         SceneManager.LoadScene(0);
+    }
+    public void OpenCloseInventory()
+    {
+        if (ableToMove)
+        {
+            if (inv)
+                ui.DisableUI("inv");
+            else
+                ui.EnableUI("inv");
+
+            inv = !inv;
+        }
     }
     public void PlayerRevive()
     {

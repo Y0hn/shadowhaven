@@ -50,7 +50,7 @@ public class Interactable : MonoBehaviour
     public void AddToInventory()
     {
         GameManager.audio.Play("pop");
-        if (Inventory.instance.Add(item))
+        if (GameManager.inventory.Add(item))
         {
             Destroy(gameObject);
             maxRarity = Rarity.Rare;

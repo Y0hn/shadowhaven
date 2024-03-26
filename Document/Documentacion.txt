@@ -623,7 +623,16 @@ ____________________/ PLANS \____________________
 Secret Roomky
 funkciu 3 quick slotu 
 - Potions/Consumables ?
+
 Level_02
+- hell
+
+Level_03
+- heaven
+
+End
+- Reached Shadow Haven 
+- NPC dialog/monolog
 
 ---/ MODIFY \---
 Load titles from .txt file
@@ -636,7 +645,8 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-// Tim PC:
+
+// Tim PC:	- more/less IRELEVANT
 	boss fight gate preopened
 	arrow in bow scalling error ? / GIANT sip
 	Fast bow (very fast very bad)

@@ -6,7 +6,6 @@ public class PlayerStats : CharakterStats
     public LevelBar LvlBar;
 
     private PlayerCombatScript playerCom;
-    private Inventory inv;
     private int numXP = 0;
     private int tillnextLvl = 10;
     private const int tillnextLvlConst = 5;
@@ -19,8 +18,7 @@ public class PlayerStats : CharakterStats
         base.Start();
         // Additional References
         playerCom = GetComponent<PlayerCombatScript>();
-        inv = Inventory.instance;
-        inv.onEquipChangeCallback += EquipmentStatsRefresh;
+        GameManager.inventory.onEquipChangeCallback += EquipmentStatsRefresh;
 
         LvlBar.SetMax(tillnextLvl);
         LvlBar.Set(0);
@@ -65,7 +63,7 @@ public class PlayerStats : CharakterStats
 
         playerCom.enabled = false;
         numXP = 0;
-        Inventory.instance.ClearEquipment();
+        GameManager.inventory.ClearEquipment();
         animator.SetBool("isAlive", false);
         transform.position = Vector2.zero;
         //Debug.Log("Hrac zomrel");

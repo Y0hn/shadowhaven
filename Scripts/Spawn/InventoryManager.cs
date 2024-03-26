@@ -4,16 +4,6 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    #region Singleton
-    public static Inventory instance;
-    private void Awake()
-    {
-        if (instance != null)
-            Debug.LogWarning("More than one Instance of Inventory!");
-        instance = this;
-    }
-    #endregion
-
     public delegate void OnItemChange();
     public OnItemChange onItemChangeCallback;
 
