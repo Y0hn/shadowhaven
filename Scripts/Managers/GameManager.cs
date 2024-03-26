@@ -153,7 +153,7 @@ public class GameManager : MonoBehaviour
     }
 
     #region Private Events
-    void PauseGame()
+    public void PauseGame()
     {
         if (inv)
         {
@@ -203,7 +203,7 @@ public class GameManager : MonoBehaviour
         lights.Start();
         sceneLoaded = true;
     }
-    void OpenCloseInventory()
+    public void OpenCloseInventory()
     {
         if (ableToMove)
         {
