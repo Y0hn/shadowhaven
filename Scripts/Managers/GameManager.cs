@@ -46,8 +46,8 @@ public class GameManager : MonoBehaviour
     public bool ableToMove { get; set; }
     public bool playerLives = true;
     public bool generated = false;
+    private bool qchange = true;
     public bool inv = false;
-
     // Lists
     public List<BossStats> bosses = new();
 
@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
         if (playerLives)
         {
             // INPUT \\
-            if      (Input.GetButtonDown("Pause"))
+            if (Input.GetButtonDown("Pause"))
             {
                 if (ableToMove)
                     PauseGame();
@@ -95,32 +95,49 @@ public class GameManager : MonoBehaviour
             {
                 OpenCloseInventory();
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha1) || eqiWeap == 1)
+            else if ((Input.GetKeyDown(KeyCode.Alpha1) || Input.GetAxis("Qslots") < 0 || eqiWeap == 1) && qchange)
             {
                 // Equip Primary
                 if (inventory.Equiped(2) != null)
                     playerScript.ChangeWeapon(true, true);
                 else
                     playerScript.SetActiveCombat(false);
-
+                //Debug.Log("Primary equip");
+                qchange = false;
                 eqiWeap = 0;
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha2) || eqiWeap == 2)
+            else if ((Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxis("Qslots") > 0 || eqiWeap == 2) && qchange)
             {
                 // Equip Secondary
                 if (inventory.Equiped(3) != null)
                     playerScript.ChangeWeapon(false, true);
                 else
                     playerScript.SetActiveCombat(false);
-
+                //Debug.Log("Secondary equip");
+                qchange = false;
                 eqiWeap = 0;
             }
-            else if (Input.GetKeyDown(KeyCode.Alpha3) || eqiWeap == 3)
+            else if (!qchange && Input.GetAxis("Qslots") == 0)
+            {
+                qchange = true;
+                //Debug.Log("Qchange reset");
+            }
+            else if (inv && Input.GetButtonDown("Submit"))
+            {
+                if (inventory.TryGetItem(0, out Item item))
+                    item.Use();
+                //Debug.Log("Cont E = " + Input.GetAxis("Cont E"));
+            }
+            else if (inv && Input.GetButtonDown("Cancel"))
+            {
+                CloseInventory();
+            }
+            /*else if (Input.GetKeyDown(KeyCode.Alpha3) || eqiWeap == 3)
             {
                 inventory.QuickUse(3);
                 eqiWeap = 0;
-            }
-            else if (Input.GetKeyDown(KeyCode.Space))
+            }*/
+            else if (Input.GetButtonDown("Jump"))
             {
                 if (camera.IsCameraFocused("free"))
                 {
@@ -137,7 +154,7 @@ public class GameManager : MonoBehaviour
         {
             if (deathScreen)
             {
-                if (Input.GetKeyDown(KeyCode.Space))
+                if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
                 {
                     PlayerRevive();
                 }
@@ -232,6 +249,16 @@ public class GameManager : MonoBehaviour
 
             inv = !inv;
         }
+    }
+    public void OpenInventory()
+    {
+        ui.EnableUI("inv");
+        inv = true;
+    }
+    public void CloseInventory() 
+    {
+        ui.DisableUI("inv");
+        inv = false;
     }
     public void PlayerRevive()
     {

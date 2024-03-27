@@ -184,5 +184,14 @@ public class Inventory : MonoBehaviour
         onCashChangeCallback.Invoke();
         return true;
     }
-
+    public bool TryGetItem(int index, out Item item)
+    {
+        item = null;
+        if (items.Count > index)
+        {
+            item= items[index];
+            return true;
+        }
+        return false;
+    }
 }

@@ -31,9 +31,11 @@ public class PlayerCombatScript : MonoBehaviour
     private float lastRotZ = 0;
     private float rotZ;
 
+    public bool onControler = false;
     private float fireTime = 0;
     public float fireRate;
     private bool fireReady;
+    private bool controler;
     private bool melee;
 
     private void Start()
@@ -60,22 +62,29 @@ public class PlayerCombatScript : MonoBehaviour
         if (GameManager.instance.ableToMove)
         {
             #region rotZ
-            Vector2 rotation;
-            rotation.x = Input.GetAxisRaw("Joy X");
-            rotation.y = Input.GetAxisRaw("Joy Y");
-            if (rotation == Vector2.zero)
+            Vector2 rotation = Vector2.zero;
+            rotation.x =    Mathf.Round(Input.GetAxis("Joy X") * 100) / 100;
+            rotation.y = -  Mathf.Round(Input.GetAxis("Joy Y") * 100) / 100;
+            Vector3 mouse = Input.mousePosition;
+            if (!controler && Mathf.Abs(rotation.x) < 0.01f && 0.01f > Mathf.Abs(rotation.y) || mousePos != mouse)
             {
-                mousePos = Input.mousePosition;
-                mousePos = cam.ScreenToWorldPoint(mousePos);
-                rotation = mousePos - transform.position;
+                Vector3 m = cam.ScreenToWorldPoint(mouse);
+                rotation = m - transform.position;
+                controler = false;
+                mousePos = mouse;
+                //Debug.Log($"Mouse Pos[{mousePos.x},{mousePos.y}]");
             }
-            rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-            rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
+            if (Mathf.Abs(rotation.x) > 0.25f && 0.25f < Mathf.Abs(rotation.y))
+            {
+                rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+                rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
+                controler = true;
+                //Debug.Log($"Rotation is [{rotation.x},{rotation.y}] which coresponds to angle {rotZ}");
+            }
             #endregion
-            // if (!GameManager.inv) // Unable to fire with inventory opened
             if (!melee)
             {
-                if (Input.GetButton("Fire"))
+                if (Input.GetAxis("Fire") > 0)
                 {
                     //textureSheet = ((Weapon)GameManager.inventory.Equiped(weaponInvIndex)).texture;
                     bool textureChange = false;
