@@ -158,7 +158,7 @@ public class GameManager : MonoBehaviour
                 {
                     PlayerRevive();
                 }
-                else if (Input.GetKeyDown(KeyCode.Escape))
+                else if (Input.GetButtonDown("Pause") || Input.GetButtonDown("Cancel"))
                 {
                     GoToMainMenu();
                 }

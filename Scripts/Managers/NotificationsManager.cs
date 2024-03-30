@@ -20,7 +20,7 @@ public class NotificationsManager : MonoBehaviour
 
         panels[0].text.text = details;
         animator.SetTrigger("levelUp");
-        Debug.Log("levelUp [Notification]");
+        //Debug.Log("levelUp [Notification]");
     }
     private class Notify
     {

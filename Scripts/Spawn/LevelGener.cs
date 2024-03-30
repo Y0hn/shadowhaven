@@ -1,6 +1,7 @@
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class LevelGener : MonoBehaviour
 {
@@ -59,7 +60,6 @@ public class LevelGener : MonoBehaviour
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
-                Destroy(gameObject);
                 break;
             default:
                 Debug.LogWarning($"Level Generator of {transform.parent.name} was destroied!");
@@ -107,6 +107,7 @@ public class LevelGener : MonoBehaviour
         int randStartPos = Random.Range(0, startingPos.Length);
         transform.position = startingPos[randStartPos].position;
         player.position = startingPos[randStartPos].position;
+        GetComponent<Light2D>().enabled = true;
         startEnd = true;
         stop = false;
         path = false;
@@ -412,7 +413,6 @@ public class LevelGener : MonoBehaviour
             Destroy(GameObject.FindGameObjectWithTag("Assets"));
             GameManager.instance.generated = true;
         }
-        // Destroy(gameobject);
         name = "Generated Floor";
         Destroy(this);
     }
