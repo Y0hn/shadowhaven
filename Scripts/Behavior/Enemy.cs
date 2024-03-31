@@ -66,6 +66,7 @@ public class EnemyScript : MonoBehaviour
         switch (name)
         {
             case "Zombie":
+            case "Demon":
                 if (distance < stats.lookRadius)
                     animator.SetBool("isFollowing", true);
                 else if (animator.GetBool("isFollowing"))
@@ -103,6 +104,7 @@ public class EnemyScript : MonoBehaviour
                 break;
 
             case "Slime":
+            case "Magma Slime":
                 if (distance < stats.lookRadius)
                     animator.SetBool("isFollowing", true);
                 else if (animator.GetBool("isFollowing"))
@@ -125,7 +127,8 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
 
-            default:                
+            default:
+                Debug.Log($"Enemy {name} not in case");
                 Destroy(gameObject);
                 break;
         }

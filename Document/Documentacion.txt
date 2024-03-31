@@ -624,12 +624,18 @@ ____________________/ PLANS \____________________
 Secret Roomky
 funkciu 3 quick slotu 
 - Potions/Consumables ?
+Demon Special head animation
 
 Level_02
 - hell
+- ranged enemy fireball  IMP ?
+- jalabaoth ?
+- items
+- door placing
 
 Level_03
 - heaven
+- cherupin ?
 
 End
 - Reached Shadow Haven 

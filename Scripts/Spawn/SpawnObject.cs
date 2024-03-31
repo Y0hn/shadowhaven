@@ -71,7 +71,15 @@ public class SpawnObject : MonoBehaviour
                 objects = GameObject.FindGameObjectsWithTag(name);
                 int rand = Random.Range(0, objects.Length);
                 if (objects.Length != 0)
+                {
                     spawn = objects[rand];
+                }
+                else
+                {
+                    Debug.Log("Found none enemies of " + name);
+                    Destroy(gameObject);
+                    return;
+                }
             }
             catch 
             {
