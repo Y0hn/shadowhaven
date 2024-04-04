@@ -672,7 +672,7 @@ MonoBehaviour:
     value: -5
   speed:
     value: 0
-  level: 1
+  level: 4
   loot: {fileID: 2031975725711106336}
   lookRadius: 5
   projectile: {fileID: 0}

@@ -550,7 +550,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8567337591631578894}
   - component: {fileID: 223615771893878236}
-  - component: {fileID: 8518129828538764439}
   m_Layer: 0
   m_Name: LevelGener
   m_TagString: Untagged
@@ -596,56 +595,6 @@ MonoBehaviour:
   moveAmount: {x: 10, y: 10}
   doorSize: 2x1
   deleteAssets: 1
---- !u!114 &8518129828538764439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5143978797909798071}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ComponentVersion: 1
-  m_LightType: 4
-  m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.5
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.02
-  m_LightVolumeIntensity: 1
-  m_LightVolumeIntensityEnabled: 0
-  m_ApplyToSortingLayers: 00000000
-  m_LightCookieSprite: {fileID: 0}
-  m_DeprecatedPointLightCookieSprite: {fileID: 0}
-  m_LightOrder: 0
-  m_AlphaBlendOnOverlap: 0
-  m_OverlapOperation: 0
-  m_NormalMapDistance: 3
-  m_NormalMapQuality: 2
-  m_UseNormalMap: 0
-  m_ShadowIntensityEnabled: 0
-  m_ShadowIntensity: 0.75
-  m_ShadowVolumeIntensityEnabled: 0
-  m_ShadowVolumeIntensity: 0.75
-  m_LocalBounds:
-    m_Center: {x: -0.002549976, y: 0.00089997053, z: 0}
-    m_Extent: {x: 1.00165, y: 1.0053, z: 0}
-  m_PointLightInnerAngle: 360
-  m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 1
-  m_ShapeLightParametricSides: 5
-  m_ShapeLightParametricAngleOffset: 0
-  m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 0.5
-  m_ShapeLightFalloffOffset: {x: 0, y: 0}
-  m_ShapePath:
-  - {x: -0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: -0.5, z: 0}
-  - {x: 0.5, y: 0.5, z: 0}
-  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &5560992662975480892
 GameObject:
   m_ObjectHideFlags: 0
@@ -1456,19 +1405,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5516604683424083511, guid: 65f10e811e167eb4c836cd5012e49e7b, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
-      value: -0.00075000525
+      value: 0.003549993
       objectReference: {fileID: 0}
     - target: {fileID: 5516604683424083511, guid: 65f10e811e167eb4c836cd5012e49e7b, type: 3}
       propertyPath: m_LocalBounds.m_Center.y
-      value: -0.25594997
+      value: -0.2544
       objectReference: {fileID: 0}
     - target: {fileID: 5516604683424083511, guid: 65f10e811e167eb4c836cd5012e49e7b, type: 3}
       propertyPath: m_LocalBounds.m_Extent.x
-      value: 1.00805
+      value: 1.00635
       objectReference: {fileID: 0}
     - target: {fileID: 5516604683424083511, guid: 65f10e811e167eb4c836cd5012e49e7b, type: 3}
       propertyPath: m_LocalBounds.m_Extent.y
-      value: 1.24735
+      value: 1.2529
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1584,7 +1533,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2409565349500900261, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
       propertyPath: m_InstanceId
-      value: -124134
+      value: -121332
       objectReference: {fileID: 0}
     - target: {fileID: 4546607092787812016, guid: 92f2d30a498318f45acd5ed98ce68c72, type: 3}
       propertyPath: m_IsActive
@@ -2398,7 +2347,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 126893150055024085, guid: e0c35beec80e3ae4da720f6f7197bd7e, type: 3}
       propertyPath: m_InstanceId
-      value: -124224
+      value: -121442
       objectReference: {fileID: 0}
     - target: {fileID: 4323183419316323150, guid: e0c35beec80e3ae4da720f6f7197bd7e, type: 3}
       propertyPath: m_Color.b

@@ -203,6 +203,11 @@ public class ItemsList : MonoBehaviour
         else
             return null;
     }
+    public void EraseItemsOfRarity(Rarity rarity)
+    {
+        foreach (Item i in GetMultiRarity(RaritiesBelow(rarity)))
+            Items.Remove(i);
+    }
     private Rarity[] RaritiesBelow(Rarity rarity)
     {
         Rarity[] r = new Rarity[(int)rarity + 1];

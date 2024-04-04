@@ -83,7 +83,7 @@ public class SpawnObject : MonoBehaviour
             }
             catch 
             {
-                Debug.LogWarning("GameObject Tag: " + name + " does not exits or sh*t like that ");
+                Debug.LogWarning("GameObject Tag: " + name + " does not exits or smth like that ");
                 Destroy(gameObject);
                 return;
             }
@@ -101,7 +101,12 @@ public class SpawnObject : MonoBehaviour
             if      (name.Contains("Boss"))
                 spawn.GetComponent<BossStats>().SetY(float.Parse(s[1]));
             else if (name.Contains("Door"))
+            {
+                if (s.Length == 3)
+                    spawn.name += "-" + s[2];
                 spawn.transform.position = new Vector3(transform.position.x, transform.position.y, 0.05f);
+                //Debug.Log($"{name} spawned door {spawn.name}");
+            }
             else if (name.Contains("Light"))
             {
                 GameManager.lights.Register(spawn, s[2]);

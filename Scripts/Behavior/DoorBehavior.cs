@@ -23,7 +23,7 @@ public class DoorBehavior : MonoBehaviour
 
     void Start()
     {
-        // name = "Door:Spawn:10x10-U_-2x1"
+        // name = "Door:Spawn:10x10-U_-2x1-E"
         string[] typ;
         typ = name.Split(':');
 
@@ -67,28 +67,37 @@ public class DoorBehavior : MonoBehaviour
         // typ[2] = "10x10-U_-2x1"
         parameters = parameters[2].Split('-');
 
-        // typ[0] = "10x10"
+        // parameters[0] = "10x10"
         float roomX = float.Parse(parameters[0].Split('x')[0]) / 2;
         float roomY = float.Parse(parameters[0].Split("x")[1]) - roomCenter;
+
+        // parameters[3] = "E"
+        float f = 0f;
+        if (parameters.Length > 3)
+        {
+            // Debug.Log("Override " + parameters[3]);
+            f = 0.5f;
+        }
 
         // Position setup
         // typ[1] = "U_"
         switch (parameters[1])
         {
             case "U_":
-                transform2.position = new Vector3(transform2.position.x, transform2.position.y + roomY, transform2.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y + roomY - f, transform2.position.z);
                 break;
             default:
             case "D_":
-                transform2.position = new Vector3(transform2.position.x, transform2.position.y - roomCenter, transform2.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y - roomCenter + f, transform2.position.z);
                 break;
             case "_R":
-                transform2.position = new Vector3(transform2.position.x + roomX, transform2.position.y, transform2.position.z);
+                transform2.position = new Vector3(transform2.position.x + roomX + f, transform2.position.y, transform2.position.z);
                 vertical = true; break;
             case "_L":
-                transform2.position = new Vector3(transform2.position.x - roomX, transform2.position.y, transform2.position.z);
+                transform2.position = new Vector3(transform2.position.x - roomX - f, transform2.position.y, transform2.position.z);
                 vertical = true; break;
         }
+        //Debug.Log($"Door position set to [{transform2.position.x},{transform2.position.y}]");
 
         // Verticality
         if (vertical)
@@ -222,7 +231,9 @@ public class DoorBehavior : MonoBehaviour
             if (2 <= s.Length && q.Length >= 2)
             {
                 t.name = q[0] + ":" + s[0] + ":" + s[1] + "-" + q[1];
-                // t.name = "Door:Spawn:10x10-U_-2x1"
+                // t.name = "Door:Spawn:10x10-U_-2x1-_"
+                if (q.Length == 3)
+                    t.name += "-" + q[2];
                 renamed = true;
                 Start();
             }

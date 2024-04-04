@@ -17,9 +17,9 @@ public class LevelGener : MonoBehaviour
     public float maxX;
     public float maxY;
     #endregion
-
+    public float globalLightIntensity;
     public Vector2 moveAmount;
-    public string doorSize = "2x1";
+    public string doorSize;
 
     private string[] roomer;
 
@@ -47,22 +47,24 @@ public class LevelGener : MonoBehaviour
         // Learnin Dictionary Rooms
         switch (transform.parent.name)
         {
-            case "Level_01":
+            case "Level_1":
             case "Level_var-01":
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
                 //                       SPAWN    PATH     BOSS 
+                doorSize = "2x1";
                 break;
 
-            case "Level_02":
+            case "Level_2":
             case "Level_var-02":
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10 E"));
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
+                doorSize = "2x1-E";
                 break;
             default:
-                Debug.LogWarning($"Level Generator of {transform.parent.name} was destroied!");
+                //Debug.LogWarning($"Level Generator of {transform.parent.name} was destroied!");
                 Destroy(gameObject);
                 break;
         }
@@ -107,7 +109,7 @@ public class LevelGener : MonoBehaviour
         int randStartPos = Random.Range(0, startingPos.Length);
         transform.position = startingPos[randStartPos].position;
         player.position = startingPos[randStartPos].position;
-        GetComponent<Light2D>().enabled = true;
+        GameManager.instance.SetGlobalLight(globalLightIntensity);
         startEnd = true;
         stop = false;
         path = false;
@@ -343,7 +345,7 @@ public class LevelGener : MonoBehaviour
     }
     private GameObject GenerateBoss()
     {
-        string s = "Boss" + roomer[2];
+        string s = "Boss" + roomer[2].Split('_')[0];
 
         dir = Random.Range(0, 3);
         transform.position = new Vector2(transform.position.x, transform.position.y + moveAmount.y);
@@ -393,8 +395,8 @@ public class LevelGener : MonoBehaviour
     private void GenerateDoor(Transform room)
     {
         GameObject spawner;
+        spawner = Instantiate(spawnObj, pastPos, Quaternion.identity, room);
 
-        spawner = Instantiate(spawnObj, new(pastPos.x, pastPos.y), Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
     }

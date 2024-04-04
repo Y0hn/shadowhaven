@@ -1,7 +1,7 @@
+using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public static LightManager lights;
     public static Inventory inventory;
     public static ManagerUI ui;
+    private static Light2D globalLight;
     private void Awake()
     {
         if (instance != null)
@@ -27,16 +28,17 @@ public class GameManager : MonoBehaviour
         lights = GetComponent<LightManager>();
         audio = GetComponent<AudioManager>();
         ui = GetComponent<ManagerUI>();
+        // PRIVATE
+        globalLight = GetComponent<Light2D>();
     }
     #endregion
 
     #region References
 
-    public GameObject[] Levels;
-    public GameObject player;
-
     private PlayerScript playerScript;
     private PlayerStats playerStats;
+    public GameObject[] Levels;
+    public GameObject player;
     private ItemsList items;
 
     #endregion
@@ -68,7 +70,6 @@ public class GameManager : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>();
         inventory = GetComponent<Inventory>();
         items = GetComponent<ItemsList>();
-
         // Level SetUp
         LevelLoad();
         sceneLoaded = true;
@@ -146,8 +147,8 @@ public class GameManager : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.P)) // DEBUG !!!!!
             {
-                playerStats.TakeDamage(int.MaxValue);
-                //playerStats.LevelUp();
+                //playerStats.TakeDamage(int.MaxValue);
+                playerStats.LevelUp();
             }
         }
         else
@@ -175,17 +176,26 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject lvl in oldLvls)
         {
-            Debug.Log("Destroyed level: " + lvl.name);
+            //Debug.Log("Destroyed level: " + lvl.name);
             Destroy(lvl);
         }
 
         // Premenovanie Levela xdd
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
-        levObj.name = levObj.name.Split('_')[0] + "_" + levObj.name.Split('_')[1].Split('-')[1].Split('(')[0];
-        items.SetAll(Resources.LoadAll<Item>($"Items/{levObj.name}"));
+        levObj.name = levObj.name.Split('_')[0] + "_" + (level+1);
+        for (int i = 0; i <= level; i++)
+            items.SetAll(Resources.LoadAll<Item>($"Items/{levObj.name.Split('_')[0]}_{i+1}"));
+        //Debug.Log($"Pridany pocet itemov [{items.Items.Count}]");
+        if (level > 0)
+        {
+            items.EraseItemsOfRarity((Rarity)level);
+            //Debug.Log("Min item Rarity set to " + (Rarity)level);
+        }
         ableToMove = true;
+
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(inventory.GetEquipment());
+        items.RemoveArray(inventory.items.ToArray());
     }
     void PlayerDeath()
     {
@@ -254,6 +264,18 @@ public class GameManager : MonoBehaviour
     {
         ui.EnableUI("inv");
         inv = true;
+    }
+    public void SetGlobalLight(float f)
+    {
+        if (f > 0)
+        {
+            globalLight.intensity = f;
+            globalLight.enabled = true;
+        }
+        else if (f == 0)
+            globalLight.enabled = false;
+        else // if (f < 0)
+            globalLight.enabled = true;
     }
     public void CloseInventory() 
     {

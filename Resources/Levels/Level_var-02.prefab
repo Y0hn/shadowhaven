@@ -119,8 +119,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 223615771893878236, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
+      propertyPath: doorSize
+      value: 2x1-E
+      objectReference: {fileID: 0}
+    - target: {fileID: 223615771893878236, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: deleteAssets
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 223615771893878236, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
+      propertyPath: globalLightIntensity
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 227938920272827878, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_Sprite
@@ -204,7 +212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1339955100362114914, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_InstanceId
-      value: -3696
+      value: -1734
       objectReference: {fileID: 0}
     - target: {fileID: 2526595790700297616, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_Name
@@ -368,7 +376,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6819805468004902499, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_InstanceId
-      value: -3962
+      value: -2000
       objectReference: {fileID: 0}
     - target: {fileID: 6882303031219058788, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_Color.b
@@ -384,19 +392,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7140404220648784196, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_LocalBounds.m_Center.x
-      value: 0.0016499758
+      value: 0.0018000007
       objectReference: {fileID: 0}
     - target: {fileID: 7140404220648784196, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_LocalBounds.m_Center.y
-      value: -0.25009996
+      value: -0.24550003
       objectReference: {fileID: 0}
     - target: {fileID: 7140404220648784196, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_LocalBounds.m_Extent.x
-      value: 1.00545
+      value: 1.0077
       objectReference: {fileID: 0}
     - target: {fileID: 7140404220648784196, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_LocalBounds.m_Extent.y
-      value: 1.2547
+      value: 1.2512
       objectReference: {fileID: 0}
     - target: {fileID: 7248834143515205880, guid: b92505431acae6b4b87f3a2608b2f0cf, type: 3}
       propertyPath: m_Color.b
