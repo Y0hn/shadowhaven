@@ -26,15 +26,15 @@ public class EnemyScript : MonoBehaviour
     private void OnDrawGizmosSelected()
     {
         stats = GetComponent<EnemyStats>();
-
+        SetStats();
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, stats.lookRadius);
-        if (transform.name == "Skeleton")
+        if (transform.name == "Skeleton" || transform.name == "Imp")
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.8f);
+            Gizmos.DrawWireSphere(transform.position, rangeMax);
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.4f);
+            Gizmos.DrawWireSphere(transform.position, rangeMin);
         }
     }
     private void Start()
@@ -53,6 +53,11 @@ public class EnemyScript : MonoBehaviour
         {
             rangeMax = stats.lookRadius * 0.8f;
             rangeMin = stats.lookRadius * 0.4f;
+        }
+        else if (name.Contains("Imp"))
+        {
+            rangeMax = stats.lookRadius * 0.8f;
+            rangeMin = stats.lookRadius * 0.2f;
         }
     }
     private void Update()
@@ -75,7 +80,7 @@ public class EnemyScript : MonoBehaviour
                     rb.velocity = Vector3.zero;
                 }
                 break;
-
+            case "Imp":
             case "Skeleton":
                 if ((rangeMax < distance || distance < rangeMin) && distance < stats.lookRadius)
                 {

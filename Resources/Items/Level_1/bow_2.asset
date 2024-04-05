@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bow_2
   m_EditorClassIdentifier: 
   rarity: 2
-  name: Wooden bow
+  name: Mantis bow
   description: '#FireRate(1)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
   icon: {fileID: 21300000, guid: e2fe15aa6a8cb9442b7747c789cb6747, type: 3}
   color: {r: 0.056069776, g: 0.5660378, b: 0.54327166, a: 1}

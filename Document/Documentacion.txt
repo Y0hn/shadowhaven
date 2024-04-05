@@ -617,14 +617,18 @@ Level Up animation
 UI utility btns
 ----------------< 27. 03.  2024 >----------------
 Controler Support
-----------------< 28. 03.  2024 >----------------
-
+----------------< 05. 04.  2024 >----------------
+Imp
 ____________________/ PLANS \____________________
+---/ BUG \---
+Ranged enemy cease fire
+- on hit
+- on range border
+
 ---/ ADD \---
-Secret Roomky
-funkciu 3 quick slotu 
-- Potions/Consumables ?
+Fireball animation
 Working Save system
+Secret Roomky ?
 
 Level_02
 - hell

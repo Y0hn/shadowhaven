@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: bow_3
   m_EditorClassIdentifier: 
   rarity: 1
-  name: Wooden bow
+  name: Darkwood bow
   description: '#FireRate(1,4)ProjPos(-0,4_0_0)ProjScale(1_1,5_1)StringColor(0_0_0)'
   icon: {fileID: 21300000, guid: bd81a6ec4f97f3b4b8ba0db33d2a0f82, type: 3}
   color: {r: 0.23222996, g: 0.33962262, b: 0.18743324, a: 1}

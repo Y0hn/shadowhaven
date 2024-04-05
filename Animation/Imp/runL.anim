@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: skel_shoot
+  m_Name: runL
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -14,7 +14,23 @@ AnimationClip:
   m_RotationCurves: []
   m_CompressedRotationCurves: []
   m_EulerCurves: []
-  m_PositionCurves: []
+  m_PositionCurves:
+  - curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: {x: -0.05, y: 0, z: -0.01}
+        inSlope: {x: 0, y: 0, z: 0}
+        outSlope: {x: 0, y: 0, z: 0}
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+        outWeight: {x: 0, y: 0.33333334, z: 0.33333334}
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    path: Body/Head/EyeR/Circle
   m_ScaleCurves: []
   m_FloatCurves:
   - serializedVersion: 2
@@ -33,9 +49,9 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point
-    classID: 1
+    attribute: m_FlipX
+    path: Body/Torso
+    classID: 212
     script: {fileID: 0}
     flags: 0
   - serializedVersion: 2
@@ -44,28 +60,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point/Hand
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -80,79 +75,32 @@ AnimationClip:
     classID: 1
     script: {fileID: 0}
     flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Body/Head/EyeR
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point/Hand/Weapon/idleProjectile
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
   m_PPtrCurves:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: 21300000, guid: ffb5a0bc949dbde48a5b4223831bf7d5, type: 3}
+      value: {fileID: 21300000, guid: c10b8e1028d17504783e01250364db48, type: 3}
+    - time: 0.16666667
+      value: {fileID: 21300000, guid: 161fabec3a78fe444879390174be6b66, type: 3}
     - time: 0.33333334
-      value: {fileID: 21300000, guid: 1d4bb51be2656004984e10742c1739cd, type: 3}
+      value: {fileID: 21300000, guid: b7dcdd46e1f0cab4da7ab1838bebccf6, type: 3}
+    - time: 0.5
+      value: {fileID: 21300000, guid: 312a279a76aea684fbff4b8cb38e8073, type: 3}
     - time: 0.6666667
-      value: {fileID: 21300000, guid: 3a6bee52d78ead64fb58553508a5a8b3, type: 3}
-    - time: 1
-      value: {fileID: 21300000, guid: ffb5a0bc949dbde48a5b4223831bf7d5, type: 3}
+      value: {fileID: 21300000, guid: a5abbdb9cbb060c489e58ef618cfc977, type: 3}
+    - time: 0.8333333
+      value: {fileID: 21300000, guid: c10b8e1028d17504783e01250364db48, type: 3}
     attribute: m_Sprite
-    path: Rotate-point/Hand/Weapon/string
+    path: Body/Torso
+    classID: 212
+    script: {fileID: 0}
+    flags: 2
+  - serializedVersion: 2
+    curve:
+    - time: 0
+      value: {fileID: 21300000, guid: 21a7e5504a6a3cc459ed0919544c18d2, type: 3}
+    attribute: m_Sprite
+    path: Body/Head
     classID: 212
     script: {fileID: 0}
     flags: 2
@@ -164,19 +112,10 @@ AnimationClip:
   m_ClipBindingConstant:
     genericBindings:
     - serializedVersion: 2
-      path: 3877781246
-      attribute: 2086281974
+      path: 17307992
+      attribute: 555744692
       script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 4003588974
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
+      typeID: 212
       customType: 0
       isPPtrCurve: 0
       isIntCurve: 0
@@ -191,25 +130,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     - serializedVersion: 2
-      path: 586403662
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 2886111333
-      attribute: 2086281974
-      script: {fileID: 0}
-      typeID: 1
-      customType: 0
-      isPPtrCurve: 0
-      isIntCurve: 0
-      isSerializeReferenceCurve: 0
-    - serializedVersion: 2
-      path: 560209838
+      path: 17307992
       attribute: 0
       script: {fileID: 0}
       typeID: 212
@@ -217,17 +138,38 @@ AnimationClip:
       isPPtrCurve: 1
       isIntCurve: 0
       isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 694585260
+      attribute: 0
+      script: {fileID: 0}
+      typeID: 212
+      customType: 23
+      isPPtrCurve: 1
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
+    - serializedVersion: 2
+      path: 929413274
+      attribute: 1
+      script: {fileID: 0}
+      typeID: 4
+      customType: 0
+      isPPtrCurve: 0
+      isIntCurve: 0
+      isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: 21300000, guid: ffb5a0bc949dbde48a5b4223831bf7d5, type: 3}
-    - {fileID: 21300000, guid: 1d4bb51be2656004984e10742c1739cd, type: 3}
-    - {fileID: 21300000, guid: 3a6bee52d78ead64fb58553508a5a8b3, type: 3}
-    - {fileID: 21300000, guid: ffb5a0bc949dbde48a5b4223831bf7d5, type: 3}
+    - {fileID: 21300000, guid: c10b8e1028d17504783e01250364db48, type: 3}
+    - {fileID: 21300000, guid: 161fabec3a78fe444879390174be6b66, type: 3}
+    - {fileID: 21300000, guid: b7dcdd46e1f0cab4da7ab1838bebccf6, type: 3}
+    - {fileID: 21300000, guid: 312a279a76aea684fbff4b8cb38e8073, type: 3}
+    - {fileID: 21300000, guid: a5abbdb9cbb060c489e58ef618cfc977, type: 3}
+    - {fileID: 21300000, guid: c10b8e1028d17504783e01250364db48, type: 3}
+    - {fileID: 21300000, guid: 21a7e5504a6a3cc459ed0919544c18d2, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 1.0166667
+    m_StopTime: 0.84999996
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -259,9 +201,9 @@ AnimationClip:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point
-    classID: 1
+    attribute: m_FlipX
+    path: Body/Torso
+    classID: 212
     script: {fileID: 0}
     flags: 0
   - serializedVersion: 2
@@ -270,28 +212,7 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point/Hand
-    classID: 1
-    script: {fileID: 0}
-    flags: 0
-  - serializedVersion: 2
-    curve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
+        value: 0
         inSlope: Infinity
         outSlope: Infinity
         tangentMode: 103
@@ -312,19 +233,19 @@ AnimationClip:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        value: -0.05
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Body/Head/EyeR
-    classID: 1
+    attribute: m_LocalPosition.x
+    path: Body/Head/EyeR/Circle
+    classID: 4
     script: {fileID: 0}
     flags: 0
   - serializedVersion: 2
@@ -334,36 +255,39 @@ AnimationClip:
       - serializedVersion: 3
         time: 0
         value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 0.6666667
-        value: 1
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: Infinity
-        outSlope: Infinity
-        tangentMode: 103
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
         weightedMode: 0
         inWeight: 0
         outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    attribute: m_IsActive
-    path: Rotate-point/Hand/Weapon/idleProjectile
-    classID: 1
+    attribute: m_LocalPosition.y
+    path: Body/Head/EyeR/Circle
+    classID: 4
+    script: {fileID: 0}
+    flags: 0
+  - serializedVersion: 2
+    curve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: -0.01
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 136
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    attribute: m_LocalPosition.z
+    path: Body/Head/EyeR/Circle
+    classID: 4
     script: {fileID: 0}
     flags: 0
   m_EulerEditorCurves: []
