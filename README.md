@@ -46,9 +46,9 @@
 		nejakych Bossov
 		vylespit textury UI
 
-### Kontrola 14. 01. 2023
+### Kontrola 14. 01. 2024
 <p>
-	<a href="https://www.youtube.com/embed/oKX7ARDCYG8">Shadowhaven 14.01. 2023</a>
+	<a href="https://www.youtube.com/embed/oKX7ARDCYG8">Shadowhaven 14.01. 2024</a>
 </p>
 
 	Dokoncene:
@@ -85,4 +85,15 @@
 			viac Itemov
 			viac Bossov
 			progresiu
-   
+### Kontrola 07. 04. 2024
+<p>
+	<a href="https://www.youtube.com/embed/BiKLy5OlqF4">Shadowhaven 07.04. 2024</a>
+</p>
+
+	Dokoncene:
+		Prvy Level
+		Druhy Level
+	Este chcem pridat:
+		Zaverecny bossfight
+		soundtrack lv2
+		zopar Itemov
