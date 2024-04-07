@@ -65,6 +65,7 @@ public class PlayerCombatScript : MonoBehaviour
             Vector2 rotation = Vector2.zero;
             rotation.x =    Mathf.Round(Input.GetAxis("Joy X") * 100) / 100;
             rotation.y = -  Mathf.Round(Input.GetAxis("Joy Y") * 100) / 100;
+            //Debug.Log($"Controler readings [{rotation.x},{rotation.y}]");
             Vector3 mouse = Input.mousePosition;
             if (!controler && Mathf.Abs(rotation.x) < 0.01f && 0.01f > Mathf.Abs(rotation.y) || mousePos != mouse)
             {
