@@ -22,7 +22,8 @@ public class EnemyScript : MonoBehaviour
 
     private float rangeMax;
     private float rangeMin;
-
+    private bool targeted;
+    private const float tarTol = 0.2f; // Targeting Tolerancy
     private void OnDrawGizmosSelected()
     {
         stats = GetComponent<EnemyStats>();
@@ -44,6 +45,7 @@ public class EnemyScript : MonoBehaviour
         stats = GetComponent<EnemyStats>();
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        targeted = false;
         SetStats();
     }
     private void SetStats()
@@ -82,29 +84,45 @@ public class EnemyScript : MonoBehaviour
                 break;
             case "Imp":
             case "Skeleton":
-                if ((rangeMax < distance || distance < rangeMin) && distance < stats.lookRadius)
+                if (distance < rangeMin)
+                // FLEES
                 {
-                    if (distance < rangeMin)
-                        animator.SetBool("runAway", true);
-                    else
-                        animator.SetBool("runAway", false);
-
+                    animator.SetBool("runAway", true);
                     animator.SetBool("Shootin", false);
                     animator.SetBool("isFollowing", true);
+                    targeted = false;
                 }
-                else if (rangeMax > distance)
+                else if (targeted && distance < rangeMax + rangeMax*tarTol
+                            ||
+                        !targeted && distance < rangeMax - rangeMax*tarTol)
+                // SHOOTS
                 {
                     animator.SetBool("isFollowing", false);
                     animator.SetBool("Shootin", true);
                     rb.velocity = Vector3.zero;
+                    targeted = true;
+                }
+                else if ((!targeted && (rangeMax - tarTol*rangeMax < distance)
+                            ||
+                        (targeted && (rangeMax + tarTol*rangeMax < distance)))
+                            &&
+                        distance < stats.lookRadius)
+                // FOLLOWS
+                {
+                    animator.SetBool("runAway", false);
+                    animator.SetBool("Shootin", false);
+                    animator.SetBool("isFollowing", true);
+                    targeted = false;
                 }
                 else
+                // DEFAULT POSE => IDLE
                 {
                     if (animator.GetBool("Shootin"))
                         animator.SetBool("Shootin", false);
                     if (animator.GetBool("isFollowing"))
                         animator.SetBool("isFollowing", false);
                     rb.velocity = Vector3.zero;
+                    targeted = false;
                 }
                 break;
 

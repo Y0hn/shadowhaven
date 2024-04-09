@@ -67,11 +67,10 @@ public class PlayerCombatScript : MonoBehaviour
             rotation.y = -  Mathf.Round(Input.GetAxis("Joy Y") * 100) / 100;
             //Debug.Log($"Controler readings [{rotation.x},{rotation.y}]");
             Vector3 mouse = Input.mousePosition;
-            if (!controler && Mathf.Abs(rotation.x) < 0.01f && 0.01f > Mathf.Abs(rotation.y) || mousePos != mouse)
+            if (Mathf.Abs(rotation.x) < 0.01f && 0.01f > Mathf.Abs(rotation.y) || mousePos != mouse)
             {
                 Vector3 m = cam.ScreenToWorldPoint(mouse);
                 rotation = m - transform.position;
-                controler = false;
                 mousePos = mouse;
                 //Debug.Log($"Mouse Pos[{mousePos.x},{mousePos.y}]");
             }
@@ -79,7 +78,6 @@ public class PlayerCombatScript : MonoBehaviour
             {
                 rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
                 rotatePoint.transform.rotation = Quaternion.Euler(0, 0, rotZ);
-                controler = true;
                 //Debug.Log($"Rotation is [{rotation.x},{rotation.y}] which coresponds to angle {rotZ}");
             }
             #endregion
