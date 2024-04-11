@@ -5,10 +5,17 @@ public class Item : ScriptableObject
 {
     public Rarity rarity = Rarity.Common;
     new public string name = "New item";
-    public string description = string.Empty;
+    public string description = "";
     public Sprite icon = null;
     public Color color = Color.white;
-
+    public Item()
+    {
+        rarity = Rarity.Common;
+        description = "desc";
+        color = Color.white;
+        name = "new";
+        icon = null;
+    }
     public virtual void Use()
     {
         // Use item
@@ -33,8 +40,36 @@ public class Item : ScriptableObject
         return r;
     }
 }
-
 public enum Rarity
 {
     Common, Uncommon, Rare, SuperRare, Legendary
+}
+[System.Serializable]
+public class ItemData
+{
+    public string name;
+    public ItemData(Item item)
+    {
+        if (item != null)
+            name = item.name;
+        else
+            name = null;
+    }
+    public Item GetItem()
+    {
+        if (name != null)
+        {
+            Item[] items = Resources.LoadAll<Item>("Items");
+            Item item = null;
+            foreach (Item i in items)
+                if (i.name == name)
+                {
+                    item = i;
+                    break;
+                }
+            return item;
+        }
+        else
+            return null;
+    }
 }

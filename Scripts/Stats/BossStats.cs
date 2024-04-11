@@ -40,7 +40,7 @@ public class BossStats : EnemyStats
         // 0 => START
         if (start)
         {
-            GameManager.instance.AddBoss(this);
+            GameManager.instance.SetBoss(this);
             start = !GameManager.instance.generated;
         }
         // 1 => ENTRY
@@ -125,7 +125,7 @@ public class BossStats : EnemyStats
         animator.SetTrigger("die");
         collid.enabled = false;
         rb.simulated = false;
-        GameManager.instance.BossKilled(this);
+        GameManager.instance.BossKilled();
         Destroy(gameObject, 3);
     }
     public void SetY(float newY)
@@ -142,6 +142,6 @@ public class BossStats : EnemyStats
     }
     private void OnDestroy()
     {
-        GameManager.instance.BossKilled(this, true);
+        GameManager.instance.BossKilled(true);
     }
 }

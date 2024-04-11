@@ -66,10 +66,10 @@ public class CameraManager : MonoBehaviour
             {
                 if (cameraSeqFollower > 0 && cameraSeqFollower < cameraSequence.Count)
                 {
-                    if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !GameManager.instance.bosses[0].onCamera)
+                    if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !GameManager.instance.boss.onCamera)
                     {
                         GameManager.lights.LightTypeTurn(0, LightManager.LightType.Boss);
-                        GameManager.instance.bosses[0].onCamera = true;
+                        GameManager.instance.boss.onCamera = true;
                     }
                     else if (cameraSequence[cameraSeqFollower - 1] == "toDoor" && cameraSequence[cameraSeqFollower] == "toBoss")
                         GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
@@ -87,7 +87,7 @@ public class CameraManager : MonoBehaviour
                 if (cameraSequence.Count <= cameraSeqFollower)
                 {
                     Kamera.ChangeCamera(cameras, 0);
-                    GameManager.instance.bosses[0].onCamera = false;
+                    GameManager.instance.boss.onCamera = false;
                     cameraSequence = new();
                     GameManager.instance.ableToMove = true;
 
@@ -276,7 +276,7 @@ public class CameraManager : MonoBehaviour
                 position = Kamera.GetCamera(cameras, "player").camera.transform.position;
                 break;
             case 1: // toBoss
-                position = GameManager.instance.bosses[0].transform.position;
+                position = GameManager.instance.boss.transform.position;
                 break;
             case 2: // toDoor
                 position = GameManager.enviroment.GetDoors(DoorType.BossIn)[0].GetClosedPos();

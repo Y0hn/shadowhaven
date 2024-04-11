@@ -2,6 +2,7 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -36,10 +37,12 @@ public class GameManager : MonoBehaviour
     #region References
 
     private PlayerScript playerScript;
-    private PlayerStats playerStats;
-    public GameObject[] Levels;
+    public PlayerStats playerStats;
     public GameObject player;
     private ItemsList items;
+    // Lists
+    public GameObject[] Levels;
+    public BossStats boss;
 
     #endregion
 
@@ -50,8 +53,6 @@ public class GameManager : MonoBehaviour
     public bool generated = false;
     private bool qchange = true;
     public bool inv = false;
-    // Lists
-    public List<BossStats> bosses = new();
 
     private bool sceneLoaded = false;
     private bool deathScreen = false;
@@ -88,9 +89,9 @@ public class GameManager : MonoBehaviour
                 else
                     ResumeGame();
 
-                foreach (BossStats b in bosses)
-                    if (b.Active())
-                        b.ShowBar(ableToMove);
+                if (boss != null)
+                    if (boss.Active())
+                        boss.ShowBar(ableToMove);
             }
             else if (Input.GetButtonDown("Inventory"))
             {
@@ -148,7 +149,16 @@ public class GameManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.P)) // DEBUG !!!!!
             {
                 //playerStats.TakeDamage(int.MaxValue);
-                playerStats.LevelUp();
+                //playerStats.LevelUp();
+                Save();
+            }
+            else if (Input.GetKeyDown(KeyCode.O))
+            {
+                Load();
+            }
+            else if (Input.GetKeyDown(KeyCode.L))
+            {
+                LevelLoad();
             }
         }
         else
@@ -170,13 +180,11 @@ public class GameManager : MonoBehaviour
     }
 
     #region Private Events
-    void LevelLoad()
+    Transform LevelLoad()
     {
         GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
-
         foreach (GameObject lvl in oldLvls)
-        {
-            //Debug.Log("Destroyed level: " + lvl.name);
+        { //Debug.Log("Destroyed level: " + lvl.name);
             Destroy(lvl);
         }
 
@@ -185,7 +193,7 @@ public class GameManager : MonoBehaviour
         levObj.name = levObj.name.Split('_')[0] + "_" + (level+1);
         for (int i = 0; i <= level; i++)
             items.SetAll(Resources.LoadAll<Item>($"Items/{levObj.name.Split('_')[0]}_{i+1}"));
-        //Debug.Log($"Pridany pocet itemov [{items.Items.Count}]");
+        // Debug.Log($"Pridany pocet itemov [{items.Items.Count}]");
         if (level > 0)
         {
             items.EraseItemsOfRarity((Rarity)level);
@@ -196,6 +204,7 @@ public class GameManager : MonoBehaviour
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(inventory.GetEquipment());
         items.RemoveArray(inventory.items.ToArray());
+        return levObj.transform;
     }
     void PlayerDeath()
     {
@@ -295,35 +304,38 @@ public class GameManager : MonoBehaviour
     }
     public void Save()
     {
-        SaveSystem.SavePlayer(playerScript, playerStats);
+        SaveSystem.Save();
     }
     public void Load()
     {
-        PlayerData data = SaveSystem.LoadPlayer();
-
-        playerStats.SetHealth(data.health);
-        playerStats.level = data.level;
-        playerScript.SetPos(new Vector2(data.position[0], data.position[1]));
+        SaveSystem.Data data = SaveSystem.Load();
+        inventory.Load(data.inventory);
+        level = data.curLevel;
+        player.transform.position = data.entities[0].position.GetVector();
+        LevelLoad().GetComponentInChildren<LevelGener>().LoadFromData(data);
     }
     public void AddXp(int xp) 
     {
         playerStats.AddXp(xp);
     }
-    public void AddBoss(BossStats boss)
+    public void SetBoss(BossStats boss)
     {
-        if (generated)
-            bosses.Add(boss);
+        this.boss = boss;
     }
-    public void BossKilled(BossStats boss, bool onDestroy = false)
+    public BossStats GetBoss()
     {
-        if (generated && bosses.Contains(boss))
+        return boss;
+    }
+    public void BossKilled(bool onDestroy = false)
+    {
+        if (generated && boss != null)
         {
             if (!onDestroy)
             {
                 enviroment.OpenDoors(DoorType.BossOut);
                 enviroment.OpenDoors(DoorType.BossIn);
             }
-            bosses.Remove(boss);
+            boss = null;
         }
     }
     public void NextLevel()

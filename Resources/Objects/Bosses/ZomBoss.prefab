@@ -849,7 +849,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5308562171726975304}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a278084227575d24080cb326599b3909, type: 3}
   m_Name: 
@@ -860,6 +860,8 @@ MonoBehaviour:
     value: 20
   armor:
     value: 10
+  speed:
+    value: 0
   level: 3
   loot: {fileID: 0}
   lookRadius: 3
@@ -1112,6 +1114,8 @@ MonoBehaviour:
   damage:
     value: 0
   armor:
+    value: 0
+  speed:
     value: 0
   level: 0
   loot: {fileID: 0}

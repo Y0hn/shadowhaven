@@ -34,6 +34,7 @@ public class SpawnObject : MonoBehaviour
             int rand = Random.Range(0, objects.Length);
             if (objects.Length != 0)
                 spawn = objects[rand];
+            spawn.GetComponent<BossStats>().enabled = true;
         }
         else if (name.Contains("item"))
         {
@@ -93,8 +94,10 @@ public class SpawnObject : MonoBehaviour
         if (spawn != null)
         {
             spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent);
-
-            spawn.tag = "Untagged";
+            if (spawn.tag.Contains("Enemy"))
+                spawn.tag = "Enemy";
+            else
+                spawn.tag = "Untagged";
             spawn.name = spawn.name.Split('(')[0];
 
             // Additional settings

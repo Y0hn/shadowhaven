@@ -194,4 +194,20 @@ public class Inventory : MonoBehaviour
         }
         return false;
     }
+    public SaveSystem.Data.InventoryData Save()
+    {
+        return new SaveSystem.Data.InventoryData(items, equipment);
+    }
+    public void Load(SaveSystem.Data.InventoryData data)
+    {
+        if (data.items != null)
+            foreach (ItemData i in data.items)
+                items.Add(i.GetItem());
+        if (data.equipment != null)
+        {
+            equipment = new Equipment[data.equipment.Length];
+            for (int i = 0; i < equipment.Length; i++)
+                equipment[i] = (Equipment)data.equipment[i].GetItem();
+        }
+    }
 }

@@ -1,4 +1,3 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 public abstract class CharakterStats : MonoBehaviour
 {
@@ -57,5 +56,9 @@ public abstract class CharakterStats : MonoBehaviour
     protected virtual void Die()
     {
         // Metod will be more specified in override
+    }
+    public virtual SaveSystem.Data.CharakterData SaveData()
+    {
+        return new SaveSystem.Data.CharakterData(name, curHealth, transform.position);
     }
 }
