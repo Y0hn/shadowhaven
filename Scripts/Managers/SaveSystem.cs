@@ -24,6 +24,7 @@ public static class SaveSystem
         Debug.Log($"[{Time.time}] Data saved succesfully\nData:" +
                     $"\n\tPlayer [{data.entities[0].position}]" +
                     $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
+                    $"\n\tNumber of Items [{data.interactables.items.Length}]" +
                     $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
                     $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
     }
@@ -39,6 +40,7 @@ public static class SaveSystem
             Debug.Log($"[{Time.time}] Data loaded succesfully\nData:" +
                     $"\n\tPlayer [{data.entities[0].position}]" +
                     $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
+                    $"\n\tNumber of Items [{data.interactables.items.Length}]" +
                     $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
                     $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
             return data;
@@ -58,12 +60,14 @@ public static class SaveSystem
     [System.Serializable]
     public class Data
     {
+        public InteractableData interactables;
         public CharakterData[] entities;
         public InventoryData inventory;
         public LevelData level;
         public int curLevel;
         public Data()
         {
+            interactables = null;
             inventory = null;
             entities = null;
             level = null;
@@ -73,8 +77,14 @@ public static class SaveSystem
         {
             entities = chars.ToArray();
             inventory = GameManager.inventory.Save();
-            level = new LevelData(GameObject.FindGameObjectWithTag("Level").transform);
+            level = new (GameObject.FindGameObjectWithTag("Level").transform);
             curLevel = GameManager.instance.level;
+
+            // Items
+            List<Interactable> inter = new List<Interactable>();
+            foreach (GameObject g in GameObject.FindGameObjectsWithTag("Item"))
+                inter.Add(g.GetComponent<Interactable>());
+            interactables = new(inter.ToArray());
         }
         [System.Serializable]
         public class CharakterData
@@ -96,6 +106,7 @@ public static class SaveSystem
             public ItemData[] equipment;
             public InventoryData(List<Item> items, Equipment[] equipment)
             {
+                this.items = new();
                 foreach (Item i in items)
                     this.items.Add(new ItemData(i));
 
@@ -127,6 +138,23 @@ public static class SaveSystem
                 roomsPos = pos.ToArray();
             }
         }
+        [System.Serializable]
+        public class InteractableData
+        {
+            public ItemData[] items;
+            public Position[] positions;
+            public InteractableData(Interactable[] items)
+            {
+                this.items = new ItemData[items.Length];
+                positions = new Position[items.Length];
+                for (int i = 0;i < items.Length;i++)
+                {
+                    this.items[i] = new ItemData(items[i].item);
+                    positions[i] = new Position(items[i].transform.position);
+                }                
+            }
+        }
+        
         [System.Serializable]
         public class Position
         {

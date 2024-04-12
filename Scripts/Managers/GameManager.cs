@@ -311,7 +311,8 @@ public class GameManager : MonoBehaviour
         SaveSystem.Data data = SaveSystem.Load();
         inventory.Load(data.inventory);
         level = data.curLevel;
-        player.transform.position = data.entities[0].position.GetVector();
+        playerStats.SetHealth(data.entities[0].curHealh);
+        //player.transform.position = data.entities[0].position.GetVector();
         LevelLoad().GetComponentInChildren<LevelGener>().LoadFromData(data);
     }
     public void AddXp(int xp) 
