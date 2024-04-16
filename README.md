@@ -1,5 +1,5 @@
 # Shadowhaven
-## Skolsky Projekt 2023/24
+Rocnikovy Projekt [2023/24]
 
 ### Goal:
 	Vytvorit funkcne singleplayer 2D RPG s:
