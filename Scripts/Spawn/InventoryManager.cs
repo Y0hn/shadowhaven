@@ -200,12 +200,13 @@ public class Inventory : MonoBehaviour
     }
     public void Load(SaveSystem.Data.InventoryData data)
     {
+        items = new();
+        equipment = new Equipment[equipment.Length];
         if (data.items != null)
             foreach (ItemData i in data.items)
                 items.Add(i.GetItem());
         if (data.equipment != null)
         {
-            equipment = new Equipment[data.equipment.Length];
             for (int i = 0; i < equipment.Length; i++)
                 equipment[i] = (Equipment)data.equipment[i].GetItem();
         }

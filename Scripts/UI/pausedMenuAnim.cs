@@ -6,8 +6,8 @@ public class pausedMenuAnim : MonoBehaviour
     public RectTransform aud;
 
     bool open, animating;
-    float openSize = 500;
-    float closeSize = 250;
+    float openSize = 550;
+    float closeSize = 300;
     public float speed = 1f;
     float sizer;
 
@@ -50,5 +50,10 @@ public class pausedMenuAnim : MonoBehaviour
             }
             animating = true;
         }
+    }
+    public void SaveGame()
+    {
+        // Animacia Save Menu + random sith
+        GameManager.instance.Save();
     }
 }

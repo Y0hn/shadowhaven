@@ -1,8 +1,6 @@
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 public class GameManager : MonoBehaviour
 {
     #region Singleton
@@ -48,6 +46,7 @@ public class GameManager : MonoBehaviour
 
     public int eqiWeap;
     public int level;
+    private float uptoLevelLoad;
     public bool ableToMove { get; set; }
     public bool playerLives = true;
     public bool generated = false;
@@ -71,14 +70,34 @@ public class GameManager : MonoBehaviour
         playerStats = player.GetComponent<PlayerStats>();
         inventory = GetComponent<Inventory>();
         items = GetComponent<ItemsList>();
-        // Level SetUp
-        LevelLoad();
-        sceneLoaded = true;
+        uptoLevelLoad = -0.5f;
+        if (SaveSystem.fileDataLoaded)
+        {
+            Debug.Log("File data load!");
+            uptoLevelLoad = Time.time + Mathf.Abs(uptoLevelLoad);
+            sceneLoaded = false;
+
+            // ENABLE LOADING SCREEN
+        }
+        else // Level SetUp
+        {
+            Debug.Log("New level creation!");
+            LevelLoad();
+            sceneLoaded = true;
+        }
     }
     void Update()
     {
         if (!sceneLoaded)
-            ReloadScene();
+        {
+            if (uptoLevelLoad < 0)
+                ReloadScene();
+            else if (uptoLevelLoad < Time.time)
+            {
+                Load();
+                sceneLoaded = true;
+            }
+        }
         if (playerLives)
         {
             // INPUT \\
@@ -182,12 +201,7 @@ public class GameManager : MonoBehaviour
     #region Private Events
     Transform LevelLoad()
     {
-        GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
-        foreach (GameObject lvl in oldLvls)
-        { //Debug.Log("Destroyed level: " + lvl.name);
-            Destroy(lvl);
-        }
-
+        LevelClear();
         // Premenovanie Levela xdd
         GameObject levObj = Instantiate(Levels[level], transform.position, Quaternion.identity);
         levObj.name = levObj.name.Split('_')[0] + "_" + (level+1);
@@ -205,6 +219,14 @@ public class GameManager : MonoBehaviour
         items.RemoveArray(inventory.GetEquipment());
         items.RemoveArray(inventory.items.ToArray());
         return levObj.transform;
+    }
+    void LevelClear()
+    {
+        GameObject[] oldLvls = GameObject.FindGameObjectsWithTag("Level");
+        foreach (GameObject lvl in oldLvls)
+        { //Debug.Log("Destroyed level: " + lvl.name);
+            Destroy(lvl);
+        }
     }
     void PlayerDeath()
     {
@@ -314,6 +336,7 @@ public class GameManager : MonoBehaviour
         playerStats.SetHealth(data.entities[0].curHealh);
         //player.transform.position = data.entities[0].position.GetVector();
         LevelLoad().GetComponentInChildren<LevelGener>().LoadFromData(data);
+        SaveSystem.fileDataLoaded = false;
     }
     public void AddXp(int xp) 
     {

@@ -5,14 +5,19 @@ using System.Collections.Generic;
 using System.Linq;
 public static class SaveSystem
 {
+    public static bool fileDataLoaded = false;
+    public static bool SaveDataExist(string filename = "data")
+    {
+        return File.Exists(Path(filename));
+    }
     public static void Save()
     {
         BinaryFormatter formatter = new();
         FileStream stream = new(Path("data"), FileMode.Create);
 
         // Entities DATA
-        List<Data.CharakterData> charakterData = new();
-        charakterData.Add(GameManager.instance.playerStats.SaveData());
+        List<Data.CharakterData> charakterData = new()
+        { GameManager.instance.playerStats.SaveData() };
         foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy"))
             charakterData.Add(e.GetComponent<EnemyStats>().SaveData());
         charakterData.Add(GameManager.instance.boss.SaveData());
