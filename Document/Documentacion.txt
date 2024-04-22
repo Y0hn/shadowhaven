@@ -657,6 +657,7 @@ Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
+If enemy moves cannot save any
 
 // Tim PC:	- more/less IRELEVANT
 	boss fight gate preopened

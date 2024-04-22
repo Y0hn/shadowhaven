@@ -1,37 +1,168 @@
-using UnityEngine;
-using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine;
+using System.IO;
 public static class SaveSystem
 {
     public static bool fileDataLoaded = false;
+    private static bool debug = false;
+    public static bool CheckSaveNeed()
+    {
+        return CompareData(GetData(), Load());
+    }
     public static bool SaveDataExist(string filename = "data")
     {
-        return File.Exists(Path(filename));
+        Data d = Load();
+        return DataCheck(d);
+    }
+    private static bool DataCheck(Data data)
+    {
+        bool check = true;
+        try
+        {
+            // Level number
+            check &= data != null;
+            check &= data.curLevel >= 0;
+            check &= data.level.roomsPos.Length == data.level.rooms.Length;
+
+
+            // Entities => min. 1 {Player}
+            check &= data.entities.Length >= 1;
+            foreach (Data.CharakterData e in data.entities)
+                check &= e.curHealh >= 0 && e.charName != "" && e.position != null;
+
+            // Inventory + Equipment DUPLICATE CHECK
+            check &= data.inventory.items.Count >= 0;
+            check &= data.inventory.equipment.Length >= 0;
+            List<ItemData> list = new();
+            for (int i = 0, e = 0; (i < data.inventory.items.Count || data.inventory.equipment.Length > e) && check; i++, e++)
+            {
+                if (i < data.inventory.items.Count)
+                {
+                    check &= !list.Contains(data.inventory.items[i]);
+                    list.Add(data.inventory.items[i]);
+                }
+                if (e < data.inventory.equipment.Length)
+                {
+                    check &= !list.Contains(data.inventory.equipment[e]);
+                    list.Add(data.inventory.equipment[e]);
+                }
+            }
+            list.Clear();
+
+            // Interactables
+            check &= data.interactables.positions.Length == data.interactables.items.Length;
+        }
+        catch
+        {
+            check = false;
+        }
+        if (check)
+            Debug.Log("Passed data check!");
+        else
+            Debug.Log("Failed data check!");
+        return check;
+    }
+    private static bool CompareData(Data d1, Data d2)
+    {
+        bool compare = DataCheck(d1) && DataCheck(d2);
+
+        // Cur Level
+        compare &= d1.curLevel == d2.curLevel;
+        DebugLogForComperators(compare, "Current Level");
+        // Inventory
+        compare &= d1.inventory.items.Count == d2.inventory.items.Count;
+        if (compare)
+            for (int i = 0; i < d1.inventory.items.Count && compare; i++)
+                compare &= d1.inventory.items[i].name == d2.inventory.items[i].name;
+        DebugLogForComperators(compare, "Inventory");
+        // Equipment
+        compare &= d1.inventory.equipment.Length == d2.inventory.equipment.Length;
+        if (compare)
+            for (int i = 0; i < d1.inventory.equipment.Length && compare; i++)
+                compare &= d1.inventory.equipment[i].name == d2.inventory.equipment[i].name;
+        DebugLogForComperators(compare, "Equipment");
+        // Level
+        compare &= d1.level.rooms.Length == d2.level.rooms.Length;
+        if (compare)
+            for (int i = 0; i < d1.level.rooms.Length && compare; i++)
+                compare &= d1.level.rooms[i] == d2.level.rooms[i];
+        DebugLogForComperators(compare, "Level");
+        // Interactable
+        compare &= d1.interactables.items.Length == d2.interactables.items.Length;
+        if (compare)
+            for (int i = 0; i < d1.interactables.items.Length && compare; i++)
+                compare &= d1.interactables.items[i].name == d2.interactables.items[i].name;
+        DebugLogForComperators(compare, "Interactable");
+        // Entities
+        compare &= d1.entities.Length == d2.entities.Length;
+        if (compare)
+            foreach (Data.CharakterData entity in d1.entities)
+            {
+                bool found = false;
+                foreach (Data.CharakterData refer in d2.entities)
+                    if (entity.position.GetVector() == refer.position.GetVector())
+                    {
+                        compare &= entity.charName == refer.charName;
+                        compare &= entity.curHealh == refer.curHealh;
+                        found = true;
+                        break;
+                    }
+                compare &= found;
+                if (!compare)
+                {
+                    Debug.Log($"{entity.charName} not found in save data");
+                    break;
+                }
+            }
+        DebugLogForComperators(compare, "Entities");
+        DebugLogDataOut(d1, "compare to d2");
+        DebugLogDataOut(d2, "compare to d1");
+
+        return compare;
+    }
+    private static void DebugLogForComperators(bool pass, string message)
+    {
+        if (debug)
+        {
+            if (pass)
+                Debug.Log(message + " passed!");
+            else
+                Debug.Log(message + " failed!");
+        }
+    }
+    private static void DebugLogDataOut(Data data, string action)
+    {
+        if (debug)
+            Debug.Log($"[{Time.time}] Data {action} succesfully\nData:" +
+                        $"\n\tPlayer [{data.entities[0].position}]" +
+                        $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
+                        $"\n\tNumber of Items [{data.interactables.items.Length}]" +
+                        $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
+                        $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
     }
     public static void Save()
     {
         BinaryFormatter formatter = new();
         FileStream stream = new(Path("data"), FileMode.Create);
 
+        Data data = GetData();
+        formatter.Serialize(stream, data);
+        stream.Close();
+        DebugLogDataOut(data, "saved");
+    }
+    private static Data GetData()
+    {
         // Entities DATA
         List<Data.CharakterData> charakterData = new()
         { GameManager.instance.playerStats.SaveData() };
         foreach (GameObject e in GameObject.FindGameObjectsWithTag("Enemy"))
             charakterData.Add(e.GetComponent<EnemyStats>().SaveData());
-        charakterData.Add(GameManager.instance.boss.SaveData());
+        if (GameManager.instance.boss != null)
+            charakterData.Add(GameManager.instance.boss.SaveData());
 
-        Data data = new(charakterData);
-        formatter.Serialize(stream, data);
-
-        stream.Close();
-        Debug.Log($"[{Time.time}] Data saved succesfully\nData:" +
-                    $"\n\tPlayer [{data.entities[0].position}]" +
-                    $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
-                    $"\n\tNumber of Items [{data.interactables.items.Length}]" +
-                    $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
-                    $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
+        return new(charakterData);
     }
     public static Data Load()
     {
@@ -42,12 +173,7 @@ public static class SaveSystem
 
             Data data = formatter.Deserialize(steam) as Data;
             steam.Close();
-            Debug.Log($"[{Time.time}] Data loaded succesfully\nData:" +
-                    $"\n\tPlayer [{data.entities[0].position}]" +
-                    $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
-                    $"\n\tNumber of Items [{data.interactables.items.Length}]" +
-                    $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
-                    $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
+            DebugLogDataOut(data, "loaded");
             return data;
         }
         else

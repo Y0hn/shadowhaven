@@ -34,7 +34,8 @@ public class SpawnObject : MonoBehaviour
             int rand = Random.Range(0, objects.Length);
             if (objects.Length != 0)
                 spawn = objects[rand];
-            spawn.GetComponent<BossStats>().enabled = true;
+            if (spawn != null)
+                spawn.GetComponent<BossStats>().enabled = true;
         }
         else if (name.Contains("item"))
         {

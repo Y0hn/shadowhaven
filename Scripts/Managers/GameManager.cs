@@ -179,6 +179,10 @@ public class GameManager : MonoBehaviour
             {
                 LevelLoad();
             }
+            else if (Input.GetKeyDown(KeyCode.K))
+            {
+                Debug.Log(SaveSystem.CheckSaveNeed());
+            }
         }
         else
         {
