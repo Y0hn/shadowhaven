@@ -459,6 +459,7 @@ public class LevelGener : MonoBehaviour
                 {
                     GameObject ee = Instantiate(enemies[index], data.entities[i].position.GetVector(), Quaternion.identity, spawned);
                     ee.name = ee.name.Split('(')[0];
+                    ee.tag = "Enemy";
                     //Debug.Log($"Enemy {e.charName} spawned");
                 }
                 else
