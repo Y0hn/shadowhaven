@@ -628,13 +628,9 @@ Ranged enemy cease fire
 - on range border
 
 ---/ ADD \---
-Fireball animation
-Working Save system
 Secret Roomky ?
 
 Level_02
-- hell
-- ranged enemy fireball  IMP ?
 - jalabaoth ?
 - items
 
@@ -672,6 +668,8 @@ Hodnoty:
 		- su vsetky v intervale ( 0 <=> 1 )
 AudioMixer has no effect on sounds themsefls
  - only when its added to audio source
+tag [System.Serializable]
+	- musi byt pri vsetkom co sa ma ukladat do pamate
 ________________/ LAYERS + TAGS \________________
 Tags:
 	[ Untagged			]
@@ -679,8 +677,8 @@ Tags:
 	[ Finish			]
 	[ EditorOnly		]
 	[ MainCamera		]
+	[ Player			]
 
-	" Player			"
 	" GameControler		"
 	" Weapon			"
 	" Tile				"
@@ -691,6 +689,12 @@ Tags:
 	" Level				"
 	" Item				"
 	" Assets			"
+	" Boss				"
+	" Camera			"
+	" Door				"
+	" Chest				"
+	" Light				"
+	" Enemy				"
 Layers:
 	[ Default			]
 	[ TransparentFX		]
