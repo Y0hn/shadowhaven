@@ -621,6 +621,11 @@ Controler Support
 Imp
 ----------------< 11. 04.  2024 >----------------
 Save System
+----------------< 04. 05.  2024 >----------------
+Arch Demon movement
+	weapon fire trident
+		- intro animation trident slam ot ground
+		- attack pierse
 ____________________/ PLANS \____________________
 ---/ BUG \---
 Ranged enemy cease fire
@@ -629,10 +634,6 @@ Ranged enemy cease fire
 
 ---/ ADD \---
 Secret Roomky ?
-
-Level_02
-- jalabaoth ?
-- items
 
 Level_03
 - heaven
