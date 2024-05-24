@@ -97,7 +97,12 @@ public class DoorBehavior : MonoBehaviour
                 transform2.position = new Vector3(transform2.position.x - roomX - f, transform2.position.y, transform2.position.z);
                 vertical = true; break;
         }
-        //Debug.Log($"Door position set to [{transform2.position.x},{transform2.position.y}]");
+        if (transform.parent.name == "Door:Loot:10x10-D_-2x1-E")
+        {
+            transform2.position = new Vector2(transform.position.x, transform.position.y - 2 * f);
+            // Debug.Log($"Exeption door position set to [{transform2.position.x},{transform2.position.y}]");
+        }
+        // else Debug.Log($"Parent name: [{transform.parent.name}] != \"Door:Loot:10x10-D_-2x1-E\"");
 
         // Verticality
         if (vertical)

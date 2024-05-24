@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 public class BossSelectorBehavior : StateMachineBehaviour
 {
@@ -57,9 +58,13 @@ public class BossSelectorBehavior : StateMachineBehaviour
                     }
                     //Debug.Log("Choosed: " + setTriger);
                     break;
+                case "ArchDevil":
+                    if      (!ConditionForAttack(animator, "trust"))
+                        setTriger = 1;
 
+                    break;
                 default:
-                    Debug.LogError("Boss " + name + " has no known behavior !");
+                    Debug.LogError("Boss " + animator.name + " has no known behavior !");
                     animator.enabled = false;
                     break;
             }
@@ -75,7 +80,7 @@ public class BossSelectorBehavior : StateMachineBehaviour
         bool condition = false;
         Vector2 pos = animator.transform.position;
         float dist = Vector2.Distance(targetTra.position, pos);
-        bool timesUp = lastAtc <= Time.time - maxChangeInterval * maxChangeInterval;
+        bool timesUp = lastAtc <= Time.time - (maxChangeInterval + maxChangeInterval);
 
         switch (atck)
         {
@@ -88,9 +93,12 @@ public class BossSelectorBehavior : StateMachineBehaviour
             case "spit":   
                 condition = dist > range * 2 && (pastTrigger % 10 != 3 || (timesUp && setTriger < 23));
                 break;
+            case "trust":
+                condition = dist < range * 1.5f && (pastTrigger % 10 != 1 || (timesUp/* && setTriger < 21*/));
+                break;
 
             default:
-                Debug.LogError($"Fatal: Boss {name} does not have attack {atck} !!!");
+                Debug.LogError($"Fatal: Boss {name} requesting non-existent attack {atck} !!!");
                 break;
         }
 

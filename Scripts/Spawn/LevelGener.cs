@@ -130,7 +130,7 @@ public class LevelGener : MonoBehaviour
             case "Level_2":
             case "Level_var-02":
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10 E"));
-                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20 E"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
                 doorSize = "2x1-E";
                 break;
