@@ -1293,6 +1293,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 466568119}
   m_CullTransparentMesh: 1
+--- !u!1 &473661540
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 473661541}
+  m_Layer: 0
+  m_Name: audioLib
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &473661541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 473661540}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 98.71423, y: 19.243837, z: -3.322167}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1098177339}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &475621816
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2984,6 +3015,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 821449193}
+  - {fileID: 473661541}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1098177340
@@ -3012,6 +3044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30d37c381b3ccfa48b40e7432f28c130, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioLibrary: {fileID: 473661541}
   masterGroup: {fileID: 24300002, guid: 87f6735136cef414fbd97458c1cc7bf0, type: 2}
   sounds:
   - name: theme

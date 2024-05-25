@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CameraManager : MonoBehaviour
@@ -24,6 +25,7 @@ public class CameraManager : MonoBehaviour
     private const float camSpeed = 5f;
     private int cameraSeqFollower;
     private bool proceedInSeq;
+    private string curCamSeq;
     private Kamera[] cameras;
     public Transform freeCam;
 
@@ -64,10 +66,10 @@ public class CameraManager : MonoBehaviour
             {
                 if (cameraSeqFollower > 0 && cameraSeqFollower < cameraSequence.Count)
                 {
-                    if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !GameManager.instance.bosses[0].onCamera)
+                    if (cameraSequence[cameraSeqFollower - 1] == "toBoss" && !GameManager.instance.boss.onCamera)
                     {
                         GameManager.lights.LightTypeTurn(0, LightManager.LightType.Boss);
-                        GameManager.instance.bosses[0].onCamera = true;
+                        GameManager.instance.boss.onCamera = true;
                     }
                     else if (cameraSequence[cameraSeqFollower - 1] == "toDoor" && cameraSequence[cameraSeqFollower] == "toBoss")
                         GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
@@ -85,7 +87,7 @@ public class CameraManager : MonoBehaviour
                 if (cameraSequence.Count <= cameraSeqFollower)
                 {
                     Kamera.ChangeCamera(cameras, 0);
-                    GameManager.instance.bosses[0].onCamera = false;
+                    GameManager.instance.boss.onCamera = false;
                     cameraSequence = new();
                     GameManager.instance.ableToMove = true;
 
@@ -221,28 +223,47 @@ public class CameraManager : MonoBehaviour
     {
         return Kamera.GetCamera(cameras, name).focused;
     }
-    public void CameraSequence(string seqName)
+    public string[] CameraSequence(string seqName, bool get = false)
     {
+        string[] output;
         switch (seqName)
         {
             case "boss":
-                cameraSequence = new()
+                output = new string[3]
                 { "toDoor", "toBoss", "toPlayer" };
                 cameraSeqFollower = 0;
                 proceedInSeq = true;
                 break;
 
             default:
+                output = null;
                 Debug.LogWarning("There is no such camera seqeunce as: " + seqName);
                 break;
+        }
+
+        // Output
+        if (get)
+        {
+            return output;
+        }
+        else
+        {
+            cameraSequence = output.ToList();
+            curCamSeq = seqName;
+            return null;
         }
     }
     public void SkipCurrentSequence()
     {
-        GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
-        Kamera.ChangeCamera(cameras, "player");
-        GameManager.instance.ableToMove = true;
         cameraSequence = new();
+        if (curCamSeq == "boss")
+        {
+            GameManager.lights.LightTypeTurn(0, LightManager.LightType.Boss);
+            GameManager.lights.LightTypeTurn(1, LightManager.LightType.Boss);
+            GameManager.enviroment.OpenDoors(DoorType.BossIn, false);
+        }
+        Kamera.ChangeCamera(cameras,0);
+        GameManager.instance.ableToMove = true;
         cameraSeqFollower = 0;
         proceedInSeq = true;
     }
@@ -251,13 +272,13 @@ public class CameraManager : MonoBehaviour
         //bool suc = true;
         switch (mode)
         {
-            case 0:
+            case 0: // toPlayer
                 position = Kamera.GetCamera(cameras, "player").camera.transform.position;
                 break;
-            case 1:
-                position = GameManager.instance.bosses[0].transform.position;
+            case 1: // toBoss
+                position = GameManager.instance.boss.transform.position;
                 break;
-            case 2:
+            case 2: // toDoor
                 position = GameManager.enviroment.GetDoors(DoorType.BossIn)[0].GetClosedPos();
                 break;
 

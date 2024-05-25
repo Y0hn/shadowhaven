@@ -12,6 +12,8 @@ public class Interactable : MonoBehaviour
         SpriteRenderer sRend = GetComponent<SpriteRenderer>();
         ItemsList itList = ItemsList.instance;
 
+        maxRarity += GameManager.instance.level;
+
         if (item == null)
         {
             switch (transform.name)
@@ -34,7 +36,10 @@ public class Interactable : MonoBehaviour
                     break;
             }
             if (item == null)
+            {
+                Debug.Log($"Interactable was unable to spawn at Max Rarity {maxRarity}");
                 Destroy(gameObject);
+            }
             else
             {
                 sRend.sprite = item.icon;
@@ -50,10 +55,7 @@ public class Interactable : MonoBehaviour
     public void AddToInventory()
     {
         GameManager.audio.Play("pop");
-        if (Inventory.instance.Add(item))
-        {
+        if (GameManager.inventory.Add(item))
             Destroy(gameObject);
-            maxRarity = Rarity.Rare;
-        }
     }
 }

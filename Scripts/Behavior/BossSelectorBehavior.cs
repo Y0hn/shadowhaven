@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 public class BossSelectorBehavior : StateMachineBehaviour
 {
@@ -45,11 +46,11 @@ public class BossSelectorBehavior : StateMachineBehaviour
             switch (animator.name)
             {
                 case "ZomBoss":
-                    if      (ConditionForAttack(animator, "bonk"))
+                    if      (ConditionForAttack(animator, "bonk", 1))
                         setTriger = 1;
-                    else if (ConditionForAttack(animator, "charge"))
+                    else if (ConditionForAttack(animator, "charge", 2))
                         setTriger = 2;
-                    else if (ConditionForAttack(animator, "spit"))
+                    else if (ConditionForAttack(animator, "spit", 3))
                         setTriger = 3;
                     else
                     {
@@ -57,9 +58,15 @@ public class BossSelectorBehavior : StateMachineBehaviour
                     }
                     //Debug.Log("Choosed: " + setTriger);
                     break;
+                case "ArchDevil":
+                    if      (ConditionForAttack(animator, "trust", 1))
+                        setTriger = 1;
+                    else if (ConditionForAttack(animator, "slash", 2))
+                        setTriger = 2;
 
+                    break;
                 default:
-                    Debug.LogError("Boss " + name + " has no known behavior !");
+                    Debug.LogError("Boss " + animator.name + " has no known behavior !");
                     animator.enabled = false;
                     break;
             }
@@ -70,27 +77,32 @@ public class BossSelectorBehavior : StateMachineBehaviour
             ch = false;
         }
     }
-    private bool ConditionForAttack(Animator animator, string atck)
+    private bool ConditionForAttack(Animator animator, string atck, int trigger)
     {
         bool condition = false;
         Vector2 pos = animator.transform.position;
         float dist = Vector2.Distance(targetTra.position, pos);
-        bool timesUp = lastAtc <= Time.time - maxChangeInterval * maxChangeInterval;
+        bool timesUp = lastAtc <= Time.time - (maxChangeInterval + maxChangeInterval);
 
         switch (atck)
         {
-            case "bonk":   
-                condition = dist < range && (pastTrigger % 10 != 1 || timesUp);
+            case "bonk":
+                condition = dist < range && (pastTrigger % 10 != trigger || timesUp);
                 break;
             case "charge":
-                condition = dist > 5*tolerancy && pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger % 10 != 2;
+                condition = dist > 5 * tolerancy && pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger % 10 != trigger;
                 break;
-            case "spit":   
-                condition = dist > range * 2 && (pastTrigger % 10 != 3 || (timesUp && setTriger < 23));
+            case "spit":
+                condition = dist > range * 2 && (pastTrigger % 10 != trigger || (timesUp && setTriger < 23));
                 break;
-
+            case "trust":
+                condition = dist < range * 1.5f && (pastTrigger % 10 != trigger || timesUp && setTriger < 21);
+                break;
+            case "slash":
+                condition = dist < range && (pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy) && (pastTrigger % 10 != trigger || timesUp);
+                break;
             default:
-                Debug.LogError($"Fatal: Boss {name} does not have attack {atck} !!!");
+                Debug.LogError($"Fatal: Boss {name} requesting non-existent attack {atck} !!!");
                 break;
         }
 

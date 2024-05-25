@@ -69,7 +69,7 @@ public class EnemyStats : CharakterStats
             // Reward Loot
             int reward;
             reward = Random.Range(level, level * 5);
-            Inventory.instance.AddMoney(reward);
+            GameManager.inventory.AddMoney(reward);
             loot.text = reward + loot.text;
 
             // Reward XP

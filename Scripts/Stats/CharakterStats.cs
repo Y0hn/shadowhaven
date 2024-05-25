@@ -8,6 +8,7 @@ public abstract class CharakterStats : MonoBehaviour
     public int maxHealth = 100;
     public Stat damage;
     public Stat armor;
+    public Stat speed;
     public int level;
 
     private const int minDmg = 1;
@@ -18,6 +19,9 @@ public abstract class CharakterStats : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         if (healthBar != null )
             healthBar.SetMax(maxHealth);
+
+        if (speed.GetValue() == 0)
+            speed.value = 1;
     }
     private void Awake()
     {
@@ -37,8 +41,24 @@ public abstract class CharakterStats : MonoBehaviour
         if (curHealth <= 0)
             Die();
     }
+    public void ChangeSpeed(EffectInArea effectInArea, bool remove = false)
+    {
+        if (remove)
+        {
+            speed.DeModify(effectInArea);
+        }
+        else
+        {
+            speed.Modify(effectInArea);
+        }
+        animator.speed = effectInArea.modifier;
+    }
     protected virtual void Die()
     {
         // Metod will be more specified in override
+    }
+    public virtual SaveSystem.Data.CharakterData SaveData()
+    {
+        return new SaveSystem.Data.CharakterData(name, curHealth, transform.position);
     }
 }

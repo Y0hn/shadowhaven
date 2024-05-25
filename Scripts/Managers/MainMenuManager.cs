@@ -7,7 +7,6 @@ public class MenuManager : MonoBehaviour
 {
     public Transform titleScreen;
     public Transform mainMenu;
-
     private RectTransform tScreen;
     private BtnManager btnManager;
     private Image mScreen;
@@ -39,6 +38,7 @@ public class MenuManager : MonoBehaviour
         main = true;
         moveBy[0] = 0;
         moveBy[1] = 0;
+        SaveSystem.fileDataLoaded = false;
         mainMenu.gameObject.SetActive(false);
         titleScreen.gameObject.SetActive(true);
     }
@@ -110,7 +110,7 @@ public class MenuManager : MonoBehaviour
                     tScreen.position = Vector3.zero;
                     inMenu = true;
                     main = true;
-                    if (!SaveCheck())
+                    if (!SaveSystem.SaveDataExist())
                         btnManager.SetActiveBtn("Continue", false);
                     btnManager.EnDisMenu("Main");
                 }
@@ -119,7 +119,10 @@ public class MenuManager : MonoBehaviour
     }
     public void ContinueGame()
     {
-        Debug.Log("Load saved data");
+        foreach (Transform t in transform.GetComponentInChildren<Transform>())
+            t.gameObject.SetActive(false);
+        SaveSystem.fileDataLoaded = true;
+        SceneManager.LoadScene(1);
     }
     public void StartGame()
     {
@@ -141,10 +144,5 @@ public class MenuManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
-    }
-    private bool SaveCheck()
-    {
-        // Does its magic here
-        return false;
     }
 }

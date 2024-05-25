@@ -1,6 +1,7 @@
 using Random = UnityEngine.Random;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LevelGener : MonoBehaviour
 {
@@ -16,76 +17,149 @@ public class LevelGener : MonoBehaviour
     public float maxX;
     public float maxY;
     #endregion
-
+    public float globalLightIntensity;
+    public SaveSystem.Data data;
     public Vector2 moveAmount;
-    public string doorSize = "2x1";
-
+    public string doorSize;
     private string[] roomer;
 
     private int dir = -1;
     private int pastDir = -1;
     private Vector2 pastPos;
 
-    public bool deleteAssets = true;
-
-    private bool stop;
+    private bool stop = false;
     private bool path;
     private bool startEnd;
 
     void Start()
     {
-        // References
-        Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+        if (!stop)
+        {
+            // References
+            Transform player = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
+            LoadAssets();
+            // Set Up
+            int randStartPos = Random.Range(0, startingPos.Length);
+            transform.position = startingPos[randStartPos].position;
+            GameManager.instance.player.transform.position = startingPos[randStartPos].position;
+            GameManager.instance.SetGlobalLight(globalLightIntensity);
+            startEnd = true;
+            //stop = false;
+            path = false;
+            // Inicializatin
+            dir = Random.Range(0, 6);
+            if (transform.position.x >= maxX)
+                dir = Random.Range(0, 2);
+            else if (transform.position.x <= minX)
+                dir = Random.Range(4, 6);
+        }
+    }
+    void Update()
+    {
+        if (!stop)
+        {
+            GameObject R;   // Room
+            GameObject C;   // Contents
+
+            if (path)
+            {
+                // Generate Path Room
+                string s = "Path=";
+                R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, GetRoomSpawnPath());
+                R.name = s + NameCrop(R.name);
+
+                C = Instantiate(GenerateContent(s + "Enemy"), R.transform.position, Quaternion.identity, R.transform);
+                C.name = NameCrop(C.name, true);
+                Move();
+            }
+            else if (startEnd)
+            {
+                string s;
+                if (pastDir == -1)
+                    s = "Spawn=";
+                else
+                    s = "Loot=";
+
+                R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, GetRoomSpawnPath());
+                pastPos = R.transform.position;
+                R.name = NameCrop(R.name);
+                if (s.Equals("Loot="))
+                {
+                    GenerateDoor(R.transform);
+                    GenerateGate(R.transform);
+                }
+                R.name = s + R.name;
+
+                C = Instantiate(GenerateContent(s + "-"), R.transform.position, Quaternion.identity, R.transform);
+                C.name = NameCrop(C.name, true);
+                Move();
+            }
+            else
+            {
+                R = GenerateBoss();
+                R.name = "Boss=" + NameCrop(R.name);
+                GenerateDoor(R.transform);
+                SpawnBoss(R);
+            }
+        }
+        else
+        {
+            End();
+        }
+    }
+    void LoadAssets()
+    {
         roomer = new string[2];
         roomContent = new();
         RoomTypes = new();
         rooms = new();
         // Learn Spawn
-        spawnObj = Resources.LoadAll<GameObject>("PreFabs/Spawner")[0];
-
+        spawnObj = Resources.LoadAll<GameObject>("Objects/Spawner")[0];
         // Learnin Dictionary Rooms
         switch (transform.parent.name)
         {
-            case "Level_01":
+            case "Level_1":
+            case "Level_var-01":
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
                 rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
                 //                       SPAWN    PATH     BOSS 
+                doorSize = "2x1";
                 break;
 
-            case "Level_02":
-                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10"));
-                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20"));
+            case "Level_2":
+            case "Level_var-02":
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 10x10 E"));
+                rooms.AddRange(Resources.LoadAll<GameObject>("Rooms/Templates/Tem 20x20 E"));
                 roomer = new string[] { "10x10", "10x10", "20x20" };
-                Destroy(gameObject);
+                doorSize = "2x1-E";
                 break;
             default:
-                Debug.LogWarning("LevelGenerator destroied!");
+                //Debug.LogWarning($"Level Generator of {transform.parent.name} was destroied!");
                 Destroy(gameObject);
                 break;
         }
-
         // Gettin PreFabs for Rooms into Dictionary
         foreach (GameObject room in rooms)
         {
             string[] s = room.name.Split(' ');
             if (s.Length > 2)
             {
-                if      (room.name.Contains("_"))
+                if (room.name.Contains("_"))
                 {
-                    s[0] = "Spawn"; // or END
+                    s[0] = "Spawn="; // or END
                 }
                 else if (s[1].Equals(roomer[1]))
                 {
-                    s[0] = "Path";
+                    s[0] = "Path=";
                 }
                 else if (s[1].Equals(roomer[2]))
                 {
-                    s[0] = "Boss";
+                    s[0] = "Boss=";
                 }
-                    
-                s[0] += s[1] + s[2];
-                // exmple: s[0] = "Boss20x20DL"
+
+                s[0] += s[1] + "-" + s[2];
+                // exmple: s[0] = "Boss=20x20-DL"
             }
 
             //Debug.Log($"Added record to dictionary ({s[0]},{rooms.IndexOf(room)})");
@@ -94,84 +168,11 @@ public class LevelGener : MonoBehaviour
         // Learnin Room Contents
         foreach (GameObject loot in Resources.LoadAll<GameObject>($"Rooms/Content/Items/{roomer[0]}"))
         {
-            roomContent.Add("Loot"+loot.name, loot);
+            roomContent.Add("Loot" + loot.name, loot);
         }
         foreach (GameObject enemies in Resources.LoadAll<GameObject>($"Rooms/Content/Enemies/{roomer[1]}"))
         {
-            roomContent.Add("Enemy"+enemies.name, enemies);
-        }
-
-        // Set Up
-        int randStartPos = Random.Range(0, startingPos.Length);
-        transform.position = startingPos[randStartPos].position;
-        player.position = startingPos[randStartPos].position;
-        startEnd = true;
-        stop = false;
-        path = false;
-
-        // Inicializatin
-        dir = Random.Range(0, 6);
-        if      (transform.position.x >= maxX)
-            dir = Random.Range(0, 2);
-        else if (transform.position.x <= minX)
-            dir = Random.Range(4, 6);
-    }
-    void Update()
-    {
-        if (!stop)
-        {
-            GameObject R;   // Room
-            GameObject C;   // Contents
-            //try
-            {
-                if (path)
-                {
-                    // Generate Path Room
-                    string s = "Path=";
-                    R = Instantiate(GeneratePath(), transform.position, Quaternion.identity, GetRoomSpawnPath());
-                    R.name = s + NameCrop(R.name);
-
-                    C = Instantiate(GenerateContent(s + "Enemy"), R.transform.position, Quaternion.identity, R.transform);
-                    C.name = NameCrop(C.name, true);
-                    Move();
-                }
-                else if (startEnd)
-                {
-                    string s;
-                    if (pastDir == -1)
-                        s = "Spawn=";
-                    else
-                        s = "Loot=";
-
-                    R = Instantiate(GenerateSpawn(), transform.position, Quaternion.identity, GetRoomSpawnPath());
-                    pastPos = R.transform.position;
-                    R.name = NameCrop(R.name);
-                    if (s.Equals("Loot="))
-                        GenerateDoor(R.transform);
-                    R.name = s + R.name;
-
-                    C = Instantiate(GenerateContent(s+"-"), R.transform.position, Quaternion.identity, R.transform);
-                    C.name = NameCrop(C.name, true);
-                    Move();
-                }
-                else
-                {
-                    R = GenerateBoss();
-                    R.name = "Boss=" + NameCrop(R.name);
-                    GenerateDoor(R.transform);
-                    SpawnBoss(R);
-                }
-            }/*
-            catch 
-            {
-                Debug.LogWarning("Something is wrong with Level Generator D:");
-                Debug.LogAssertion("Available Generator KEYS:" + GetOutAllDictionaries());
-                stop = true;
-            }*/
-        }
-        else
-        {
-            End();
+            roomContent.Add("Enemy" + enemies.name, enemies);
         }
     }
     private string NameCrop(string s,bool simle = false, char spliter = ' ')
@@ -277,29 +278,29 @@ public class LevelGener : MonoBehaviour
     }
     private GameObject GeneratePath()
     {
-        string s = "Path" + roomer[1];
+        string s = "Path=" + roomer[1];
         if      (pastDir == 1 || pastDir == 3)      // FROM RIGHT
         {
             if      (dir == 1 || dir == 3)  // to right
-                s += "LR";
+                s += "-LR";
             else if (dir == 0 || dir == 5)  // to up
-                s += "UR";
+                s += "-UR";
         }
         else if (pastDir == 2 || pastDir == 4)      // FROM LEFT
         {
             if      (dir == 2 || dir == 4)  // to left
-                s += "LR";
+                s += "-LR";
             else if (dir == 0 || dir == 5)  // to up
-                s += "UL";
+                s += "-UL";
         }   
         else if (pastDir == 0 || pastDir == 5)      // FROM BOTTOM
         {
             if      (dir == 1 || dir == 3)  // to left
-                s += "DL";
+                s += "-DL";
             else if (dir == 2 || dir == 4)  // to right
-                s += "DR";
+                s += "-DR";
             else if (dir == 0 || dir == 5)  // to up
-                s += "UD";
+                s += "-UD";
         }
 
         pastDir = dir;
@@ -307,16 +308,16 @@ public class LevelGener : MonoBehaviour
     }
     private GameObject GenerateSpawn()
     {
-        string s = "Spawn" + roomer[0];
+        string s = "Spawn=" + roomer[0];
 
         if (pastDir != -1)
         {
 
             switch (pastDir)
             {
-                case 1: case 3: s += "_R"; break;   // FROM LEFT
-                case 2: case 4: s += "_L"; break;   // FROM RIGHT
-                case 0: case 5: s += "D_"; break;   // FROM DOWN
+                case 1: case 3: s += "-_R"; break;   // FROM LEFT
+                case 2: case 4: s += "-_L"; break;   // FROM RIGHT
+                case 0: case 5: s += "-D_"; break;   // FROM DOWN
             }
             stop = true;
         }
@@ -324,9 +325,9 @@ public class LevelGener : MonoBehaviour
         {
             switch (dir)
             {
-                case 1: case 3: s += "_L"; break;   // Left
-                case 2: case 4: s += "_R"; break;   // Right
-                case 0: case 5: s += "U_"; break;   // Up
+                case 1: case 3: s += "-_L"; break;   // Left
+                case 2: case 4: s += "-_R"; break;   // Right
+                case 0: case 5: s += "-U_"; break;   // Up
             }
             path = true;
         }
@@ -337,7 +338,7 @@ public class LevelGener : MonoBehaviour
     }
     private GameObject GenerateBoss()
     {
-        string s = "Boss" + roomer[2];
+        string s = "Boss=" + roomer[2].Split('_')[0];
 
         dir = Random.Range(0, 3);
         transform.position = new Vector2(transform.position.x, transform.position.y + moveAmount.y);
@@ -346,17 +347,17 @@ public class LevelGener : MonoBehaviour
         switch (dir)
         {
             case 1: case 3: 
-                s += "DR"; 
+                s += "-DR"; 
                 transform.position = 
                     new Vector2(transform.position.x - 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
                 break;
             case 2: case 4: 
-                s += "DL";
+                s += "-DL";
                 transform.position =
                     new Vector2(transform.position.x + 1.5f * moveAmount.x, transform.position.y + moveAmount.y);
                 break;
             case 0: case 5: 
-                s += "DU";
+                s += "-DU";
                 transform.position =
                     new Vector2(transform.position.x, transform.position.y + 2 * moveAmount.y);
                 break;
@@ -387,24 +388,110 @@ public class LevelGener : MonoBehaviour
     private void GenerateDoor(Transform room)
     {
         GameObject spawner;
-
-        spawner = Instantiate(spawnObj, new(pastPos.x, pastPos.y), Quaternion.identity, room);
+        spawner = Instantiate(spawnObj, pastPos, Quaternion.identity, room);
         // spawner.name => "Door-2x1"
         spawner.name = "Door-" + doorSize;
     }
+    private void GenerateGate(Transform room)
+    {
+        GameObject spawner;
+        Vector3 pos = new(room.position.x, room.position.y + 5.5f, -1);
+        spawner = Instantiate(spawnObj, pos, Quaternion.identity, room);
+        // spawner.name => "Door-2x1"
+        spawner.name = "Wall-GATE";
+    }
     private void End()
     {
-        if (deleteAssets)
-        {
-            Destroy(GameObject.FindGameObjectWithTag("Assets"));
-            GameManager.instance.generated = true;
-        }
-        // Destroy(gameobject);
-        name = "Generated Floor";
-        Destroy(this);
+        GameObject.FindGameObjectWithTag("Assets").SetActive(false);
+        enabled = false;
     }
     private Transform GetRoomSpawnPath()
     {
         return transform.parent;
+    }
+    public void LoadFromData(SaveSystem.Data data)
+    {
+        enabled = false;
+        GameObject inter = Resources.Load<GameObject>("Objects/item");
+        GameObject.FindGameObjectWithTag("Assets").SetActive(true);
+        Transform spawned = transform;
+        spawned.name = "spawned";
+        // Building Rooms
+        SaveSystem.Data.LevelData levelData = data.level;
+        LoadAssets();
+        for (int i = 0; i < levelData.rooms.Length; i++) 
+        {
+            if (levelData.rooms[i].Contains("Loot"))
+                levelData.rooms[i] = "Spawn" + "=" + levelData.rooms[i].Split('=')[1];
+            GameObject r = Instantiate(rooms[RoomTypes[levelData.rooms[i]]], levelData.roomsPos[i].GetVector(), Quaternion.identity, GetRoomSpawnPath());
+            pastPos = r.transform.position;
+            r.name = levelData.rooms[i];
+
+            if (r.name.Contains("Spawn") && i != 0)
+            {
+                r.name = "Loot=" + r.name.Split('=')[1];
+                GenerateGate(r.transform);
+                GenerateDoor(r.transform);
+                GameObject C = Instantiate(GenerateContent(r.name), r.transform.position, Quaternion.identity, r.transform);
+                C.name = NameCrop(C.name, true);
+            }
+            else if (r.name.Contains("Boss"))
+            {
+                GenerateDoor(r.transform);
+            }
+            //Debug.Log($"Loaded room \"{r.name}\" on position [{levelData.roomsPos[i]}]");
+        }
+        // Insantiatie enemies
+        GameObject[] enemies = Resources.LoadAll<GameObject>("Objects/Enemies");
+        GameObject[] bosses = Resources.LoadAll<GameObject>("Objects/Bosses");
+        for (int i = 1; i < data.entities.Length; i++)
+        {
+            if (i < data.entities.Length - 1)
+            {
+                int index = -1;
+                for (int j = 0; j < enemies.Length; j++)
+                    if (data.entities[i].charName == enemies[j].name)
+                    {
+                        index = j;
+                        break;
+                    }
+                if (index != -1)
+                {
+                    GameObject ee = Instantiate(enemies[index], data.entities[i].position.GetVector(), Quaternion.identity, spawned);
+                    ee.name = ee.name.Split('(')[0];
+                    ee.tag = "Enemy";
+                    //Debug.Log($"Enemy {e.charName} spawned");
+                }
+                else
+                    Debug.Log("Indestingusable enemy saved name: " + data.entities[i].charName);
+            }
+            else // Boss
+            {
+                foreach (GameObject b in bosses)
+                {
+                    if (data.entities[i].charName == b.name)
+                    {
+                        GameObject bo = Instantiate(b, data.entities[i].position.GetVector(), Quaternion.identity, spawned);
+                        bo.name = bo.name.Split('(')[0];
+                        BossStats bs = bo.GetComponent<BossStats>();
+                        bs.enabled = true;
+                        bs.SetY(bs.transform.position.y - 10);
+                        
+                        //Debug.Log("Boss spawned " + bo.name);
+                    }
+                }
+            }
+        }
+        // Loading interactable items
+        for (int i = 0; i < data.interactables.items.Length; i++)
+        {
+            GameObject interact = Instantiate(inter, data.interactables.positions[i].GetVector(), Quaternion.identity, GetRoomSpawnPath());
+            interact.GetComponent<Interactable>().item = data.interactables.items[i].GetItem();
+        }
+        GameManager.instance.player.transform.position = data.entities[0].position.GetVector();
+        GameManager.instance.generated = true;
+        transform.parent.name += "_Loaded";
+        enabled = true;
+        stop = true;
     }
 }

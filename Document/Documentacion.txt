@@ -600,37 +600,66 @@ Boss Bug Fixes:
 ----------------< 05. 03.  2024 >----------------
 Bug Fixes:
 	On reload scene OnDestroySpawn()
-
-
+----------------< 09. 03.  2024 >----------------
+Light adjustments
+Bus Fixes:
+	Door cover Mask
+----------------< 10. 03.  2024 >----------------
+Torch
+Bug Fixes:
+	if intro skiped on Boss animation sequence is not competed
+----------------< 15. 03.  2024 >----------------
+Area Effects:
+	Speed
+----------------< 25. 03.  2024 >----------------
+Level Up animation
+----------------< 26. 03.  2024 >----------------
+UI utility btns
+----------------< 27. 03.  2024 >----------------
+Controler Support
+----------------< 05. 04.  2024 >----------------
+Imp
+----------------< 11. 04.  2024 >----------------
+Save System
+----------------< 04. 05.  2024 >----------------
+Arch Demon movement
+	weapon fire trident
+		- intro animation trident slam ot ground
+		- attack pierse
 ____________________/ PLANS \____________________
+---/ BUG \---
+Ranged enemy cease fire
+- on hit
+- on range border
+
 ---/ ADD \---
-Secret Roomky
-funkciu 3 quick slotu 
-- Potions/Consumables
-After sword effect
+Secret Roomky ?
 
-Level_02
-- tranzition medzi levelami
-- After chest is emptied
+Level_03
+- heaven
+- cherupin ?
 
-Chce to lepsie movementy Zombosa
-- blood pool shots doing area dmg or slow
+End
+- Reached Shadow Haven 
+- NPC dialog/monolog
 
 ---/ MODIFY \---
 Load titles from .txt file
 Sound Setting Saves in file
 ____________________/ BUGSS \____________________
 Camera
+	if Camera Seq skiped sometimes DoorClosedPos returns old (destroyed) door pos
 	Freezes For moment when intro skiped
-	if intro skiped on Boss animation sequence is not competed
 Textture Overlay
 	enemy <-> player
 	enemy <-> dead enemy
 Better Balancing
-// Tim PC:
+If enemy moves cannot save any
+
+// Tim PC:	- more/less IRELEVANT
 	boss fight gate preopened
 	arrow in bow scalling error ? / GIANT sip
-	Fast bow (very fast very bad)
+	Fast bow (very fast - very bad)
 ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
 	Behaviory oboch animacii idu sucastne
@@ -640,6 +669,8 @@ Hodnoty:
 		- su vsetky v intervale ( 0 <=> 1 )
 AudioMixer has no effect on sounds themsefls
  - only when its added to audio source
+tag [System.Serializable]
+	- musi byt pri vsetkom co sa ma ukladat do pamate
 ________________/ LAYERS + TAGS \________________
 Tags:
 	[ Untagged			]
@@ -647,8 +678,8 @@ Tags:
 	[ Finish			]
 	[ EditorOnly		]
 	[ MainCamera		]
+	[ Player			]
 
-	" Player			"
 	" GameControler		"
 	" Weapon			"
 	" Tile				"
@@ -659,6 +690,12 @@ Tags:
 	" Level				"
 	" Item				"
 	" Assets			"
+	" Boss				"
+	" Camera			"
+	" Door				"
+	" Chest				"
+	" Light				"
+	" Enemy				"
 Layers:
 	[ Default			]
 	[ TransparentFX		]

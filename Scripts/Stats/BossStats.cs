@@ -23,7 +23,6 @@ public class BossStats : EnemyStats
         stunable = false;
         healthBar.gameObject.SetActive(true);
         target = GameObject.FindGameObjectWithTag("Player").transform;
-
         // Reset variable
         timer = 0f;
         entry = true;
@@ -34,13 +33,14 @@ public class BossStats : EnemyStats
         healthBar.SetMax(maxHealth);
         healthBar.Set(0);
         ShowBar(false);
+        Debug.Log($"Boss [{name}] started");
     }
     private void Update()
     {
         // 0 => START
         if (start)
         {
-            GameManager.instance.AddBoss(this);
+            GameManager.instance.SetBoss(this);
             start = !GameManager.instance.generated;
         }
         // 1 => ENTRY
@@ -86,12 +86,14 @@ public class BossStats : EnemyStats
                     fakeHealth = 0;
                     ShowBar(true);
                 }
+
                 // SKIPED
-                else if (GameManager.camera.IsCameraFocused("player"))
+                if (GameManager.camera.IsCameraFocused("player"))
                 {
                     GameManager.audio.PlayTheme("boss-theme");
                     animator.SetBool("move", true);
                     healthBar.Set(maxHealth);
+                    ShowBar(true);
                     entry = false;
                     timer = 0;
                 }
@@ -123,7 +125,7 @@ public class BossStats : EnemyStats
         animator.SetTrigger("die");
         collid.enabled = false;
         rb.simulated = false;
-        GameManager.instance.BossKilled(this);
+        GameManager.instance.BossKilled();
         Destroy(gameObject, 3);
     }
     public void SetY(float newY)
@@ -140,6 +142,6 @@ public class BossStats : EnemyStats
     }
     private void OnDestroy()
     {
-        GameManager.instance.BossKilled(this);
+        GameManager.instance.BossKilled(true);
     }
 }

@@ -14,19 +14,16 @@ public class DoorBehavior : MonoBehaviour
     private const float movinConst = 1;
     private const float roomCenter = 5;
 
-    // True - opened
-    // False - closed
+    // True     = opened
+    // False    = closed
     private bool state;
     private bool wanted;
-
     private bool setup;
     private bool renamed;
-    private bool interCheck = false;
-    private bool toRight = false;
 
     void Start()
     {
-        // name = "Door:Spawn:10x10-U_-2x1"
+        // name = "Door:Spawn:10x10-U_-2x1-E"
         string[] typ;
         typ = name.Split(':');
 
@@ -45,7 +42,7 @@ public class DoorBehavior : MonoBehaviour
                 setup = false;
         }
     }
-    void SetUp(string[] parameters, Transform transform)
+    void SetUp(string[] parameters, Transform transform2)
     {
         // typ[0] = "Door"
 
@@ -54,12 +51,12 @@ public class DoorBehavior : MonoBehaviour
         {
             case "Boss":
                 type = DoorType.BossIn;
-                interCheck = false; break;
+                break;
             case "Loot":
                 type = DoorType.BossOut; break;
             case "Spawn":
                 type = DoorType.Spawn;
-                interCheck = true; break;
+                break;
             case "Path":
                 type = DoorType.Locked; break;
             default:
@@ -70,32 +67,46 @@ public class DoorBehavior : MonoBehaviour
         // typ[2] = "10x10-U_-2x1"
         parameters = parameters[2].Split('-');
 
-        // typ[0] = "10x10"
+        // parameters[0] = "10x10"
         float roomX = float.Parse(parameters[0].Split('x')[0]) / 2;
         float roomY = float.Parse(parameters[0].Split("x")[1]) - roomCenter;
+
+        // parameters[3] = "E"
+        float f = 0f;
+        if (parameters.Length > 3)
+        {
+            // Debug.Log("Override " + parameters[3]);
+            f = 0.5f;
+        }
 
         // Position setup
         // typ[1] = "U_"
         switch (parameters[1])
         {
             case "U_":
-                transform.position = new Vector3(transform.position.x, transform.position.y + roomY, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y + roomY - f, transform2.position.z);
                 break;
             default:
             case "D_":
-                transform.position = new Vector3(transform.position.x, transform.position.y - roomCenter, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x, transform2.position.y - roomCenter + f, transform2.position.z);
                 break;
             case "_R":
-                transform.position = new Vector3(transform.position.x + roomX, transform.position.y, transform.position.z);
-                vertical = true; toRight = true; break;
+                transform2.position = new Vector3(transform2.position.x + roomX + f, transform2.position.y, transform2.position.z);
+                vertical = true; break;
             case "_L":
-                transform.position = new Vector3(transform.position.x - roomX, transform.position.y, transform.position.z);
+                transform2.position = new Vector3(transform2.position.x - roomX - f, transform2.position.y, transform2.position.z);
                 vertical = true; break;
         }
+        if (transform.parent.name == "Door:Loot:10x10-D_-2x1-E")
+        {
+            transform2.position = new Vector2(transform.position.x, transform.position.y - 2 * f);
+            // Debug.Log($"Exeption door position set to [{transform2.position.x},{transform2.position.y}]");
+        }
+        // else Debug.Log($"Parent name: [{transform.parent.name}] != \"Door:Loot:10x10-D_-2x1-E\"");
 
         // Verticality
         if (vertical)
-            transform.rotation = Quaternion.Euler(0, 0, 90);
+            transform2.rotation = Quaternion.Euler(0, 0, 90);
 
         // Setup acording to Type (Role)
         switch (type)
@@ -115,7 +126,7 @@ public class DoorBehavior : MonoBehaviour
                 break;
         }
 
-        closedPosition = transform.position;
+        closedPosition = transform2.position;
         wanted = state;
 
         // Opened position
@@ -124,14 +135,23 @@ public class DoorBehavior : MonoBehaviour
 
         if (vertical)
         {
-            openedPosition = new Vector3(transform.position.x, transform.position.y + doorSizeX, transform.position.z);
+            openedPosition = new Vector3(transform2.position.x, transform2.position.y + doorSizeX, transform2.position.z);
         }
         else
         {
-            openedPosition = new Vector3(transform.position.x + doorSizeX, transform.position.y, transform.position.z);
+            openedPosition = new Vector3(transform2.position.x + doorSizeX, transform2.position.y, transform2.position.z);
         }
+
+        // Setting Positions
+        transform2.position = closedPosition;
+        
+        if (transform2.childCount > 1)
+            transform2.GetChild(1).position = openedPosition;
+
         if (state)
-            transform.position = openedPosition;
+            transform2.GetChild(0).position = openedPosition;
+        else
+            transform2.GetChild(0).position = closedPosition;
 
         GameManager.enviroment.AddDoor(this);
         setup = true;
@@ -139,7 +159,7 @@ public class DoorBehavior : MonoBehaviour
     void Update()
     {
         if (setup)
-        {
+        {/*
             if (interCheck)
             {
                 Transform player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -200,7 +220,7 @@ public class DoorBehavior : MonoBehaviour
                     }
                 }
             }
-        }
+        */}
         else if (Time.time > waitTimer && !renamed)
         {
             // room.name = "Spawn=10x10-U_"
@@ -216,7 +236,9 @@ public class DoorBehavior : MonoBehaviour
             if (2 <= s.Length && q.Length >= 2)
             {
                 t.name = q[0] + ":" + s[0] + ":" + s[1] + "-" + q[1];
-                // t.name = "Door:Spawn:10x10-U_-2x1"
+                // t.name = "Door:Spawn:10x10-U_-2x1-_"
+                if (q.Length == 3)
+                    t.name += "-" + q[2];
                 renamed = true;
                 Start();
             }
@@ -270,13 +292,13 @@ public class DoorBehavior : MonoBehaviour
     {
         wanted = newState;
     }
-    public void SetUpDoor(string size, DoorType newType, bool newVert)
+    /*public void SetUpDoor(string size, DoorType newType, bool newVert)
     {
         // NAME: Door_10x10-2x1
         name = "Door_" + size;
         vertical = newVert;
         type = newType;
-    }
+    }*/
     public Vector2 GetClosedPos()
     {
         return closedPosition;

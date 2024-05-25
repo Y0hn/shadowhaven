@@ -22,19 +22,20 @@ public class EnemyScript : MonoBehaviour
 
     private float rangeMax;
     private float rangeMin;
-
+    private bool targeted;
+    private const float tarTol = 0.2f; // Targeting Tolerancy
     private void OnDrawGizmosSelected()
     {
         stats = GetComponent<EnemyStats>();
-
+        SetStats();
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, stats.lookRadius);
-        if (transform.name == "Skeleton")
+        if (transform.name == "Skeleton" || transform.name == "Imp")
         {
             Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.8f);
+            Gizmos.DrawWireSphere(transform.position, rangeMax);
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(transform.position, stats.lookRadius * 0.4f);
+            Gizmos.DrawWireSphere(transform.position, rangeMin);
         }
     }
     private void Start()
@@ -44,6 +45,7 @@ public class EnemyScript : MonoBehaviour
         stats = GetComponent<EnemyStats>();
         rb = GetComponent<Rigidbody2D>();
         target = GameObject.FindGameObjectWithTag("Player").transform;
+        targeted = false;
         SetStats();
     }
     private void SetStats()
@@ -53,6 +55,11 @@ public class EnemyScript : MonoBehaviour
         {
             rangeMax = stats.lookRadius * 0.8f;
             rangeMin = stats.lookRadius * 0.4f;
+        }
+        else if (name.Contains("Imp"))
+        {
+            rangeMax = stats.lookRadius * 0.8f;
+            rangeMin = stats.lookRadius * 0.2f;
         }
     }
     private void Update()
@@ -66,6 +73,7 @@ public class EnemyScript : MonoBehaviour
         switch (name)
         {
             case "Zombie":
+            case "Demon":
                 if (distance < stats.lookRadius)
                     animator.SetBool("isFollowing", true);
                 else if (animator.GetBool("isFollowing"))
@@ -74,35 +82,52 @@ public class EnemyScript : MonoBehaviour
                     rb.velocity = Vector3.zero;
                 }
                 break;
-
+            case "Imp":
             case "Skeleton":
-                if ((rangeMax < distance || distance < rangeMin) && distance < stats.lookRadius)
+                if (distance < rangeMin)
+                // FLEES
                 {
-                    if (distance < rangeMin)
-                        animator.SetBool("runAway", true);
-                    else
-                        animator.SetBool("runAway", false);
-
+                    animator.SetBool("runAway", true);
                     animator.SetBool("Shootin", false);
                     animator.SetBool("isFollowing", true);
+                    targeted = false;
                 }
-                else if (rangeMax > distance)
+                else if (targeted && distance < rangeMax + rangeMax*tarTol
+                            ||
+                        !targeted && distance < rangeMax - rangeMax*tarTol)
+                // SHOOTS
                 {
                     animator.SetBool("isFollowing", false);
                     animator.SetBool("Shootin", true);
                     rb.velocity = Vector3.zero;
+                    targeted = true;
+                }
+                else if ((!targeted && (rangeMax - tarTol*rangeMax < distance)
+                            ||
+                        (targeted && (rangeMax + tarTol*rangeMax < distance)))
+                            &&
+                        distance < stats.lookRadius)
+                // FOLLOWS
+                {
+                    animator.SetBool("runAway", false);
+                    animator.SetBool("Shootin", false);
+                    animator.SetBool("isFollowing", true);
+                    targeted = false;
                 }
                 else
+                // DEFAULT POSE => IDLE
                 {
                     if (animator.GetBool("Shootin"))
                         animator.SetBool("Shootin", false);
                     if (animator.GetBool("isFollowing"))
                         animator.SetBool("isFollowing", false);
                     rb.velocity = Vector3.zero;
+                    targeted = false;
                 }
                 break;
 
             case "Slime":
+            case "Magma Slime":
                 if (distance < stats.lookRadius)
                     animator.SetBool("isFollowing", true);
                 else if (animator.GetBool("isFollowing"))
@@ -125,7 +150,8 @@ public class EnemyScript : MonoBehaviour
                 }
                 break;
 
-            default:                
+            default:
+                Debug.Log($"Enemy {name} not in case");
                 Destroy(gameObject);
                 break;
         }

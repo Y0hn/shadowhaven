@@ -6,12 +6,12 @@ public class Equipment : Item
     public override void Use()
     {
         base.Use();
-        Inventory.instance.Equip(this);
+        GameManager.inventory.Equip(this);
         RemoveFromInventory();
     }
     public void UnEquip()
     {
-        Inventory.instance.Unequip(this);
+        GameManager.inventory.Unequip(this);
     }
 }
 public enum EquipmentSlot

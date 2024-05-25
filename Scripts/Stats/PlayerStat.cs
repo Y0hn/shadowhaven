@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerStats : CharakterStats
@@ -5,11 +6,9 @@ public class PlayerStats : CharakterStats
     public LevelBar LvlBar;
 
     private PlayerCombatScript playerCom;
-    private Inventory inv;
-    private int numE;
     private int numXP = 0;
     private int tillnextLvl = 10;
-    private const int tillnextLvlConst = 10;
+    private const int tillnextLvlConst = 5;
 
     public float nextDamage = 0;
     private const float inviTime = 0.5f;
@@ -19,8 +18,7 @@ public class PlayerStats : CharakterStats
         base.Start();
         // Additional References
         playerCom = GetComponent<PlayerCombatScript>();
-        inv = Inventory.instance;
-        inv.onEquipChangeCallback += EquipmentStatsRefresh;
+        GameManager.inventory.onEquipChangeCallback += EquipmentStatsRefresh;
 
         LvlBar.SetMax(tillnextLvl);
         LvlBar.Set(0);
@@ -64,16 +62,8 @@ public class PlayerStats : CharakterStats
         GameManager.instance.playerLives = false;
 
         playerCom.enabled = false;
-
-        level -= 5;
         numXP = 0;
-
-        if (level < 0)
-        {
-            Inventory.instance.ClearEquipment();
-            level = 0;
-        }
-
+        GameManager.inventory.ClearEquipment();
         animator.SetBool("isAlive", false);
         transform.position = Vector2.zero;
         //Debug.Log("Hrac zomrel");
@@ -84,6 +74,7 @@ public class PlayerStats : CharakterStats
         healthBar.Set(curHealth);
         //playerCom.enabled = true;
         rb.simulated = true;
+        speed.DeModify();
         animator.SetBool("isAlive", true);
     }
     public void SetHealth(int health)
@@ -98,19 +89,31 @@ public class PlayerStats : CharakterStats
     {
         numXP += xp;
         if (numXP >= tillnextLvl)
-        {
-            numXP = 0;
-            level++;
-            tillnextLvl = tillnextLvlConst * level;
-            maxHealth += 10;
-            SetHealth((int)Mathf.Floor(maxHealth*0.2f + curHealth));
+            LevelUp();
+        LvlBar.Set(numXP);
+    }
+    public void LevelUp()
+    {
+        bool changeHP = true;
+        level++;
+        List<string> stats = new List<string>();
+        stats.Add("Max Health\n" + maxHealth);
+        numXP = 0;
+        tillnextLvl += tillnextLvlConst*level;
 
-            // Visual
-            LvlBar.SetMax(tillnextLvl);
-            LvlBar.SetText("Lvl  " + level);
-            healthBar.SetMax(maxHealth);
-            healthBar.Set(curHealth);
+        if (changeHP)
+        {
+            maxHealth += 10;
+            stats[0] += " -> " + maxHealth;
+            SetHealth(maxHealth);
         }
+
+        // Visual
+        LvlBar.SetMax(tillnextLvl);
+        LvlBar.SetText("Lvl  " + level);
+        healthBar.SetMax(maxHealth);
+        healthBar.Set(curHealth);
+        GameManager.notifi.LevelUp(stats.ToArray());
         LvlBar.Set(numXP);
     }
     public void SetDamage(int dam, bool add = false)

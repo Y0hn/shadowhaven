@@ -34,6 +34,8 @@ public class SpawnObject : MonoBehaviour
             int rand = Random.Range(0, objects.Length);
             if (objects.Length != 0)
                 spawn = objects[rand];
+            if (spawn != null)
+                spawn.GetComponent<BossStats>().enabled = true;
         }
         else if (name.Contains("item"))
         {
@@ -71,11 +73,19 @@ public class SpawnObject : MonoBehaviour
                 objects = GameObject.FindGameObjectsWithTag(name);
                 int rand = Random.Range(0, objects.Length);
                 if (objects.Length != 0)
+                {
                     spawn = objects[rand];
+                }
+                else
+                {
+                    Debug.Log("Found none enemies of " + name);
+                    Destroy(gameObject);
+                    return;
+                }
             }
             catch 
             {
-                Debug.LogWarning("GameObject Tag: " + name + " does not exits or sh*t like that ");
+                Debug.LogWarning("GameObject Tag: " + name + " does not exits or smth like that ");
                 Destroy(gameObject);
                 return;
             }
@@ -85,15 +95,22 @@ public class SpawnObject : MonoBehaviour
         if (spawn != null)
         {
             spawn = Instantiate(spawn, transform.position, Quaternion.identity, transform.parent);
-
-            spawn.tag = "Untagged";
+            if (spawn.tag.Contains("Enemy"))
+                spawn.tag = "Enemy";
+            else
+                spawn.tag = "Untagged";
             spawn.name = spawn.name.Split('(')[0];
 
             // Additional settings
             if      (name.Contains("Boss"))
                 spawn.GetComponent<BossStats>().SetY(float.Parse(s[1]));
             else if (name.Contains("Door"))
+            {
+                if (s.Length == 3)
+                    spawn.name += "-" + s[2];
                 spawn.transform.position = new Vector3(transform.position.x, transform.position.y, 0.05f);
+                //Debug.Log($"{name} spawned door {spawn.name}");
+            }
             else if (name.Contains("Light"))
             {
                 GameManager.lights.Register(spawn, s[2]);

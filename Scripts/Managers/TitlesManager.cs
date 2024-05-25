@@ -9,11 +9,12 @@ public class TitlesManager : MonoBehaviour
     public List<Transform> UIs;
     public float move = 100;
     RectTransform parent;
-
+    private const string autor = "Jan Anco";
     private Dictionary<string, int> uiIndexer;
     private float yTowards;
     private readonly string titles =
-        "Game Desing: Jan Anco\n\nCharakter design: Jan Anco\n\nCharakter Animations: Jan Anco\n\nBehavior: Jan Anco\n\nSound design: Tim Anco";
+        $"Game Desing: {autor}\n\nCharakter design: {autor}\n\nCharakter Animations: {autor}\n\nAI Behavior: {autor}\n\nMenu Sound design: Tim Anco\n\n" +
+        $"InGame Sound Track from Darkest Dungeon";
     void Start()
     {
         // List add UIs
