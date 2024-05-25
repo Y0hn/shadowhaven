@@ -23,7 +23,6 @@ public class BossStats : EnemyStats
         stunable = false;
         healthBar.gameObject.SetActive(true);
         target = GameObject.FindGameObjectWithTag("Player").transform;
-
         // Reset variable
         timer = 0f;
         entry = true;
@@ -34,6 +33,7 @@ public class BossStats : EnemyStats
         healthBar.SetMax(maxHealth);
         healthBar.Set(0);
         ShowBar(false);
+        Debug.Log($"Boss [{name}] started");
     }
     private void Update()
     {

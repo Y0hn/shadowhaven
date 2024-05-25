@@ -659,7 +659,7 @@ If enemy moves cannot save any
 // Tim PC:	- more/less IRELEVANT
 	boss fight gate preopened
 	arrow in bow scalling error ? / GIANT sip
-	Fast bow (very fast very bad)
+	Fast bow (very fast - very bad)
 ____________/ IMPORTANT  DICOVERIES \____________
 Ak je animation tranzition != 0	
 	Behaviory oboch animacii idu sucastne

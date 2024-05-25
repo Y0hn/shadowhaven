@@ -596,9 +596,9 @@ MonoBehaviour:
   healthBar: {fileID: 4340828779594679461}
   maxHealth: 200
   damage:
-    value: 40
+    value: 30
   armor:
-    value: 20
+    value: 15
   speed:
     value: 0
   level: 3

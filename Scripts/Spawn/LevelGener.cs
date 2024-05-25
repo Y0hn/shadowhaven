@@ -473,7 +473,10 @@ public class LevelGener : MonoBehaviour
                     {
                         GameObject bo = Instantiate(b, data.entities[i].position.GetVector(), Quaternion.identity, spawned);
                         bo.name = bo.name.Split('(')[0];
-                        bo.GetComponent<BossStats>().enabled = true;
+                        BossStats bs = bo.GetComponent<BossStats>();
+                        bs.enabled = true;
+                        bs.SetY(bs.transform.position.y - 10);
+                        
                         //Debug.Log("Boss spawned " + bo.name);
                     }
                 }
@@ -486,6 +489,7 @@ public class LevelGener : MonoBehaviour
             interact.GetComponent<Interactable>().item = data.interactables.items[i].GetItem();
         }
         GameManager.instance.player.transform.position = data.entities[0].position.GetVector();
+        GameManager.instance.generated = true;
         transform.parent.name += "_Loaded";
         enabled = true;
         stop = true;

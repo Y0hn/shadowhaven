@@ -1,7 +1,7 @@
 using UnityEngine;
 public class FollowBehavior : StateMachineBehaviour
 {
-    public string targetTag;
+    public string targetTag = "Player";
     public float speed;
     public float rangeTolerancy = 0.2f;
     public bool toClose = false;
@@ -10,6 +10,7 @@ public class FollowBehavior : StateMachineBehaviour
     public float trajectoryLimit = -1;
     public float startDelay = 0;
     public float velocityStopTreshold = 0;
+    public string outRawParam = "";
 
     private bool startDelayed = false;
     private bool inMovement = false;
@@ -87,6 +88,12 @@ public class FollowBehavior : StateMachineBehaviour
                 rb.velocity = new Vector2(moveDir.x * speed, moveDir.y * speed);
                 animator.SetFloat("Horizontal", dir.x);
                 animator.SetFloat("Vertical", dir.y);
+                if (outRawParam != "")
+                {
+                    string[] temp = outRawParam.Split(',');
+                    animator.SetFloat(temp[0], playerPos.x - pos.x);
+                    animator.SetFloat(temp[1], playerPos.y - pos.y);
+                }
             }
             // TRAJECTORY set
             else if (trajectoryLimit != -1)

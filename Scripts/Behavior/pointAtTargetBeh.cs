@@ -6,6 +6,7 @@ public class pointAtTargetBeh : StateMachineBehaviour
 {
     public string targetTag;
     public string triggerOut = "";
+    public string outPutParam = "";
 
     private Transform rotatePoint;
     private Transform targetTra;
@@ -35,8 +36,15 @@ public class pointAtTargetBeh : StateMachineBehaviour
         if (rotatePoint != null && targetTra != null)
         {
             Vector2 rotation = targetTra.position - animator.transform.position;
+            
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.rotation = Quaternion.Euler(0, 0, rotZ);
+            if (outPutParam != "")
+            {
+                string[] param = outPutParam.Split(',');
+                animator.SetFloat(param[0].Trim(), rotation.x);
+                animator.SetFloat(param[1].Trim(), rotation.y);
+            }
             Debug.Log($"Rotate point {rotatePoint.name} has been set on rotation [{rotZ}]");
         }
         else

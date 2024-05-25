@@ -6,7 +6,7 @@ using System.IO;
 public static class SaveSystem
 {
     public static bool fileDataLoaded = false;
-    private static bool debug = false;
+    private static bool debug = true;
     public static bool CheckSaveNeed()
     {
         return CompareData(GetData(), Load());
