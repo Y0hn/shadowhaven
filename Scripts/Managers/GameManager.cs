@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
             LevelLoad();
             sceneLoaded = true;
         }
+
     }
     void Update()
     {
@@ -319,7 +320,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive()
     {
-        audio.PlayTheme("theme");
+        audio.PlayTheme("theme" + level);
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;
@@ -341,6 +342,8 @@ public class GameManager : MonoBehaviour
         //player.transform.position = data.entities[0].position.GetVector();
         LevelLoad().GetComponentInChildren<LevelGener>().LoadFromData(data);
         SaveSystem.fileDataLoaded = false;
+        audio.PlayTheme("stop");
+        audio.PlayTheme("theme" + level);
     }
     public void AddXp(int xp) 
     {

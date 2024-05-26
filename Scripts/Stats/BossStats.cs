@@ -126,6 +126,7 @@ public class BossStats : EnemyStats
         collid.enabled = false;
         rb.simulated = false;
         GameManager.instance.BossKilled();
+        GameManager.audio.PlayTheme("stop");
         Destroy(gameObject, 3);
     }
     public void SetY(float newY)

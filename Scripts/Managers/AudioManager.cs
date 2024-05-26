@@ -27,7 +27,7 @@ public class AudioManager : MonoBehaviour
                 s.source.outputAudioMixerGroup = masterGroup;
         }
 
-        PlayTheme("theme");
+        PlayTheme("theme" + GameManager.instance.level);
     }
     public void PauseTheme()
     {
