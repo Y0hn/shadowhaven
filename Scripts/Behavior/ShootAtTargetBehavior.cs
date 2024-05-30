@@ -61,7 +61,6 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
             float rotZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
             rotatePoint.rotation = Quaternion.Euler(0, 0, rotZ);
         }
-
         if (Time.time >= nextAtk && rate > 0)
         {
             Fire(animator);
@@ -74,7 +73,6 @@ public class ShootAtTargetBehavior : StateMachineBehaviour
             if (!triggerOut.Equals(""))
                 animator.SetTrigger(triggerOut);
         }
-
     }
     private void Fire(Animator animator)
     {

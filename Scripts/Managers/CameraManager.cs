@@ -55,7 +55,6 @@ public class CameraManager : MonoBehaviour
                 }
                 proceedInSeq = false;
             }
-
             Kamera k = Kamera.GetFocusedCamera(cameras);
             if (k.moving)
             {
@@ -77,7 +76,6 @@ public class CameraManager : MonoBehaviour
                 if (k.haltTime < Time.time)
                     k.SetUp((int)camModer[cameraSequence[cameraSeqFollower]]);
             }
-
             if (proceedInSeq)
             {
                 k.haltTime += Time.time;
@@ -93,7 +91,6 @@ public class CameraManager : MonoBehaviour
 
                     debug += " which ended the Sequence";
                 }
-
                 //Debug.Log(debug);
             }
         }
@@ -230,28 +227,22 @@ public class CameraManager : MonoBehaviour
         {
             case "boss":
                 output = new string[3]
-                { "toDoor", "toBoss", "toPlayer" };
+                    { "toDoor", "toBoss", "toPlayer" };
                 cameraSeqFollower = 0;
                 proceedInSeq = true;
                 break;
-
             default:
                 output = null;
                 Debug.LogWarning("There is no such camera seqeunce as: " + seqName);
                 break;
         }
-
         // Output
-        if (get)
-        {
-            return output;
-        }
-        else
+        if (!get)
         {
             cameraSequence = output.ToList();
             curCamSeq = seqName;
-            return null;
         }
+        return output;
     }
     public void SkipCurrentSequence()
     {
@@ -269,7 +260,6 @@ public class CameraManager : MonoBehaviour
     }
     private void GetModeTarget(int mode, out Vector2 position)
     {
-        //bool suc = true;
         switch (mode)
         {
             case 0: // toPlayer
@@ -285,11 +275,7 @@ public class CameraManager : MonoBehaviour
             default:
                 Debug.LogWarning("Mode " + mode + " was not identified! ");
                 position = Vector2.zero;
-                //suc = false;
                 break;
         }
-        /*
-        if (suc)
-            Debug.Log($"Target of mode: {GetModReverse(mode)}({mode}) position recieved [{position.x}, {position.y}]");*/
     }
 }

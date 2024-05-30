@@ -12,9 +12,21 @@ public class TitlesManager : MonoBehaviour
     private const string autor = "Jan Anco";
     private Dictionary<string, int> uiIndexer;
     private float yTowards;
-    private readonly string titles =
+    private float timer = 0;
+    private static readonly string ytLinks =
+        "\nhttps://www.youtube.com/watch?v=OeU8UYJgxZg" +
+        "\nhttps://www.youtube.com/watch?v=DOz9vQYKHBg" +
+        "\nhttps://www.youtube.com/watch?v=gfBIRQRdzu0" +
+        "\nhttps://www.youtube.com/watch?v=JFrGDCc8Je0" +
+        "\nhttps://www.youtube.com/watch?v=qkDByoPKvmU";
+    private static readonly string titles =
         $"Game Desing: {autor}\n\nCharakter design: {autor}\n\nCharakter Animations: {autor}\n\nAI Behavior: {autor}\n\nMenu Sound design: Tim Anco\n\n" +
-        $"InGame Sound Track from Darkest Dungeon";
+        $"InGame Sound Track Sources\n--< YouTube >--\n{ytLinks}";
+    private static readonly string thx =
+        "Thank you for playing";
+    private bool tit;
+    private Text afterText, comText;
+    private float cmpT = 2, aftT = 2;
     void Start()
     {
         // List add UIs
@@ -29,9 +41,10 @@ public class TitlesManager : MonoBehaviour
         // Set Up
         UIs[uiIndexer["Version"]].GetComponent<Text>().text = Application.version;
         UIs[uiIndexer["Title"]].GetComponent<Text>().text = Application.productName;
-        UIs[uiIndexer["CompanyName"]].GetComponent<Text>().text = Application.companyName;
         UIs[uiIndexer["Titles"]].GetComponent<Text>().text = titles;
-
+        afterText = UIs[uiIndexer["AfterText"]].GetComponent<Text>();
+        comText = UIs[uiIndexer["CompanyName"]].GetComponent<Text>();
+        comText.text = Application.companyName;
 
         // Titles put down
         RectTransform
@@ -39,7 +52,10 @@ public class TitlesManager : MonoBehaviour
             parent = UIs[uiIndexer["Titles_parent"]].GetComponent<RectTransform>();
         
         parent.position = new(parent.position.x, -(parent.sizeDelta.y / 2));
-        yTowards = Math.Abs(parent.position.y) + canvas.sizeDelta.y;
+        yTowards = Math.Abs(parent.position.y) + canvas.sizeDelta.y - 700;
+        afterText.color = new Color(255, 255, 255, 0);
+        tit = false;
+        timer = 0;
     }
     void Update()
     {
@@ -52,10 +68,30 @@ public class TitlesManager : MonoBehaviour
         {
             parent.position = new Vector2(parent.position.x, parent.position.y + move * Time.deltaTime);
         }
+        else if (timer == 0)
+            timer = Time.time + cmpT;
         // ENDED UP
-        else
+        else if (!tit && timer < Time.time)
+        {
+            UIs[uiIndexer["AfterText"]].position = UIs[uiIndexer["CompanyName"]].position;
+            timer = Time.time + aftT;
+            afterText.text = thx;
+            tit = true;
+        }
+        else if (timer < Time.time) // tit = true
         {
             ReturnToMain();
+        }
+        else if (tit)
+        {
+            float a = Mathf.Abs(afterText.color.a + Time.deltaTime / cmpT);
+            afterText.color = new Color(255, 255, 255, a);
+            //comText.color = new Color(255, 255, 255, 1 - a);
+            comText.gameObject.SetActive(false);
+            if (a >= 1)
+            {
+                timer = Time.time + aftT;
+            }
         }
     }
     void ReturnToMain()

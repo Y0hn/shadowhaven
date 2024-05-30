@@ -135,7 +135,7 @@ public static class SaveSystem
     private static void DebugLogDataOut(Data data, string action)
     {
         if (debug)
-            Debug.Log($"[{Time.time}] Data {action} succesfully\nData:" +
+            Debug.Log($"[{Time.time}] Data {action} succesfully\nData:" + 
                         $"\n\tPlayer [{data.entities[0].position}]" +
                         $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
                         $"\n\tNumber of Items [{data.interactables.items.Length}]" +
