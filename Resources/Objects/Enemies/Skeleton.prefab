@@ -231,11 +231,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 4804847482079158785}
-  maxHealth: 80
+  maxHealth: 70
   damage:
     value: 10
   armor:
     value: 2
+  speed:
+    value: 0
   level: 1
   loot: {fileID: 4515999510577055718}
   lookRadius: 5

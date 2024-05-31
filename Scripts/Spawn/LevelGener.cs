@@ -458,6 +458,7 @@ public class LevelGener : MonoBehaviour
                 if (index != -1)
                 {
                     GameObject ee = Instantiate(enemies[index], data.entities[i].position.GetVector(), Quaternion.identity, spawned);
+                    ee.GetComponent<EnemyStats>().LoadHealth(data.entities[i].curHealth, data.entities[i].maxHealth);
                     ee.name = ee.name.Split('(')[0];
                     ee.tag = "Enemy";
                     //Debug.Log($"Enemy {e.charName} spawned");
@@ -474,8 +475,9 @@ public class LevelGener : MonoBehaviour
                         GameObject bo = Instantiate(b, data.entities[i].position.GetVector(), Quaternion.identity, spawned);
                         bo.name = bo.name.Split('(')[0];
                         BossStats bs = bo.GetComponent<BossStats>();
-                        bs.enabled = true;
+                        bs.LoadHealth(data.entities[i].curHealth, data.entities[i].maxHealth);
                         bs.SetY(bs.transform.position.y - 10);
+                        bs.enabled = true;
                         
                         //Debug.Log("Boss spawned " + bo.name);
                     }

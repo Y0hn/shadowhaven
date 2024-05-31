@@ -59,6 +59,14 @@ public abstract class CharakterStats : MonoBehaviour
     }
     public virtual SaveSystem.Data.CharakterData SaveData()
     {
-        return new SaveSystem.Data.CharakterData(name, curHealth, transform.position);
+        return new SaveSystem.Data.CharakterData(name, curHealth, maxHealth, transform.position);
+    }
+    public void LoadHealth(int health, int maxHp)
+    {
+        curHealth = health;
+        maxHealth = maxHp;
+
+        healthBar.SetMax(maxHealth);
+        healthBar.Set(curHealth);
     }
 }

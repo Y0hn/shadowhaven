@@ -93,10 +93,10 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 condition = dist > 5 * tolerancy && pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy && pastTrigger % 10 != trigger;
                 break;
             case "spit":
-                condition = dist > range * 2 && (pastTrigger % 10 != trigger || (timesUp && setTriger < 23));
+                condition = dist > range * 2 && (pastTrigger % 10 != trigger || (timesUp && pastTrigger < 23));
                 break;
             case "trust":
-                condition = dist < range * 1.5f && (pastTrigger % 10 != trigger || timesUp && setTriger < 21);
+                condition = dist < range * 1.5f && (pastTrigger % 10 != trigger || timesUp && pastTrigger < 21);
                 break;
             case "slash":
                 condition = dist < range && (pos.y - tolerancy < targetTra.position.y && targetTra.position.y < pos.y + tolerancy) && (pastTrigger % 10 != trigger || timesUp);
@@ -105,7 +105,8 @@ public class BossSelectorBehavior : StateMachineBehaviour
                 Debug.LogError($"Fatal: Boss {name} requesting non-existent attack {atck} !!!");
                 break;
         }
-
+        //
+        if (condition) Debug.Log($"Condition for {atck} is fullfiled (pasttrigger = {pastTrigger})");
         return condition;        
     }
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

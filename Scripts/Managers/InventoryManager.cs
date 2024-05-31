@@ -59,8 +59,8 @@ public class Inventory : MonoBehaviour
         items.Remove(item);
         droper.GetComponent<Interactable>().item = item;
         player.GetComponent<PlayerScript>().DropedItem();
-        Instantiate(droper, player.position, Quaternion.identity);
-
+        Instantiate(droper, player.position, Quaternion.identity, GameObject.FindGameObjectWithTag("Level").transform);
+        GameManager.audio.Play("item-drop");
         onItemChangeCallback?.Invoke();
     }
     public void Equip (Equipment newEqu)

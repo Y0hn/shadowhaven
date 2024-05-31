@@ -21,7 +21,8 @@ public class TitlesManager : MonoBehaviour
         "\nhttps://www.youtube.com/watch?v=qkDByoPKvmU";
     private static readonly string titles =
         $"Game Desing: {autor}\n\nCharakter design: {autor}\n\nCharakter Animations: {autor}\n\nAI Behavior: {autor}\n\nMenu Sound design: Tim Anco\n\n" +
-        $"InGame Sound Track Sources\n--< YouTube >--\n{ytLinks}";
+        $"Game Sound Effects\nZAPSPLAT\n\n" +
+        $"InGame Sound Track Sources\n--< YouTube >--{ytLinks}";
     private static readonly string thx =
         "Thank you for playing";
     private bool tit;

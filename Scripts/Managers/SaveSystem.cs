@@ -30,7 +30,7 @@ public static class SaveSystem
             // Entities => min. 1 {Player}
             check &= data.entities.Length >= 1;
             foreach (Data.CharakterData e in data.entities)
-                check &= e.curHealh >= 0 && e.charName != "" && e.position != null;
+                check &= e.curHealth >= 0 && e.charName != "" && e.position != null;
 
             // Inventory + Equipment DUPLICATE CHECK
             check &= data.inventory.items.Count >= 0;
@@ -105,7 +105,8 @@ public static class SaveSystem
                     if (entity.position.GetVector() == refer.position.GetVector())
                     {
                         compare &= entity.charName == refer.charName;
-                        compare &= entity.curHealh == refer.curHealh;
+                        compare &= entity.curHealth == refer.curHealth;
+                        compare &= entity.maxHealth == refer.maxHealth;
                         found = true;
                         break;
                     }
@@ -135,12 +136,7 @@ public static class SaveSystem
     private static void DebugLogDataOut(Data data, string action)
     {
         if (debug)
-            Debug.Log($"[{Time.time}] Data {action} succesfully\nData:" + 
-                        $"\n\tPlayer [{data.entities[0].position}]" +
-                        $"\n\tNumber of Rooms [{data.level.rooms.Length}] on level {data.curLevel}" +
-                        $"\n\tNumber of Items [{data.interactables.items.Length}]" +
-                        $"\n\tNumber of Enemies [{data.entities.Length - 1}]" +
-                        $"\n\tBoss {data.entities.Last().charName} is on pos [{data.entities.Last().position}]");
+            Debug.Log($"Data {action} " + data);
     }
     public static void Save()
     {
@@ -217,16 +213,41 @@ public static class SaveSystem
                 inter.Add(g.GetComponent<Interactable>());
             interactables = new(inter.ToArray());
         }
+
+        public override string ToString()
+        {
+            return
+                    $"\n\tEntities" +
+                        $"\n\t\tNumber of Interactable Items [{interactables.items.Length}]" +
+                        $"\n\t\tNumber of Enemies [{entities.Length - 1}]" +
+                        $"\n\t\tBoss {entities.Last().charName} is on pos [{entities.Last().position}], HP [{entities.Last().curHealth}/{entities.Last().maxHealth}]" +
+
+                    $"\n\tPlayer Data" +
+                        $"\n\t\tPosition [{entities[0].position}] " +
+                        $"\n\t\tHP [{entities[0].curHealth}/{entities[0].maxHealth}]" +
+
+                    $"\n\tInventory" +
+                        $"\n\t\tNumber of items [{inventory.items.Count}]" +
+                        $"\n\t\tNumber of equipment [{inventory.GetEquipmentCount()}]" +
+
+                    $"\n\tLevel" +
+                        $"\n\t\tNumber of Rooms {level.rooms.Length}" +
+                        $"\n\t\tCurrent level is {curLevel}" +
+                "";
+        }
+
         [System.Serializable]
         public class CharakterData
         {
-            public int curHealh;
+            public int curHealth;
+            public int maxHealth;
             public string charName;
             public Position position;
-            public CharakterData(string charName, int curHealh, Vector3 position)
+            public CharakterData(string charName, int curHealh, int maxHealth, Vector3 position)
             {
-                this.curHealh = curHealh;
                 this.charName = charName;
+                this.curHealth = curHealh;
+                this.maxHealth = maxHealth;
                 this.position = new Position(position);
             }
         }
@@ -244,6 +265,16 @@ public static class SaveSystem
                 this.equipment = new ItemData[equipment.Length];
                 for (int i = 0; i < equipment.Length; i++)
                     this.equipment[i] = new ItemData(equipment[i]);
+            }
+            public int GetEquipmentCount()
+            {
+                int c = 0;
+
+                for (int i = 0;i < items.Count;i++)
+                    if (equipment[i] != null)
+                        c++;
+
+                return c;
             }
         }
         [System.Serializable]
@@ -285,7 +316,6 @@ public static class SaveSystem
                 }                
             }
         }
-        
         [System.Serializable]
         public class Position
         {

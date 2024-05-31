@@ -7,6 +7,8 @@ public class ProjectileScript : MonoBehaviour
     public float timeToDie;
     public LayerMask targetLayers;
     public bool ableToMove = true;
+    public string onLaunch = "";
+    public string onHit = "";
 
     private SpawnOnDestroy sod;
     private Vector3 targetPos;
@@ -61,10 +63,13 @@ public class ProjectileScript : MonoBehaviour
             }
 
             timeToDie = Time.time + timeToDie;
+
+            if (onLaunch != "")
+                GameManager.audio.Play(onLaunch);
         }
         else
         {
-            Debug.LogWarning("Projectile has no sender");
+            Debug.LogWarning($"Projectile {name} has no sender");
             Destroy(gameObject);
         }
     }
@@ -72,8 +77,8 @@ public class ProjectileScript : MonoBehaviour
     {
         if (Time.time >= timeToDie)
         {
-            Destroy(transform.gameObject);
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
         else
         {
@@ -99,10 +104,11 @@ public class ProjectileScript : MonoBehaviour
                 {
                     hitted.TakeDamage(damage);
                     BefDestroy();
+                    return;
                 }
             }
             if (!rb.velocity.Equals(velocity) && ableToMove)
-                BefDestroy();
+                BefDestroy(false);
         }
     }
     public int DoDamage() { return damage; }
@@ -110,8 +116,18 @@ public class ProjectileScript : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, size);
     }
-    void BefDestroy()
+    void BefDestroy(bool hit = true)
     {
+        if (onHit.Contains("arrow"))
+        {
+            if (hit)
+                GameManager.audio.PlayAtRandom(onHit, 2);
+            else
+                GameManager.audio.Play(onHit+"-1");
+        }
+        else if (!hit && onHit != "")
+            GameManager.audio.Play(onHit);
+
         if (sod != null)
             sod.SpawnPreFab();
         Destroy(gameObject);

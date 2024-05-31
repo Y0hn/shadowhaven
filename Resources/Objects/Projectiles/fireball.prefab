@@ -255,6 +255,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ableToMove: 1
+  onLaunch: 
+  onHit: flame-ing-2
 --- !u!95 &1779817714865452627
 Animator:
   serializedVersion: 5

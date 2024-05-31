@@ -562,7 +562,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 3515794167013544237}
-  maxHealth: 200
+  maxHealth: 125
   damage:
     value: 25
   armor:

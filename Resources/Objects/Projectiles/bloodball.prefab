@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 3724763272054166639}
   - component: {fileID: 1208504121911540871}
   m_Layer: 0
-  m_Name: orb
+  m_Name: bloodball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -170,6 +170,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ableToMove: 1
+  onLaunch: 
+  onHit: splash
 --- !u!114 &1208504121911540871
 MonoBehaviour:
   m_ObjectHideFlags: 0

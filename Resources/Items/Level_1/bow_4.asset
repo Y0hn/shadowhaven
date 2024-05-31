@@ -19,7 +19,7 @@ MonoBehaviour:
   color: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 1}
   equipSlot: 2
   type: 1
-  damageModifier: 8
+  damageModifier: 15
   onlySecondary: 0
   texture:
   - {fileID: 21300000, guid: 9deb705ae5bc718449953c5be400881e, type: 3}

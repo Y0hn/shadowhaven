@@ -68,12 +68,8 @@ public class BossStats : EnemyStats
                         // Wait for camera to focus on Boss
                         if (!onCamera)
                         {
-                            GameManager.audio.PlayTheme("boss-theme");
-                            animator.SetBool("move", true);
-                            healthBar.Set(maxHealth);
                             barFilling = false;
-                            entry = false;
-                            timer = 0;
+                            LastInisiate();
                         }
                     }
                 }
@@ -90,12 +86,8 @@ public class BossStats : EnemyStats
                 // SKIPED
                 if (GameManager.camera.IsCameraFocused("player"))
                 {
-                    GameManager.audio.PlayTheme("boss-theme");
-                    animator.SetBool("move", true);
-                    healthBar.Set(maxHealth);
+                    LastInisiate();
                     ShowBar(true);
-                    entry = false;
-                    timer = 0;
                 }
             }
             // 1.1
@@ -104,6 +96,7 @@ public class BossStats : EnemyStats
                 // Play Sound
                 GameManager.audio.PlayTheme("boss-intro");
                 GameManager.camera.CameraSequence("boss");
+                GameManager.instance.DisEnableAllMobs(false);
                 animator.SetBool("move", false);
                 animator.enabled = true;
             }
@@ -114,10 +107,21 @@ public class BossStats : EnemyStats
             healthBar.Set(curHealth);
         }
     }
+    private void LastInisiate()
+    {
+        GameManager.audio.PlayTheme("boss-theme_" + name);
+        GameManager.instance.DisEnableAllMobs(true);
+        animator.SetBool("move", true);
+        healthBar.SetMax(maxHealth);
+        healthBar.Set(maxHealth);
+        entry = false;
+        timer = 0;
+    }
     public override void TakeDamage(int dmg)
     {
         if (!entry)
             base.TakeDamage(dmg);
+        Debug.Log($"Boss taken damage [{curHealth}/{maxHealth}]");
     }
     protected override void Die()
     {
@@ -145,4 +149,5 @@ public class BossStats : EnemyStats
     {
         GameManager.instance.BossKilled(true);
     }
+    public void Uninstall() { Die(); }
 }

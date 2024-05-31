@@ -166,7 +166,8 @@ public class GameManager : MonoBehaviour
                     camera.SkipCurrentSequence();
                 }
             }
-            else if (Input.GetKeyDown(KeyCode.P)) // DEBUG !!!!!
+            // DEBUG !!!!!
+            else if (Input.GetKeyDown(KeyCode.P))
             {
                 //playerStats.TakeDamage(int.MaxValue);
                 //playerStats.LevelUp();
@@ -183,6 +184,10 @@ public class GameManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.K))
             {
                 Debug.Log(SaveSystem.CheckSaveNeed());
+            }
+            else if (Input.GetKeyDown(KeyCode.U))
+            {
+                boss.Uninstall();
             }
         }
         else
@@ -223,6 +228,7 @@ public class GameManager : MonoBehaviour
         // Odstrani uz vlastnene itemy z item poolu
         items.RemoveArray(inventory.GetEquipment());
         items.RemoveArray(inventory.items.ToArray());
+        audio.PlayTheme("stop");
         return levObj.transform;
     }
     void LevelClear()
@@ -338,10 +344,12 @@ public class GameManager : MonoBehaviour
         SaveSystem.Data data = SaveSystem.Load();
         inventory.Load(data.inventory);
         level = data.curLevel;
-        playerStats.SetHealth(data.entities[0].curHealh);
+        playerStats.LoadHealth(data.entities[0].curHealth, data.entities[0].maxHealth);
         //player.transform.position = data.entities[0].position.GetVector();
         LevelLoad().GetComponentInChildren<LevelGener>().LoadFromData(data);
         SaveSystem.fileDataLoaded = false;
+        inventory.onEquipChangeCallback();
+        inventory.onItemChangeCallback();
         audio.PlayTheme("stop");
         audio.PlayTheme("theme" + level);
     }
@@ -359,12 +367,17 @@ public class GameManager : MonoBehaviour
     }
     public void BossKilled(bool onDestroy = false)
     {
-        if (generated && boss != null)
+        if (boss != null)
         {
             if (!onDestroy)
             {
                 enviroment.OpenDoors(DoorType.BossOut);
                 enviroment.OpenDoors(DoorType.BossIn);
+                Debug.Log("Boss destroyed and Gates opening");
+            }
+            else
+            {
+                Debug.Log("Boss destroyed");
             }
             boss = null;
         }
@@ -384,6 +397,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1f;
         sceneLoaded = false;
         SceneManager.LoadScene(2);
+    }
+    public void DisEnableAllMobs(bool enable)
+    {
+        GameObject[] ene = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject e in ene) 
+        {
+            e.GetComponent<EnemyStats>().ResumePause(enable);
+        }
     }
 
     #endregion

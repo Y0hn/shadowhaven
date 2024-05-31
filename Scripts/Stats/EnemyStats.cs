@@ -89,4 +89,10 @@ public class EnemyStats : CharakterStats
     {
         lookRadius = nLR;
     }
+    public void ResumePause(bool enabled)
+    {
+        animator.enabled = enabled;
+        this.enabled = enabled;
+        rb.velocity = Vector2.zero;
+    }
 }

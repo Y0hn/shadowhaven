@@ -54,7 +54,7 @@ public class Interactable : MonoBehaviour
     }
     public void AddToInventory()
     {
-        GameManager.audio.Play("pop");
+        GameManager.audio.Play("item-pick-up-1");
         if (GameManager.inventory.Add(item))
             Destroy(gameObject);
     }

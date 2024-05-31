@@ -67,8 +67,9 @@ public class AudioManager : MonoBehaviour
             s.paused = false;
             s.source.Play();
         }
-        else
-            sounds[curThemeIndex].source.Stop();
+        else if (sounds.Length > curThemeIndex)
+            if (sounds[curThemeIndex].source != null)
+                sounds[curThemeIndex].source.Stop();
 
         return true;
     }
@@ -80,6 +81,19 @@ public class AudioManager : MonoBehaviour
                 list.Add(s);
 
         Play(list[UnityEngine.Random.Range(0, list.Count)].name);
+    }
+    public void PlayAtRandom(string name, int bottom, int upper = -1)
+    {
+        List<Sound> list = new();
+        foreach (Sound s in sounds)
+            if (s.name.Contains(name))
+                list.Add(s);
+
+        if (upper < 0)
+            Play(list[UnityEngine.Random.Range(bottom, list.Count)].name);
+        else
+            Play(list[UnityEngine.Random.Range(bottom, upper)].name);
+
     }
     public void SetSoundVolume(SoundType type, float vol)
     {

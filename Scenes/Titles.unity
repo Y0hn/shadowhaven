@@ -573,7 +573,7 @@ MonoBehaviour:
   UIs:
   - {fileID: 404870314}
   - {fileID: 271682982}
-  move: 500
+  move: 250
 --- !u!4 &608977149
 Transform:
   m_ObjectHideFlags: 0

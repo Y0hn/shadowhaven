@@ -169,3 +169,5 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 384
   ableToMove: 1
+  onLaunch: 
+  onHit: arrow-hit

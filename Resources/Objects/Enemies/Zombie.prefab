@@ -314,14 +314,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 7658259115138996119}
-  maxHealth: 100
+  maxHealth: 80
   damage:
     value: 15
   armor:
     value: 0
+  speed:
+    value: 0
   level: 1
   loot: {fileID: 5906422445418528148}
   lookRadius: 5
+  projectile: {fileID: 0}
+  nextDamage: 0
 --- !u!1 &4309263989974651806
 GameObject:
   m_ObjectHideFlags: 0

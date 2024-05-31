@@ -81,9 +81,11 @@ public class PlayerStats : CharakterStats
     {
         /// carefull does not change max HP
         if (health > maxHealth)
-            health = maxHealth;
+            maxHealth = health;
         else
             curHealth = health;
+
+        healthBar.Set(health);
     }
     public void AddXp(int xp)
     {
@@ -114,6 +116,7 @@ public class PlayerStats : CharakterStats
         healthBar.SetMax(maxHealth);
         healthBar.Set(curHealth);
         GameManager.notifi.LevelUp(stats.ToArray());
+        GameManager.audio.Play("level-up");
         LvlBar.Set(numXP);
     }
     public void SetDamage(int dam, bool add = false)
