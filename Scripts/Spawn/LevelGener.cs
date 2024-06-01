@@ -414,6 +414,7 @@ public class LevelGener : MonoBehaviour
         enabled = false;
         GameObject inter = Resources.Load<GameObject>("Objects/item");
         GameObject.FindGameObjectWithTag("Assets").SetActive(true);
+        GameManager.instance.SetGlobalLight(globalLightIntensity);
         Transform spawned = transform;
         spawned.name = "spawned";
         // Building Rooms

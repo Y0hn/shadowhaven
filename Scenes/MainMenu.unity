@@ -3065,6 +3065,7 @@ MonoBehaviour:
     volume: 0.8
     pitch: 1
     source: {fileID: 0}
+  intro: 1
 --- !u!114 &1098177342
 MonoBehaviour:
   m_ObjectHideFlags: 0

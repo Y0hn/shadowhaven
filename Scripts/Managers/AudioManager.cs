@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public Transform audioLibrary;
     public AudioMixerGroup masterGroup;
     public Sound[] sounds;
+    public bool intro = false;
     private int curThemeIndex;
 
     void Start()
@@ -29,6 +30,8 @@ public class AudioManager : MonoBehaviour
 
         if (GameManager.instance != null)
             PlayTheme("theme" + GameManager.instance.level);
+        else if (intro)
+            PlayTheme("theme");
     }
     public void PauseTheme()
     {

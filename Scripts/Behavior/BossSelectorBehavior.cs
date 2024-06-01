@@ -15,11 +15,12 @@ public class BossSelectorBehavior : StateMachineBehaviour
     private float lastAtc = 0;
     private float tChange;
     private float timer;
-    private float range;
+    private float range = -1f;
     private bool ch;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        range = animator.GetComponent<EnemyStats>().lookRadius;
+        if (range < 0)
+            range = animator.GetComponent<EnemyStats>().lookRadius;
         //Debug.Log(name + " start walk with past triger: " + pastTriger);
         // Finding closet target
         if (targetTra == null)

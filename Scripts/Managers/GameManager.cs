@@ -29,7 +29,28 @@ public class GameManager : MonoBehaviour
         ui = GetComponent<ManagerUI>();
         // PRIVATE
         globalLight = GetComponent<Light2D>();
-    }
+    }/*
+    void OnDestroy()
+    {
+        if (instance != null) 
+        { 
+            instance = null;
+            /*
+            enviroment = null;
+            notifi = null;
+            camera = null;
+            inventory = null;
+            lights = null;
+            audio = null;
+            ui = null;
+            // PRIVATE
+            globalLight = null;
+            * /
+        } 
+        else 
+            Debug.LogWarning("No Instance of GameManager!");
+
+    }*/
     #endregion
 
     #region References
@@ -166,7 +187,7 @@ public class GameManager : MonoBehaviour
                     camera.SkipCurrentSequence();
                 }
             }
-            // DEBUG !!!!!
+            /*/ DEBUG !!!!!
             else if (Input.GetKeyDown(KeyCode.P))
             {
                 //playerStats.TakeDamage(int.MaxValue);
@@ -188,7 +209,7 @@ public class GameManager : MonoBehaviour
             else if (Input.GetKeyDown(KeyCode.U))
             {
                 boss.Uninstall();
-            }
+            }*/
         }
         else
         {
