@@ -402,6 +402,7 @@ public class LevelGener : MonoBehaviour
     }
     private void End()
     {
+        GameManager.audio.PlayTheme("theme" + GameManager.instance.level);
         GameObject.FindGameObjectWithTag("Assets").SetActive(false);
         enabled = false;
     }

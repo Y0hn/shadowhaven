@@ -10,8 +10,8 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup masterGroup;
     public Sound[] sounds;
     public bool intro = false;
-    private int curThemeIndex;
-
+    private int curThemeIndex = -1;
+    private bool nextThemePaused;
     void Start()
     {
         foreach (Sound s in sounds)
@@ -27,20 +27,6 @@ public class AudioManager : MonoBehaviour
             else
                 s.source.outputAudioMixerGroup = masterGroup;
         }
-
-        if (GameManager.instance != null)
-            PlayTheme("theme" + GameManager.instance.level);
-        else if (intro)
-            PlayTheme("theme");
-    }
-    public void PauseTheme()
-    {
-        if (sounds[curThemeIndex].paused)
-            sounds[curThemeIndex].source.UnPause();
-        else
-            sounds[curThemeIndex].source.Pause();
-
-        sounds[curThemeIndex].paused = !sounds[curThemeIndex].paused;
     }
     public bool Play(string name)
     {
@@ -54,6 +40,23 @@ public class AudioManager : MonoBehaviour
         s.paused = false;
         return true;
     }
+    public void PauseTheme(bool pause = true)
+    {
+        if (0 <= curThemeIndex && curThemeIndex < sounds.Length)
+        {
+            if (pause)
+                sounds[curThemeIndex].source.Pause();
+            else
+                sounds[curThemeIndex].source.UnPause();
+
+            sounds[curThemeIndex].paused = pause;
+
+            if (nextThemePaused)
+                nextThemePaused = false;
+        }
+        else
+            nextThemePaused = pause;
+    }
     public bool PlayTheme(string name)
     {
         if (name != "stop")
@@ -64,13 +67,21 @@ public class AudioManager : MonoBehaviour
                 Debug.Log($"OST: {name} does not exist !");
                 return false;
             }
-            sounds[curThemeIndex].source.Stop();
+            if (curThemeIndex >= 0)
+                sounds[curThemeIndex].source.Stop();
+
             // Not Optimal
             curThemeIndex = sounds.ToList().IndexOf(s);
             s.paused = false;
             s.source.Play();
+            if (nextThemePaused)
+            {
+                nextThemePaused = false;
+                s.source.Pause();
+                s.paused = true;
+            }
         }
-        else if (sounds.Length > curThemeIndex)
+        else if (0 <= curThemeIndex && curThemeIndex < sounds.Length)
             if (sounds[curThemeIndex].source != null)
                 sounds[curThemeIndex].source.Stop();
 

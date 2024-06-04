@@ -222,9 +222,9 @@ public class PlayerCombatScript : MonoBehaviour
                             //Debug.Log($"Idle projectile position set to ({x},{y},0)");
                             break;
                         case "ProjScale":
-                            x = float.Parse(temp[0]);
-                            y = float.Parse(temp[1]);
-                            idleProjectile.localScale = new Vector3(x, y, 1);
+                            //x = float.Parse(temp[0]);
+                            //y = float.Parse(temp[1]);
+                            idleProjectile.localScale = new Vector3(1, 1.5f, 1);
                             //Debug.Log($"Idle projectile scale set to ({x},{y},0)");
                             break;
                         case "FireRate":

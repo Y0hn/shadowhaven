@@ -7,12 +7,13 @@ public class ManagerUI : MonoBehaviour
     public Transform[] UIs;
     private static readonly Dictionary<string, int> Dic = new()
     {
-        {"base", 0},
-        {"inv", 1},
-        {"pause", 2},
-        {"death", 3},
+        {"base",  0 },
+        {"inv",   1 },
+        {"pause", 2 },
+        {"death", 3 },
         {"money", 4 },
         {"quick", 5 },
+        {"guide", 6 }
     };
     private itemSlot[] inveSlots;
     private itemSlot[] equiSlots;
@@ -108,12 +109,15 @@ public class ManagerUI : MonoBehaviour
     }
     public void DisableUI(int n)
     {
-        UIs[n].gameObject.SetActive(false);
+        if (UIs[n] != null)
+            UIs[n].gameObject.SetActive(false);
     }
     public void DisableUI(string s)
     {
         if (Dic.TryGetValue(s, out int i))
+        {
             UIs[i].gameObject.SetActive(false);
+        }
     }
     public void EnableUI(int n)
     {
@@ -123,5 +127,11 @@ public class ManagerUI : MonoBehaviour
     {
         if (Dic.TryGetValue(s, out int i))
             UIs[i].gameObject.SetActive(true);
+    }
+    public Transform GetUI(string s)
+    {
+        if (Dic.TryGetValue(s, out int i))
+            return UIs[i];
+        return null;
     }
 }

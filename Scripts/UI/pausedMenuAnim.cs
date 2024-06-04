@@ -21,6 +21,7 @@ public class pausedMenuAnim : MonoBehaviour
 
     private void SetMain(bool active = true)
     {
+        buttons ??= mainPanel.GetComponentsInChildren<Button>();
         foreach (Button button in buttons) 
             button.interactable = active;
 
@@ -28,10 +29,6 @@ public class pausedMenuAnim : MonoBehaviour
             mainPanel.SetSiblingIndex(2);
         else
             mainPanel.SetSiblingIndex(1);
-    }
-
-    private void Update()
-    {
     }
     #region ButtonsEvents
     public void SettingsBtn()

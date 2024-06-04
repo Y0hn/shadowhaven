@@ -3,9 +3,9 @@ using UnityEngine.SceneManagement;
 using UnityEngine;
 public class GameManager : MonoBehaviour
 {
-    #region Singleton
-    public static EviromentManager enviroment;
+    #region Instance
     public static NotificationsManager notifi;
+    public static EviromentManager enviroment;
     public new static CameraManager camera;
     public new static AudioManager audio;
     public static GameManager instance;
@@ -29,28 +29,7 @@ public class GameManager : MonoBehaviour
         ui = GetComponent<ManagerUI>();
         // PRIVATE
         globalLight = GetComponent<Light2D>();
-    }/*
-    void OnDestroy()
-    {
-        if (instance != null) 
-        { 
-            instance = null;
-            /*
-            enviroment = null;
-            notifi = null;
-            camera = null;
-            inventory = null;
-            lights = null;
-            audio = null;
-            ui = null;
-            // PRIVATE
-            globalLight = null;
-            * /
-        } 
-        else 
-            Debug.LogWarning("No Instance of GameManager!");
-
-    }*/
+    }
     #endregion
 
     #region References
@@ -76,6 +55,8 @@ public class GameManager : MonoBehaviour
 
     private bool sceneLoaded = false;
     private bool deathScreen = false;
+    private bool acGui = false;
+    private bool guide = true;
     void Start()
     {
         //// REFERENCES \\\\
@@ -97,7 +78,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("File data load!");
             uptoLevelLoad = Time.time + Mathf.Abs(uptoLevelLoad);
             sceneLoaded = false;
-
+            //ResumeGame();
             // ENABLE LOADING SCREEN
         }
         else // Level SetUp
@@ -120,7 +101,18 @@ public class GameManager : MonoBehaviour
                 sceneLoaded = true;
             }
         }
-        if (playerLives)
+        else if (guide)
+        {
+            ShowGuide();
+            guide = false;
+            acGui = true;
+        }
+        else if (Input.anyKeyDown && acGui)
+        {
+            ShowGuide(false);
+            acGui = false;
+        }
+        else if (playerLives)
         {
             // INPUT \\
             if (Input.GetButtonDown("Pause"))
@@ -151,82 +143,41 @@ public class GameManager : MonoBehaviour
             }
             else if ((Input.GetKeyDown(KeyCode.Alpha2) || Input.GetAxis("Qslots") > 0 || eqiWeap == 2) && qchange)
             {
-                // Equip Secondary
                 if (inventory.Equiped(3) != null)
                     playerScript.ChangeWeapon(false, true);
                 else
                     playerScript.SetActiveCombat(false);
-                //Debug.Log("Secondary equip");
                 qchange = false;
                 eqiWeap = 0;
             }
             else if (!qchange && Input.GetAxis("Qslots") == 0)
             {
                 qchange = true;
-                //Debug.Log("Qchange reset");
             }
             else if (inv && Input.GetButtonDown("Submit"))
             {
                 if (inventory.TryGetItem(0, out Item item))
                     item.Use();
-                //Debug.Log("Cont E = " + Input.GetAxis("Cont E"));
             }
             else if (inv && Input.GetButtonDown("Cancel"))
             {
                 CloseInventory();
             }
-            /*else if (Input.GetKeyDown(KeyCode.Alpha3) || eqiWeap == 3)
-            {
-                inventory.QuickUse(3);
-                eqiWeap = 0;
-            }*/
             else if (Input.GetButtonDown("Jump"))
             {
                 if (camera.IsCameraFocused("free"))
-                {
                     camera.SkipCurrentSequence();
-                }
             }
-            /*/ DEBUG !!!!!
-            else if (Input.GetKeyDown(KeyCode.P))
-            {
-                //playerStats.TakeDamage(int.MaxValue);
-                //playerStats.LevelUp();
-                Save();
-            }
-            else if (Input.GetKeyDown(KeyCode.O))
-            {
-                Load();
-            }
-            else if (Input.GetKeyDown(KeyCode.L))
-            {
-                LevelLoad();
-            }
-            else if (Input.GetKeyDown(KeyCode.K))
-            {
-                Debug.Log(SaveSystem.CheckSaveNeed());
-            }
-            else if (Input.GetKeyDown(KeyCode.U))
-            {
-                boss.Uninstall();
-            }*/
+        }
+        else if (deathScreen)
+        {
+            if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
+                PlayerRevive();
+            else if (Input.GetButtonDown("Pause") || Input.GetButtonDown("Cancel"))
+                GoToMainMenu();
         }
         else
-        {
-            if (deathScreen)
-            {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Submit"))
-                {
-                    PlayerRevive();
-                }
-                else if (Input.GetButtonDown("Pause") || Input.GetButtonDown("Cancel"))
-                {
-                    GoToMainMenu();
-                }
-            }
-            else
-                PlayerDeath();
-        }
+            PlayerDeath();
     }
 
     #region Private Events
@@ -280,6 +231,28 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Game Events
+    public void ShowGuide(bool show = true)
+    {
+        if (show)
+        {
+
+            ui.DisableUI(0);
+            ui.EnableUI("guide");
+
+            Time.timeScale = 0f;
+            ableToMove = false;
+        }
+        else
+        {
+            ui.EnableUI(0);
+            ui.DisableUI("guide");
+
+            Time.timeScale = 1f;
+            ableToMove = true;
+        }
+        audio.PauseTheme(show);
+    }
+
     public void PauseGame()
     {
         if (inv)
@@ -291,6 +264,7 @@ public class GameManager : MonoBehaviour
         {
             ui.DisableUI(0);
             ui.EnableUI("pause");
+
             audio.PauseTheme();
             Time.timeScale = 0f;
             ableToMove = false;
@@ -301,7 +275,7 @@ public class GameManager : MonoBehaviour
         ui.EnableUI(0);
         ui.DisableUI("inv");
         ui.DisableUI("pause");
-        audio.PauseTheme();
+        audio.PauseTheme(false);
         Time.timeScale = 1f;
         ableToMove = true;
     }
@@ -347,7 +321,7 @@ public class GameManager : MonoBehaviour
     }
     public void PlayerRevive()
     {
-        audio.PlayTheme("theme" + level);
+        //audio.PlayTheme("theme" + level);
         playerScript.Resurect();
         deathScreen = false;
         playerLives = true;
