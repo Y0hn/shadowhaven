@@ -9,11 +9,13 @@ public class MenuManager : MonoBehaviour
     public Transform mainMenu;
     private RectTransform tScreen;
     private BtnManager btnManager;
+    private AudioManager am;
     private Image mScreen;
 
     private readonly static float[] titleZoomParam = { 10f, -260f, 3780f };
     private const float scaleChange = 2f;
     private float[] moveBy = new float[2];
+    private bool startTheme;
     private bool inMenu;
     private bool main;
     private bool sub;
@@ -27,6 +29,7 @@ public class MenuManager : MonoBehaviour
         tScreen = titleScreen.GetComponent<RectTransform>();
         btnManager = mainMenu.GetComponent<BtnManager>();
         mScreen = mainMenu.GetComponent<Image>();
+        am = GetComponent<AudioManager>();
 
         // Set Up
         vers.GetComponent<Text>().text += Application.version;
@@ -38,13 +41,19 @@ public class MenuManager : MonoBehaviour
         main = true;
         moveBy[0] = 0;
         moveBy[1] = 0;
+        startTheme = true;
         SaveSystem.fileDataLoaded = false;
         mainMenu.gameObject.SetActive(false);
         titleScreen.gameObject.SetActive(true);
     }
     void Update()
     {
-        if (inMenu)
+        if (startTheme) 
+        {
+            am.PlayTheme("theme-1");
+            startTheme = false;
+        }
+        else if (inMenu)
         {
             // Tranzitions
             if (main)
